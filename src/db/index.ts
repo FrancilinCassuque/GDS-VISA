@@ -1,0 +1,5 @@
+export * from './endereco/EnderecoService'
+export * from './home/homeService'
+export * from './user/userService'
+export * from './user/profileService'
+export * from './user/ocupacaoService'
