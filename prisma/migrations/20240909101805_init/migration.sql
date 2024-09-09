@@ -72,7 +72,6 @@ CREATE TABLE "Profile" (
     "genero" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "Apelido" TEXT NOT NULL,
-    "pessoatipo" TEXT NOT NULL,
     "telefone" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -91,40 +90,41 @@ CREATE TABLE "Identidade" (
 );
 
 -- CreateTable
-CREATE TABLE "Ocupacao" (
+CREATE TABLE "Funcao" (
     "id" SERIAL NOT NULL,
-    "ocupacao" VARCHAR(25) NOT NULL,
-    "ocupante" VARCHAR(50) NOT NULL,
-    "area" VARCHAR(50) NOT NULL,
-    "remoneravel" BOOLEAN DEFAULT false,
-    "valor" DECIMAL(65,30) DEFAULT 0.00,
-    "desde" TIMESTAMP(3),
-    "ate" TIMESTAMP(3),
+    "funcao" VARCHAR(50) NOT NULL,
     "profileId" TEXT NOT NULL,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "Ocupacao_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Funcao_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Casa" (
+CREATE TABLE "Processo" (
     "id" TEXT NOT NULL,
-    "name" VARCHAR(100),
-    "published" BOOLEAN DEFAULT false,
-    "quarto" VARCHAR(5) NOT NULL,
-    "sala" VARCHAR(20) NOT NULL,
-    "casadebanho" VARCHAR(20) NOT NULL,
-    "cozinha" VARCHAR(20) NOT NULL,
-    "quintal" VARCHAR(20) NOT NULL,
-    "tipo" VARCHAR(30) NOT NULL,
+    "estado" TEXT NOT NULL,
     "descricao" TEXT DEFAULT '',
-    "userId" TEXT NOT NULL,
-    "images" TEXT[],
+    "tipo" TEXT NOT NULL,
+    "profileId" TEXT NOT NULL,
+    "clientId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Casa_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Processo_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Client" (
+    "id" TEXT NOT NULL,
+    "nomecompleto" TEXT NOT NULL,
+    "passaport" VARCHAR(5),
+    "telefone" VARCHAR(30) NOT NULL,
+    "descricao" TEXT DEFAULT '',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Client_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -136,7 +136,6 @@ CREATE TABLE "Address" (
     "municipio" VARCHAR(50) NOT NULL,
     "provincia" VARCHAR(50) NOT NULL,
     "pais" VARCHAR(50) NOT NULL,
-    "casaId" TEXT,
     "profileId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -163,25 +162,25 @@ CREATE UNIQUE INDEX "Authenticator_credentialID_key" ON "Authenticator"("credent
 CREATE UNIQUE INDEX "Profile_userId_key" ON "Profile"("userId");
 
 -- CreateIndex
+CREATE INDEX "Profile_userId_idx" ON "Profile"("userId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Identidade_numero_key" ON "Identidade"("numero");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Identidade_profileId_key" ON "Identidade"("profileId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Ocupacao_profileId_key" ON "Ocupacao"("profileId");
+CREATE INDEX "Funcao_profileId_idx" ON "Funcao"("profileId");
 
 -- CreateIndex
-CREATE INDEX "Ocupacao_profileId_idx" ON "Ocupacao"("profileId");
+CREATE INDEX "Processo_clientId_idx" ON "Processo"("clientId");
 
 -- CreateIndex
-CREATE INDEX "Casa_userId_idx" ON "Casa"("userId");
+CREATE INDEX "Processo_profileId_idx" ON "Processo"("profileId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Address_casaId_key" ON "Address"("casaId");
-
--- CreateIndex
-CREATE INDEX "Address_casaId_idx" ON "Address"("casaId");
+CREATE UNIQUE INDEX "Address_profileId_key" ON "Address"("profileId");
 
 -- CreateIndex
 CREATE INDEX "Address_profileId_idx" ON "Address"("profileId");
