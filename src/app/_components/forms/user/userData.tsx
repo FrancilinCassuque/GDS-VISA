@@ -52,7 +52,7 @@ export const UserData: React.FC = () => {
         userSave.image = img || ''
       }
 
-      const id = await update(userSave)
+      const id = await update(userSave.id, userSave)
       setEditar(true)
       setLoading(false)
 

@@ -2,6 +2,7 @@
 
 import { IProfile, IProfileStore } from "@/types"
 import prisma from '../prisma.index'
+import { update } from "./userService"
 
 
 
@@ -45,6 +46,9 @@ export async function storeProfile(profile: IProfileStore, userId: string): Prom
   'use server'
 
   try {
+    const farstNome = profile.nome.split(' ').find((_, index) => index == 0)
+
+
     const perfil = await prisma.profile.create({
       data: {
         nome: profile.nome,
@@ -62,13 +66,16 @@ export async function storeProfile(profile: IProfileStore, userId: string): Prom
         }
       },
       select: {
-        id: true
+        id: true,
+        userId: true
       }
     })
 
     if (perfil instanceof Error) {
       return new Error('Error ao registrar perfil.')
     }
+
+    await update(perfil.userId,undefined,`${profile.apelido}${farstNome}`.trim())
 
     return perfil.id
 

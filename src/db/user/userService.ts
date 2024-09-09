@@ -69,7 +69,7 @@ export async function login(user: Omit<userlogin, 'id'>): Promise<IUser | Error>
     if (userFinded?.password != passwordHash) {
       return new Error('Palavra passe errada.')
     }
-    
+
     revalidatePath('/')
 
     return userFinded
@@ -301,21 +301,37 @@ export async function userIndex(page = 1): Promise<IUser[] | Error> {
   }
 }
 
-export async function update(user: IUpdateUser): Promise<string | Error> {
+export async function update(userId = '', user?: IUpdateUser, userName = ''): Promise<string | Error> {
   'use server'
 
   try {
-    const updatedUser = await prisma.user.update({
-      where: {
-        id: user.id
-      },
-      data: {
-        ...user
-      }
-    })
 
-    if (updatedUser) {
-      return updatedUser.id
+    if (userName) {
+      const updatedUser = await prisma.user.update({
+        where: {
+          id: userId
+        },
+        data: {
+          name: userName
+        }
+      })
+
+      if (updatedUser) {
+        return updatedUser.id
+      }
+    } else {
+      const updatedUser = await prisma.user.update({
+        where: {
+          id: userId
+        },
+        data: {
+          ...user
+        }
+      })
+
+      if (updatedUser) {
+        return updatedUser.id
+      }
     }
 
     return new Error('usuário não encontrado')
