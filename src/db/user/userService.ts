@@ -58,14 +58,6 @@ export async function login(user: Omit<userlogin, 'id'>): Promise<IUser | Error>
       where: {
         email: user.email
       },
-      // include: {
-      //   profile: true,
-      //   casas: {
-      //     include: {
-      //       address: true
-      //     }
-      //   }
-      // },
     })
 
     const passwordHash = CriptPassword(user.password)
@@ -99,12 +91,6 @@ export async function auth(email: string): Promise<authRetun | Error> {
       },
 
       include: {
-        casas: {
-          include: {
-            address: true
-          },
-        },
-
         profile: {
           // select: {
           //   id: true,
@@ -120,16 +106,14 @@ export async function auth(email: string): Promise<authRetun | Error> {
           include: {
             identidades: true,
 
-            ocupacoes: {
+            funcoes: {
               orderBy: {
                 updatedAt: "desc"
               },
 
               select: {
                 id: true,
-                ocupacao: true,
-                ocupante: true,
-                area: true,
+                funcao: true,
               }
             },
 
@@ -153,10 +137,10 @@ export async function auth(email: string): Promise<authRetun | Error> {
       return new Error('Conta não existe.')
     }
 
-    const pessoa = userCompleto.profile.find(pessoa => pessoa.pessoatipo == 'Pessoa Fisíca')
+    const pessoa = userCompleto.profile.find((_, index) => index == 0)
     const identidade = pessoa?.identidades.find(indentidade => indentidade.tipo == 'NIF' || indentidade.tipo == 'PASSAPORTE')
-    const ocupacao = pessoa?.ocupacoes.find((ocupacao, index) => index == 0)
-    const address = pessoa?.Address.find((a, index) => index == 0)
+    const funcao = pessoa?.funcoes.find((_, index) => index == 0)
+    const address = pessoa?.Address.find((_, index) => index == 0)
 
     const auth: IUserAuth = {
       id: userCompleto.id,
@@ -171,7 +155,6 @@ export async function auth(email: string): Promise<authRetun | Error> {
         genero: pessoa?.genero || '',
         pais: pessoa?.pais || '',
         telefone: pessoa?.telefone || '',
-        pessoatipo: pessoa?.pessoatipo || '',
         bio: pessoa?.bio || '',
 
         identidade: {
@@ -180,11 +163,9 @@ export async function auth(email: string): Promise<authRetun | Error> {
           tipo: identidade?.tipo || '',
         },
 
-        ocupacao: {
-          id: ocupacao?.id || 0,
-          area: ocupacao?.area || '',
-          ocupacao: ocupacao?.ocupacao || '',
-          ocupante: ocupacao?.ocupante || '',
+        funcoes: {
+          id: funcao?.id || 0,
+          funcao: funcao?.funcao || '',
         },
 
         address: {
@@ -216,37 +197,19 @@ export async function ShowUser(id: string): Promise<IUserShow | Error> {
       },
 
       include: {
-        casas: {
-          include: {
-            address: true
-          },
-        },
-
         profile: {
-          // select: {
-          //   id: true,
-          //   nome: true,
-          //   Apelido: true,
-          //   genero: true,
-          //   pais: true,
-          //   bio: true,
-          //   pessoatipo: true,
-          //   telefone: true,
-          // },
 
           include: {
             identidades: true,
 
-            ocupacoes: {
+            funcoes: {
               orderBy: {
                 updatedAt: "desc"
               },
 
               select: {
                 id: true,
-                ocupacao: true,
-                ocupante: true,
-                area: true,
+                funcao: true,
               }
             },
 
@@ -260,7 +223,9 @@ export async function ShowUser(id: string): Promise<IUserShow | Error> {
                 provincia: true,
                 pais: true,
               }
-            }
+            },
+
+            processos: true
           }
         },
       }
@@ -270,10 +235,10 @@ export async function ShowUser(id: string): Promise<IUserShow | Error> {
       return new Error('Conta não existe.')
     }
 
-    const pessoa = userCompleto.profile.find(pessoa => pessoa.pessoatipo == 'Pessoa Fisíca')
+    const pessoa = userCompleto.profile.find((_, index) => index == 0)
     const identidade = pessoa?.identidades.find(indentidade => indentidade.tipo == 'NIF' || indentidade.tipo == 'PASSAPORTE')
-    const ocupacao = pessoa?.ocupacoes.find((ocupacao, index) => index == 0)
-    const address = pessoa?.Address.find((a, index) => index == 0)
+    const ocupacao = pessoa?.funcoes.find((_, index) => index == 0)
+    const address = pessoa?.Address.find((_, index) => index == 0)
 
     const auth: IUserShow = {
       id: userCompleto.id,
@@ -288,7 +253,6 @@ export async function ShowUser(id: string): Promise<IUserShow | Error> {
         genero: pessoa?.genero || '',
         pais: pessoa?.pais || '',
         telefone: pessoa?.telefone || '',
-        pessoatipo: pessoa?.pessoatipo || '',
         bio: pessoa?.bio || '',
 
         identidade: {
@@ -297,11 +261,9 @@ export async function ShowUser(id: string): Promise<IUserShow | Error> {
           tipo: identidade?.tipo || '',
         },
 
-        ocupacao: {
+        funcao: {
           id: ocupacao?.id || 0,
-          area: ocupacao?.area || '',
-          ocupacao: ocupacao?.ocupacao || '',
-          ocupante: ocupacao?.ocupante || '',
+          funcao: ocupacao?.funcao || '',
         },
 
         address: {
@@ -315,7 +277,7 @@ export async function ShowUser(id: string): Promise<IUserShow | Error> {
         }
       },
 
-      casas: userCompleto.casas
+      // casas: userCompleto.casas
     }
 
     revalidatePath('/')

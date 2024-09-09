@@ -16,7 +16,6 @@ export type IUserProfileHome = {
   password: string | null
   emailVerified: Date | null
 
-  casas: ICasas[]
   profile: IProfile[]
 
   createdAt: Date
@@ -42,7 +41,6 @@ export interface IProfile {
   pais: string | null
   bio: string | null
   userId: string
-  pessoatipo: string
   telefone: string
 
   identidades?: {
@@ -57,7 +55,6 @@ export interface IProfile {
 
 export interface IProfileStore {
   pais: string
-  pessoatipo: string
   nome: string
   apelido: string
   numero: string
@@ -80,7 +77,6 @@ export interface IUserAuth {
     genero: string
     pais: string | null
     bio: string | null
-    pessoatipo: string
     telefone: string
 
     address: {
@@ -99,11 +95,9 @@ export interface IUserAuth {
       tipo: string
     }
 
-    ocupacao?: {
+    funcoes?: {
       id: number,
-      ocupacao: string
-      ocupante: string
-      area: string
+      funcao: string
     }
 
   }
@@ -123,7 +117,6 @@ export interface IUserShow {
     genero: string
     pais: string | null
     bio: string | null
-    pessoatipo: string
     telefone: string
 
     address: {
@@ -142,14 +135,12 @@ export interface IUserShow {
       tipo: string
     }
 
-    ocupacao?: {
+    funcao?: {
       id: number,
-      ocupacao: string
-      ocupante: string
-      area: string
+      funcao: string
     }
   },
 
-  casas: ICasas[]
+  // casas: ICasas[]
 }
 
