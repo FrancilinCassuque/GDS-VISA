@@ -11,7 +11,6 @@ export * from './layouts/dashboard/tooggleMenu'
 export * from './layouts/dashboard/DropMenu'
 export * from './layouts/dashboard/aside'
 
-
 export * from './auth/_login'
 export * from './auth/_create'
 export * from './auth/socialAuth'
@@ -23,9 +22,6 @@ export * from './home/settings/_keyFeatures'
 export * from './home/settings/_cadastro'
 export * from './home/create/create'
 export * from './home/carouselImage'
-
-
-export * from './home/feed/posts'
 
 export * from './forms/profile/profile'
 export * from './forms/profile/address'

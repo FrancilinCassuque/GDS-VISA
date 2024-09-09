@@ -20,7 +20,8 @@ import Link from "next/link"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { TCasaShow } from "@/types"
+import { IClientStore, TCasaShow } from "@/types"
+import { ClientStore } from "@/db"
 
 const clientForm = z.object({
   telefone: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(9, 'Contacto Pequeno de mais').max(20, 'Contacto Grande de mais'),
@@ -45,33 +46,49 @@ export const CreateClient: React.FC<ICreateProps> = ({ casa }) => {
   const route = useRouter()
   const { status } = useSession()
 
-  const submitForm = form.handleSubmit(async (casa: z.infer<typeof clientForm>) => {
+  const submitForm = form.handleSubmit(async (clientBody: z.infer<typeof clientForm>) => {
     try {
+      setLoading(true)
       const user = AUTH.userauth
 
-      setLoading(true)
+      if (user?.id) {
+        const client: Omit<IClientStore, 'id'> = {
+          telefone: clientBody.telefone,
+          nomecompleto: clientBody.nomecompleto,
+          descricao: clientBody.descricao,
+          passaport: clientBody.descricao,
+          userId: user.id
+        }
 
-      // if (casaNova instanceof Error) {
-      //   setLoading(false)
-      //   toast({
-      //     title: 'Error!',
-      //     description: <pre><code> {casaNova.message} </code></pre>,
-      //     variant: 'destructive'
-      //   })
-      // } else {
-      //   toast({
-      //     title: 'Success',
-      //     description: <pre><code>Residência Registrada com sucesso.</code></pre>
-      //   })
+        const newClient = ClientStore(client)
 
-      //   setLoading(false)
-      //   route.push(`/auth/dashboard/`)
-      // }
+        if (newClient instanceof Error) {
+          setLoading(false)
+          toast({
+            title: 'Error!',
+            description: <pre><code> Erro ao Registrar Cliente </code></pre>,
+            variant: 'destructive'
+          })
+        } else {
+          toast({
+            title: 'Success',
+            description: <pre><code>Cliente Registrado com sucesso.</code></pre>
+          })
+
+          setLoading(false)
+          form.setValue('nomecompleto', '')
+          form.setValue('descricao', '')
+          form.setValue('passaport', '')
+          form.setValue('telefone', '')
+
+          form.setFocus('nomecompleto')
+        }
+      }
 
     } catch (error) {
       toast({
         title: 'Error!',
-        description: <pre><code>Erro ao Registrar nova Cliente</code></pre>,
+        description: <pre><code>Erro ao Registrar novo Cliente</code></pre>,
         variant: 'destructive'
       })
       setLoading(false)
@@ -207,7 +224,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ casa }) => {
                   </div>
                 </div>
 
-                
+
               </CollapsibleContent>
             </Collapsible>
 

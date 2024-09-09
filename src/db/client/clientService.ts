@@ -1,8 +1,7 @@
 'use server'
 
-import { ICasas, IClient, IClientStore, TCasaShow, TCasasList, TClientShow } from "@/types"
+import { IClient, IClientStore, TClientShow } from "@/types"
 import prisma from "../prisma.index"
-import { homeStore } from "@/store"
 import { revalidatePath } from "next/cache"
 
 async function ClientStore(client: Omit<IClientStore, 'id'>): Promise<String | Error> {

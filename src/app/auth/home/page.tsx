@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import HomeFeed from "../../_components/home/feedHome";
 import { HomeDashboard } from "@/app/_components";
 
 const metadata: Metadata = {
@@ -9,7 +8,6 @@ const metadata: Metadata = {
 
 export default function HomePage(){
   return(
-    // <HomeFeed/>
     <HomeDashboard/>
   )
 }

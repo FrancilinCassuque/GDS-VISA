@@ -29,8 +29,6 @@ export default function Component({ children }: Readonly<{ children: React.React
         auth(userMail).then(async (res) => {
           if (res instanceof Error) return
           authStore.getState().startAuth(res.auth)
-          // authStore.getState().startCasas(res.userCompleto.casas)
-          // authStore.getState().startProfile(res.userCompleto.profile)
         })
       }else{
         setLoading(false)

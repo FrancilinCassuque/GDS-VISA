@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "@/components/ui/breadcrumb"
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu"
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
@@ -9,8 +8,12 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@
 import { Badge } from "@/components/ui/badge"
 import { IconFile, IconListFilter } from ".."
 import { Newspaper } from "lucide-react"
+import { ClientIndex } from "@/db"
 
-export const HomeDashboard: React.FC = () => {
+export const HomeDashboard: React.FC = async () => {
+  const clietes = await ClientIndex()
+
+  if (clietes instanceof Error) return
 
   return (
     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3 sm:mb-64">
@@ -95,40 +98,30 @@ export const HomeDashboard: React.FC = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Customer</TableHead>
-                      <TableHead className="hidden sm:table-cell">Type</TableHead>
-                      <TableHead className="hidden sm:table-cell">Status</TableHead>
+                      <TableHead>Nome Completo</TableHead>
+                      <TableHead className="hidden sm:table-cell">Telefone</TableHead>
+                      <TableHead className="hidden sm:table-cell">Passaporte</TableHead>
                       <TableHead className="hidden md:table-cell">Date</TableHead>
-                      <TableHead className="text-right">Amount</TableHead>
+                      {/* <TableHead className="text-right">Amount</TableHead> */}
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    <TableRow className="bg-accent">
-                      <TableCell>
-                        <div className="font-medium">Liam Johnson</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">liam@example.com</div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">Sale</TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="secondary">
-                          Fulfilled
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">2023-06-23</TableCell>
-                      <TableCell className="text-right">$250.00</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <div className="font-medium">Olivia Smith</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">olivia@example.com</div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">Refund</TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="outline">
-                          Declined
-                        </Badge>
-                      </TableCell>
-                    </TableRow>
+                    {clietes.map((client, i) => (
+                      <TableRow className="bg-accent">
+                        <TableCell>
+                          <div className="font-medium">{client.nomecompleto}</div>
+                          <div className="hidden text-sm text-muted-foreground md:inline">{client.telefone}</div>
+                        </TableCell>
+                        {/* <TableCell className="hidden sm:table-cell">{client.passaport}</TableCell> */}
+                        <TableCell className="hidden sm:table-cell">
+                          <Badge className="text-xs" variant="secondary">
+                            {client.passaport}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="hidden md:table-cell">{client.updatedAt.toLocaleDateString()}</TableCell>
+                        {/* <TableCell className="text-right">$250.00</TableCell> */}
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </CardContent>

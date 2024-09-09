@@ -1,3 +1,3 @@
 export * from './userStore'
 export * from './authStore'
-export * from './homeStore'
+export * from './ClientStore'
