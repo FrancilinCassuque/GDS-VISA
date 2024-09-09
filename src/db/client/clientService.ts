@@ -33,15 +33,14 @@ async function ClientIndex(): Promise<IClient[] | Error> {
     revalidatePath('/')
     return clientes
   } catch (error) {
-    console.log(error)
     return new Error((error as { message: string }).message || 'Erro ao listar registros')
   }
 }
 
-async function UserClientes(userId: string): Promise<TCasasList | Error> {
+async function UserClientes(userId: string): Promise<IClient[] | Error> {
   'use server'
   try {
-    const totalCasas = await prisma.client.findMany({
+    const clients = await prisma.client.findMany({
       where: {
         userId
       },
@@ -49,23 +48,8 @@ async function UserClientes(userId: string): Promise<TCasasList | Error> {
         updatedAt: "desc",
       },
     })
-
-    if (totalCasas) {
-      const totalCount = totalCasas.length
-      const end = page * 5
-      const start = end - 5
-
-      const casas = totalCasas.filter((casa: ICasas, index: number) => {
-        if (index >= start && index <= end) {
-          return casa
-        }
-      })
-      return { data: casas, tatal: totalCount }
-    }
-
-    return new Error('Erro ao listar registros')
+    return clients
   } catch (error) {
-    console.log(error)
     return new Error((error as { message: string }).message || 'Erro ao listar registros')
   }
 }
@@ -81,7 +65,7 @@ async function ClientShow(id: string): Promise<TClientShow | Error> {
 
       include: {
         processos: true,
-        user: true,
+        user: true
       }
     })
 

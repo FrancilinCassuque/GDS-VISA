@@ -11,9 +11,6 @@ export interface IClient {
 
   createdAt: Date
   updatedAt: Date
-
-  // Processo Processo[]
-  // User     User       @relation(fields: [userId], references: [id])
 }
 
 export interface IClientStore {
@@ -26,7 +23,7 @@ export interface IClientStore {
 }
 
 
-export type TClientShow={
+export type TClientShow = {
   id: string
   userId: string
   telefone: string
