@@ -49,7 +49,6 @@ export async function storeProfile(profile: IProfileStore, userId: string): Prom
       data: {
         nome: profile.nome,
         Apelido: profile.apelido,
-        pessoatipo: profile.pessoatipo,
         genero: profile.genero || 'Outro',
         telefone: profile.telefone,
         pais: profile.pais,
@@ -90,14 +89,13 @@ export async function updateProfile(profile: IProfileStore, profileId: string, i
       data: {
         nome: profile.nome,
         Apelido: profile.apelido,
-        pessoatipo: profile.pessoatipo,
         genero: profile.genero || 'Outro',
         telefone: profile.telefone,
         pais: profile.pais,
       },
     })
 
-    const identidade = await prisma.identidade.update({
+    await prisma.identidade.update({
       where: {
         id: identidadeId
       },

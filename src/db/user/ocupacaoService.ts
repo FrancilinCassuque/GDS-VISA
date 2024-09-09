@@ -4,9 +4,7 @@ import prisma from "../prisma.index"
 
 interface IUpdateUser {
   id: number
-  ocupacao: string
-  ocupante: string
-  area: string
+  funcao: string
   profileId: string
 }
 
@@ -14,7 +12,7 @@ export async function ocupacaoCreate(formDara: Omit<IUpdateUser, 'id'>): Promise
   'use server'
 
   try {
-    const ocupacao = await prisma.ocupacao.create({
+    const ocupacao = await prisma.funcao.create({
       data: {
         ...formDara
       }

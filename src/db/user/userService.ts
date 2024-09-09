@@ -69,12 +69,8 @@ export async function login(user: Omit<userlogin, 'id'>): Promise<IUser | Error>
     if (userFinded?.password != passwordHash) {
       return new Error('Palavra passe errada.')
     }
-
-    // if (!userFinded?.emailVerified) {
-    //   return new Error('Confirma teu Email.')
-    // }
+    
     revalidatePath('/')
-    // authStore.getState().login(userFinded)
 
     return userFinded
   } catch (error) {
