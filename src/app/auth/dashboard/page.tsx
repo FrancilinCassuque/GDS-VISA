@@ -85,6 +85,10 @@ export default function Component() {
                     </DrawerDialog>
                   </div>
                 )}
+
+                <DrawerDialog textoDoBotao="Registrar Ocupaçao" descricao="Registra sua Ocupaçao aqui. Clique em salvar quando terminar.">
+                  <FormOcupacao />
+                </DrawerDialog>
               </div>
 
               {(user?.pessoa && user.pessoa.bio) ? <p className="text-sm text-muted-foreground max-w-[300px] text-center">{user.pessoa.bio}</p> : (
@@ -142,7 +146,7 @@ export default function Component() {
               <TabsTrigger value="tudo">Propriedades</TabsTrigger>
               <TabsTrigger value="Disponiveis">Disponiveis</TabsTrigger>
               <TabsTrigger value="Pendentes">Pendentes</TabsTrigger>
-            </TabsList>          
+            </TabsList>
           </div>
           <TabsContent value="tudo">
             <Card x-chunk="dashboard-05-chunk-3">

@@ -104,12 +104,12 @@ export function FormOcupacao() {
           </div>
         )}
 
-        <div className="flex flex-col-2 w-full">
+        <div className="flex flex-col items-center justify-center w-full">
           <FormField
             control={form.control}
             name="funcao"
             render={({ field }) => (
-              <FormItem className="flex flex-col mx-6">
+              <FormItem className="flex flex-col mx-6 w-full">
                 <FormLabel>Ocupacao Actual</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
@@ -123,20 +123,21 @@ export function FormOcupacao() {
                         )}
                       >
                         {field.value
-                          ? listaDeOcupacoes.find(
+                          ? ListaDeCargos.superLista.find(
                             (ocupacao) => ocupacao === field.value
                           ) : "Select ocupacao"}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className="w-[200px] p-0">
+                  <PopoverContent className="w-full p-0">
                     <Command>
                       <CommandInput placeholder="Pesquisar..." />
                       <CommandList>
                         <CommandEmpty>Funçao nao Encontrada.</CommandEmpty>
                         <CommandGroup>
-                          Cargos de Gestão
+                          <span className="m-4">  Cargos de Suporte Administrativo </span>
+
                           {ListaDeCargos.Administrativo.map((funcao) => (
                             <CommandItem
                               value={funcao}
@@ -160,8 +161,56 @@ export function FormOcupacao() {
                         <CommandSeparator />
 
                         <CommandGroup>
-                          Cargos de Tecnologia da Informação (TI)
+                          <span className="m-4">Cargos de Tecnologia da Informação (TI)</span>
                           {ListaDeCargos.TI.map((funcao) => (
+                            <CommandItem
+                              value={funcao}
+                              key={funcao}
+                              onSelect={() => {
+                                form.setValue("funcao", funcao)
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  funcao === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {funcao}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                        <CommandSeparator />
+
+                        <CommandGroup>
+                          <span className="m-4">Cargos de Contabilidade e Finanças</span>
+                          {ListaDeCargos.financas.map((funcao) => (
+                            <CommandItem
+                              value={funcao}
+                              key={funcao}
+                              onSelect={() => {
+                                form.setValue("funcao", funcao)
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  funcao === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {funcao}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                        <CommandSeparator />
+
+                        <CommandGroup>
+                          <span className="m-4">Cargos de Gestão</span>
+                          {ListaDeCargos.gestao.map((funcao) => (
                             <CommandItem
                               value={funcao}
                               key={funcao}

@@ -42,9 +42,14 @@ const TI = [
   'Assistente de TI',
   'Coordenador de ',
 ]
+
+const superLista = TI.concat(financas, Administrativo, gestao)
+
 export const ListaDeCargos = {
   gestao,
   Administrativo,
   financas,
   TI,
+
+  superLista
 }
