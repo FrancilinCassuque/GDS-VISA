@@ -1,5 +1,5 @@
 export * from './endereco/EnderecoService'
-export * from './client/homeService'
+export * from './client/clientService'
 export * from './user/userService'
 export * from './user/profileService'
 export * from './user/ocupacaoService'

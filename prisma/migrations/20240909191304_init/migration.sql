@@ -123,6 +123,7 @@ CREATE TABLE "Client" (
     "descricao" TEXT DEFAULT '',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "Client_pkey" PRIMARY KEY ("id")
 );
@@ -178,6 +179,9 @@ CREATE INDEX "Processo_clientId_idx" ON "Processo"("clientId");
 
 -- CreateIndex
 CREATE INDEX "Processo_profileId_idx" ON "Processo"("profileId");
+
+-- CreateIndex
+CREATE INDEX "Client_userId_idx" ON "Client"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Address_profileId_key" ON "Address"("profileId");
