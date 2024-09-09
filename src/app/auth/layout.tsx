@@ -24,11 +24,13 @@ export default function Component({ children }: Readonly<{ children: React.React
     if ((status == 'authenticated') && userMail) {
 
       if (!authUser.userauth?.id) {
-        auth(userMail).then((res) => {
+        const user = auth(userMail).then((res) => {
           if (res instanceof Error) return
-          authStore.getState().startAuth(res.auth)
-          setLoading(false)
+          authStore.getState().startAuth(res)
         })
+
+        console.log(user)
+        setLoading(false)
 
 
       } else {

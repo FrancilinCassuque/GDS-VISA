@@ -106,8 +106,8 @@ export const HomeDashboard: React.FC = async () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {clietes.map((client, i) => (
-                      <TableRow className="bg-accent">
+                    {clietes.map((client) => (
+                      <TableRow className="bg-accent" key={client.id}>
                         <TableCell>
                           <div className="font-medium">{client.nomecompleto}</div>
                           <div className="hidden text-sm text-muted-foreground md:inline">{client.telefone}</div>

@@ -9,7 +9,11 @@ async function ClientStore(client: Omit<IClientStore, 'id'>): Promise<String | E
   try {
     const clientNovo = await prisma.client.create({
       data: {
-        ...client,
+        nomecompleto: client.nomecompleto,
+        telefone: client.telefone,
+        descricao: client.descricao,
+        passaport: client.passaport,
+        userId: client.userId,
       }
     })
 
@@ -28,8 +32,8 @@ async function ClientIndex(): Promise<IClient[] | Error> {
       },
     })
 
-
     revalidatePath('/')
+
     return clientes
   } catch (error) {
     return new Error((error as { message: string }).message || 'Erro ao listar registros')

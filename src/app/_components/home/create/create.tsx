@@ -57,32 +57,29 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
           nomecompleto: clientBody.nomecompleto,
           descricao: clientBody.descricao,
           passaport: clientBody.descricao,
-          userId: user.id
+          userId: user.id,
         }
 
-        const newClient = ClientStore(client)
+        const newClient = await ClientStore(client)
 
         if (newClient instanceof Error) {
           setLoading(false)
-          toast({
+          return toast({
             title: 'Error!',
             description: <pre><code> Erro ao Registrar Cliente </code></pre>,
             variant: 'destructive'
           })
-        } else {
-          toast({
-            title: 'Success',
-            description: <pre><code>Cliente Registrado com sucesso.</code></pre>
-          })
-
-          setLoading(false)
-          form.setValue('nomecompleto', '')
-          form.setValue('descricao', '')
-          form.setValue('passaport', '')
-          form.setValue('telefone', '')
-
-          form.setFocus('nomecompleto')
         }
+
+        
+        toast({
+          title: 'Success',
+          description: <pre><code>Cliente Registrado com sucesso.</code></pre>
+        })
+
+        cancelar()
+
+        form.setFocus('nomecompleto')
       }
 
     } catch (error) {

@@ -13,11 +13,6 @@ interface IUpdateUser {
   image?: string
 }
 
-type authRetun = {
-  auth: IUserAuth,
-  userCompleto: IUserProfileHome
-}
-
 export async function userCreate(formDara: Omit<userlogin, 'id'>): Promise<string | Error> {
   'use server'
 
@@ -78,27 +73,16 @@ export async function login(user: Omit<userlogin, 'id'>): Promise<IUser | Error>
   }
 }
 
-export async function auth(email: string): Promise<authRetun | Error> {
+export async function auth(email: string): Promise<IUserAuth | Error> {
   'use server'
   try {
     const userCompleto = await prisma.user.findUnique({
       where: {
-        email: email
+        email
       },
 
       include: {
         profile: {
-          // select: {
-          //   id: true,
-          //   nome: true,
-          //   Apelido: true,
-          //   genero: true,
-          //   pais: true,
-          //   bio: true,
-          //   pessoatipo: true,
-          //   telefone: true,
-          // },
-
           include: {
             identidades: true,
 
@@ -178,7 +162,7 @@ export async function auth(email: string): Promise<authRetun | Error> {
 
     revalidatePath('/')
 
-    return { auth, userCompleto }
+    return auth
   } catch (error) {
     return new Error((error as { massage: string }).massage || 'Erro ao fazer login')
   }
