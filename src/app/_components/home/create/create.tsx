@@ -20,7 +20,7 @@ import Link from "next/link"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { IClientStore, TCasaShow } from "@/types"
+import { IClientStore, TCasaShow, TClientShow } from "@/types"
 import { ClientStore } from "@/db"
 
 const clientForm = z.object({
@@ -31,9 +31,9 @@ const clientForm = z.object({
 })
 
 interface ICreateProps {
-  casa?: TCasaShow
+  client?: TClientShow
 }
-export const CreateClient: React.FC<ICreateProps> = ({ casa }) => {
+export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
   const form = useForm<z.infer<typeof clientForm>>({
     resolver: zodResolver(clientForm),
   })
@@ -110,11 +110,11 @@ export const CreateClient: React.FC<ICreateProps> = ({ casa }) => {
   }
 
   useEffect(() => {
-    if (!casa) {
+    if (!client) {
       setEditar(false)
     }
 
-  }, [setEditar, casa,])
+  }, [setEditar, client,])
 
   return (
     <div className="w-full max-w-4xl mx-auto py-12 md:py-16 lg:py-20">
@@ -135,8 +135,8 @@ export const CreateClient: React.FC<ICreateProps> = ({ casa }) => {
       )}
 
       <div className="space-y-4 text-center">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-primary">{casa?.id ? 'Actualize As Definiçoes Do Cliente' : 'Registre Novo Cliente'}</h1>
-        <p className="text-muted-foreground md:text-lg">{casa?.id ? 'Configura facilmente um novo Cliente.' : 'Registra facilmente um novo Cliente.'}</p>
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-primary">{client?.id ? 'Actualize As Definiçoes Do Cliente' : 'Registre Novo Cliente'}</h1>
+        <p className="text-muted-foreground md:text-lg">{client?.id ? 'Configura facilmente um novo Cliente.' : 'Registra facilmente um novo Cliente.'}</p>
       </div>
 
       <Form {...form}>
@@ -231,7 +231,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ casa }) => {
             <div className="flex justify-end">
               <div className="flex items-center justify-center w-full">
 
-                {!casa && (
+                {!client && (
                   <Button disabled={loading} className="w-6/12" type="submit" >{loading ? <Loader2 className="animate-spin" /> : 'Registar Propriedade'}</Button>
                 )}
 
@@ -242,7 +242,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ casa }) => {
       </Form>
 
 
-      {casa && (
+      {client && (
         <>
           <form>
             <Collapsible open={true} className="border rounded-lg overflow-hidden">

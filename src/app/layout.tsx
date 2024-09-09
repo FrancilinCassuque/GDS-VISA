@@ -18,7 +18,7 @@ const fontBody = Inter({
   variable: '--font-body',
 })
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
   title: "Sara",
   description: "Alocation Residence System",
 }

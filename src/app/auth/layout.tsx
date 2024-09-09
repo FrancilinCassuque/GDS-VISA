@@ -1,7 +1,5 @@
 'use client'
 
-import Link from "next/link"
-import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "@/components/ui/breadcrumb"
 import { DropMenu, Footer, AsideBar, TooggleMenu, IconBell, IconCasaRuler } from "../_components"
 import { useEffect, useState } from "react"
 import { authStore } from "@/store"
@@ -26,11 +24,14 @@ export default function Component({ children }: Readonly<{ children: React.React
     if ((status == 'authenticated') && userMail) {
 
       if (!authUser.userauth?.id) {
-        auth(userMail).then(async (res) => {
+        auth(userMail).then((res) => {
           if (res instanceof Error) return
           authStore.getState().startAuth(res.auth)
+          setLoading(false)
         })
-      }else{
+
+
+      } else {
         setLoading(false)
       }
     } else if (status == 'unauthenticated') {

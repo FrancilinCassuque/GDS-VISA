@@ -14,7 +14,7 @@ export * from './layouts/dashboard/aside'
 export * from './auth/_login'
 export * from './auth/_create'
 export * from './auth/socialAuth'
-export * from '../auth/home/[id]/page'
+export * from '../auth/home/settings/[id]/page'
 
 export * from './home/Index'
 export * from './home/settings/_topHome'
