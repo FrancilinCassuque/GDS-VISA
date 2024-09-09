@@ -3,51 +3,29 @@ import { create } from 'zustand'
 
 
 type Auth = {
-  user: IUser | null
   userauth: IUserAuth | undefined
-  casas: ICasas[]
-  profiles: IProfile[]
+  // casas: ICasas[]
   startAuth: (user: IUserAuth) => void
-  addCasas: (casa: ICasas) => void
-  startCasas: (casasT: ICasas[]) => void
-  startProfile: (profile: IProfile[]) => void
-  addProfile: (perfil: IProfile) => void
-  update: (user: IUser) => void
+  // addCasas: (casa: ICasas) => void
+  // startCasas: (casasT: ICasas[]) => void
 }
 
 export const authStore = create<Auth>()((set) => ({
-  user: null,
   userauth: undefined,
-  casas: [],
-  profiles: [],
+  // casas: [],
 
-  addCasas: (casa: ICasas) =>
-    set((state) => ({
-      casas: [...state.casas, casa]
-    })),
+  // addCasas: (casa: ICasas) =>
+  //   set((state) => ({
+  //     casas: [...state.casas, casa]
+  //   })),
 
-  addProfile: (perfil: IProfile) =>
-    set((state) => ({
-      profiles: [...state.profiles, perfil]
-    })),
-
-  startCasas: (casasT: ICasas[]) =>
-    set(() => ({
-      casas: casasT
-    })),
-
-    startProfile: (profiles: IProfile[]) =>
-      set(() => ({
-        profiles: profiles
-      })),
+  // startCasas: (casasT: ICasas[]) =>
+  //   set(() => ({
+  //     casas: casasT
+  //   })),
 
   startAuth: (user: IUserAuth) =>
     set(() => ({
       userauth: user
-    })),
-
-  update: (user: IUser) =>
-    set(() => ({
-      user: user
     }))
 }))

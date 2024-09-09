@@ -23,12 +23,11 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?
+
+  profile       Profile[]
+  clientes      Client[]
   accounts      Account[]
   sessions      Session[]
-
-  profile  Profile[]
-  clientes Client[]
-
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 

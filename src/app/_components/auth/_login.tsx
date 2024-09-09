@@ -13,6 +13,7 @@ import { SocialAuth } from "./socialAuth"
 import { IconEye, IconLogIn, IconUserPlus } from "../icons"
 import { useState } from "react"
 import { Loader2 } from "lucide-react"
+import Image from "next/image"
 
 export const GoogleLogin = async () => {
   try {
@@ -81,6 +82,7 @@ export const Login: React.FC = () => {
   return (
     <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto w-full max-w-md space-y-8">
+        {/* <Image src={'/placeholder.png'} alt="Logo da Gota de Sol" width={150} height={150} className="rounded-t-lg object-cover aspect-video" /> */}
         <div>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-foreground">
             <IconLogIn className="mr-2 inline-block h-6 w-6" />

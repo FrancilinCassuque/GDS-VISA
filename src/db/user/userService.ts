@@ -315,7 +315,6 @@ export async function update(user: IUpdateUser): Promise<string | Error> {
     })
 
     if (updatedUser) {
-      authStore.getState().update(updatedUser)
       return updatedUser.id
     }
 
