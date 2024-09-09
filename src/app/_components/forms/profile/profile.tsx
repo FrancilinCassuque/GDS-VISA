@@ -61,7 +61,7 @@ export const PerfilData: React.FC = () => {
             }
           }
         }
-        
+
         setEditar(true)
         setLoading(false)
         setErro(false)
@@ -77,7 +77,6 @@ export const PerfilData: React.FC = () => {
     form.setValue('genero', auth.userauth?.pessoa?.genero || '')
     form.setValue('nome', auth.userauth?.pessoa?.nome || '')
     form.setValue('pais', auth.userauth?.pessoa?.pais || '')
-    form.setValue('pessoatipo', auth.userauth?.pessoa?.pessoatipo || '')
     form.setValue('telefone', auth.userauth?.pessoa?.telefone || '')
     form.setValue('numero', auth.userauth?.pessoa?.identidade?.numero || '')
     form.setValue('tipo', auth.userauth?.pessoa?.identidade?.tipo || '')
@@ -135,7 +134,7 @@ export const PerfilData: React.FC = () => {
                   } />
               </div>
 
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <Label htmlFor="Tipo">Tipo de Pessoa</Label>
                 <Controller
                   name='pessoatipo'
@@ -156,93 +155,89 @@ export const PerfilData: React.FC = () => {
                     </Select>
 
                   } />
-              </div>
+              </div> */}
             </div>
 
-            {(tipoPessoa || auth.userauth?.pessoa?.pessoatipo) && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor={tipoPessoa != 'PESSOA JURIDÍCA' ? 'Nomes Proprio' : 'Nome da Empresa'}>
-                    {tipoPessoa != 'PESSOA JURIDÍCA' ? 'Nomes Proprio' : 'Nome da Empresa'}
-                  </Label>
-                  <Input
-                    autoComplete="nome"
-                    type="text" {...form.register('nome')}
-                    placeholder={tipoPessoa != 'PESSOA JURIDÍCA' ? 'Fulano Beutrano Cicrano' : 'Empresa Comércio Geral e Prestação de Serviço'}
-                    defaultValue={auth.userauth?.pessoa?.nome || ''} readOnly={editar} />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor={tipoPessoa != 'PESSOA JURIDÍCA' ? 'Nome de Familía' : 'Tipo de Empresa'}>
-                    {tipoPessoa != 'PESSOA JURIDÍCA' ? 'Nome de Familía' : 'Tipo de Empresa'}
-                  </Label>
-                  <Input
-                    autoComplete="apelido" {...form.register('apelido')}
-                    id='apelido'
-                    placeholder={tipoPessoa != 'PESSOA JURIDÍCA' ? 'Da Silva' : '(SU) LDA'}
-                    defaultValue={auth.userauth?.pessoa?.Apelido || ''} readOnly={editar} />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="Identificaçõa">Identificaçõa</Label>
-                  <Controller
-                    name='tipo'
-                    control={form.control}
-                    render={({ field: { onChange, value } }) =>
-                      <Select onValueChange={onChange} value={value} required
-                        disabled={editar}
-                        defaultValue={auth.userauth?.pessoa?.identidade?.tipo || ''}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Seleciona o tipoPessoa" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {Lista.docTypes.map((tipo, index) => (
-                            <SelectItem value={tipo.toUpperCase()} key={index}>{tipo.toUpperCase()}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    } />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="numero">Número</Label>
-                  <Input {...form.register('numero')} placeholder='Nº do Documento'
-                    // readOnly={editar}
-                    defaultValue={auth.userauth?.pessoa?.identidade?.numero || ''}
-                    readOnly={editar}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="telefone">Contacto</Label>
-                  <Input {...form.register('telefone')} placeholder='Nº de Telefone'
-                    defaultValue={auth.userauth?.pessoa?.telefone || ''}
-                    autoComplete="telefone" readOnly={editar} />
-                </div>
-
-                {(tipoPessoa != 'PESSOA JURIDÍCA') && (
-                  <div className="space-y-2">
-                    <Label htmlFor="genero">genero</Label>
-                    <Controller
-                      name='genero'
-                      control={form.control}
-                      render={({ field: { onChange, value } }) =>
-                        <Select required value={value} onValueChange={onChange} defaultValue={auth.userauth?.pessoa?.genero || ''} disabled={editar}>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Genero" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="Masculino">Masculino</SelectItem>
-                            <SelectItem value="Femenino">Femenino</SelectItem>
-                            <SelectItem value="Outro">Outro</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      } />
-                  </div>
-                )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor={'Nomes Proprio'}>
+                  Nomes Proprio
+                </Label>
+                <Input
+                  autoComplete="nome"
+                  type="text" {...form.register('nome')}
+                  placeholder={'Fulano Beutrano Cicrano'}
+                  defaultValue={auth.userauth?.pessoa?.nome || ''} readOnly={editar} />
               </div>
-            )}
+
+              <div className="space-y-2">
+                <Label htmlFor={'Nome de Familía'}>
+                  Nome de Familía
+                </Label>
+                <Input
+                  autoComplete="apelido" {...form.register('apelido')}
+                  id='apelido'
+                  placeholder={'Da Silva'}
+                  defaultValue={auth.userauth?.pessoa?.Apelido || ''} readOnly={editar} />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="Identificaçõa">Identificaçõa</Label>
+                <Controller
+                  name='tipo'
+                  control={form.control}
+                  render={({ field: { onChange, value } }) =>
+                    <Select onValueChange={onChange} value={value} required
+                      disabled={editar}
+                      defaultValue={auth.userauth?.pessoa?.identidade?.tipo || ''}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Seleciona o Tipo" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {Lista.docTypes.map((tipo, index) => (
+                          <SelectItem value={tipo.toUpperCase()} key={index}>{tipo.toUpperCase()}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  } />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="numero">Número</Label>
+                <Input {...form.register('numero')} placeholder='Nº do Documento'
+                  // readOnly={editar}
+                  defaultValue={auth.userauth?.pessoa?.identidade?.numero || ''}
+                  readOnly={editar}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="telefone">Contacto</Label>
+                <Input {...form.register('telefone')} placeholder='Nº de Telefone'
+                  defaultValue={auth.userauth?.pessoa?.telefone || ''}
+                  autoComplete="telefone" readOnly={editar} />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="genero">genero</Label>
+                <Controller
+                  name='genero'
+                  control={form.control}
+                  render={({ field: { onChange, value } }) =>
+                    <Select required value={value} onValueChange={onChange} defaultValue={auth.userauth?.pessoa?.genero || ''} disabled={editar}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Genero" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Masculino">Masculino</SelectItem>
+                        <SelectItem value="Femenino">Femenino</SelectItem>
+                        <SelectItem value="Outro">Outro</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  } />
+              </div>
+            </div>
 
             <div className="flex flex-row items-end justify-end mt-4 mb-3">
               {!editar ? (

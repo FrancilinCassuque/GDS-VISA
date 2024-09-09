@@ -23,17 +23,17 @@ export default function Component() {
   const { status } = useSession()
   const [user, setUser] = useState<IUserAuth | undefined>(undefined)
   const [casasdisponiveis, setdisponiveis] = useState(0)
-  const [casas, setCasas] = useState<ICasas[]>([])
+  // const [casas, setCasas] = useState<ICasas[]>([])
   const u = authStore()
 
   useEffect(() => {
     if (status == 'authenticated') {
       setUser(u.userauth)
-      setCasas(u.casas)
-      setdisponiveis(u.casas.filter(casa => casa.published == true).length)
+      // setCasas(u.casas)
+      // setdisponiveis(u.casas.filter(casa => casa.published == true).length)
     }
 
-  }, [status, setUser, setCasas, u, setdisponiveis])
+  }, [status, setUser, u, setdisponiveis])
 
   return (
     <div className="flex flex-col items-center gap-8 min-w-full mx-auto py-12 px-4 md:px-0">
@@ -71,11 +71,11 @@ export default function Component() {
           ) : (
             <>
               <div className="text-center md:text-left items-center">
-                {(user?.pessoa?.ocupacao && user.pessoa.ocupacao.ocupacao) ? (
+                {(user?.pessoa?.funcoes && user.pessoa.funcoes.funcao) ? (
                   <div>
                     <div className="flex items-center gap-2">
                       <IconBriefcase className="w-4 h-4 text-muted-foreground" />
-                      <span className="text-sm text-muted-foreground">{user.pessoa.ocupacao.ocupacao}</span>
+                      <span className="text-sm text-muted-foreground">{user.pessoa.funcoes.funcao}</span>
                     </div>
                   </div>
                 ) : (
@@ -100,27 +100,27 @@ export default function Component() {
         </div>
         <div className="bg-muted/20 rounded-lg p-4 w-full">
           <div className="flex items-center justify-between">
-            <div className="flex flex-col items-center">
+            {/* <div className="flex flex-col items-center">
               <span className="text-2xl font-bold">{casas.length}</span>
               <span className="text-sm text-muted-foreground">Casas</span>
             </div>
             <div className="flex flex-col items-center">
               <span className="text-2xl font-bold">{casasdisponiveis}</span>
               <span className="text-sm text-muted-foreground">Casas Disponíveis</span>
-            </div>
+            </div> */}
           </div>
 
           <Separator className="my-4" />
 
-          {(user?.pessoa?.ocupacao && user.pessoa.ocupacao.ocupacao) && (
+          {(user?.pessoa?.funcoes && user.pessoa.funcoes.id) && (
             <div className="grid gap-2">
               <div className="flex items-center gap-2">
                 <IconBriefcase className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">{user.pessoa.ocupacao.ocupacao}</span>
+                <span className="text-sm text-muted-foreground">{user.pessoa.funcoes.funcao}</span>
               </div>
               <div className="flex items-center gap-2">
                 <IconHeart className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">{user.pessoa.ocupacao.area}, {user.pessoa.ocupacao.ocupante}</span>
+                <span className="text-sm text-muted-foreground">Gota D` Sol</span>
               </div>
             </div>
           )}
@@ -151,7 +151,7 @@ export default function Component() {
                 <CardDescription>Todas as Propriedades.</CardDescription>
               </CardHeader>
               <CardContent>
-                <DataTableHome listaDeCasas={casas} />
+                {/* <DataTableHome listaDeCasas={casas} /> */}
               </CardContent>
             </Card>
           </TabsContent>
@@ -163,7 +163,7 @@ export default function Component() {
                 <CardDescription>Todas as Propriedades Disponiveis.</CardDescription>
               </CardHeader>
               <CardContent>
-                <DataTableHome listaDeCasas={casas.filter(casa => casa.published)} />
+                {/* <DataTableHome listaDeCasas={casas.filter(casa => casa.published)} /> */}
               </CardContent>
             </Card>
           </TabsContent>
@@ -175,7 +175,7 @@ export default function Component() {
                 <CardDescription>Todas as Propriedades Pendentes.</CardDescription>
               </CardHeader>
               <CardContent>
-                <DataTableHome listaDeCasas={casas.filter(casa => !casa.published)} />
+                {/* <DataTableHome listaDeCasas={casas.filter(casa => !casa.published)} /> */}
               </CardContent>
             </Card>
           </TabsContent>

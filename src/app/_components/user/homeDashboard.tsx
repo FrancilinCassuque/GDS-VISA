@@ -7,9 +7,10 @@ import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { IconFile, IconListFilter } from "../../_components"
+import { IconFile, IconListFilter } from ".."
+import { Newspaper } from "lucide-react"
 
-export default function Component() {
+export const HomeDashboard: React.FC = () => {
 
   return (
     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3 sm:mb-64">
@@ -17,13 +18,15 @@ export default function Component() {
         <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
           <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
             <CardHeader className="pb-3">
-              <CardTitle>Your Orders</CardTitle>
+              <CardTitle>Clientes</CardTitle>
               <CardDescription className="max-w-lg text-balance leading-relaxed">
-                Introducing Our Dynamic Orders Dashboard for Seamless Management and Insightful Analysis.
+                Registra o Cliente para poder Abrir um Processo.
               </CardDescription>
             </CardHeader>
             <CardFooter>
-              <Button>Create New Order</Button>
+              <Button>
+                <Newspaper /> <span className="px-4">Registrar novo </span>
+              </Button>
             </CardFooter>
           </Card>
           <Card x-chunk="dashboard-05-chunk-1">
@@ -35,7 +38,7 @@ export default function Component() {
               <div className="text-xs text-muted-foreground">+25% from last week</div>
             </CardContent>
             <CardFooter>
-              <Progress value={25} aria-label="25% increase" />
+              <Progress value={50} aria-label="25% increase" />
             </CardFooter>
           </Card>
           <Card x-chunk="dashboard-05-chunk-2">

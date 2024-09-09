@@ -40,3 +40,4 @@ export * from './listas/listaDeItens'
 export * from './listas/listaDeOcupacoes'
 
 export * from './user/listadeCasas'
+export * from './user/homeDashboard'

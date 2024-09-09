@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import HomeFeed from "../../_components/home/feedHome";
+import { HomeDashboard } from "@/app/_components";
 
 const metadata: Metadata = {
   title: "S A R A - Feed",
@@ -8,6 +9,7 @@ const metadata: Metadata = {
 
 export default function HomePage(){
   return(
-    <HomeFeed/>
+    // <HomeFeed/>
+    <HomeDashboard/>
   )
 }
