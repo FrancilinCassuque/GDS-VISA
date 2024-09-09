@@ -14,6 +14,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandSeparator,
 } from "@/components/ui/command"
 import {
   Form,
@@ -38,12 +39,11 @@ import { useState } from "react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import { redirect, useRouter } from "next/navigation"
+import { ListaDeCargos } from "@/app/_components/listas/cargos"
 
 
 const FormSchema = z.object({
-  ocupacao: z.string({ required_error: "Por favor Selecciona a ocupacao..", }),
-  ocupante: z.string({ required_error: "Por favor preencha este campo!", }).min(3, 'Preencha devidamente este campo!').max(125, 'O Nome e grande de mais, Abrevie, por favor!'),
-  area: z.string({ required_error: "Preencha devidamente este campo", }).min(3, 'Preencha devidamente este campo!').max(125, 'Grande de mais, Abrevie, por favor!'),
+  funcao: z.string({ required_error: "Por favor Selecciona a ocupacao..", }),
 })
 
 export function FormOcupacao() {
@@ -88,7 +88,7 @@ export function FormOcupacao() {
   return (
     <Form {...form}>
 
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex flex-col items-center mt-10">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex flex-col items-center w-full mt-10">
 
         {erro && (
           <div>
@@ -107,7 +107,7 @@ export function FormOcupacao() {
         <div className="flex flex-col-2 w-full">
           <FormField
             control={form.control}
-            name="ocupacao"
+            name="funcao"
             render={({ field }) => (
               <FormItem className="flex flex-col mx-6">
                 <FormLabel>Ocupacao Actual</FormLabel>
@@ -134,28 +134,54 @@ export function FormOcupacao() {
                     <Command>
                       <CommandInput placeholder="Pesquisar..." />
                       <CommandList>
-                        <CommandEmpty>Ocupaçao nao Encontrada.</CommandEmpty>
+                        <CommandEmpty>Funçao nao Encontrada.</CommandEmpty>
                         <CommandGroup>
-                          {listaDeOcupacoes.map((ocupacao) => (
+                          Cargos de Gestão
+                          {ListaDeCargos.Administrativo.map((funcao) => (
                             <CommandItem
-                              value={ocupacao}
-                              key={ocupacao}
+                              value={funcao}
+                              key={funcao}
                               onSelect={() => {
-                                form.setValue("ocupacao", ocupacao)
+                                form.setValue("funcao", funcao)
                               }}
                             >
                               <Check
                                 className={cn(
                                   "mr-2 h-4 w-4",
-                                  ocupacao === field.value
+                                  funcao === field.value
                                     ? "opacity-100"
                                     : "opacity-0"
                                 )}
                               />
-                              {ocupacao}
+                              {funcao}
                             </CommandItem>
                           ))}
                         </CommandGroup>
+                        <CommandSeparator />
+
+                        <CommandGroup>
+                          Cargos de Tecnologia da Informação (TI)
+                          {ListaDeCargos.TI.map((funcao) => (
+                            <CommandItem
+                              value={funcao}
+                              key={funcao}
+                              onSelect={() => {
+                                form.setValue("funcao", funcao)
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  funcao === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {funcao}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                        <CommandSeparator />
                       </CommandList>
                     </Command>
                   </PopoverContent>
@@ -167,43 +193,7 @@ export function FormOcupacao() {
               </FormItem>
             )}
           />
-
-          <FormField
-            control={form.control}
-            name="ocupante"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>Nome da Entidade</FormLabel>
-                <Input type="text"  {...field} placeholder="Nome" />
-                <FormDescription>
-                  Nome da Entidade Patronal, no casa Estudante nome da Escola.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
         </div>
-
-        <div className="flex flex-col-1 w-full">
-          <FormField
-            control={form.control}
-            name="area"
-            render={({ field }) => (
-              <FormItem className="flex flex-col mx-6">
-                <FormLabel>Area de Ocupaçao</FormLabel>
-                <FormControl>
-                  <Input type="text" className="w-full"  {...field} placeholder="2ª ano da Faculdade de Direito." />
-                </FormControl>
-                <FormDescription>
-                  Opcional! No caso de estudante, a classe.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
         <Button type="submit" className="w-11/12" disabled={loading}> {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Submit'}</Button>
       </form>
     </Form>

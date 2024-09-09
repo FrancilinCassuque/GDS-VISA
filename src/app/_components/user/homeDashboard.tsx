@@ -24,9 +24,11 @@ export const HomeDashboard: React.FC = () => {
               </CardDescription>
             </CardHeader>
             <CardFooter>
-              <Button>
-                <Newspaper /> <span className="px-4">Registrar novo </span>
-              </Button>
+              <Link href={'/auth/home/create'}>
+                <Button>
+                  <Newspaper /> <span className="px-4">Registrar novo </span>
+                </Button>
+              </Link>
             </CardFooter>
           </Card>
           <Card x-chunk="dashboard-05-chunk-1">

@@ -18,13 +18,14 @@ import { Loader } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 
 import z from 'zod'
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 const pessoa = z.object({
   apelido: z.string().min(3),
   genero: z.string().min(3),
   nome: z.string().min(3),
   pais: z.string().min(3),
-  pessoatipo: z.string().min(3),
   telefone: z.string().min(3),
   numero: z.string().min(3),
   tipo: z.string().min(3),
@@ -35,11 +36,14 @@ export const PerfilData: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [erro, setErro] = useState(false)
 
-  const form = useForm<IProfileStore>()
+  const form = useForm<z.infer<typeof pessoa>>({
+    resolver: zodResolver(pessoa),
+  })
+
   const [tipoPessoa, setTipo] = useState('')
   const auth = authStore()
 
-  const submitProfileForm = form.handleSubmit(async (data: IProfileStore) => {
+  const submitProfileForm = form.handleSubmit(async (data: z.infer<typeof pessoa>) => {
     try {
       setLoading(true)
 
@@ -111,30 +115,36 @@ export const PerfilData: React.FC = () => {
         )}
 
         <CollapsibleContent className="px-6 py-4 space-y-4">
-          <form className="mx-2 mb-20" onSubmit={submitProfileForm}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Form {...form} >
+            <form className="mx-2 mb-20" onSubmit={submitProfileForm}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-              <div className="space-y-2">
-                <Label htmlFor="Nacionalidade">Nacionalidade</Label>
-                <Controller
-                  name='pais'
-                  control={form.control}
-                  render={({ field: { onChange, value } }) =>
-                    <Select onValueChange={onChange} value={value} required defaultValue={auth.userauth?.pessoa?.pais || ''}
-                      disabled={editar}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="País" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {Lista.Africa.map((pais, index) => (
-                          <SelectItem key={index} value={pais.toUpperCase()}>{pais.toUpperCase()}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  } />
-              </div>
+                <div className="space-y-2 my-2">
+                  <FormField name='pais'
+                    control={form.control}
+                    render={({ field: { onChange, value } }) =>
+                      <FormItem>
+                        <FormLabel>Nacionalidade</FormLabel>
+                        <FormControl>
+                          <Select onValueChange={onChange} value={value} required defaultValue={auth.userauth?.pessoa?.pais || ''}
+                            disabled={editar}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="País" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {Lista.Africa.map((pais, index) => (
+                                <SelectItem key={index} value={pais.toUpperCase()}>{pais.toUpperCase()}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormDescription>Pais de Origem</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    } />
+                </div>
 
-              {/* <div className="space-y-2">
+                {/* <div className="space-y-2 my-2">
                 <Label htmlFor="Tipo">Tipo de Pessoa</Label>
                 <Controller
                   name='pessoatipo'
@@ -156,114 +166,171 @@ export const PerfilData: React.FC = () => {
 
                   } />
               </div> */}
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor={'Nomes Proprio'}>
-                  Nomes Proprio
-                </Label>
-                <Input
-                  autoComplete="nome"
-                  type="text" {...form.register('nome')}
-                  placeholder={'Fulano Beutrano Cicrano'}
-                  defaultValue={auth.userauth?.pessoa?.nome || ''} readOnly={editar} />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor={'Nome de Familía'}>
-                  Nome de Familía
-                </Label>
-                <Input
-                  autoComplete="apelido" {...form.register('apelido')}
-                  id='apelido'
-                  placeholder={'Da Silva'}
-                  defaultValue={auth.userauth?.pessoa?.Apelido || ''} readOnly={editar} />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2 my-2">
+                  <FormField
+                    name="nome"
+                    control={form.control}
+                    render={({ field }) =>
+                      <FormItem>
+                        <FormLabel>Nomes Proprio</FormLabel>
+                        <FormControl>
+                          <Input
+                            autoComplete="nome"
+                            type="text" {...field}
+                            placeholder={'Fulano Beutrano Cicrano'}
+                            defaultValue={auth.userauth?.pessoa?.nome || ''} readOnly={editar} />
+                        </FormControl>
+                        <FormDescription>Todos os nomes Excepto o Apelido</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+
+                    }
+                  />
+                </div>
+
+                <div className="space-y-2 my-2">
+                  <FormField
+                    name="apelido"
+                    control={form.control}
+                    render={({ field }) =>
+                      <FormItem>
+                        <FormLabel>Nome de Familía</FormLabel>
+                        <FormControl>
+                          <Input
+                            autoComplete="nome"
+                            type="text" {...field}
+                            placeholder={'Fulano Beutrano Cicrano'}
+                            defaultValue={auth.userauth?.pessoa?.nome || ''} readOnly={editar} />
+                        </FormControl>
+                        <FormDescription>Ultimo Nome</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    } />
+                </div>
+
+                <div className="space-y-2 my-2">
+                  <FormField
+                    name="tipo"
+                    control={form.control}
+                    render={({ field: { value, onChange } }) =>
+                      <FormItem>
+                        <FormLabel>Tipo de Documento</FormLabel>
+                        <FormControl>
+                          <Select onValueChange={onChange} value={value} required
+                            disabled={editar}
+                            defaultValue={auth.userauth?.pessoa?.identidade?.tipo || ''}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Seleciona o Tipo" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {Lista.docTypes.map((tipo, index) => (
+                                <SelectItem value={tipo.toUpperCase()} key={index}>{tipo.toUpperCase()}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormDescription>Documento de Identificaçõa</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    } />
+                </div>
+
+                <div className="space-y-2 my-2">
+                  <FormField
+                    name="numero"
+                    control={form.control}
+                    render={({ field }) =>
+                      <FormItem>
+                        <FormLabel>Número de Documento</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder='Nº do Documento'
+                            // readOnly={editar}
+                            defaultValue={auth.userauth?.pessoa?.identidade?.numero || ''}
+                            readOnly={editar}
+                          />
+                        </FormControl>
+                        <FormDescription>Número de Identificaçõa</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    } />
+                </div>
+
+                <div className="space-y-2 my-2">
+                  <FormField
+                    name="telefone"
+                    control={form.control}
+                    render={({ field }) =>
+                      <FormItem>
+                        <FormLabel>Número de Contacto</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder='Nº do Telefone'
+                            // readOnly={editar}
+                            defaultValue={auth.userauth?.pessoa?.identidade?.numero || ''}
+                            readOnly={editar}
+                          />
+                        </FormControl>
+                        <FormDescription>Número de Telefone</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    } />
+                </div>
+
+                <div className="space-y-2 my-2">
+                  <FormField
+                    name="genero"
+                    control={form.control}
+                    render={({ field: { value, onChange } }) =>
+                      <FormItem>
+                        <FormLabel>Genero</FormLabel>
+                        <FormControl>
+                          <Select required value={value} onValueChange={onChange} defaultValue={auth.userauth?.pessoa?.genero || ''} disabled={editar}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Genero" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Masculino">Masculino</SelectItem>
+                              <SelectItem value="Femenino">Femenino</SelectItem>
+                              <SelectItem value="Outro">Outro</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormDescription>Genero, escolha outro no casa de Nao Binario!</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    } />
+                </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="Identificaçõa">Identificaçõa</Label>
-                <Controller
-                  name='tipo'
-                  control={form.control}
-                  render={({ field: { onChange, value } }) =>
-                    <Select onValueChange={onChange} value={value} required
-                      disabled={editar}
-                      defaultValue={auth.userauth?.pessoa?.identidade?.tipo || ''}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Seleciona o Tipo" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {Lista.docTypes.map((tipo, index) => (
-                          <SelectItem value={tipo.toUpperCase()} key={index}>{tipo.toUpperCase()}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  } />
+              <div className="flex flex-row items-end justify-end mt-4 mb-3">
+                {!editar ? (
+                  <>
+                    <Button className="mx-2 px-6" disabled={loading} type="submit" variant='secondary'>
+                      {loading ? <Loader className="animate-spin h-8 w-8" /> : 'Salvar'}
+                    </Button>
+
+                    <Button className="mx-2 px-6" disabled={loading} variant='destructive'
+                      onClick={(e) => {
+                        e.preventDefault()
+                        cancelar()
+                      }}>
+                      Cancelar
+                    </Button>
+                  </>
+                ) : (
+                  <Button className="mx-2 px-6" variant='secondary' onClick={(e) => {
+                    e.preventDefault()
+                    setEditar(false)
+                  }}> {auth.userauth?.pessoa?.id ? 'Editar' : 'Registrar'} </Button>
+                )}
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="numero">Número</Label>
-                <Input {...form.register('numero')} placeholder='Nº do Documento'
-                  // readOnly={editar}
-                  defaultValue={auth.userauth?.pessoa?.identidade?.numero || ''}
-                  readOnly={editar}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="telefone">Contacto</Label>
-                <Input {...form.register('telefone')} placeholder='Nº de Telefone'
-                  defaultValue={auth.userauth?.pessoa?.telefone || ''}
-                  autoComplete="telefone" readOnly={editar} />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="genero">genero</Label>
-                <Controller
-                  name='genero'
-                  control={form.control}
-                  render={({ field: { onChange, value } }) =>
-                    <Select required value={value} onValueChange={onChange} defaultValue={auth.userauth?.pessoa?.genero || ''} disabled={editar}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Genero" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Masculino">Masculino</SelectItem>
-                        <SelectItem value="Femenino">Femenino</SelectItem>
-                        <SelectItem value="Outro">Outro</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  } />
-              </div>
-            </div>
-
-            <div className="flex flex-row items-end justify-end mt-4 mb-3">
-              {!editar ? (
-                <>
-                  <Button className="mx-2 px-6" disabled={loading} variant='secondary'>
-                    {loading ? <Loader className="animate-spin h-8 w-8" /> : 'Salvar'}
-
-                  </Button>
-                  <Button className="mx-2 px-6" disabled={loading} variant='destructive'
-                    onClick={(e) => {
-                      e.preventDefault()
-                      cancelar()
-                    }}>
-                    Cancelar
-                  </Button>
-                </>
-              ) : (
-                <Button className="mx-2 px-6" variant='secondary' onClick={(e) => {
-                  e.preventDefault()
-                  setEditar(false)
-                }}> {auth.userauth?.pessoa?.id ? 'Editar' : 'Registrar'} </Button>
-              )}
-            </div>
-
-            <Separator />
-          </form>
+              <Separator />
+            </form>
+          </Form>
         </CollapsibleContent>
       </Collapsible>
     </div >

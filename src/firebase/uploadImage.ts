@@ -1,4 +1,4 @@
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
 import { storage } from './firebase.config'
 
 const imgUpload = async (files: [any]) => {
@@ -8,7 +8,7 @@ const imgUpload = async (files: [any]) => {
     const snapshot = await uploadBytes(storageRef, file)
     const downloadURL = await getDownloadURL(snapshot.ref)
     console.log('File uploaded successfully:', downloadURL)
-    
+
     return downloadURL
   } catch (error) {
     console.error('Error uploading file:', error)
@@ -16,6 +16,21 @@ const imgUpload = async (files: [any]) => {
   }
 }
 
+// Função para excluir o arquivo usando o caminho
+const deleteFile = async (filePath: string): Promise<number> => {
+  try {
+    const fileRef = ref(storage, filePath)
+    await deleteObject(fileRef)
+    
+    return 200
+  } catch (error) {
+    console.log(error)
+    return 400
+  }
+}
+
+
 export const image = {
-  imgUpload
+  imgUpload,
+  deleteFile
 }

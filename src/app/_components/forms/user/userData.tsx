@@ -13,6 +13,7 @@ import { image } from "@/firebase/uploadImage"
 import { Loader, Loader2 } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { BioData } from "./bioData"
+import { toast } from "@/components/ui/use-toast"
 
 interface IUpdateUser {
   id: string
@@ -48,18 +49,35 @@ export const UserData: React.FC = () => {
       }
 
       if (data.file) {
-        const img = await image.imgUpload(data.file)
-        userSave.image = img || ''
+        if (auth.userauth?.image) {
+          await image.deleteFile(auth.userauth.image)
+
+          const img = await image.imgUpload(data.file)
+          userSave.image = img || ''
+        } else {
+          const img = await image.imgUpload(data.file)
+          userSave.image = img || ''
+        }
       }
 
-      const id = await update(userSave.id, userSave)
+      await update(auth.userauth?.id || '', userSave)
       setEditar(true)
       setLoading(false)
 
+      toast({
+        title: 'Sucesso!',
+        description: 'Usuario actualizado com successo! Por favor, actualiza a Pagina.',
+        variant: 'default'
+      })
 
     } catch (erro) {
       setLoading(false)
       setEditar(true)
+      toast({
+        title: 'Erro',
+        description: 'Erro ao actualizar a Imagem',
+        variant: 'destructive'
+      })
 
     }
   })
@@ -107,7 +125,7 @@ export const UserData: React.FC = () => {
             <div className="flex flex-row items-end justify-end my-3">
               {!editar ? (
                 <>
-                  <Button className="mx-2 px-6" disabled={loading} variant='secondary'>
+                  <Button className="mx-2 px-6" type="submit" disabled={loading} variant='secondary'>
                     {loading ? <Loader className="animate-spin h-8 w-8" /> : 'Salvar'}
                   </Button>
                   <Button variant='destructive' className="mx-2 px-6" disabled={loading}
@@ -119,7 +137,7 @@ export const UserData: React.FC = () => {
                   </Button>
                 </>
               ) : (
-                <Button className="mx-2 px-6 hidden" variant='secondary' onClick={(e) => {
+                <Button className="mx-2 px-6" variant='secondary' onClick={(e) => {
                   e.preventDefault()
                   setEditar(false)
                 }}>Editar</Button>

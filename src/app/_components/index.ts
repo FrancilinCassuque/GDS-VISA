@@ -38,6 +38,7 @@ export * from './forms/formDialog'
 export * from './listas/listadepaises'
 export * from './listas/listaDeItens'
 export * from './listas/listaDeOcupacoes'
+export * from './listas/cargos'
 
 export * from './user/listadeCasas'
 export * from './user/homeDashboard'
