@@ -8,11 +8,13 @@ import { useState } from "react"
 
 interface IDrawerDialogProps {
   children: React.ReactNode
-  textoDoBotao: string
+  textoDoBotao?: string
+  icon?: React.ReactNode
   descricao: string
+
 }
 
-export const DrawerDialog: React.FC<IDrawerDialogProps> = ({ children, textoDoBotao, descricao }) => {
+export const DrawerDialog: React.FC<IDrawerDialogProps> = ({ children, textoDoBotao, descricao, icon }) => {
   const [open, setOpen] = useState(false)
   const isDesktop = useMediaQuery("(min-width: 768px)")
 
@@ -20,7 +22,10 @@ export const DrawerDialog: React.FC<IDrawerDialogProps> = ({ children, textoDoBo
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">{textoDoBotao}</Button>
+          <Button variant="outline" className="bg-none border-none max-w-min max-h-min">
+            {icon}
+            {textoDoBotao}
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -38,7 +43,10 @@ export const DrawerDialog: React.FC<IDrawerDialogProps> = ({ children, textoDoBo
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">{textoDoBotao}</Button>
+        <Button variant="outline">
+          {icon}
+          {textoDoBotao}
+        </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">

@@ -29,6 +29,34 @@ export async function ocupacaoCreate(formDara: Omit<IUpdateUser, 'id'>): Promise
   }
 }
 
+export async function ocupacaoUpdate(id: number, funcao: string): Promise<Number | Error> {
+  'use server'
+
+  try {
+    const ocupacao = await prisma.funcao.update({
+      where: {
+        id
+      },
+      data: {
+        funcao
+      },
+
+      select: {
+        id: true
+      }
+    })
+
+    if (ocupacao.id) {
+      return ocupacao.id
+    }
+
+    return new Error('Erro ao Actualizar registro')
+
+  } catch (error) {
+    return new Error((error as { message: string }).message || 'Erro ao Actualizar registro')
+  }
+}
+
 // export async function ocupacaoIndex(page = 1): Promise<IUpdateUser[] | Error> {
 //   'use server'
 

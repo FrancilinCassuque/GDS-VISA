@@ -18,6 +18,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { IconFile, IconListFilter } from "../../_components"
+import { Pencil } from "lucide-react"
 
 export default function Component() {
   const { status } = useSession()
@@ -73,9 +74,16 @@ export default function Component() {
               <div className="text-center md:text-left items-center">
                 {(user?.pessoa?.funcoes && user.pessoa.funcoes.funcao) ? (
                   <div>
-                    <div className="flex items-center gap-2">
+                    <div className="grid grid-flow-col grid-cols-1 items-center justify-center">
                       <IconBriefcase className="w-4 h-4 text-muted-foreground" />
-                      <span className="text-sm text-muted-foreground">{user.pessoa.funcoes.funcao}</span>
+                      <span className="text-sm text-muted-foreground m-4">
+                        {user.pessoa.funcoes.funcao}
+                      </span>
+
+                      <DrawerDialog descricao="Actualiza sua Funcao aqui. Clique em salvar quando terminar."
+                        icon={<Pencil className="w-5 text-primary" />}>
+                        <FormOcupacao />
+                      </DrawerDialog>
                     </div>
                   </div>
                 ) : (
@@ -85,10 +93,6 @@ export default function Component() {
                     </DrawerDialog>
                   </div>
                 )}
-
-                <DrawerDialog textoDoBotao="Registrar Ocupaçao" descricao="Registra sua Ocupaçao aqui. Clique em salvar quando terminar.">
-                  <FormOcupacao />
-                </DrawerDialog>
               </div>
 
               {(user?.pessoa && user.pessoa.bio) ? <p className="text-sm text-muted-foreground max-w-[300px] text-center">{user.pessoa.bio}</p> : (
