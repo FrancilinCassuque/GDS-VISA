@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Client" ALTER COLUMN "passaport" SET DATA TYPE VARCHAR(15);

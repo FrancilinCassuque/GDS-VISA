@@ -122,7 +122,6 @@ export interface IEnderecoShow {
   municipio: string
   provincia: string
   pais: string
-  casaId: string | null
   profileId: string | null
   createdAt: Date
   updatedAt: Date

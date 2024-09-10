@@ -157,9 +157,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Nome Completo</FormLabel>
-                          <FormControl>
-                            <Input {...field} type="text" placeholder="Fulano de Tal" />
-                          </FormControl>
+                          <Input {...field} type="text" placeholder="Fulano de Tal" />
                           <FormDescription>Primeiro e o Ultimo no Do Cliente</FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -173,9 +171,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Contacto</FormLabel>
-                          <FormControl>
-                            <Input {...field} type="text" placeholder="+244 999 000 000" />
-                          </FormControl>
+                          <Input {...field} type="text" placeholder="+244 999 000 000" />
                           <FormDescription>Telefone do Cliente</FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -188,10 +184,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Passaport</FormLabel>
-                          <FormControl>
-                            <Input type="text" {...field} placeholder="N0000001" />
-
-                          </FormControl>
+                          <Input type="text" {...field} placeholder="N0000001" />
                           <FormDescription>Nº Passaporte do Cliente</FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -207,9 +200,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Sobre</FormLabel>
-                          <FormControl>
-                            <Textarea {...field} placeholder="Descreva o Cliente" />
-                          </FormControl>
+                          <Textarea {...field} placeholder="Descreva o Cliente" />
                           <FormDescription>Decricao do Cliente</FormDescription>
                           <FormMessage />
                         </FormItem>
