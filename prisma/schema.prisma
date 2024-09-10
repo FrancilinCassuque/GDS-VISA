@@ -168,7 +168,7 @@ model Client {
 
   processos Processo[]
   userId   String
-  users     User       @relation(fields: [userId], references: [id])
+  user     User       @relation(fields: [userId], references: [id])
 
   @@index([userId])
 }
