@@ -15,12 +15,12 @@ export const Home: React.FC = () => {
         <div>
           <div className="text-center">
             <Image src="/placeholder.png" alt="Gota D' Sol Logo" width={150} height={150} className="mx-auto mb-4" />
-            <span className="text-5xl font-bold text-white mb-4">
+            <p className="text-5xl font-bold text-white mb-4">
               Bem-vindo à Gota D' Sol
-            </span>
-            <span className="text-2xl text-white mb-8">
+            </p>
+            <p className="text-2xl text-white mb-8">
               Consultoria Premium em Vistos e Viagens Internacionais
-            </span>
+            </p>
             <Button className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg">
               Entre em contato
             </Button>
@@ -31,37 +31,37 @@ export const Home: React.FC = () => {
       <section className="bg-white py-12">
         <div>
           <div className="text-center mb-8">
-            <span className="text-3xl font-semibold mb-4">
+            <p className="text-3xl font-semibold mb-4">
               Nossos Serviços
-            </span>
-            <span className="text-lg text-gray-700">
+            </p>
+            <p className="text-lg text-gray-700">
               Oferecemos uma gama completa de serviços de consultoria para ajudar você a obter vistos e planejar suas viagens internacionais com facilidade e segurança.
-            </span>
+            </p>
           </div>
           <div className="flex flex-wrap justify-center gap-8">
             <div className="bg-gray-100 p-6 rounded-lg shadow-lg max-w-xs text-center">
-              <span className="text-xl font-semibold mb-2">
+              <p className="text-xl font-semibold mb-2">
                 Consultoria de Vistos
-              </span>
-              <span className="text-gray-600">
+              </p>
+              <p className="text-gray-600">
                 Orientação completa para obtenção de vistos, incluindo análise de documentos e acompanhamento do processo.
-              </span>
+              </p>
             </div>
             <div className="bg-gray-100 p-6 rounded-lg shadow-lg max-w-xs text-center">
-              <span className="text-xl font-semibold mb-2">
+              <p className="text-xl font-semibold mb-2">
                 Planejamento de Viagens
-              </span>
-              <span className="text-gray-600">
+              </p>
+              <p className="text-gray-600">
                 Assistência na criação de itinerários personalizados e recomendações de viagens.
-              </span>
+              </p>
             </div>
             <div className="bg-gray-100 p-6 rounded-lg shadow-lg max-w-xs text-center">
-              <span className="text-xl font-semibold mb-2">
+              <p className="text-xl font-semibold mb-2">
                 Suporte Completo
-              </span>
-              <span className="text-gray-600">
+              </p>
+              <p className="text-gray-600">
                 Acompanhamento contínuo durante o processo de visto e viagem, garantindo a tranquilidade de nossos clientes.
-              </span>
+              </p>
             </div>
           </div>
         </div>
