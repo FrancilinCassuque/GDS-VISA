@@ -73,7 +73,7 @@ async function ClientShow(id: string): Promise<TClientShow | Error> {
 
       include: {
         processos: true,
-        user: true
+        users: true
       }
     })
 
