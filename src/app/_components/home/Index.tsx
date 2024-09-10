@@ -9,13 +9,12 @@ export const Home: React.FC = () => {
       <Head>
         <title>Gota D' Sol - Agência de Consultoria de Vistos e Viagens</title>
         <meta name="description" content="Agência de consultoria especializada em vistos e viagens internacionais." />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className="flex flex-col items-center justify-center min-h-screen p-4 bg-gradient-to-r from-blue-200 to-blue-500">
-        <Container>
+        <div>
           <div className="text-center">
-            <Image src="/logo.png" alt="Gota D' Sol Logo" width={150} height={150} className="mx-auto mb-4" />
+            <Image src="/placeholder.png" alt="Gota D' Sol Logo" width={150} height={150} className="mx-auto mb-4" />
             <span className="text-5xl font-bold text-white mb-4">
               Bem-vindo à Gota D' Sol
             </span>
@@ -26,11 +25,11 @@ export const Home: React.FC = () => {
               Entre em contato
             </Button>
           </div>
-        </Container>
+        </div>
       </main>
 
       <section className="bg-white py-12">
-        <Container>
+        <div>
           <div className="text-center mb-8">
             <span className="text-3xl font-semibold mb-4">
               Nossos Serviços
@@ -65,7 +64,7 @@ export const Home: React.FC = () => {
               </span>
             </div>
           </div>
-        </Container>
+        </div>
       </section>
     </div>
   )
