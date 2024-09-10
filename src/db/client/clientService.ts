@@ -6,10 +6,8 @@ import { revalidatePath } from "next/cache"
 
 async function ClientStore(client: Omit<IClientStore, 'id'>): Promise<String | Error> {
   'use server'
+  
   try {
-
-    console.info(client)
-
     const clientNovo = await prisma.client.create({
       data: {
         nomecompleto: client.nomecompleto.toUpperCase(),
