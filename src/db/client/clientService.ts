@@ -9,7 +9,7 @@ async function ClientStore(client: Omit<IClientStore, 'id'>): Promise<String | E
   try {
     const clientNovo = await prisma.client.create({
       data: {
-        nomecompleto: client.nomecompleto,
+        nomecompleto: client.nomecompleto.toUpperCase(),
         telefone: client.telefone,
         descricao: client.descricao,
         passaport: client.passaport,
