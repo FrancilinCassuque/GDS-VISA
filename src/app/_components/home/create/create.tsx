@@ -43,10 +43,10 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
   const [loading, setLoading] = useState(false)
   const [editar, setEditar] = useState(true)
   const AUTH = authStore()
-  const route = useRouter()
+  // const route = useRouter()
   const { status } = useSession()
 
-  const submitForm = form.handleSubmit(async (clientBody: z.infer<typeof clientForm>) => {
+  async function submitForm(clientBody: z.infer<typeof clientForm>) {
     try {
       setLoading(true)
       const user = AUTH.userauth
@@ -56,7 +56,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
           telefone: clientBody.telefone,
           nomecompleto: clientBody.nomecompleto,
           descricao: clientBody.descricao,
-          passaport: clientBody.descricao,
+          passaport: clientBody.passaport,
           userId: user.id,
         }
 
@@ -71,7 +71,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
           })
         }
 
-        
+
         toast({
           title: 'Success',
           description: <pre><code>Cliente Registrado com sucesso.</code></pre>
@@ -90,7 +90,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
       })
       setLoading(false)
     }
-  })
+  }
 
   const cancelar = () => {
     form.setValue('telefone', '')
@@ -137,7 +137,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
       </div>
 
       <Form {...form}>
-        <form onSubmit={submitForm}>
+        <form onSubmit={form.handleSubmit(submitForm)}>
           <div className="mt-10 space-y-8">
             <Collapsible open={true} className="border rounded-lg overflow-hidden">
               <CollapsibleTrigger className="flex items-center justify-between bg-muted px-6 py-4 cursor-pointer">
@@ -163,8 +163,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                           <FormDescription>Primeiro e o Ultimo no Do Cliente</FormDescription>
                           <FormMessage />
                         </FormItem>
-                      )}>
-                    </FormField>
+                      )} />
                   </div>
 
                   <div className="space-y-2">
@@ -180,8 +179,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                           <FormDescription>Telefone do Cliente</FormDescription>
                           <FormMessage />
                         </FormItem>
-                      )}>
-                    </FormField>
+                      )} />
                   </div>
                   <div className="space-y-2">
                     <FormField
@@ -197,8 +195,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                           <FormDescription>Nº Passaporte do Cliente</FormDescription>
                           <FormMessage />
                         </FormItem>
-                      )}>
-                    </FormField>
+                      )} />
                   </div>
                 </div>
 
@@ -216,8 +213,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                           <FormDescription>Decricao do Cliente</FormDescription>
                           <FormMessage />
                         </FormItem>
-                      )}>
-                    </FormField>
+                      )} />
                   </div>
                 </div>
 
@@ -229,7 +225,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
               <div className="flex items-center justify-center w-full">
 
                 {!client && (
-                  <Button disabled={loading} className="w-6/12" type="submit" >{loading ? <Loader2 className="animate-spin" /> : 'Registar Propriedade'}</Button>
+                  <Button disabled={loading} className="w-6/12" >{loading ? <Loader2 className="animate-spin" /> : 'Registar Cliente'}</Button>
                 )}
 
               </div>
@@ -241,43 +237,6 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
 
       {client && (
         <>
-          <form>
-            <Collapsible open={true} className="border rounded-lg overflow-hidden">
-              <CollapsibleTrigger className="flex items-center justify-between bg-muted px-6 py-4 cursor-pointer">
-                <div className="flex items-center gap-4">
-                  <div className="font-medium">Imagens Da Propriedade</div>
-                  <div className="text-muted-foreground text-sm">Forneça Imagens da Propriedade</div>
-                </div>
-                <IconChevronDown className="h-5 w-5 transition-transform" />
-              </CollapsibleTrigger>
-
-              <CollapsibleContent className="px-6 py-4 space-y-4">
-
-                <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
-                  <div className="space-y-2">
-                    <Input type="file" {...FormImage.register('image1')} placeholder="Bairro da Paz" disabled={editar} />
-                  </div>
-                  <div className="space-y-2">
-                    <Input type="file" {...FormImage.register('image2')} placeholder="Bairro da Paz" disabled={editar} />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Input type="file" {...FormImage.register('image3')} placeholder="Bairro da Paz" disabled={editar} />
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-center w-full my-10" >
-                  <Button className="mx-2 px-6" disabled={loading} variant='secondary' onClick={(e) => {
-                    e.preventDefault()
-                    salvar()
-                  }}>
-                    {loading ? <Loader2 className="animate-spin h-8 w-8" /> : 'Salvar Imagens'}
-                  </Button>
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-          </form>
-
           <div className="flex items-center justify-center w-full my-10" >
             {!editar ? (
               <>
@@ -299,7 +258,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                   e.preventDefault()
                   setEditar(false)
                   // alert('Clickou...')
-                }} >{loading ? <Loader2 className="animate-spin" /> : 'Configurar Propriedade'}</Button>
+                }} >{loading ? <Loader2 className="animate-spin" /> : 'Configuar Cliente'}</Button>
               </>
             )}
           </div>
