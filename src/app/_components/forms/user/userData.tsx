@@ -43,9 +43,9 @@ export const UserData: React.FC = () => {
       setLoading(true)
       const userSave = {
         id: auth.userauth?.id || '',
-        name: data.name,
-        email: data.email,
-        image: auth.userauth?.image || ''
+        name: auth.userauth?.name || '',
+        email: auth.userauth?.email || '',
+        image: auth.userauth?.image || '',
       }
 
       if (data.file) {

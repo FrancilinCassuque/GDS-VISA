@@ -27,7 +27,7 @@ export async function userCreate(formDara: Omit<userlogin, 'id'>): Promise<strin
 
     const newUser = await prisma.user.create({
       data: {
-        email: user.email,
+        email: user.email.toLowerCase(),
         password: criptPass,
         name: name
       }
@@ -51,7 +51,7 @@ export async function login(user: Omit<userlogin, 'id'>): Promise<IUser | Error>
   try {
     const userFinded = await prisma.user.findUnique({
       where: {
-        email: user.email
+        email: user.email.toLowerCase()
       },
     })
 
@@ -309,7 +309,9 @@ export async function update(userId = '', user?: IUpdateUser, userName = ''): Pr
           id: userId
         },
         data: {
-          ...user
+          name: user?.name,
+          email: user?.email.toLowerCase(),
+          image: user?.image
         }
       })
 

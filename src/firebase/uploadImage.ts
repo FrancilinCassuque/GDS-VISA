@@ -4,7 +4,7 @@ import { storage } from './firebase.config'
 const imgUpload = async (files: [any]) => {
   try {
     const file = files[0]
-    const storageRef = ref(storage, `files/${file.name}`)
+    const storageRef = ref(storage, `gds/${file.name}`)
     const snapshot = await uploadBytes(storageRef, file)
     const downloadURL = await getDownloadURL(snapshot.ref)
     console.log('File uploaded successfully:', downloadURL)

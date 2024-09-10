@@ -29,7 +29,7 @@ export default function Component({ children }: Readonly<{ children: React.React
           authStore.getState().startAuth(res)
         })
 
-        console.log(user)
+        // console.log(user)
         setLoading(false)
 
 
