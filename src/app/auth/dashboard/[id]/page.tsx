@@ -1,17 +1,11 @@
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
-import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card"
-import { FormOcupacao, DrawerDialog, FormBio, IconCasaCalendar, IconCasaLocate, IconHeart, IconMapPin, IconSettings, IconBriefcase, DataTableHome } from "@/app/_components"
+import { FormOcupacao, DrawerDialog, FormBio, IconHeart, IconMapPin, IconSettings, IconBriefcase, } from "@/app/_components"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
-import { authStore } from "@/store"
-import { useEffect, useState } from "react"
-import Image from "next/image"
-import { ShowUser, UserCasas } from "@/db"
-import { useSession } from "next-auth/react"
-import { ICasas, IUser, IUserAuth } from "@/types"
+import { ShowUser } from "@/db"
 import { redirect } from "next/navigation"
 
 export default async function Component({ params }: { params: { id: string } }) {
@@ -19,10 +13,9 @@ export default async function Component({ params }: { params: { id: string } }) 
 
   const user = await ShowUser(id)
 
-  if(user instanceof Error) {redirect('/auth/user')}
+  if (user instanceof Error) { redirect('/auth/user') }
 
-  const casasdisponiveis = user.casas.filter(casa => casa.published == true).length
-
+  // const casasdisponiveis = user.casas.filter(casa => casa.published == true).length
 
   return (
     <div className="flex flex-col items-center gap-8 min-w-full mx-auto py-12 px-4 md:px-0">
@@ -60,11 +53,11 @@ export default async function Component({ params }: { params: { id: string } }) 
           ) : (
             <>
               <div className="text-center md:text-left items-center">
-                {(user?.pessoa?.ocupacao && user.pessoa.ocupacao.ocupacao) ? (
+                {(user?.pessoa?.funcao && user.pessoa.funcao.funcao) ? (
                   <div>
                     <div className="flex items-center gap-2">
                       <IconBriefcase className="w-4 h-4 text-muted-foreground" />
-                      <span className="text-sm text-muted-foreground">{user.pessoa.ocupacao.ocupacao}</span>
+                      <span className="text-sm text-muted-foreground">{user.pessoa.funcao.funcao}</span>
                     </div>
                   </div>
                 ) : (
@@ -97,31 +90,31 @@ export default async function Component({ params }: { params: { id: string } }) 
               )}
             </>
           )}
-
         </div>
+
         <div className="bg-muted/20 rounded-lg p-4 w-full">
           <div className="flex items-center justify-between">
             <div className="flex flex-col items-center">
-              <span className="text-2xl font-bold">{user.casas.length}</span>
+              {/* <span className="text-2xl font-bold">{user.casas.length}</span> */}
               <span className="text-sm text-muted-foreground">Casas</span>
             </div>
             <div className="flex flex-col items-center">
-              <span className="text-2xl font-bold">{casasdisponiveis}</span>
+              {/* <span className="text-2xl font-bold">{casasdisponiveis}</span> */}
               <span className="text-sm text-muted-foreground">Casas Disponíveis</span>
             </div>
           </div>
 
           <Separator className="my-4" />
 
-          {(user?.pessoa?.ocupacao && user.pessoa.ocupacao.ocupacao) && (
+          {(user?.pessoa?.funcao && user.pessoa.funcao.funcao) && (
             <div className="grid gap-2">
               <div className="flex items-center gap-2">
                 <IconBriefcase className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">{user.pessoa.ocupacao.ocupacao}</span>
+                <span className="text-sm text-muted-foreground">{user.pessoa.funcao.funcao}</span>
               </div>
               <div className="flex items-center gap-2">
                 <IconHeart className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">{user.pessoa.ocupacao.area}, {user.pessoa.ocupacao.ocupante}</span>
+                <span className="text-sm text-muted-foreground">Gota D' Sol, {user.pessoa.funcao.funcao}</span>
               </div>
             </div>
           )}
@@ -136,7 +129,7 @@ export default async function Component({ params }: { params: { id: string } }) 
         </div>
       </div>
 
-      <div className=" grid gap-6 w-80 items-center">
+      {/* <div className=" grid gap-6 w-80 items-center">
         {user.casas?.map((casa: any) => (
           <Card key={casa.id}>
             <CardHeader>
@@ -179,8 +172,7 @@ export default async function Component({ params }: { params: { id: string } }) 
             </CardFooter>
           </Card>
         ))}
-        {/* <DataTableHome listaDeCasas={user.casas} /> */}
-      </div>
+      </div> */}
 
     </div>
   )
