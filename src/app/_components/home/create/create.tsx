@@ -56,7 +56,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
           telefone: clientBody.telefone,
           nomecompleto: clientBody.nomecompleto,
           descricao: clientBody.descricao,
-          passaport: clientBody.passaport,
+          passaport: clientBody.passaport == '0000000' ? null : clientBody.passaport,
           userId: user.id,
         }
 
