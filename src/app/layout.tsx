@@ -19,8 +19,8 @@ const fontBody = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Sara",
-  description: "Alocation Residence System",
+  title: "Gota D' Sol Visa",
+  description: "Gota D' Sol Agencia",
 }
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

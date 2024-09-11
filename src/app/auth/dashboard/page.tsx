@@ -10,15 +10,12 @@ import Link from "next/link"
 import { authStore } from "@/store"
 import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
-import { ICasas, IUserAuth } from "@/types"
+import { IUserAuth } from "@/types"
 
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import { IconFile, IconListFilter } from "../../_components"
 import { Pencil } from "lucide-react"
+import { Metadata } from "next"
 
 export default function Component() {
   const { status } = useSession()
