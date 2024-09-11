@@ -99,6 +99,8 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
     form.setValue('passaport', '')
 
     setEditar(true)
+    setLoading(false)
+
   }
 
   const salvar = async () => {
