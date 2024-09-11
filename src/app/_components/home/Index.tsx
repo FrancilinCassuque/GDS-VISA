@@ -15,7 +15,7 @@ export const Home: React.FC = () => {
       <main className="flex flex-col items-center justify-center min-h-screen p-4 bg-gradient-to-r from-blue-200 to-blue-500">
         <div>
           <div className="text-center">
-            <Image src="/placeholder.svg" alt="Gota D' Sol Logo" width={150} height={150} className="mx-auto mb-4" />
+            <Image src="/placeholder.svg" alt="Gota D' Sol Logo" width={550} height={550} className="mx-auto mb-4" />
             <p className="text-5xl font-bold text-white mb-4">
               Bem-vindo à Gota D' Sol
             </p>
@@ -23,8 +23,9 @@ export const Home: React.FC = () => {
               Consultoria Premium em Vistos e Viagens Internacionais
             </p>
             <Button className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg">
-              <Link href={'/user'}></Link>
-              Entrar
+              <Link href={'/user'}>
+                Entrar
+              </Link>
               {/* Entre em contato */}
             </Button>
           </div>
