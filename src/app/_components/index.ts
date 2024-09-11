@@ -38,3 +38,4 @@ export * from './listas/cargos'
 
 export * from './user/listadeCasas'
 export * from './user/homeDashboard'
+export * from './user/tabDashboard'
