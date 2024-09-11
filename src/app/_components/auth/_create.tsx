@@ -38,9 +38,9 @@ export const SignUp = () => {
   const submitForm = form.handleSubmit(async (user: z.infer<typeof IFormRegisterUser>) => {
     setIsLoading(true)
 
-    const elias = user.code.toUpperCase() === 'G22/24-01'
-    const jose = user.code.toUpperCase() === 'G22/24-02'
-    const francis = user.code.toUpperCase() === 'G22/24-00'
+    const elias = user.code.toUpperCase() === 'G22/24-002877412LA031'
+    const jose = user.code.toUpperCase() === 'G22/24-009578474LA040'
+    const francis = user.code.toUpperCase() === 'G22/24-007169455LA048'
 
     if (francis || elias || jose) {
       const newUser = await userCreate(user).then(res => {
