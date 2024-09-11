@@ -159,7 +159,7 @@ model Processo {
 model Client {
   id           String  @id @default(cuid())
   nomecompleto String
-  passaport    String? @db.VarChar(15)
+  passaport    String? @db.VarChar(15) @unique
   telefone     String  @db.VarChar(30)
   descricao    String? @default("")
 

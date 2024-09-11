@@ -18,7 +18,7 @@ import { Loader } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 
 import z from 'zod'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 const pessoa = z.object({
@@ -39,8 +39,7 @@ export const PerfilData: React.FC = () => {
   const form = useForm<z.infer<typeof pessoa>>({
     resolver: zodResolver(pessoa),
   })
-
-  const [tipoPessoa, setTipo] = useState('')
+  
   const auth = authStore()
 
   const submitProfileForm = form.handleSubmit(async (data: z.infer<typeof pessoa>) => {
@@ -48,7 +47,7 @@ export const PerfilData: React.FC = () => {
       setLoading(true)
 
       if (auth.userauth?.id) {
-        const userData = pessoa.parse(data)
+        const userData = data
 
         if (userData) {
           if (auth.userauth.pessoa?.id) {
@@ -125,19 +124,17 @@ export const PerfilData: React.FC = () => {
                     render={({ field: { onChange, value } }) =>
                       <FormItem>
                         <FormLabel>Nacionalidade</FormLabel>
-                        <FormControl>
-                          <Select onValueChange={onChange} value={value} required defaultValue={auth.userauth?.pessoa?.pais || ''}
-                            disabled={editar}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="País" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {Lista.Africa.map((pais, index) => (
-                                <SelectItem key={index} value={pais.toUpperCase()}>{pais.toUpperCase()}</SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
+                        <Select onValueChange={onChange} value={value} required defaultValue={auth.userauth?.pessoa?.pais || ''}
+                          disabled={editar}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="País" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {Lista.Africa.map((pais, index) => (
+                              <SelectItem key={index} value={pais.toUpperCase()}>{pais.toUpperCase()}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                         <FormDescription>Pais de Origem</FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -176,13 +173,11 @@ export const PerfilData: React.FC = () => {
                     render={({ field }) =>
                       <FormItem>
                         <FormLabel>Nomes Proprio</FormLabel>
-                        <FormControl>
-                          <Input
-                            autoComplete="nome"
-                            type="text" {...field}
-                            placeholder={'Fulano Beutrano Cicrano'}
-                            defaultValue={auth.userauth?.pessoa?.nome || ''} readOnly={editar} />
-                        </FormControl>
+                        <Input
+                          autoComplete="nome"
+                          type="text" {...field}
+                          placeholder={'Fulano Beutrano Cicrano'}
+                          defaultValue={auth.userauth?.pessoa?.nome || ''} readOnly={editar} />
                         <FormDescription>Todos os nomes Excepto o Apelido</FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -198,13 +193,11 @@ export const PerfilData: React.FC = () => {
                     render={({ field }) =>
                       <FormItem>
                         <FormLabel>Nome de Familía</FormLabel>
-                        <FormControl>
-                          <Input
-                            autoComplete="nome"
-                            type="text" {...field}
-                            placeholder={'Fulano Beutrano Cicrano'}
-                            defaultValue={auth.userauth?.pessoa?.nome || ''} readOnly={editar} />
-                        </FormControl>
+                        <Input
+                          autoComplete="nome"
+                          type="text" {...field}
+                          placeholder={'Fulano Beutrano Cicrano'}
+                          defaultValue={auth.userauth?.pessoa?.nome || ''} readOnly={editar} />
                         <FormDescription>Ultimo Nome</FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -218,21 +211,19 @@ export const PerfilData: React.FC = () => {
                     render={({ field: { value, onChange } }) =>
                       <FormItem>
                         <FormLabel>Tipo de Documento</FormLabel>
-                        <FormControl>
-                          <Select onValueChange={onChange} value={value} required
-                            disabled={editar}
-                            defaultValue={auth.userauth?.pessoa?.identidade?.tipo || ''}
-                          >
-                            <SelectTrigger>
-                              <SelectValue placeholder="Seleciona o Tipo" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {Lista.docTypes.map((tipo, index) => (
-                                <SelectItem value={tipo.toUpperCase()} key={index}>{tipo.toUpperCase()}</SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
+                        <Select onValueChange={onChange} value={value} required
+                          disabled={editar}
+                          defaultValue={auth.userauth?.pessoa?.identidade?.tipo || ''}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Seleciona o Tipo" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {Lista.docTypes.map((tipo, index) => (
+                              <SelectItem value={tipo.toUpperCase()} key={index}>{tipo.toUpperCase()}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                         <FormDescription>Documento de Identificaçõa</FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -246,13 +237,11 @@ export const PerfilData: React.FC = () => {
                     render={({ field }) =>
                       <FormItem>
                         <FormLabel>Número de Documento</FormLabel>
-                        <FormControl>
-                          <Input {...field} placeholder='Nº do Documento'
-                            // readOnly={editar}
-                            defaultValue={auth.userauth?.pessoa?.identidade?.numero || ''}
-                            readOnly={editar}
-                          />
-                        </FormControl>
+                        <Input {...field} placeholder='Nº do Documento'
+                          // readOnly={editar}
+                          defaultValue={auth.userauth?.pessoa?.identidade?.numero || ''}
+                          readOnly={editar}
+                        />
                         <FormDescription>Número de Identificaçõa</FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -266,13 +255,11 @@ export const PerfilData: React.FC = () => {
                     render={({ field }) =>
                       <FormItem>
                         <FormLabel>Número de Contacto</FormLabel>
-                        <FormControl>
-                          <Input {...field} placeholder='Nº do Telefone'
-                            // readOnly={editar}
-                            defaultValue={auth.userauth?.pessoa?.identidade?.numero || ''}
-                            readOnly={editar}
-                          />
-                        </FormControl>
+                        <Input {...field} placeholder='Nº do Telefone'
+                          // readOnly={editar}
+                          defaultValue={auth.userauth?.pessoa?.identidade?.numero || ''}
+                          readOnly={editar}
+                        />
                         <FormDescription>Número de Telefone</FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -286,18 +273,16 @@ export const PerfilData: React.FC = () => {
                     render={({ field: { value, onChange } }) =>
                       <FormItem>
                         <FormLabel>Genero</FormLabel>
-                        <FormControl>
-                          <Select required value={value} onValueChange={onChange} defaultValue={auth.userauth?.pessoa?.genero || ''} disabled={editar}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Genero" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="Masculino">Masculino</SelectItem>
-                              <SelectItem value="Femenino">Femenino</SelectItem>
-                              <SelectItem value="Outro">Outro</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
+                        <Select required value={value} onValueChange={onChange} defaultValue={auth.userauth?.pessoa?.genero || ''} disabled={editar}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Genero" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Masculino">Masculino</SelectItem>
+                            <SelectItem value="Femenino">Femenino</SelectItem>
+                            <SelectItem value="Outro">Outro</SelectItem>
+                          </SelectContent>
+                        </Select>
                         <FormDescription>Genero, escolha outro no casa de Nao Binario!</FormDescription>
                         <FormMessage />
                       </FormItem>
