@@ -34,7 +34,8 @@ export const HomeDashboard: React.FC = async () => {
               </Link>
             </CardFooter>
           </Card>
-          <Card x-chunk="dashboard-05-chunk-1">
+
+          {/* <Card x-chunk="dashboard-05-chunk-1">
             <CardHeader className="pb-2">
               <CardDescription>This Week</CardDescription>
               <CardTitle className="text-4xl">$1,329</CardTitle>
@@ -45,8 +46,9 @@ export const HomeDashboard: React.FC = async () => {
             <CardFooter>
               <Progress value={50} aria-label="25% increase" />
             </CardFooter>
-          </Card>
-          <Card x-chunk="dashboard-05-chunk-2">
+          </Card> */}
+          
+          {/* <Card x-chunk="dashboard-05-chunk-2">
             <CardHeader className="pb-2">
               <CardDescription>This Month</CardDescription>
               <CardTitle className="text-4xl">$5,329</CardTitle>
@@ -57,7 +59,8 @@ export const HomeDashboard: React.FC = async () => {
             <CardFooter>
               <Progress value={12} aria-label="12% increase" />
             </CardFooter>
-          </Card>
+          </Card> */}
+          
         </div>
         <Tabs defaultValue="week">
           <div className="flex items-center">
@@ -110,16 +113,20 @@ export const HomeDashboard: React.FC = async () => {
                       <TableRow className="bg-accent" key={client.id}>
                         <TableCell>
                           <div className="font-medium">{client.nomecompleto}</div>
-                          <div className="hidden text-sm text-muted-foreground md:inline">{client.telefone}</div>
+                          <div className="hidden text-sm text-muted-foreground md:inline">{client.descricao}</div>
                         </TableCell>
-                        {/* <TableCell className="hidden sm:table-cell">{client.passaport}</TableCell> */}
+                        <TableCell className="hidden sm:table-cell">
+                        <Badge className="text-xs" variant="secondary">
+                            {client.telefone}
+                          </Badge>
+                        </TableCell>
                         <TableCell className="hidden sm:table-cell">
                           <Badge className="text-xs" variant="secondary">
                             {client.passaport}
                           </Badge>
                         </TableCell>
                         <TableCell className="hidden md:table-cell">{client.updatedAt.toLocaleDateString()}</TableCell>
-                        {/* <TableCell className="text-right">$250.00</TableCell> */}
+                        {/* <TableCell className="text-right">{client.updatedAt.toLocaleDateString()}</TableCell> */}
                       </TableRow>
                     ))}
                   </TableBody>
