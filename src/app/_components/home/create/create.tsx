@@ -27,7 +27,7 @@ const clientForm = z.object({
   telefone: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(9, 'Contacto Pequeno de mais').max(20, 'Contacto Grande de mais'),
   nomecompleto: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(3, 'Nome muito curto!!').max(25, 'Atingiu o Limite de caracter apenas 50'),
   descricao: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(3, 'muito curto!!').max(225, 'Atingiu o Limite de caracter apenas 50'),
-  passaport: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }),
+  passaport: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(5, 'Muito curto').max(15, 'Muito longo apenas 15 caracteres'),
 })
 
 interface ICreateProps {

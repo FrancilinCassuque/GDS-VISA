@@ -19,7 +19,7 @@ export interface IClientStore {
   telefone: string
   nomecompleto: string
   descricao: string
-  passaport: string
+  passaport: string | null
 }
 
 
