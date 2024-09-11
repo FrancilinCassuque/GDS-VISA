@@ -194,10 +194,10 @@ export const PerfilData: React.FC = () => {
                       <FormItem>
                         <FormLabel>Nome de Familía</FormLabel>
                         <Input
-                          autoComplete="nome"
+                          autoComplete="apelido"
                           type="text" {...field}
                           placeholder={'Fulano Beutrano Cicrano'}
-                          defaultValue={auth.userauth?.pessoa?.nome || ''} readOnly={editar} />
+                          defaultValue={auth.userauth?.pessoa?.Apelido || ''} readOnly={editar} />
                         <FormDescription>Ultimo Nome</FormDescription>
                         <FormMessage />
                       </FormItem>

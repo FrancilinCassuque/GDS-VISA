@@ -187,7 +187,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                         <FormItem>
                           <FormLabel>Passaport</FormLabel>
                           <Input type="text" {...field} placeholder="N0000001" />
-                          <FormDescription>Nº Passaporte do Cliente</FormDescription>
+                          <FormDescription>Nº Passaporte do Cliente, no caso de ausencia digita 7 zeros!</FormDescription>
                           <FormMessage />
                         </FormItem>
                       )} />
