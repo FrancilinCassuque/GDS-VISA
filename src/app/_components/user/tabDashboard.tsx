@@ -8,7 +8,7 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@
 import { Badge } from "@/components/ui/badge"
 import { IconFile, IconListFilter } from ".."
 import { useReactToPrint } from 'react-to-print'
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { IClient } from "@/types"
 import Image from "next/image"
 
@@ -19,9 +19,9 @@ interface ITableProps {
 export const TabDashboard: React.FC<ITableProps> = ({ clientes }) => {
   const tableRef = useRef(null)
 
-
   const printTable = useReactToPrint({
     content: () => tableRef.current,
+    removeAfterPrint: true
   })
 
   return (
@@ -64,15 +64,7 @@ export const TabDashboard: React.FC<ITableProps> = ({ clientes }) => {
             <CardDescription>Clientes Registrados Recentimente.</CardDescription>
           </CardHeader>
 
-          <CardContent ref={tableRef}>
-
-
-            <div className="flex flex-col items-center my-10 invisible">
-              <Image width={175} height={175} src={'/placeholder.png'} alt="Logotipo da Gota De Sol" />
-              <CardTitle>GOTA D' SOL - CLIENTES</CardTitle>
-              <CardDescription>A Luz que Falta em Tua Direcção.</CardDescription>
-            </div>
-
+          <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
@@ -107,6 +99,54 @@ export const TabDashboard: React.FC<ITableProps> = ({ clientes }) => {
               </TableBody>
             </Table>
           </CardContent>
+
+          <div className="sr-only">
+            <CardContent ref={tableRef}>
+
+
+
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <div className='flex flex-col items-center my-10 justify-center'>
+                      <Image width={175} height={175} src={'/placeholder.png'} alt="Logotipo da Gota De Sol" />
+                      <CardTitle>GOTA D' SOL - CLIENTES</CardTitle>
+                      <CardDescription>A Luz que Falta em Tua Direcção.</CardDescription>
+                    </div>
+                  </TableRow>
+                  <TableRow>
+                    <TableHead>Nome Completo</TableHead>
+                    <TableHead className="hidden sm:table-cell">Telefone</TableHead>
+                    <TableHead className="hidden sm:table-cell">Passaporte</TableHead>
+                    <TableHead className="hidden md:table-cell">Date</TableHead>
+                    {/* <TableHead className="text-right">Amount</TableHead> */}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {clientes.map((client) => (
+                    <TableRow className="bg-accent" key={client.id}>
+                      <TableCell>
+                        <div className="font-medium">{client.nomecompleto}</div>
+                        <div className="hidden text-sm text-muted-foreground md:inline">{client.descricao}</div>
+                      </TableCell>
+                      <TableCell className="font-medium">
+                        <Badge className="text-xs" variant="secondary">
+                          {client.telefone}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        <Badge className="text-xs" variant="secondary">
+                          {client.passaport}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">{client.updatedAt.toLocaleDateString()}</TableCell>
+                      {/* <TableCell className="text-right">{client.updatedAt.toLocaleDateString()}</TableCell> */}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </div>
         </Card>
       </TabsContent>
     </Tabs>
