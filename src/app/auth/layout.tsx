@@ -1,15 +1,13 @@
 'use client'
 
-import { DropMenu, Footer, AsideBar, TooggleMenu, IconBell, IconCasaRuler } from "../_components"
+import { DropMenu, Footer, AsideBar, TooggleMenu, } from "../_components"
 import { useEffect, useState } from "react"
 import { authStore } from "@/store"
-import { IUser, IUserAuth } from "@/types"
 import { signOut, useSession } from "next-auth/react"
 import { auth } from "@/db"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 // import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import { Input } from "@/components/ui/input"
-import { Loader2, LoaderPinwheel, Search } from "lucide-react"
+import { Loader2, Search } from "lucide-react"
 
 export default function Component({ children }: Readonly<{ children: React.ReactNode }>) {
   const { data, status } = useSession()

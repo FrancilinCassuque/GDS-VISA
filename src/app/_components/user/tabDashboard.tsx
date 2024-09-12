@@ -99,11 +99,13 @@ export const TabDashboard: React.FC<ITableProps> = ({ clientes }) => {
               </TableBody>
             </Table>
           </CardContent>
+
           {/* Div invisivel para fazer um print perfeito dos Clientes */}
           <div className="sr-only">
             <CardContent ref={tableRef}>
               <Table>
                 <TableHeader>
+
                   <TableRow>
                     <TableCell colSpan={4} className="border-none">
                       <div className='flex flex-col items-center my-10 justify-center'>
@@ -121,6 +123,7 @@ export const TabDashboard: React.FC<ITableProps> = ({ clientes }) => {
                     {/* <TableHead className="text-right">Amount</TableHead> */}
                   </TableRow>
                 </TableHeader>
+
                 <TableBody>
                   {clientes.map((client) => (
                     <TableRow className="bg-accent" key={client.id}>
@@ -143,7 +146,7 @@ export const TabDashboard: React.FC<ITableProps> = ({ clientes }) => {
                     </TableRow>
                   ))}
                 </TableBody>
-
+                <br />
                 <TableFooter>
                   <TableRow>
                     <TableCell colSpan={4}>
@@ -156,6 +159,7 @@ export const TabDashboard: React.FC<ITableProps> = ({ clientes }) => {
                     </TableCell>
                   </TableRow>
                 </TableFooter>
+
               </Table>
             </CardContent>
           </div>

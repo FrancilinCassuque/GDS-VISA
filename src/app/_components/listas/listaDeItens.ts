@@ -1,15 +1,16 @@
+import { NewspaperIcon } from "lucide-react"
 import { IconPackage2, IconHome, IconShoppingCart, IconPackage, IconUsers, IconLineChart, IconSettings, IconPlus } from ".."
 
 export const listItem = [
   {
-    text: 'SARA',
-    icon: IconPackage2,
-    path: '/auth/home',
+    text: 'Dashboard',
+    icon: IconHome,
+    path: '/auth/dashboard',
     linkClass: 'flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
   },
   {
     text: 'Dashboard',
-    icon: IconHome,
+    icon: IconPackage2,
     path: '/auth/dashboard',
     linkClass: 'flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
   },
@@ -18,16 +19,23 @@ export const listItem = [
   //   icon: IconShoppingCart,
   //   path: '#',
   // },
+  // {
+  //   text: 'Products',
+  //   icon: IconPackage,
+  //   path: '/auth/home',
+  // },
   {
-    text: 'Products',
-    icon: IconPackage,
-    path: '/auth/home',
-  },
-  {
-    text: 'Registrar Casa',
+    text: 'Registrar Cliente',
     icon: IconPlus,
     path: '/auth/home/create',
   },
+
+  // {
+  //   text: 'Registrar Casa',
+  //   icon: IconPlus,
+  //   path: '/auth/home/create',
+  // },
+
   {
     text: 'Usuarios',
     icon: IconUsers,
