@@ -39,7 +39,7 @@ export const TabDashboard: React.FC<ITableProps> = ({ clientes }) => {
         <Card x-chunk="dashboard-05-chunk-3" >
           <CardHeader className="px-7">
             <div className="ml-auto flex items-center gap-2">
-              <DropdownMenu>
+              {/* <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm" className="h-7 gap-1 text-sm">
                     <IconListFilter className="h-3.5 w-3.5" />
@@ -53,7 +53,7 @@ export const TabDashboard: React.FC<ITableProps> = ({ clientes }) => {
                   <DropdownMenuCheckboxItem>Declined</DropdownMenuCheckboxItem>
                   <DropdownMenuCheckboxItem>Refunded</DropdownMenuCheckboxItem>
                 </DropdownMenuContent>
-              </DropdownMenu>
+              </DropdownMenu> */}
               <Button size="sm" variant="outline" className="h-7 gap-1 text-sm" onClick={printTable}>
                 <IconFile className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only">Imprimir</span>

@@ -1,4 +1,3 @@
-import { NewspaperIcon } from "lucide-react"
 import { IconPackage2, IconHome, IconShoppingCart, IconPackage, IconUsers, IconLineChart, IconSettings, IconPlus } from ".."
 
 export const listItem = [
