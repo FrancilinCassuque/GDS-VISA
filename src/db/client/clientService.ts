@@ -3,10 +3,11 @@
 import { IClient, IClientStore, TClientShow } from "@/types"
 import prisma from "../prisma.index"
 import { revalidatePath } from "next/cache"
+import { ClientStore } from "@/store"
 
-async function ClientStore(client: Omit<IClientStore, 'id'>): Promise<String | Error> {
+async function storeClient(client: Omit<IClientStore, 'id'>): Promise<String | Error> {
   'use server'
-  
+
   try {
     const clientNovo = await prisma.client.create({
       data: {
@@ -38,6 +39,8 @@ async function ClientIndex(): Promise<IClient[] | Error> {
     })
 
     revalidatePath('/')
+
+    ClientStore.getState().start(clientes)
 
     return clientes
   } catch (error) {
@@ -108,4 +111,4 @@ async function ClientDelete(id: string): Promise<String | Error> {
   }
 }
 
-export { ClientStore, ClientIndex, UserClientes, ClientShow, ClientDelete }
+export { storeClient as ClientStore, ClientIndex, UserClientes, ClientShow, ClientDelete }

@@ -3,14 +3,14 @@ import { IconPackage2, IconHome, IconShoppingCart, IconPackage, IconUsers, IconL
 export const listItem = [
   {
     text: 'Dashboard',
-    icon: IconHome,
+    icon: IconPackage2,
     path: '/auth/dashboard',
     linkClass: 'flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
   },
   {
-    text: 'Dashboard',
-    icon: IconPackage2,
-    path: '/auth/dashboard',
+    text: 'Inicio',
+    icon: IconHome,
+    path: '/auth/home',
     linkClass: 'flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
   },
   // {

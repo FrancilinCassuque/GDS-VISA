@@ -2,14 +2,14 @@ import { create } from 'zustand'
 import { IClient } from '../types'
 
 
-type Casas = {
+type clientes = {
   clientes: IClient[]
   total: number
-  add: (casa: IClient) => void
-  start: (casas: IClient[] | []) => void
+  add: (cliente: IClient) => void
+  start: (clientes: IClient[] | []) => void
 }
 
-export const ClientStore = create<Casas>()((set) => ({
+export const ClientStore = create<clientes>()((set) => ({
   clientes: [],
   total: 0,
   add: (cliente: IClient) =>
@@ -17,9 +17,9 @@ export const ClientStore = create<Casas>()((set) => ({
       clientes: [...state.clientes, cliente]
     })),
 
-  start: (casas: IClient[] | []) =>
+  start: (clientes: IClient[] | []) =>
     set(() => ({
-      casas: casas,
-      total: casas.length
+      clientes: clientes,
+      total: clientes.length
     }))
 }))
