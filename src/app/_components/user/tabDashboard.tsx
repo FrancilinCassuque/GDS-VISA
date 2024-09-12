@@ -66,7 +66,8 @@ export const TabDashboard: React.FC<ITableProps> = ({ clientes }) => {
 
           <CardContent ref={tableRef}>
 
-            <div className="flex flex-col items-center my-10 sr-only">
+
+            <div className="flex flex-col items-center my-10 invisible">
               <Image width={175} height={175} src={'/placeholder.png'} alt="Logotipo da Gota De Sol" />
               <CardTitle>GOTA D' SOL - CLIENTES</CardTitle>
               <CardDescription>A Luz que Falta em Tua Direcção.</CardDescription>
