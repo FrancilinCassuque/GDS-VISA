@@ -10,6 +10,7 @@ import { IconFile, IconListFilter } from ".."
 import { useReactToPrint } from 'react-to-print'
 import { useRef } from "react"
 import { IClient } from "@/types"
+import Image from "next/image"
 
 interface ITableProps {
   clientes: IClient[]
@@ -22,7 +23,7 @@ export const TabDashboard: React.FC<ITableProps> = ({ clientes }) => {
   const printTable = useReactToPrint({
     content: () => tableRef.current,
   })
-  
+
   return (
 
     <Tabs defaultValue="totalClientes">
@@ -32,35 +33,45 @@ export const TabDashboard: React.FC<ITableProps> = ({ clientes }) => {
           <TabsTrigger value="clientes">Clentes</TabsTrigger>
           <TabsTrigger value="processos">Processos</TabsTrigger>
         </TabsList>
-        <div className="ml-auto flex items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="h-7 gap-1 text-sm">
-                <IconListFilter className="h-3.5 w-3.5" />
-                <span className="sr-only sm:not-sr-only">Filtrar</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuCheckboxItem checked>Fulfilled</DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>Declined</DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>Refunded</DropdownMenuCheckboxItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <Button size="sm" variant="outline" className="h-7 gap-1 text-sm" onClick={printTable}>
-            <IconFile className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only">Imprimir</span>
-          </Button>
-        </div>
+
       </div>
       <TabsContent value="totalClientes">
-        <Card x-chunk="dashboard-05-chunk-3" ref={tableRef}>
+        <Card x-chunk="dashboard-05-chunk-3" >
           <CardHeader className="px-7">
+            <div className="ml-auto flex items-center gap-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="h-7 gap-1 text-sm">
+                    <IconListFilter className="h-3.5 w-3.5" />
+                    <span className="sr-only sm:not-sr-only">Filtrar</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuCheckboxItem checked>Fulfilled</DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem>Declined</DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem>Refunded</DropdownMenuCheckboxItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <Button size="sm" variant="outline" className="h-7 gap-1 text-sm" onClick={printTable}>
+                <IconFile className="h-3.5 w-3.5" />
+                <span className="sr-only sm:not-sr-only">Imprimir</span>
+              </Button>
+            </div>
+
             <CardTitle>Total de Clientes</CardTitle>
             <CardDescription>Clientes Registrados Recentimente.</CardDescription>
           </CardHeader>
-          <CardContent>
+
+          <CardContent ref={tableRef}>
+
+            <div className="flex flex-col items-center my-10 sr-only">
+              <Image width={175} height={175} src={'/placeholder.png'} alt="Logotipo da Gota De Sol" />
+              <CardTitle>GOTA D' SOL - CLIENTES</CardTitle>
+              <CardDescription>A Luz que Falta em Tua Direcção.</CardDescription>
+            </div>
+
             <Table>
               <TableHeader>
                 <TableRow>
