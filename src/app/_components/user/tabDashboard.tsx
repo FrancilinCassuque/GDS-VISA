@@ -99,12 +99,9 @@ export const TabDashboard: React.FC<ITableProps> = ({ clientes }) => {
               </TableBody>
             </Table>
           </CardContent>
-
+          {/* Div invisivel para fazer um print perfeito dos Clientes */}
           <div className="sr-only">
             <CardContent ref={tableRef}>
-
-
-
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -150,12 +147,12 @@ export const TabDashboard: React.FC<ITableProps> = ({ clientes }) => {
                 <TableFooter>
                   <TableRow>
                     <TableCell colSpan={4}>
-                    <div className="flex flex-col items-start my-4">
-                      <p className="text-muted-foreground"> <strong>NIF:</strong> 5001292218</p>
-                      <p className="text-muted-foreground"> Destrito urbano do sambizanga casa 109 zona 16</p>
-                      <p className="text-muted-foreground"> <strong>Email:</strong> gotadesol01@gmail.com</p>
-                      <p className="text-muted-foreground"> <strong>Tell:</strong> 935 823 482 | 949143902</p>
-                    </div>
+                      <div className="flex flex-col items-start my-4">
+                        <p className="text-muted-foreground"> <strong>NIF:</strong> 5001292218</p>
+                        <p className="text-muted-foreground"> Destrito urbano do sambizanga casa 109 zona 16</p>
+                        <p className="text-muted-foreground"> <strong>Email:</strong> gotadesol01@gmail.com</p>
+                        <p className="text-muted-foreground"> <strong>Tell:</strong> 935 823 482 | 949143902</p>
+                      </div>
                     </TableCell>
                   </TableRow>
                 </TableFooter>
