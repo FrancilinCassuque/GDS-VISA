@@ -16,11 +16,9 @@ export * from './auth/_create'
 export * from './auth/socialAuth'
 
 export * from './home/Index'
-export * from './home/settings/_topHome'
-export * from './home/settings/_keyFeatures'
-export * from './home/settings/_cadastro'
 export * from './home/create/create'
 export * from './home/carouselImage'
+export * from './home/homeDashboard'
 
 export * from './forms/profile/profile'
 export * from './forms/profile/address'
@@ -36,7 +34,6 @@ export * from './listas/listaDeOcupacoes'
 export * from './listas/cargos'
 
 export * from './user/listadeCasas'
-export * from './user/homeDashboard'
 export * from './user/tabDashboard'
 
 export * from './processo/create'
