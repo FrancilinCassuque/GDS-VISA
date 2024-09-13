@@ -127,7 +127,7 @@ export const CreateProcess: React.FC<ICreateProps> = ({ client, clientes }) => {
     form.setValue('passaport', '')
     form.setValue('clientId', '')
 
-    setEditar(true)
+    // setEditar(true)
     setLoading(false)
 
   }
