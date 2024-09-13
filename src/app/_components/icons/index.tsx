@@ -1,3 +1,5 @@
+import { Newspaper } from "lucide-react"
+
 export const IconFile = (props: any) => {
   return (
     <svg
@@ -217,6 +219,12 @@ export const IconPlus = (props: any) => {
       <path d="M5 12h14" />
       <path d="M12 5v14" />
     </svg>
+  )
+}
+
+export const IconNewInf = (props: any) => {
+  return (
+    <Newspaper {...props} />
   )
 }
 
