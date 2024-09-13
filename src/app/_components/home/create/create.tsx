@@ -12,12 +12,11 @@ import { useCallback, useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { IconChevronDown } from "../../icons"
 import { useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
 import { authStore } from "@/store"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
 import { FileWarning, Loader2, Newspaper } from "lucide-react"
 import Link from "next/link"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { IClientStore, TClientShow } from "@/types"
@@ -36,8 +35,6 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
   const form = useForm<z.infer<typeof clientForm>>({
     resolver: zodResolver(clientForm),
   })
-
-  const FormImage = useForm()
 
   const [loading, setLoading] = useState(false)
   const [editar, setEditar] = useState(true)

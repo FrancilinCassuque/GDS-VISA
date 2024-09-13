@@ -14,7 +14,7 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { authStore, ClientStore } from "@/store"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
-import { FileWarning, Loader2, Newspaper } from "lucide-react"
+import { Check, ChevronsUpDown, FileWarning, Loader2, Newspaper } from "lucide-react"
 import Link from "next/link"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { z } from "zod"
@@ -23,6 +23,9 @@ import { IClient, IProcessoStore, TClientShow } from "@/types"
 import { ClientIndex, storeProcesso } from "@/db"
 import { IconChevronDown } from "@/app/_components"
 import { error } from "console"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { cn } from "@/lib/utils"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 
 const clientForm = z.object({
   preco: z.number(),
@@ -217,8 +220,7 @@ export const CreateProcess: React.FC<ICreateProps> = ({ client, clientes }) => {
                       )} />
                   </div>
 
-
-                  <div className="space-y-2 my-2">
+                  <div className="space-y-2 my-4">
                     <FormField
                       name="estado"
                       control={form.control}
@@ -230,7 +232,7 @@ export const CreateProcess: React.FC<ICreateProps> = ({ client, clientes }) => {
                           // defaultValue={auth.userauth?.pessoa?.identidade?.tipo || ''}
                           >
                             <SelectTrigger>
-                              <SelectValue placeholder="Seleciona o Tipo" />
+                              <SelectValue placeholder="Seleciona o Estado" />
                             </SelectTrigger>
                             <SelectContent>
                               {estados.map((estado, index) => (
@@ -238,38 +240,93 @@ export const CreateProcess: React.FC<ICreateProps> = ({ client, clientes }) => {
                               ))}
                             </SelectContent>
                           </Select>
-                          <FormDescription>Em qual estado se encontra o processo, selecione pendente em caso de ñ pagamento.</FormDescription>
+                          <FormDescription>Informa Em qual estado se encontra o processo, selecione pendente em caso de ñ pagamento.</FormDescription>
                           <FormMessage />
                         </FormItem>
                       } />
                   </div>
 
-                  <div className="space-y-2 my-2">
+                  <div className="space-y-2 my-4">
                     <FormField
-                      name="clientId"
                       control={form.control}
-                      render={({ field: { value, onChange } }) =>
-                        <FormItem>
+                      name="clientId"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
                           <FormLabel>Cliente Responsavél pelo Processo</FormLabel>
-                          <Select onValueChange={onChange} value={value} required
-                            disabled={editar}
-                          // defaultValue={auth.userauth?.pessoa?.identidade?.tipo || ''}
-                          >
-                            <SelectTrigger>
-                              <SelectValue placeholder="Seleciona o Tipo" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {clientes.map((client) => (
-                                <SelectItem value={client.id} key={client.id}>{client.nomecompleto.toUpperCase()}</SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <FormDescription>Documento de Identificaçõa</FormDescription>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <FormControl>
+                                <Button
+                                  variant="outline"
+                                  role="combobox"
+                                  className={cn(
+                                    "w-auto justify-between",
+                                    !field.value && "text-muted-foreground"
+                                  )}
+                                >
+                                  {field.value
+                                    ? clientes.find(
+                                      (client) => client.id === field.value
+                                    )?.nomecompleto : "Qual é o Cliente"}
+                                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                </Button>
+                              </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-full p-0">
+                              <Command>
+                                <CommandInput placeholder="Pesquisar..." />
+                                <CommandList>
+                                  <CommandEmpty>Cliente não Encontrado.</CommandEmpty>
+                                  <CommandGroup>
+                                    <span className="m-4">  Clientes Disponíveis </span>
+
+                                    {clientes.map((client) => (
+                                      <CommandItem
+                                        value={client.id}
+                                        key={client.id}
+                                        onSelect={() => {
+                                          form.setValue("clientId", client.id)
+                                        }}
+                                      >
+                                        <Check
+                                          className={cn(
+                                            "mr-2 h-4 w-4",
+                                            client.id === field.value
+                                              ? "opacity-100"
+                                              : "opacity-0"
+                                          )}
+                                        />
+                                        {client.nomecompleto}
+                                      </CommandItem>
+                                    ))}
+                                  </CommandGroup>
+                                </CommandList>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
+                          <FormDescription>Seleciona o cliente responsavél pelo Processo.</FormDescription>
                           <FormMessage />
                         </FormItem>
-                      } />
+                      )}
+                    />
                   </div>
+
+                  <div className="space-y-2 my-4">
+                    <FormField
+                      control={form.control}
+                      name="preco"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Preço do Processo</FormLabel>
+                          <Input {...field} type="number" placeholder="Visto de Turismo" />
+                          <FormDescription>Informa o Preço do Serviço</FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )} />
+                  </div>
+
                 </div>
+
 
                 <div className="grid grid-cols-1 gap-4">
                   <div className="space-y-2">
