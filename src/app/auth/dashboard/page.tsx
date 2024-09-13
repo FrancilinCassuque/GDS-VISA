@@ -21,9 +21,10 @@ export default function Component() {
   const { status } = useSession()
   const [user, setUser] = useState<IUserAuth | undefined>(undefined)
   const [casasdisponiveis, setdisponiveis] = useState(0)
-  // const [casas, setCasas] = useState<ICasas[]>([])
+  const [open, setopen] = useState(false)
   const u = authStore()
 
+  
   useEffect(() => {
     if (status == 'authenticated') {
       setUser(u.userauth)
@@ -77,7 +78,7 @@ export default function Component() {
                         {user.pessoa.funcoes.funcao}
                       </span>
 
-                      <DrawerDialog descricao="Actualiza sua Funcao aqui. Clique em salvar quando terminar."
+                      <DrawerDialog  descricao="Actualiza sua Função aqui. Clique em salvar quando terminar."
                         icon={<Pencil className="w-5 text-primary" />}>
                         <FormOcupacao />
                       </DrawerDialog>
@@ -85,7 +86,7 @@ export default function Component() {
                   </div>
                 ) : (
                   <div>
-                    <DrawerDialog textoDoBotao="Registrar Ocupaçao" descricao="Registra sua Ocupaçao aqui. Clique em salvar quando terminar.">
+                    <DrawerDialog  textoDoBotao="Registrar Função" descricao="Registra sua Função aqui. Clique em salvar quando terminar.">
                       <FormOcupacao />
                     </DrawerDialog>
                   </div>
@@ -94,7 +95,7 @@ export default function Component() {
 
               {(user?.pessoa && user.pessoa.bio) ? <p className="text-sm text-muted-foreground max-w-[300px] text-center">{user.pessoa.bio}</p> : (
                 <div>
-                  <DrawerDialog textoDoBotao="Editar Biografia" descricao="Faça alterações em sua Biografia aqui. Clique em salvar quando terminar.">
+                  <DrawerDialog  textoDoBotao="Editar Biografia" descricao="Faça alterações em sua Biografia aqui. Clique em salvar quando terminar.">
                     <FormBio />
                   </DrawerDialog>
                 </div>

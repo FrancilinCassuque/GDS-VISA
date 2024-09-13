@@ -12,19 +12,23 @@ import { useCallback, useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import { authStore } from "@/store"
+import { authStore, ClientStore } from "@/store"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
 import { FileWarning, Loader2, Newspaper } from "lucide-react"
 import Link from "next/link"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { IClientStore, TClientShow } from "@/types"
-import { ClientStore } from "@/db"
+import { IClient, IProcessoStore, TClientShow } from "@/types"
+import { ClientIndex, storeProcesso } from "@/db"
 import { IconChevronDown } from "@/app/_components"
+import { error } from "console"
 
 const clientForm = z.object({
-  telefone: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(9, 'Contacto Pequeno de mais').max(20, 'Contacto Grande de mais'),
+  preco: z.number(),
+  estado: z.enum(['Pendente', 'Activo', 'Recusado', 'Aceite']),
+  clientId: z.string(),
+  tipo: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(4, 'Contacto Pequeno de mais').max(50, 'Contacto Grande de mais'),
   nomecompleto: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(3, 'Nome muito curto!!').max(25, 'Atingiu o Limite de caracter apenas 50'),
   descricao: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(3, 'muito curto!!').max(225, 'Atingiu o Limite de caracter apenas 50'),
   passaport: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(5, 'Muito curto').max(15, 'Muito longo apenas 15 caracteres'),
@@ -32,14 +36,24 @@ const clientForm = z.object({
 
 interface ICreateProps {
   client?: TClientShow
+  clientes?: IClient[]
 }
 
-export const CreateProcess: React.FC<ICreateProps> = ({ client }) => {
+const estados = [
+  "Pendente",
+  "Activo",
+  "Recusado",
+  "Aceite"
+]
+
+export const CreateProcess: React.FC<ICreateProps> = ({ client, clientes }) => {
+  if (!clientes) {
+    clientes = []
+  }
+
   const form = useForm<z.infer<typeof clientForm>>({
     resolver: zodResolver(clientForm),
   })
-
-  const FormImage = useForm()
 
   const [loading, setLoading] = useState(false)
   const [editar, setEditar] = useState(true)
@@ -47,34 +61,41 @@ export const CreateProcess: React.FC<ICreateProps> = ({ client }) => {
   // const route = useRouter()
   const { status } = useSession()
 
-  async function submitForm(clientBody: z.infer<typeof clientForm>) {
+  async function submitForm(body: z.infer<typeof clientForm>) {
     try {
       setLoading(true)
       const user = AUTH.userauth
 
-      if (user?.id) {
-        const client: Omit<IClientStore, 'id'> = {
-          telefone: clientBody.telefone,
-          nomecompleto: clientBody.nomecompleto,
-          descricao: clientBody.descricao,
-          userId: user.id,
-        }
 
-        const newClient = await ClientStore(client)
-
-        if (newClient instanceof Error) {
-          setLoading(false)
-          return toast({
-            title: 'Error!',
-            description: <pre><code> Erro ao Registrar Cliente </code></pre>,
-            variant: 'destructive'
-          })
+      if (user?.pessoa?.id) {
+        const processo: IProcessoStore = {
+          tipo: body.tipo,
+          preco: body.preco,
+          estado: body.estado,
+          descricao: body.descricao,
+          nomecompleto: body.nomecompleto,
+          passaport: body.passaport,
+          profileId: user.pessoa.id,
+          clientId: body.clientId,
+          anexos: []
         }
+        // const newClient = await ClientStore(processo)
+
+        // if (newClient instanceof Error) {
+        //   setLoading(false)
+        //   return toast({
+        //     title: 'Error!',
+        //     description: <pre><code> Erro ao Registrar Cliente </code></pre>,
+        //     variant: 'destructive'
+        //   })
+        // }
+
+
 
 
         toast({
           title: 'Success',
-          description: <pre><code>Cliente Registrado com sucesso.</code></pre>
+          description: <pre><code>Processo Registrado com sucesso.</code></pre>
         })
 
         cancelar()
@@ -85,7 +106,7 @@ export const CreateProcess: React.FC<ICreateProps> = ({ client }) => {
     } catch (error) {
       toast({
         title: 'Error!',
-        description: <pre><code>Erro ao Registrar novo Cliente</code></pre>,
+        description: <pre><code>Erro ao Registrar novo Processo</code></pre>,
         variant: 'destructive'
       })
       setLoading(false)
@@ -93,9 +114,11 @@ export const CreateProcess: React.FC<ICreateProps> = ({ client }) => {
   }
 
   const cancelar = () => {
-    form.setValue('telefone', '')
+    form.setValue('tipo', '')
     form.setValue('descricao', '')
     form.setValue('nomecompleto', '')
+    form.setValue('estado', 'Pendente')
+    form.setValue('preco', 0)
     form.setValue('passaport', '')
 
     setEditar(true)
@@ -169,28 +192,82 @@ export const CreateProcess: React.FC<ICreateProps> = ({ client }) => {
                   <div className="space-y-2">
                     <FormField
                       control={form.control}
-                      name="telefone"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Contacto</FormLabel>
-                          <Input {...field} type="text" placeholder="+244 999 000 000" />
-                          <FormDescription>Telefone do Cliente</FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      )} />
-                  </div>
-                  <div className="space-y-2">
-                    <FormField
-                      control={form.control}
                       name="passaport"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Passaport</FormLabel>
                           <Input type="text" {...field} placeholder="N0000001" />
-                          <FormDescription>Nº Passaporte do Cliente, no caso de ausencia digita 7 zeros!</FormDescription>
+                          <FormDescription>Nº Passaporte do Cliente.</FormDescription>
                           <FormMessage />
                         </FormItem>
                       )} />
+                  </div>
+
+                  <div className="space-y-2">
+                    <FormField
+                      control={form.control}
+                      name="tipo"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Categoria</FormLabel>
+                          <Input {...field} type="text" placeholder="Visto de Turismo" />
+                          <FormDescription>Informa a categoria do Serviço</FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )} />
+                  </div>
+
+
+                  <div className="space-y-2 my-2">
+                    <FormField
+                      name="estado"
+                      control={form.control}
+                      render={({ field: { value, onChange } }) =>
+                        <FormItem>
+                          <FormLabel>Estado do Processo</FormLabel>
+                          <Select onValueChange={onChange} value={value} required
+                            disabled={editar}
+                          // defaultValue={auth.userauth?.pessoa?.identidade?.tipo || ''}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Seleciona o Tipo" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {estados.map((estado, index) => (
+                                <SelectItem value={estado} key={index}>{estado}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormDescription>Em qual estado se encontra o processo, selecione pendente em caso de ñ pagamento.</FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      } />
+                  </div>
+
+                  <div className="space-y-2 my-2">
+                    <FormField
+                      name="clientId"
+                      control={form.control}
+                      render={({ field: { value, onChange } }) =>
+                        <FormItem>
+                          <FormLabel>Cliente Responsavél pelo Processo</FormLabel>
+                          <Select onValueChange={onChange} value={value} required
+                            disabled={editar}
+                          // defaultValue={auth.userauth?.pessoa?.identidade?.tipo || ''}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Seleciona o Tipo" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {clientes.map((client) => (
+                                <SelectItem value={client.id} key={client.id}>{client.nomecompleto.toUpperCase()}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormDescription>Documento de Identificaçõa</FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      } />
                   </div>
                 </div>
 

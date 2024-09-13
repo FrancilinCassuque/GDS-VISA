@@ -109,4 +109,4 @@ async function ClientDelete(id: string): Promise<String | Error> {
   }
 }
 
-export { storeClient as ClientStore, ClientIndex, UserClientes, ClientShow, ClientDelete }
+export { storeClient, ClientIndex, UserClientes, ClientShow, ClientDelete }

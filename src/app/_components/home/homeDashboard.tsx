@@ -7,6 +7,7 @@ import { Newspaper } from "lucide-react"
 import { ClientIndex, processoIndex } from "@/db"
 import { CardClientsHomeTop } from "./feed/clientCardTop"
 import { CardProcessoHomeTop } from "./feed/processoCardTop"
+import { ClientStore } from "@/store"
 
 export const HomeDashboard: React.FC = async () => {
   const clientes = await ClientIndex()
@@ -14,6 +15,8 @@ export const HomeDashboard: React.FC = async () => {
 
   if (clientes instanceof Error) return
   if (processo instanceof Error) return
+  
+  ClientStore.getState().start(clientes)
 
   const semanaCliActual = clientes.filter(cli => {
     if ((cli.updatedAt.getFullYear() == new Date().getFullYear()) &&

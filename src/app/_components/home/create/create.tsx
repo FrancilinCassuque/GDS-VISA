@@ -21,7 +21,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { IClientStore, TClientShow } from "@/types"
-import { ClientStore } from "@/db"
+import { storeClient } from "@/db"
 
 const clientForm = z.object({
   telefone: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(9, 'Contacto Pequeno de mais').max(20, 'Contacto Grande de mais'),
@@ -58,7 +58,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
           userId: user.id,
         }
 
-        const newClient = await ClientStore(client)
+        const newClient = await storeClient(client)
 
         if (newClient instanceof Error) {
           setLoading(false)

@@ -69,6 +69,7 @@ export function FormOcupacao() {
       }
 
       setLoading(false)
+      route.refresh()
       toast({
         title: "sucesso!",
         description: (
