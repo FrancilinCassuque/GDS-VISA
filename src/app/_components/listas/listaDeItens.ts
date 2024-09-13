@@ -1,4 +1,4 @@
-import { IconPackage2, IconHome, IconShoppingCart, IconPackage, IconUsers, IconLineChart, IconSettings, IconPlus } from ".."
+import { IconPackage2, IconHome, IconShoppingCart, IconPackage, IconUsers, IconLineChart, IconSettings, IconPlus, IconUserPlus } from ".."
 
 export const listItem = [
   {
@@ -25,8 +25,8 @@ export const listItem = [
   // },
   {
     text: 'Registrar Cliente',
-    icon: IconPlus,
-    path: '/auth/home/create',
+    icon: IconUserPlus,
+    path: '/auth/processo/create',
   },
 
   // {

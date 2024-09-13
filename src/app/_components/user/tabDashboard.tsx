@@ -70,7 +70,6 @@ export const TabDashboard: React.FC<ITableProps> = ({ clientes }) => {
                 <TableRow>
                   <TableHead>Nome Completo</TableHead>
                   <TableHead className="hidden sm:table-cell">Telefone</TableHead>
-                  <TableHead className="hidden sm:table-cell">Passaporte</TableHead>
                   <TableHead className="hidden md:table-cell">Date</TableHead>
                   {/* <TableHead className="text-right">Amount</TableHead> */}
                 </TableRow>
@@ -85,11 +84,6 @@ export const TabDashboard: React.FC<ITableProps> = ({ clientes }) => {
                     <TableCell className="font-medium">
                       <Badge className="text-xs" variant="secondary">
                         {client.telefone}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="hidden sm:table-cell">
-                      <Badge className="text-xs" variant="secondary">
-                        {client.passaport}
                       </Badge>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">{client.updatedAt.toLocaleDateString()}</TableCell>
@@ -118,7 +112,6 @@ export const TabDashboard: React.FC<ITableProps> = ({ clientes }) => {
                   <TableRow>
                     <TableHead>Nome Completo</TableHead>
                     <TableHead className="hidden sm:table-cell">Telefone</TableHead>
-                    <TableHead className="hidden sm:table-cell">Passaporte</TableHead>
                     <TableHead className="hidden md:table-cell">Date</TableHead>
                     {/* <TableHead className="text-right">Amount</TableHead> */}
                   </TableRow>
@@ -134,11 +127,6 @@ export const TabDashboard: React.FC<ITableProps> = ({ clientes }) => {
                       <TableCell className="font-medium">
                         <Badge className="text-xs" variant="secondary">
                           {client.telefone}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="secondary">
-                          {client.passaport}
                         </Badge>
                       </TableCell>
                       <TableCell className="hidden md:table-cell">{client.updatedAt.toLocaleDateString()}</TableCell>

@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { TabDashboard } from ".."
+import { IconUserPlus, TabDashboard } from ".."
 import { Newspaper } from "lucide-react"
 import { ClientIndex } from "@/db"
 
@@ -43,9 +43,9 @@ export const HomeDashboard: React.FC = async () => {
               </CardDescription>
             </CardHeader>
             <CardFooter>
-              <Link href={'/auth/home/create'}>
+              <Link href={'/auth/processo/create'}>
                 <Button>
-                  <Newspaper /> <span className="px-4">Registrar novo </span>
+                  <IconUserPlus /> <span className="px-4">Registrar novo </span>
                 </Button>
               </Link>
             </CardFooter>
