@@ -1,6 +1,6 @@
 'use server'
 
-import { IProcessoStore } from "@/types"
+import { IProcesso, IProcessoStore } from "@/types"
 import prisma from "../prisma.index"
 import { revalidatePath } from "next/cache"
 import { processoStore } from "@/store"
@@ -39,24 +39,23 @@ async function storeProcesso(processo: IProcessoStore): Promise<String | Error> 
   }
 }
 
-// async function ClientIndex(): Promise<IClient[] | Error> {
-//   'use server'
-//   try {
-//     const clientes = await prisma.client.findMany({
-//       orderBy: {
-//         updatedAt: "desc",
-//       },
-//     })
+async function processoIndex(): Promise<IProcesso[] | Error> {
+  'use server'
+  try {
+    const processos = await prisma.processo.findMany({
+      orderBy: {
+        updatedAt: "desc",
+      },
+    })
 
-//     revalidatePath('/')
+    processoStore.getState().start(processos)
+    revalidatePath('/')
 
-//     ClientStore.getState().start(clientes)
-
-//     return clientes
-//   } catch (error) {
-//     return new Error((error as { message: string }).message || 'Erro ao listar registros')
-//   }
-// }
+    return processos
+  } catch (error) {
+    return new Error((error as { message: string }).message || 'Erro ao listar registros')
+  }
+}
 
 // async function UserClientes(userId: string): Promise<IClient[] | Error> {
 //   'use server'
@@ -123,4 +122,4 @@ async function storeProcesso(processo: IProcessoStore): Promise<String | Error> 
 
 // ClientIndex, UserClientes, ClientShow, ClientDelete
 
-export { storeProcesso }
+export { storeProcesso, processoIndex }

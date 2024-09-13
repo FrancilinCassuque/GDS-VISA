@@ -5,6 +5,8 @@ export interface IProcesso {
   descricao: string
   nomecompleto: string
   passaport: string
+  preco: number
+  anexos: string[]
   
   clientId: string
   profileId: string

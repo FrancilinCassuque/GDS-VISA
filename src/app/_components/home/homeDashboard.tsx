@@ -4,13 +4,16 @@ import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent }
 import { Progress } from "@/components/ui/progress"
 import { IconUserPlus, TabDashboard } from ".."
 import { Newspaper } from "lucide-react"
-import { ClientIndex } from "@/db"
+import { ClientIndex, processoIndex } from "@/db"
 import { CardClientsHomeTop } from "./feed/clientCardTop"
+import { CardProcessoHomeTop } from "./feed/processoCardTop"
 
 export const HomeDashboard: React.FC = async () => {
   const clientes = await ClientIndex()
+  const processo = await processoIndex()
 
   if (clientes instanceof Error) return
+  if (processo instanceof Error) return
 
   const semanaCliActual = clientes.filter(cli => {
     if ((cli.updatedAt.getFullYear() == new Date().getFullYear()) &&
@@ -37,9 +40,11 @@ export const HomeDashboard: React.FC = async () => {
       <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
         <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
           <CardClientsHomeTop clientes={clientes} />
+
+          <CardProcessoHomeTop processos={processo} />
         </div>
-        
-        <TabDashboard clientes={clientes}/>
+
+        <TabDashboard clientes={clientes} />
       </div>
     </main>
   )
