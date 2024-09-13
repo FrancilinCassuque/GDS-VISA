@@ -88,6 +88,8 @@ export async function updateProfile(profile: IProfileStore, profileId: string, i
   'use server'
 
   try {
+    const farstNome = profile.nome.split(' ').find((_, index) => index == 0)
+
     const perfil = await prisma.profile.update({
       where: {
         id: profileId
@@ -115,6 +117,8 @@ export async function updateProfile(profile: IProfileStore, profileId: string, i
     if (perfil instanceof Error) {
       return new Error('Error ao registrar perfil.')
     }
+
+    await update(perfil.userId,undefined,`${profile.apelido}${farstNome}`.trim())
 
     return perfil.id
 

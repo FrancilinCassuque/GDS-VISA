@@ -297,12 +297,22 @@ export async function update(userId = '', user?: IUpdateUser, userName = ''): Pr
         },
         data: {
           name: userName
+        },
+        select: {
+          id: true,
+          email: true
         }
       })
 
       if (updatedUser) {
+        const userAuth = await auth(updatedUser.email)
+
+        if (userAuth instanceof Error) return updatedUser.id
+
+        authStore.getState().startAuth(userAuth)
         return updatedUser.id
       }
+
     } else {
       const updatedUser = await prisma.user.update({
         where: {
@@ -312,10 +322,19 @@ export async function update(userId = '', user?: IUpdateUser, userName = ''): Pr
           name: user?.name,
           email: user?.email.toLowerCase(),
           image: user?.image
+        },
+        select: {
+          id: true,
+          email: true
         }
       })
 
       if (updatedUser) {
+        const userAuth = await auth(updatedUser.email)
+
+        if (userAuth instanceof Error) return updatedUser.id
+
+        authStore.getState().startAuth(userAuth)
         return updatedUser.id
       }
     }
