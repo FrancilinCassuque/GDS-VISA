@@ -19,7 +19,7 @@ import Link from "next/link"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { IClientStore, TCasaShow, TClientShow } from "@/types"
+import { IClientStore, TClientShow } from "@/types"
 import { ClientStore } from "@/db"
 import { IconChevronDown } from "@/app/_components"
 
@@ -33,6 +33,7 @@ const clientForm = z.object({
 interface ICreateProps {
   client?: TClientShow
 }
+
 export const CreateProcess: React.FC<ICreateProps> = ({ client }) => {
   const form = useForm<z.infer<typeof clientForm>>({
     resolver: zodResolver(clientForm),

@@ -26,7 +26,7 @@ export const listItem = [
   {
     text: 'Registrar Cliente',
     icon: IconUserPlus,
-    path: '/auth/processo/create',
+    path: '/auth/client/create',
   },
 
   // {

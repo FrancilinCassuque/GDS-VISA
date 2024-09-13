@@ -43,7 +43,7 @@ export const HomeDashboard: React.FC = async () => {
               </CardDescription>
             </CardHeader>
             <CardFooter>
-              <Link href={'/auth/processo/create'}>
+              <Link href={'/auth/client/create'}>
                 <Button>
                   <IconUserPlus /> <span className="px-4">Registrar novo </span>
                 </Button>
