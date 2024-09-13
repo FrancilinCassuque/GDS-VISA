@@ -97,8 +97,8 @@ export const Tabelaprocessos: React.FC<ITableProps> = ({ processos }) => {
               </TableRow>
 
               <TableRow>
-                <TableHead>Nome Completo</TableHead>
-                <TableHead className="hidden sm:table-cell">Passaport</TableHead>
+                <TableHead>Nome</TableHead>
+                <TableHead className="">Passaport</TableHead>
                 <TableHead className="hidden sm:table-cell">Categória</TableHead>
                 <TableHead className="text-center">Estado</TableHead>
                 <TableHead className="hidden md:table-cell">Date</TableHead>
@@ -109,10 +109,10 @@ export const Tabelaprocessos: React.FC<ITableProps> = ({ processos }) => {
                 <TableRow className="bg-accent" key={processo.id}>
                   <TableCell>
                     <div className="font-medium">{processo.nomecompleto}</div>
-                    <div className="hidden text-sm text-muted-foreground md:inline">{processo.preco.toLocaleString('AO', { style: 'currency', currency: 'AOA' })}</div>
+                    <div className="text-sm text-muted-foreground md:inline">{processo.preco.toLocaleString('AO', { style: 'currency', currency: 'AOA' })}</div>
                   </TableCell>
                   <TableCell className="font-medium"> <Badge className="text-xs" variant="secondary">{processo.passaport} </Badge> </TableCell>
-                  <TableCell className="font-medium"> <Badge className="text-xs" variant="secondary">{processo.tipo} </Badge> </TableCell>
+                  <TableCell className="font-medium hidden md:table-cell"> <Badge className="text-xs" variant="secondary">{processo.tipo} </Badge> </TableCell>
                   <TableCell className="font-medium"> <Badge className="text-xs" variant="secondary">{processo.estado} </Badge> </TableCell>
                   <TableCell className="hidden md:table-cell">{processo.updatedAt.toLocaleDateString()}</TableCell>
                 </TableRow>
