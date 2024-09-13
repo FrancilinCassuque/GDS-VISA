@@ -14,7 +14,7 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { authStore, ClientStore } from "@/store"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
-import { Check, ChevronsUpDown, FileWarning, Loader2, Newspaper } from "lucide-react"
+import { Check, ChevronsUpDown, FileWarning, HandHelpingIcon, Loader2, Newspaper } from "lucide-react"
 import Link from "next/link"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { z } from "zod"
@@ -28,7 +28,7 @@ import { cn } from "@/lib/utils"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 
 const clientForm = z.object({
-  preco: z.number(),
+  preco: z.string(),
   estado: z.enum(['Pendente', 'Activo', 'Recusado', 'Aceite']),
   clientId: z.string(),
   tipo: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(4, 'Contacto Pequeno de mais').max(50, 'Contacto Grande de mais'),
@@ -73,7 +73,7 @@ export const CreateProcess: React.FC<ICreateProps> = ({ client, clientes }) => {
       if (user?.pessoa?.id) {
         const processo: IProcessoStore = {
           tipo: body.tipo,
-          preco: body.preco,
+          preco: Number.parseInt(body.preco),
           estado: body.estado,
           descricao: body.descricao,
           nomecompleto: body.nomecompleto,
@@ -82,23 +82,25 @@ export const CreateProcess: React.FC<ICreateProps> = ({ client, clientes }) => {
           clientId: body.clientId,
           anexos: []
         }
-        // const newClient = await ClientStore(processo)
 
-        // if (newClient instanceof Error) {
-        //   setLoading(false)
-        //   return toast({
-        //     title: 'Error!',
-        //     description: <pre><code> Erro ao Registrar Cliente </code></pre>,
-        //     variant: 'destructive'
-        //   })
-        // }
+        const novoProcesso = await storeProcesso(processo)
 
-
-
+        if (novoProcesso instanceof Error) {
+          setLoading(false)
+          return toast({
+            title: 'Error!',
+            description: <pre><code> Erro ao Registrar Cliente </code></pre>,
+            variant: 'destructive'
+          })
+        }
 
         toast({
           title: 'Success',
-          description: <pre><code>Processo Registrado com sucesso.</code></pre>
+          description:
+            <pre>
+              <HandHelpingIcon />
+              <code>Processo Registrado com sucesso.</code>
+            </pre>
         })
 
         cancelar()
@@ -121,8 +123,9 @@ export const CreateProcess: React.FC<ICreateProps> = ({ client, clientes }) => {
     form.setValue('descricao', '')
     form.setValue('nomecompleto', '')
     form.setValue('estado', 'Pendente')
-    form.setValue('preco', 0)
+    form.setValue('preco', '')
     form.setValue('passaport', '')
+    form.setValue('clientId', '')
 
     setEditar(true)
     setLoading(false)
@@ -318,7 +321,7 @@ export const CreateProcess: React.FC<ICreateProps> = ({ client, clientes }) => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Preço do Processo</FormLabel>
-                          <Input {...field} type="number" placeholder="Visto de Turismo" />
+                          <Input {...field} type="number" placeholder="100000" />
                           <FormDescription>Informa o Preço do Serviço</FormDescription>
                           <FormMessage />
                         </FormItem>

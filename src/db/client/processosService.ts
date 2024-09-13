@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache"
 import { processoStore } from "@/store"
 // import { redirect } from "next/navigation"
 
-async function storeProcesso(processo: IProcessoStore): Promise<String | Error> {
+export async function storeProcesso(processo: IProcessoStore): Promise<String | Error> {
   'use server'
 
   try {
@@ -30,8 +30,6 @@ async function storeProcesso(processo: IProcessoStore): Promise<String | Error> 
 
     processoStore.getState().add(processoNovo)
     revalidatePath('/auth/home')
-    // redirect('')
-
 
     return processoNovo.id
   } catch (err) {
@@ -39,7 +37,7 @@ async function storeProcesso(processo: IProcessoStore): Promise<String | Error> 
   }
 }
 
-async function processoIndex(): Promise<IProcesso[] | Error> {
+export async function processoIndex(): Promise<IProcesso[] | Error> {
   'use server'
   try {
     const processos = await prisma.processo.findMany({
@@ -120,6 +118,5 @@ async function processoIndex(): Promise<IProcesso[] | Error> {
 //   }
 // }
 
-// ClientIndex, UserClientes, ClientShow, ClientDelete
 
-export { storeProcesso, processoIndex }
+// export { storeProcesso, processoIndex }
