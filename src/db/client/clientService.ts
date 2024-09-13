@@ -35,6 +35,10 @@ async function ClientIndex(): Promise<IClient[] | Error> {
       orderBy: {
         updatedAt: "desc",
       },
+
+      include: {
+        processos: true,
+      }
     })
 
     revalidatePath('/')
@@ -57,6 +61,10 @@ async function UserClientes(userId: string): Promise<IClient[] | Error> {
       orderBy: {
         updatedAt: "desc",
       },
+
+      include: {
+        processos: true
+      }
     })
     return clients
   } catch (error) {

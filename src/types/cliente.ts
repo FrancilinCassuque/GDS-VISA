@@ -8,6 +8,8 @@ export interface IClient {
   nomecompleto: string
   descricao: string | null
 
+  processos: IProcesso[]
+
   createdAt: Date
   updatedAt: Date
 }

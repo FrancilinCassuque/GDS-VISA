@@ -2,21 +2,22 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { IconUserPlus, TabDashboard } from ".."
+import { IconUserPlus, TabelaClientes } from ".."
 import { Newspaper } from "lucide-react"
 import { ClientIndex, processoIndex } from "@/db"
 import { CardClientsHomeTop } from "./feed/clientCardTop"
 import { CardProcessoHomeTop } from "./feed/processoCardTop"
-import { ClientStore } from "@/store"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabelaprocessos } from "../user/tableProcessos"
 
 export const HomeDashboard: React.FC = async () => {
   const clientes = await ClientIndex()
-  const processo = await processoIndex()
+  const processos = await processoIndex()
 
   if (clientes instanceof Error) return
-  if (processo instanceof Error) return
-  
-  ClientStore.getState().start(clientes)
+  if (processos instanceof Error) return
+
+  const clientesAtivos = clientes.filter(cli => cli.processos.length > 0)
 
   const semanaCliActual = clientes.filter(cli => {
     if ((cli.updatedAt.getFullYear() == new Date().getFullYear()) &&
@@ -44,10 +45,31 @@ export const HomeDashboard: React.FC = async () => {
         <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
           <CardClientsHomeTop clientes={clientes} />
 
-          <CardProcessoHomeTop processos={processo} />
+          <CardProcessoHomeTop processos={processos} />
         </div>
 
-        <TabDashboard clientes={clientes} />
+
+        <Tabs defaultValue="totalClientes">
+          <div className="flex items-center">
+            <TabsList>
+              <TabsTrigger value="totalClientes">Total de Clientes</TabsTrigger>
+              <TabsTrigger value="clientesActivos">Clentes Ativos</TabsTrigger>
+              <TabsTrigger value="processos">Processos</TabsTrigger>
+            </TabsList>
+
+          </div>
+          <TabsContent value="totalClientes">
+            <TabelaClientes clientes={clientes} />
+          </TabsContent>
+
+          <TabsContent value="clientesActivos">
+            <TabelaClientes clientes={clientesAtivos} />
+          </TabsContent>
+
+          <TabsContent value="processos">
+            <Tabelaprocessos processos={processos} />
+          </TabsContent>
+        </Tabs>
       </div>
     </main>
   )
