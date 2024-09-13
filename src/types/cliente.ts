@@ -7,7 +7,6 @@ export interface IClient {
   telefone: string
   nomecompleto: string
   descricao: string | null
-  passaport: string | null
 
   createdAt: Date
   updatedAt: Date
@@ -19,7 +18,6 @@ export interface IClientStore {
   telefone: string
   nomecompleto: string
   descricao: string
-  passaport: string | null
 }
 
 
@@ -29,7 +27,6 @@ export type TClientShow = {
   telefone: string
   nomecompleto: string
   descricao: string | null
-  passaport: string | null
 
   createdAt: Date
   updatedAt: Date

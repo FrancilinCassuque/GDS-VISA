@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { useCallback, useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
-import { IconChevronDown } from "../../icons"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { authStore } from "@/store"
@@ -20,19 +19,21 @@ import Link from "next/link"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { IClientStore, TClientShow } from "@/types"
+import { IClientStore, TCasaShow, TClientShow } from "@/types"
 import { ClientStore } from "@/db"
+import { IconChevronDown } from "@/app/_components"
 
 const clientForm = z.object({
   telefone: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(9, 'Contacto Pequeno de mais').max(20, 'Contacto Grande de mais'),
   nomecompleto: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(3, 'Nome muito curto!!').max(25, 'Atingiu o Limite de caracter apenas 50'),
   descricao: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(3, 'muito curto!!').max(225, 'Atingiu o Limite de caracter apenas 50'),
+  passaport: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(5, 'Muito curto').max(15, 'Muito longo apenas 15 caracteres'),
 })
 
 interface ICreateProps {
   client?: TClientShow
 }
-export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
+export const CreateProcess: React.FC<ICreateProps> = ({ client }) => {
   const form = useForm<z.infer<typeof clientForm>>({
     resolver: zodResolver(clientForm),
   })
@@ -94,6 +95,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
     form.setValue('telefone', '')
     form.setValue('descricao', '')
     form.setValue('nomecompleto', '')
+    form.setValue('passaport', '')
 
     setEditar(true)
     setLoading(false)
@@ -148,7 +150,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
               </CollapsibleTrigger>
 
               <CollapsibleContent className="px-6 py-4 space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="space-y-2">
                     <FormField
                       control={form.control}
@@ -172,6 +174,19 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                           <FormLabel>Contacto</FormLabel>
                           <Input {...field} type="text" placeholder="+244 999 000 000" />
                           <FormDescription>Telefone do Cliente</FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )} />
+                  </div>
+                  <div className="space-y-2">
+                    <FormField
+                      control={form.control}
+                      name="passaport"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Passaport</FormLabel>
+                          <Input type="text" {...field} placeholder="N0000001" />
+                          <FormDescription>Nº Passaporte do Cliente, no caso de ausencia digita 7 zeros!</FormDescription>
                           <FormMessage />
                         </FormItem>
                       )} />

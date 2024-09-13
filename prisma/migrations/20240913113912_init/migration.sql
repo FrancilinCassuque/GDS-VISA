@@ -103,9 +103,13 @@ CREATE TABLE "Funcao" (
 -- CreateTable
 CREATE TABLE "Processo" (
     "id" TEXT NOT NULL,
-    "estado" TEXT NOT NULL,
-    "descricao" TEXT DEFAULT '',
     "tipo" TEXT NOT NULL,
+    "preco" INTEGER NOT NULL,
+    "estado" TEXT NOT NULL,
+    "nomecompleto" TEXT NOT NULL,
+    "passaport" VARCHAR(15) NOT NULL,
+    "descricao" TEXT NOT NULL DEFAULT '',
+    "anexos" TEXT[],
     "profileId" TEXT NOT NULL,
     "clientId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -118,7 +122,6 @@ CREATE TABLE "Processo" (
 CREATE TABLE "Client" (
     "id" TEXT NOT NULL,
     "nomecompleto" TEXT NOT NULL,
-    "passaport" VARCHAR(5),
     "telefone" VARCHAR(30) NOT NULL,
     "descricao" TEXT DEFAULT '',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -173,6 +176,9 @@ CREATE UNIQUE INDEX "Identidade_profileId_key" ON "Identidade"("profileId");
 
 -- CreateIndex
 CREATE INDEX "Funcao_profileId_idx" ON "Funcao"("profileId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Processo_passaport_key" ON "Processo"("passaport");
 
 -- CreateIndex
 CREATE INDEX "Processo_clientId_idx" ON "Processo"("clientId");

@@ -138,10 +138,15 @@ model Funcao {
 }
 
 model Processo {
-  id        String  @id @default(cuid())
-  estado    String
-  descricao String? @default("") @db.Text
-  tipo      String
+  id           String @id @default(cuid())
+  tipo         String
+  preco        Int
+  estado       String
+  nomecompleto String
+  passaport    String @unique @db.VarChar(15)
+  descricao    String @default("") @db.Text
+
+  anexos String[]
 
   profile   Profile @relation(fields: [profileId], references: [id])
   profileId String
@@ -159,7 +164,6 @@ model Processo {
 model Client {
   id           String  @id @default(cuid())
   nomecompleto String
-  passaport    String? @db.VarChar(15) @unique
   telefone     String  @db.VarChar(30)
   descricao    String? @default("")
 
@@ -167,8 +171,8 @@ model Client {
   updatedAt DateTime @updatedAt
 
   processos Processo[]
-  userId   String
-  user     User       @relation(fields: [userId], references: [id])
+  userId    String
+  user      User       @relation(fields: [userId], references: [id])
 
   @@index([userId])
 }

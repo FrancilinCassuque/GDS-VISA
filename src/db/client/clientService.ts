@@ -14,7 +14,6 @@ async function storeClient(client: Omit<IClientStore, 'id'>): Promise<String | E
         nomecompleto: client.nomecompleto.toUpperCase(),
         telefone: client.telefone,
         descricao: client.descricao,
-        passaport: client.passaport,
         userId: client.userId,
       },
 
