@@ -279,9 +279,12 @@ export const CreateProcess: React.FC<ICreateProps> = ({ client, clientes }) => {
                               <Command>
                                 <CommandInput placeholder="Pesquisar..." />
                                 <CommandList>
-                                  <CommandEmpty>Cliente não Encontrado.</CommandEmpty>
+                                  <CommandEmpty>
+                                    Cliente não Encontrado. <br />
+                                    <Link href={'/auth/client/create'}>Registrar novo Cliente</Link>
+                                    </CommandEmpty>
                                   <CommandGroup>
-                                    <span className="m-4">  Clientes Disponíveis </span>
+                                    {/* <span className="m-4">  Clientes Disponíveis </span> */}
 
                                     {clientes.map((client) => (
                                       <CommandItem
