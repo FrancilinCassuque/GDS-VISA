@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { IconUserPlus, TabelaClientes } from ".."
+import { DataTableHome, IconUserPlus, TabelaClientes } from ".."
 import { Newspaper } from "lucide-react"
 import { ClientIndex, processoIndex } from "@/db"
 import { CardClientsHomeTop } from "./feed/clientCardTop"
@@ -64,6 +64,8 @@ export const HomeDashboard: React.FC = async () => {
 
           <TabsContent value="clientesActivos">
             <TabelaClientes clientes={clientesAtivos} />
+
+            {/* <DataTableHome listaDeCasas={clientes} /> */}
           </TabsContent>
 
           <TabsContent value="processos">
