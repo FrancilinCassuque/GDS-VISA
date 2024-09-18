@@ -2,7 +2,7 @@
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import Link from "next/link"
-import { listItem } from "../../listas/listaDeItens"
+import { listItem, subListItem } from "../../listas/listaDeItens"
 import { ConfigButton } from "../config"
 
 
@@ -46,14 +46,28 @@ export const AsideBar: React.FC = () => {
       </nav>
       <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
         <TooltipProvider>
-          {/* {subListItem.map((link, index) => ( */}
+          {subListItem.map((link, index) => (
             <Tooltip>
               <TooltipTrigger asChild>
-                <ConfigButton/>
+                <Link
+                  href={link.path}
+                  className={`${classLink}`}
+                  prefetch={false}
+                >
+                  {link.icon({ className: `h-5 w-5` })}
+                  <span className="sr-only">{link.text}</span>
+                </Link>
               </TooltipTrigger>
-              <TooltipContent side="right">definições</TooltipContent>
+              <TooltipContent side="right">{link.text}</TooltipContent>
             </Tooltip>
-          {/* ))} */}
+          ))}
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <ConfigButton />
+            </TooltipTrigger>
+            <TooltipContent side="right">Tema</TooltipContent>
+          </Tooltip>
         </TooltipProvider>
       </nav>
     </aside>

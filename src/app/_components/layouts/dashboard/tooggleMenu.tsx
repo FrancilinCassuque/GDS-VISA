@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { ConfigButton, IconPanelLeft, listItem, subListItem } from "../.."
 import Link from "next/link"
 
-export const TooggleMenu:React.FC = () => {
+export const TooggleMenu: React.FC = () => {
   const classBaseLink = 'flex items-center gap-4 px-2.5'
   const classLinkHome = 'group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base'
 
@@ -43,7 +43,18 @@ export const TooggleMenu:React.FC = () => {
             </div>
           ))}
 
-          <ConfigButton text={'Configurações'}/>
+          {subListItem.map((link, index) => (
+            <Link
+              href={link.path}
+              className={`${classBaseLink} text-muted-foreground hover:text-foreground`}
+              prefetch={false}
+            >
+              {link.icon({ className: `h-5 w-5` })}
+              {link.text}
+            </Link>
+          ))}
+
+          <ConfigButton text={'Tema'} />
         </nav>
       </SheetContent>
     </Sheet>

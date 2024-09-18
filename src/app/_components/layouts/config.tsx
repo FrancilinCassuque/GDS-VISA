@@ -7,6 +7,7 @@ import Link from "next/link"
 import { IconSettings } from "../icons"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
+import { SunMoon } from "lucide-react"
 
 interface IConfigProps{
   text?: string
@@ -32,7 +33,7 @@ export const ConfigButton: React.FC<IConfigProps> = ({text}) => {
           className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-muted hover:text-foreground"
           prefetch={false}
         >
-          <IconSettings className="h-5 w-5" />
+          <SunMoon className="h-5 w-5" />
           {text}
         </Link>
       </PopoverTrigger>
@@ -40,19 +41,19 @@ export const ConfigButton: React.FC<IConfigProps> = ({text}) => {
         <div className="grid gap-4">
           <div className="space-y-2">
             <h4 className="font-medium leading-none">Configurações</h4>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400">Ajusta as configurações do teu aplicativo.</p>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">Ajuste as configurações do teu aplicativo.</p>
           </div>
           <div className="grid gap-2">
             <div className="grid grid-cols-3 items-center gap-4 w-full">
-              <Label htmlFor="theme">Theme</Label>
+              <Label htmlFor="theme">Tema</Label>
               <Select onValueChange={(e) => { setTema(e) }} value={tema}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder={tema} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="light">Light</SelectItem>
-                    <SelectItem value="dark">Dark</SelectItem>
+                    <SelectItem value="light">Claro</SelectItem>
+                    <SelectItem value="dark">Escuro</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -91,13 +92,13 @@ export const ConfigButtonPC: React.FC = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Link href="#">Settings</Link>
+        <Link href="#">Configurações</Link>
       </PopoverTrigger>
       <PopoverContent className="w-96">
         <div className="grid gap-4">
           <div className="space-y-2">
-            <h4 className="font-medium leading-none">Settings</h4>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400">Adjust your application settings.</p>
+            <h4 className="font-medium leading-none">Configurações</h4>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">Ajuste as configurações do teu aplicativo.</p>
           </div>
           <div className="grid gap-2">
             <div className="grid grid-cols-3 items-center gap-4 w-full">
@@ -108,13 +109,13 @@ export const ConfigButtonPC: React.FC = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="light">Light</SelectItem>
-                    <SelectItem value="dark">Dark</SelectItem>
+                    <SelectItem value="light">Claro</SelectItem>
+                    <SelectItem value="dark">Escuro</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
             </div>
-            <div className="grid grid-cols-3 items-center gap-4">
+            {/* <div className="grid grid-cols-3 items-center gap-4">
               <Label htmlFor="language">Language</Label>
               <Select>
                 <SelectTrigger className="w-full">
@@ -128,7 +129,7 @@ export const ConfigButtonPC: React.FC = () => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
           </div>
         </div>
       </PopoverContent>
