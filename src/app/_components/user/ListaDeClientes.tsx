@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -35,15 +34,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { ICasasList } from "@/types"
+import { ICasasList, IClient } from "@/types"
 import { IconListFilter } from "../icons/dashboard"
 import { IconFile } from "../icons"
+import { useEffect, useState } from "react"
+import { TabelaClientes } from "./tabClientes"
 
 interface IDataTableProps {
-  listaDeCasas: ICasasList[]
+  listaDeClientes: IClient[]
 }
 
-export const columns: ColumnDef<ICasasList>[] = [
+export const columns: ColumnDef<IClient>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -67,14 +68,7 @@ export const columns: ColumnDef<ICasasList>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "estado",
-    header: "Estado",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("published") ? 'Disponivel' : 'Indisponivel'}</div>
-    ),
-  },
-  {
-    accessorKey: "name",
+    accessorKey: "nomecompleto",
     header: ({ column }) => {
       return (
         <Button
@@ -86,21 +80,34 @@ export const columns: ColumnDef<ICasasList>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("name")}</div>,
+    cell: ({ row }) => (
+      <>
+        <div className="capitalize">{row.getValue('nomecompleto')}</div>
+        <div className="text-sm text-muted-foreground md:inline">{row.getValue("descricao")} </div>
+      </>
+    ),
   },
   {
-    accessorKey: "tipo",
-    header: () => <div className="text-right">Tipo</div>,
+    accessorKey: "telefone",
+    header: "Telefone",
+    cell: ({ row }) => <div className="lowercase">{row.getValue("telefone")}</div>,
+  },
+  {
+    accessorKey: "updatedAt",
+    header: () => <div className="text-right">Data</div>,
     cell: ({ row }) => {
-      // const amount = parseFloat(row.getValue("amount"))
 
-      // Format the amount as a dollar amount
-      // const formatted = new Intl.NumberFormat("en-US", {
-      //   style: "currency",
-      //   currency: "USD",
-      // }).format(amount)
+      const date = new Date(row.getValue('updatedAt')).toLocaleDateString()
 
-      return <div className="text-right font-medium">{row.getValue("tipo")}</div>
+      return <div className="text-right font-medium">{date}</div>
+    },
+  },
+
+  {
+    accessorKey: "descricao",
+    header: () => <div className="sr-only">Descrição</div>,
+    cell: ({ row }) => {
+      return <div className="text-right font-medium sr-only">{row.getValue('descricao')}</div>
     },
   },
   {
@@ -135,17 +142,15 @@ export const columns: ColumnDef<ICasasList>[] = [
 ]
 
 
-export const DataTableHome: React.FC<IDataTableProps> = ({ listaDeCasas }) => {
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
+export const DataTableClientes: React.FC<IDataTableProps> = ({ listaDeClientes }) => {
+  const [sorting, setSorting] = useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const [clientSelection, setClientSelection] = useState<IClient[]>([])
+  const [rowSelection, setRowSelection] = useState({})
 
   const table = useReactTable({
-    data: listaDeCasas,
+    data: listaDeClientes,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -163,6 +168,18 @@ export const DataTableHome: React.FC<IDataTableProps> = ({ listaDeCasas }) => {
     },
   })
 
+  useEffect(() => {
+    const selectedValues = Object.keys(rowSelection)
+    const arreyCli: IClient[] = []
+
+    selectedValues.map(linha => {
+      const cli = table.getRow(linha).original
+      arreyCli.push(cli)
+    })
+
+    setClientSelection(arreyCli)
+  }, [rowSelection, setClientSelection])
+
   return (
     <div className="w-full">
       {/* Div do Input de filtro e a dropdown do filtro de comlunas */}
@@ -170,9 +187,9 @@ export const DataTableHome: React.FC<IDataTableProps> = ({ listaDeCasas }) => {
       <div className="flex items-center w-full py-4">
         <Input
           placeholder="Filtrar Por Nome..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn("nomecompleto")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("nomecompleto")?.setFilterValue(event.target.value)
           }
           className="max-w-sm mr-10"
         />
@@ -206,10 +223,7 @@ export const DataTableHome: React.FC<IDataTableProps> = ({ listaDeCasas }) => {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <Button size="sm" variant="outline" className="h-7 gap-1 text-sm mx-4">
-          <IconFile className="h-3.5 w-3.5" />
-          <span className="sr-only sm:not-sr-only">Exportar</span>
-        </Button>
+        <TabelaClientes clientes={clientSelection} printOnly={true} />
       </div>
 
       {/* Search */}
@@ -267,8 +281,8 @@ export const DataTableHome: React.FC<IDataTableProps> = ({ listaDeCasas }) => {
       {/* Footer table */}
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+          {table.getFilteredSelectedRowModel().rows.length} de{" "}
+          {table.getFilteredRowModel().rows.length} Linha(s) Selecionada.
         </div>
         <div className="space-x-2">
           <Button
@@ -277,7 +291,7 @@ export const DataTableHome: React.FC<IDataTableProps> = ({ listaDeCasas }) => {
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            Voltar
           </Button>
           <Button
             variant="outline"
@@ -285,7 +299,7 @@ export const DataTableHome: React.FC<IDataTableProps> = ({ listaDeCasas }) => {
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            Proximo
           </Button>
         </div>
       </div>

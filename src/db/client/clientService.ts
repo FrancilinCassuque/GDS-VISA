@@ -36,8 +36,8 @@ async function ClientIndex(): Promise<IClient[] | Error> {
         updatedAt: "desc",
       },
 
-      include: {
-        processos: true,
+      include:{
+        processos: true
       }
     })
 

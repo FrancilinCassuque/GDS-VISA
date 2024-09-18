@@ -13,6 +13,9 @@ export const CardProcessoHomeTop: React.FC<ICardProps> = async ({ processos }) =
 
   if (processos instanceof Error) return
 
+  const abertos = processos.filter(pro => pro.estado == 'Activo')
+  const abertoPerc = (abertos.length / processos.length) * 100
+
   const semanaCliActual = processos.filter(cli => {
     if ((cli.updatedAt.getFullYear() == new Date().getFullYear()) &&
       (cli.updatedAt.getMonth() == new Date().getMonth()) &&
@@ -67,18 +70,18 @@ export const CardProcessoHomeTop: React.FC<ICardProps> = async ({ processos }) =
               </CardFooter>
             </Card>
 
-            {/* <Card x-chunk="dashboard-05-chunk-2">
-                <CardHeader className="pb-2">
-                  <CardDescription>This Month</CardDescription>
-                  <CardTitle className="text-4xl">$5,329</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-xs text-muted-foreground">+10% from last month</div>
-                </CardContent>
-                <CardFooter>
-                  <Progress value={12} aria-label="12% increase" />
-                </CardFooter>
-              </Card> */}
+            <Card x-chunk="dashboard-05-chunk-2">
+              <CardHeader className="pb-2">
+                <CardDescription>Total de Processos Activos</CardDescription>
+                <CardTitle className="text-4xl text-center">{abertos.length}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-xs text-muted-foreground">{`${abertoPerc.toFixed()}% com a primeira parcela Paga`}</div>
+              </CardContent>
+              <CardFooter>
+                <Progress value={abertoPerc} aria-label="12% increase" />
+              </CardFooter>
+            </Card>
           </>
         )
       }

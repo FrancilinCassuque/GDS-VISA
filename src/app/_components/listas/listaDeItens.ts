@@ -39,7 +39,7 @@ export const listItem = [
   {
     text: 'Contas',
     icon: IconFactura,
-    path: '/auth/contas',
+    path: '/auth/dashboard/contas',
   },
 
   {
