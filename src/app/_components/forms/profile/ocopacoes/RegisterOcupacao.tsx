@@ -67,9 +67,17 @@ export function FormOcupacao() {
         setLoading(false)
         return
       }
+      const upAuth = authUser.userauth
 
+      if (upAuth) {
+        upAuth.pessoa.funcoes = ocupacao
+
+        authUser.startAuth(upAuth)
+
+        route.push('/auth/dashboard')
+      }
       setLoading(false)
-      route.refresh()
+
       toast({
         title: "sucesso!",
         description: (
@@ -78,7 +86,7 @@ export function FormOcupacao() {
           </pre>
         ),
       })
-      route.refresh()
+
     } catch (error) {
       setErro(true)
       setLoading(false)

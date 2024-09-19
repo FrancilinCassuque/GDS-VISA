@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Lista } from "../../listas/listadepaises"
 import { useCallback, useState } from "react"
-import { IProfileStore } from "@/types"
+import { IProfile, IProfileStore } from "@/types"
 import { authStore } from "@/store"
 import { storeProfile, updateProfile } from "@/db"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -39,8 +39,27 @@ export const PerfilData: React.FC = () => {
   const form = useForm<z.infer<typeof pessoa>>({
     resolver: zodResolver(pessoa),
   })
-  
+
   const auth = authStore()
+
+  function updateAuth(perfil: IProfile) {
+    if(auth.userauth){
+      const authUpdate = auth.userauth
+  
+      authUpdate.pessoa.id = perfil.id
+      authUpdate.pessoa.nome = perfil.nome
+      authUpdate.pessoa.pais = perfil.pais
+      authUpdate.pessoa.bio = perfil.bio
+      authUpdate.pessoa.genero = perfil.genero
+      authUpdate.pessoa.Apelido = perfil.Apelido
+      authUpdate.pessoa.telefone = perfil.telefone
+      authUpdate.pessoa.identidade.id = perfil.identidade?.id || ''
+      authUpdate.pessoa.identidade.tipo = perfil.identidade?.tipo || ''
+      authUpdate.pessoa.identidade.numero = perfil.identidade?.numero || ''
+  
+      auth.startAuth(authUpdate)
+    }
+  }
 
   const submitProfileForm = form.handleSubmit(async (data: z.infer<typeof pessoa>) => {
     try {
@@ -56,12 +75,17 @@ export const PerfilData: React.FC = () => {
             if (perfil instanceof Error) {
               return setErro(true)
             }
+
+            updateAuth(perfil)
+
           } else {
             const perfil = await storeProfile(userData, auth.userauth.id)
 
             if (perfil instanceof Error) {
               return setErro(true)
             }
+
+            updateAuth(perfil)
           }
         }
 

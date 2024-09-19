@@ -1,14 +1,10 @@
 'use server'
 
+import { IFuncao } from "@/types"
 import prisma from "../prisma.index"
 
-interface IUpdateUser {
-  id: number
-  funcao: string
-  profileId: string
-}
 
-export async function ocupacaoCreate(formDara: Omit<IUpdateUser, 'id'>): Promise<Number | Error> {
+export async function ocupacaoCreate(formDara: Omit<IFuncao, 'id'>): Promise<IFuncao | Error> {
   'use server'
 
   try {
@@ -19,7 +15,7 @@ export async function ocupacaoCreate(formDara: Omit<IUpdateUser, 'id'>): Promise
     })
 
     if (ocupacao.id) {
-      return ocupacao.id
+      return ocupacao
     }
 
     return new Error('Erro ao criar registro')
@@ -29,7 +25,7 @@ export async function ocupacaoCreate(formDara: Omit<IUpdateUser, 'id'>): Promise
   }
 }
 
-export async function ocupacaoUpdate(id: number, funcao: string): Promise<Number | Error> {
+export async function ocupacaoUpdate(id: number, funcao: string): Promise<IFuncao | Error> {
   'use server'
 
   try {
@@ -40,14 +36,10 @@ export async function ocupacaoUpdate(id: number, funcao: string): Promise<Number
       data: {
         funcao
       },
-
-      select: {
-        id: true
-      }
     })
 
     if (ocupacao.id) {
-      return ocupacao.id
+      return ocupacao
     }
 
     return new Error('Erro ao Actualizar registro')

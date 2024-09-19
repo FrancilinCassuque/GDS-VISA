@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { updateBio } from "@/db"
 import { authStore } from "@/store"
 import { Loader } from "lucide-react"
+import { useRouter } from "next/router"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -20,6 +21,7 @@ export const FormBio: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const form = useForm<IUpdateUser>()
   const auth = authStore()
+  const rote=useRouter()
 
   // const cancelar = () => {
   //   form.setValue('bio', auth.userauth?.pessoa?.bio || '')
@@ -32,16 +34,26 @@ export const FormBio: React.FC = () => {
       setLoading(true)
 
       const id = auth.userauth?.pessoa?.id || ''
-      
+
       const bioSend = bio.parse(data.bio)
 
       const response = await updateBio(bioSend, id)
 
+      if (!(response instanceof Error)) {
+        const upAuth = auth.userauth
+
+        if (upAuth) {
+          upAuth.pessoa.bio = response
+
+          auth.startAuth(upAuth)
+
+          rote.push('/auth/dashboard')
+        }
+      }
       setLoading(false)
 
     } catch (erro) {
       setLoading(false)
-
     }
   })
 

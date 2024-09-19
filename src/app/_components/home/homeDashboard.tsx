@@ -53,24 +53,40 @@ export const HomeDashboard: React.FC = async () => {
         <Tabs defaultValue="totalClientes">
           <div className="flex items-center">
             <TabsList>
-              <TabsTrigger value="totalClientes">Total de Clientes</TabsTrigger>
-              <TabsTrigger value="clientesActivos">Clentes Ativos</TabsTrigger>
-              <TabsTrigger value="processos">Processos</TabsTrigger>
+              {clientes.length > 0 && (
+                <>
+                  <TabsTrigger value="totalClientes">Total de Clientes</TabsTrigger>
+                  <TabsTrigger value="clientesActivos">Clentes Ativos</TabsTrigger>
+                </>
+              )}
+
+              {processos.length > 0 && (
+                <TabsTrigger value="processos">Processos</TabsTrigger>
+              )}
             </TabsList>
 
           </div>
-          <TabsContent value="totalClientes">
-            <DataTableClientes listaDeClientes={clientes} />
-          </TabsContent>
+          
+          {clientes.length > 0 && (
+            <TabsContent value="totalClientes">
+              <DataTableClientes listaDeClientes={clientes} />
+            </TabsContent>
+          )}
 
-          <TabsContent value="clientesActivos">
-            <DataTableClientes listaDeClientes={clientesAtivos} />
-          </TabsContent>
 
-          <TabsContent value="processos">
-            <DataTableProcessos listaDeProcessos={processos} />
-          </TabsContent>
+          {clientesAtivos.length > 0 && (
+            <TabsContent value="clientesActivos">
+              <DataTableClientes listaDeClientes={clientesAtivos} />
+            </TabsContent>
+          )}
+
+          {processos.length > 0 && (
+            <TabsContent value="processos">
+              <DataTableProcessos listaDeProcessos={processos} />
+            </TabsContent>
+          )}
         </Tabs>
+
       </div>
     </main>
   )

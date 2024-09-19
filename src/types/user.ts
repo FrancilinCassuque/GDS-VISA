@@ -1,7 +1,5 @@
 // User types
 
-import { ICasas } from "./home"
-
 export interface userlogin {
   id: string
   email: string
@@ -43,11 +41,11 @@ export interface IProfile {
   userId: string
   telefone: string
 
-  identidades?: {
+  identidade?: {
     id: string,
     numero: string,
     tipo: string
-  }[]
+  }
 
   createdAt: Date
   updatedAt: Date
@@ -70,7 +68,7 @@ export interface IUserAuth {
   email: string
   image: string | null
   password: string | null
-  pessoa?: {
+  pessoa: {
     id: string
     nome: string
     Apelido: string
@@ -89,7 +87,7 @@ export interface IUserAuth {
       pais: string
     }
 
-    identidade?: {
+    identidade: {
       id: string,
       numero: string,
       tipo: string

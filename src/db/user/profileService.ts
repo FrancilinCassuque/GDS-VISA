@@ -42,7 +42,7 @@ export async function userProfiles(userId: string): Promise<IProfile[] | Error> 
   }
 }
 
-export async function storeProfile(profile: IProfileStore, userId: string): Promise<string | Error> {
+export async function storeProfile(profile: IProfileStore, userId: string): Promise<IProfile | Error> {
   'use server'
 
   try {
@@ -64,10 +64,6 @@ export async function storeProfile(profile: IProfileStore, userId: string): Prom
             tipo: profile.tipo
           }
         }
-      },
-      select: {
-        id: true,
-        userId: true
       }
     })
 
@@ -77,14 +73,14 @@ export async function storeProfile(profile: IProfileStore, userId: string): Prom
 
     await update(perfil.userId,undefined,`${profile.apelido}${farstNome}`.trim())
 
-    return perfil.id
+    return perfil
 
   } catch (error) {
     return new Error((error as { message: string }).message || 'Error ao crear registro.')
   }
 }
 
-export async function updateProfile(profile: IProfileStore, profileId: string, identidadeId = ''): Promise<string | Error> {
+export async function updateProfile(profile: IProfileStore, profileId: string, identidadeId = ''): Promise<IProfile | Error> {
   'use server'
 
   try {
@@ -120,7 +116,7 @@ export async function updateProfile(profile: IProfileStore, profileId: string, i
 
     await update(perfil.userId,undefined,`${profile.apelido}${farstNome}`.trim())
 
-    return perfil.id
+    return perfil
 
   } catch (error) {
     return new Error((error as { message: string }).message || 'Error ao crear registro.')
@@ -145,7 +141,7 @@ export async function updateBio(bio: string, profileId: string): Promise<string 
       return new Error('Error ao registrar perfil.')
     }
 
-    return perfil.id
+    return perfil.bio || ''
 
   } catch (error) {
     return new Error((error as { message: string }).message || 'Error ao crear registro.')
