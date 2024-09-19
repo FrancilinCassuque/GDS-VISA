@@ -2,13 +2,11 @@
 
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectGroup } from "@/components/ui/select"
-import { IconLeft, IconRight } from "react-day-picker"
-import { Controller, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
@@ -20,26 +18,12 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { IClient, IFacturaStore, IProcesso, TClientShow } from "@/types"
-import { ClientIndex, storeProcesso } from "@/db"
 import { IconChevronDown } from "@/app/_components"
-import { error } from "console"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { DataTableProcessos } from "../user/ListaDeProcessos"
-
-const clientForm = z.object({
-  desconto: z.string(),
-  estado: z.enum(['Pendente', '1ª Pago', '2ª Pago', 'Cancelado', 'Aguardando Reembolso', 'Reembolsado', 'Total Pago']),
-  clientId: z.string(),
-  descricao: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(3, 'muito curto!!').max(225, 'Atingiu o Limite de caracter apenas 50'),
-})
-
-interface IFacturaProps {
-  client?: TClientShow
-  clientes?: IClient[]
-  processos?: IProcesso[]
-}
+import { facturaStore } from "@/db"
 
 export const estados = [
   "1ª Parcela Pendente",
@@ -53,9 +37,24 @@ export const estados = [
 ]
 
 
+const facturaForm = z.object({
+  desconto: z.string(),
+  estado: z.enum(['1ª Parcela Pendente','2ª Parcela Pendente', '1ª Pago', '2ª Pago', 'Cancelado', 'Aguardando Reembolso', 'Reembolsado', 'Total Pago']),
+  clientId: z.string(),
+  descricao: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(3, 'muito curto!!').max(225, 'Atingiu o Limite de caracter apenas 50'),
+})
+
+interface IFacturaProps {
+  client?: TClientShow
+  clientes?: IClient[]
+  processos?: IProcesso[]
+}
+
+
+
 export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, processos }) => {
-  const form = useForm<z.infer<typeof clientForm>>({
-    resolver: zodResolver(clientForm),
+  const form = useForm<z.infer<typeof facturaForm>>({
+    resolver: zodResolver(facturaForm),
   })
 
   const [loading, setLoading] = useState(false)
@@ -75,12 +74,12 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
   if (!processos) {
     processos = []
   }
-  
-  function listaDeSelecionados(lista:IProcesso[]){
+
+  function listaDeSelecionados(lista: IProcesso[]) {
     return setEscolhidos(lista)
   }
 
-  async function submitForm(body: z.infer<typeof clientForm>) {
+  async function submitForm(body: z.infer<typeof facturaForm>) {
     try {
       setLoading(true)
       const user = AUTH.userauth
@@ -88,25 +87,24 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
 
       if (user?.pessoa?.id) {
 
-        const processo: IFacturaStore = {
+        const store: IFacturaStore = {
           desconto: Number.parseInt(body.desconto),
           estado: body.estado,
           descricao: body.descricao,
           agenteId: user.pessoa.id,
           clientId: body.clientId,
-          // anexos: []
         }
 
-        // const novoProcesso = await storeProcesso(processo)
+        const novaFactura = await facturaStore(store, escolhidos)
 
-        // if (novoProcesso instanceof Error) {
-        //   setLoading(false)
-        //   return toast({
-        //     title: 'Error!',
-        //     description: <pre><code> Erro ao Registrar Cliente </code></pre>,
-        //     variant: 'destructive'
-        //   })
-        // }
+        if (novaFactura instanceof Error) {
+          setLoading(false)
+          return toast({
+            title: 'Error!',
+            description: <pre><code> Erro ao Registrar Cliente </code></pre>,
+            variant: 'destructive'
+          })
+        }
 
         toast({
           title: 'Success',
@@ -134,7 +132,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
 
   const cancelar = () => {
     form.setValue('descricao', '')
-    form.setValue('estado', 'Pendente')
+    form.setValue('estado', '1ª Parcela Pendente')
     form.setValue('desconto', '')
     form.setValue('clientId', '')
 

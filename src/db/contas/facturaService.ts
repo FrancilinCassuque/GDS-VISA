@@ -1,7 +1,7 @@
 import { IFactura, IFacturaStore, IFacturaUpdate, IProcesso } from "@/types"
 import prisma from "../prisma.index"
 
-export async function FacturaStore(store: IFacturaStore, listaDeProcessos: IProcesso[]): Promise<string | Error> {
+export async function facturaStore(store: IFacturaStore, listaDeProcessos: IProcesso[]): Promise<string | Error> {
   try {
     const calculo = {
       total: 0,
