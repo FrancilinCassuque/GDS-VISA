@@ -20,7 +20,7 @@ export async function storeProcesso(processo: IProcessoStore): Promise<String | 
         passaport: processo.passaport,
 
         profileId: processo.profileId,
-        clientId: processo.profileId,
+        clientId: processo.clientId,
       },
 
       // select: {

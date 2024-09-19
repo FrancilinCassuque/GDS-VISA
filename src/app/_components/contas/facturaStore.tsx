@@ -147,8 +147,11 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
 
   useEffect(() => {
     if (processos.length > 0) {
-      const processosDoClient = processos.filter((processo) => {
-        console.log(processo)
+      const processosDoClient = processos.filter((processo, i) => {
+        console.group('Processo ' + i)
+        console.log(processo.clientId)
+        console.log(selectedClient)
+        console.groupEnd()
         if (processo.clientId == selectedClient) {
           return processo
         }
