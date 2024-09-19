@@ -74,7 +74,7 @@ export const UserData: React.FC = () => {
 
         setEditar(true)
         setLoading(false)
-        rote.push('/')
+        rote.push('/auth/dashboard')
         toast({
           title: 'Sucesso!',
           description: 'Usuario actualizado com successo! Por favor, actualiza a Pagina.',
