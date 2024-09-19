@@ -38,7 +38,7 @@ import { ICasasList, IClient, IProcesso } from "@/types"
 import { IconListFilter } from "../icons/dashboard"
 import { IconFile } from "../icons"
 import { useEffect, useState } from "react"
-import { TabelaClientes } from "./tabClientes"
+import { Tabelaprocessos } from "./tableProcessos"
 
 interface IDataTableProps {
   listaDeProcessos: IProcesso[]
@@ -80,12 +80,17 @@ export const columns: ColumnDef<IProcesso>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => (
-      <>
-        <div className="capitalize">{row.getValue('nomecompleto')}</div>
-        <div className="text-sm text-muted-foreground md:inline">{row.getValue("preco")} </div>
-      </>
-    ),
+    cell: ({ row }) => {
+      const preco = row.getValue("preco") as number
+      const precoFormat = preco.toLocaleString('AO', { style: 'currency', currency: 'AOA' })
+
+      return (
+        <>
+          <div className="capitalize">{row.getValue('nomecompleto')}</div>
+          <div className="text-sm text-muted-foreground md:inline">{precoFormat} </div>
+        </>
+      )
+    },
   },
   {
     accessorKey: "passaport",
@@ -95,8 +100,8 @@ export const columns: ColumnDef<IProcesso>[] = [
 
   {
     accessorKey: "tipo",
-    header: "Categória",
-    cell: ({ row }) => <div className="uppercase text-center">{row.getValue("tipo")}</div>,
+    header: () => <div className="invisible sm:visible">Categória</div>,
+    cell: ({ row }) => <div className="invisible sm:visible uppercase text-center">{row.getValue("tipo")}</div>,
   },
 
 
@@ -237,7 +242,7 @@ export const DataTableProcessos: React.FC<IDataTableProps> = ({ listaDeProcessos
           </DropdownMenuContent>
         </DropdownMenu>
 
-        {/* <TabelaClientes clientes={clientSelection} printOnly={true} /> */}
+        <Tabelaprocessos processos={clientSelection} printOnly={true} />
       </div>
 
       {/* Search */}

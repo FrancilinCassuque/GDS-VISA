@@ -9,6 +9,7 @@ import { CardClientsHomeTop } from "./feed/clientCardTop"
 import { CardProcessoHomeTop } from "./feed/processoCardTop"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Tabelaprocessos } from "../user/tableProcessos"
+import { DataTableProcessos } from "../user/ListaDeProcessos"
 
 export const HomeDashboard: React.FC = async () => {
   const clientes = await ClientIndex()
@@ -67,7 +68,7 @@ export const HomeDashboard: React.FC = async () => {
           </TabsContent>
 
           <TabsContent value="processos">
-            <Tabelaprocessos processos={processos} />
+            <DataTableProcessos listaDeProcessos={processos} />
           </TabsContent>
         </Tabs>
       </div>
