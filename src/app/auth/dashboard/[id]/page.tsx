@@ -37,16 +37,8 @@ export default async function Component({ params }: { params: { id: string } }) 
                 <AlertTitle>Perfil incompleto</AlertTitle>
                 <AlertDescription className="flex flex-col">
                   <p>
-                    Finalize a configuração do teu perfil para melhor usuabilidade.
+                    Configuração do perfil Está incompleta.
                   </p>
-
-                  <Link href={`/auth/dashboard/settings`}>
-                    <Button className='my-4 flex flex-row w-full'>
-                      <IconSettings className='w-5 h-5 mx-2' />
-                      Configurar
-                    </Button>
-                  </Link>
-
                 </AlertDescription>
               </Alert>
             </div>
@@ -62,17 +54,6 @@ export default async function Component({ params }: { params: { id: string } }) 
                   </div>
                 ) : (
                   <div>
-                    {/* <Alert variant='destructive'>
-                      <AlertTitle>Perfil incompleto</AlertTitle>
-                      <ExclamationTriangleIcon />
-                      <AlertDescription className="flex flex-col">
-                        <Link href={`/auth/dashboard/settings`}>
-                          <p className="text-sm text-muted-foreground max-w-[300px] text-center md:text-left">
-                            Adiciona tua Ocupaçao.
-                          </p>
-                        </Link>
-                      </AlertDescription>
-                    </Alert> */}
 
                     <DrawerDialog textoDoBotao="Registrar Ocupaçao" descricao="Registra sua Ocupaçao aqui. Clique em salvar quando terminar.">
                       <FormOcupacao />

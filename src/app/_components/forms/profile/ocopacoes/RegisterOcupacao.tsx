@@ -31,7 +31,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { toast } from "@/components/ui/use-toast"
-import { ocupacaoCreate } from "@/db"
+import { ocupacaoCreate, ocupacaoUpdate } from "@/db"
 import { authStore } from "@/store"
 import { useState } from "react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -44,7 +44,12 @@ const FormSchema = z.object({
   funcao: z.string({ required_error: "Por favor Selecciona a ocupacao..", }),
 })
 
-export function FormOcupacao() {
+interface IOcupacaoProps {
+  update?: boolean
+  id?: number
+}
+
+export const FormOcupacao: React.FC<IOcupacaoProps> = ({ update, id }) => {
   const [loading, setLoading] = useState(false)
   const [erro, setErro] = useState(false)
   const authUser = authStore()
@@ -58,32 +63,65 @@ export function FormOcupacao() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       setLoading(true)
-      const ocupacao = await ocupacaoCreate({ ...data, profileId: authUser.userauth?.pessoa?.id || '' })
 
-      if (ocupacao instanceof Error) {
-        setErro(true)
+      if (update) {
+        if (id) {
+          const ocupacao = await ocupacaoUpdate(id, data.funcao)
+
+          if (ocupacao instanceof Error) {
+            setErro(true)
+            setLoading(false)
+            return
+          }
+          const upAuth = authUser.userauth
+    
+          if (upAuth) {
+            upAuth.pessoa.funcoes = ocupacao
+    
+            authUser.startAuth(upAuth)
+    
+            route.push('/auth/home')
+          }
+          setLoading(false)
+    
+          toast({
+            title: "sucesso!",
+            description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                <code className="text-white">Perfil Actualizado com sucesso!</code>
+              </pre>
+            ),
+          })
+        }
+
+      } else {
+        const ocupacao = await ocupacaoCreate({ ...data, profileId: authUser.userauth?.pessoa?.id || '' })
+
+        if (ocupacao instanceof Error) {
+          setErro(true)
+          setLoading(false)
+          return
+        }
+        const upAuth = authUser.userauth
+  
+        if (upAuth) {
+          upAuth.pessoa.funcoes = ocupacao
+  
+          authUser.startAuth(upAuth)
+  
+          route.push('/auth/dashboard')
+        }
         setLoading(false)
-        return
+  
+        toast({
+          title: "sucesso!",
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+              <code className="text-white">Perfil Actualizado com sucesso!</code>
+            </pre>
+          ),
+        })
       }
-      const upAuth = authUser.userauth
-
-      if (upAuth) {
-        upAuth.pessoa.funcoes = ocupacao
-
-        authUser.startAuth(upAuth)
-
-        route.push('/auth/dashboard')
-      }
-      setLoading(false)
-
-      toast({
-        title: "sucesso!",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">Perfil Actualizado com sucesso!</code>
-          </pre>
-        ),
-      })
 
     } catch (error) {
       setErro(true)

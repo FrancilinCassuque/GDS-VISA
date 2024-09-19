@@ -14,6 +14,7 @@ import { Loader, Loader2 } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { BioData } from "./bioData"
 import { toast } from "@/components/ui/use-toast"
+import { useRouter } from "next/navigation"
 
 interface IUpdateUser {
   id: string
@@ -30,6 +31,7 @@ export const UserData: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const form = useForm<IUpdateUser>()
   const auth = authStore()
+  const rote = useRouter()
 
   const cancelar = () => {
     form.setValue('name', auth.userauth?.name || '')
@@ -60,15 +62,26 @@ export const UserData: React.FC = () => {
         }
       }
 
-      await update(auth.userauth?.id || '', userSave)
-      setEditar(true)
-      setLoading(false)
+      const response = await update(auth.userauth?.id || '', userSave)
 
-      toast({
-        title: 'Sucesso!',
-        description: 'Usuario actualizado com successo! Por favor, actualiza a Pagina.',
-        variant: 'default'
-      })
+      if (!(response instanceof Error)) {
+        const upAuth = auth.userauth
+
+        if (upAuth) {
+          upAuth.image = userSave.image
+          auth.startAuth(upAuth)
+        }
+
+        setEditar(true)
+        setLoading(false)
+        rote.push('/')
+        toast({
+          title: 'Sucesso!',
+          description: 'Usuario actualizado com successo! Por favor, actualiza a Pagina.',
+          variant: 'default'
+        })
+
+      }
 
     } catch (erro) {
       setLoading(false)

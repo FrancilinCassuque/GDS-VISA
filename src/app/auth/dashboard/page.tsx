@@ -80,7 +80,7 @@ export default function Component() {
 
                       <DrawerDialog  descricao="Actualiza sua Função aqui. Clique em salvar quando terminar."
                         icon={<Pencil className="w-5 text-primary" />}>
-                        <FormOcupacao />
+                        <FormOcupacao id={user.pessoa.funcoes.id} update={true} />
                       </DrawerDialog>
                     </div>
                   </div>
