@@ -1,7 +1,11 @@
+'use serverg'
+
 import { IFactura, IFacturaStore, IFacturaUpdate, IProcesso } from "@/types"
 import prisma from "../prisma.index"
 
-export async function facturaStore(store: IFacturaStore, listaDeProcessos: IProcesso[]): Promise<string | Error> {
+export async function facturaStoreService(store: IFacturaStore, listaDeProcessos: IProcesso[]): Promise<string | Error> {
+  'use server'
+
   try {
     const calculo = {
       total: 0,
@@ -34,7 +38,7 @@ export async function facturaStore(store: IFacturaStore, listaDeProcessos: IProc
         desconto: store.desconto,
         descricao: store.descricao,
         estado: store.estado,
-        agenteId: store.agenteId,
+        profileId: store.profileId,
         clientId: store.clientId,
         total: calculo.total,
         valorApagar: calculo.valorApagar,
@@ -43,18 +47,21 @@ export async function facturaStore(store: IFacturaStore, listaDeProcessos: IProc
       }
     })
 
-    if (novaFactura.id) {
+    if (novaFactura) {
       return novaFactura.id
     }
 
     return new Error('Erro ao registrar a factura')
   } catch (error) {
+    console.log(error)
     return new Error((error as { message: string }).message || 'Erro ao registrar Registro')
   }
 }
 
 
 export async function FacturaUpdate(factura: IFacturaUpdate, listaDeProcessos: IProcesso[]): Promise<string | Error> {
+  'use server'
+
   try {
     const processosId = ['']
 
@@ -80,7 +87,7 @@ export async function FacturaUpdate(factura: IFacturaUpdate, listaDeProcessos: I
         desconto: factura.desconto,
         descricao: factura.descricao,
         estado: factura.estado,
-        agenteId: factura.agenteId,
+        profileId: factura.profileId,
         clientId: factura.clientId,
         total: factura.total,
         valorApagar: factura.valorApagar,

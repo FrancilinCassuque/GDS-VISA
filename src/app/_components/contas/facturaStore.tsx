@@ -23,13 +23,11 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { DataTableProcessos } from "../user/ListaDeProcessos"
-import { facturaStore } from "@/db"
+import { facturaStoreService } from "@/db"
 
 export const estados = [
   "1ª Parcela Pendente",
   "2ª Parcela Pendente",
-  "1ª Pago",
-  "2ª Pago",
   "Cancelado",
   'Aguardando Reembolso',
   'Reembolsado',
@@ -91,17 +89,17 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
           desconto: Number.parseInt(body.desconto),
           estado: body.estado,
           descricao: body.descricao,
-          agenteId: user.pessoa.id,
+          profileId: user.pessoa.id,
           clientId: body.clientId,
         }
 
-        const novaFactura = await facturaStore(store, escolhidos)
+        const novaFactura = await facturaStoreService(store, escolhidos)
 
         if (novaFactura instanceof Error) {
           setLoading(false)
           return toast({
             title: 'Error!',
-            description: <pre><code> Erro ao Registrar Cliente </code></pre>,
+            description: <pre><code> Erro ao Registrar Cliente {JSON.stringify(novaFactura )} </code></pre>,
             variant: 'destructive'
           })
         }

@@ -5,7 +5,7 @@ export interface IFacturaStore {
   estado: string
   descricao: string
   desconto: number
-  agenteId: string
+  profileId: string
 }
 
 export interface IFactura {
@@ -18,7 +18,7 @@ export interface IFactura {
   desconto: number
   valorApagar: number
   valorEmFalta: number
-  agenteId: string
+  profileId: string
 
   createdAt: Date
   updatedAt: Date
@@ -33,5 +33,5 @@ export interface IFacturaUpdate {
   desconto: number
   valorApagar: number
   valorEmFalta: number
-  agenteId: string
+  profileId: string
 }
