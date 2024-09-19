@@ -13,6 +13,8 @@ import { Loader, Newspaper } from "lucide-react"
 import { EnderecoStore } from "@/db"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
+import { useRouter } from "next/navigation"
+import { toast } from "@/components/ui/use-toast"
 
 
 export const EnderecoForm: React.FC = () => {
@@ -22,6 +24,7 @@ export const EnderecoForm: React.FC = () => {
 
   const form = useForm<IEnderecoStore>()
   const auth = authStore()
+  const rote = useRouter()
 
   const submitAddressForm = form.handleSubmit(async (data: IEnderecoStore) => {
     try {
@@ -33,20 +36,34 @@ export const EnderecoForm: React.FC = () => {
         if (address instanceof Error) {
           return setErro(true)
         }
+        const upAuth = auth.userauth
+        if (upAuth) {
+          upAuth.pessoa.address.rua = address.rua
+          upAuth.pessoa.address.bairro = address.bairro
+          upAuth.pessoa.address.comuna = address.comuna
+          upAuth.pessoa.address.municipio = address.municipio
+          upAuth.pessoa.address.provincia = address.provincia
+          upAuth.pessoa.address.pais = address.pais
 
-        if (auth?.userauth?.pessoa?.address) {
-          auth.userauth.pessoa.address.rua = address.rua
-          auth.userauth.pessoa.address.bairro = address.bairro
-          auth.userauth.pessoa.address.comuna = address.comuna
-          auth.userauth.pessoa.address.municipio = address.municipio
-          auth.userauth.pessoa.address.provincia = address.provincia
-          auth.userauth.pessoa.address.pais = address.pais
+          auth.startAuth(upAuth)
+
+
+          toast({
+            title: "sucesso!",
+            description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                <code className="text-white">Perfil Actualizado com sucesso!</code>
+              </pre>
+            ),
+          })
         }
       }
 
       setEditar(true)
       setLoading(false)
       setErro(false)
+      rote.push('/auth/home')
+
     } catch (error) {
       setEditar(true)
       setLoading(false)
@@ -79,7 +96,7 @@ export const EnderecoForm: React.FC = () => {
               <br /><br />
 
               <Button variant='secondary' onClick={() => setEditar(false)}>
-                <Newspaper/> <span className="p-4">Adicionar Endereço.</span>
+                <Newspaper /> <span className="p-4">Adicionar Endereço.</span>
               </Button>
             </AlertDescription>
           </Alert>
