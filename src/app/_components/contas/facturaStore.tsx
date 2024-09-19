@@ -41,8 +41,9 @@ interface IFacturaProps {
   processos?: IProcesso[]
 }
 
-const estados = [
-  "Pendente",
+export const estados = [
+  "1ª Parcela Pendente",
+  "2ª Parcela Pendente",
   "1ª Pago",
   "2ª Pago",
   "Cancelado",
@@ -146,7 +147,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
     // const formValue = form.getValues()
     // console.log(formValue)
   }
-  
+
   useEffect(() => {
     if (processos.length > 0) {
       const processosDoClient = processos.filter((processo, i) => {

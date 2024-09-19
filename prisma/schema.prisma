@@ -205,10 +205,10 @@ model Factura {
   estado      String
   descricao   String
 
-  total        Decimal
-  desconto     Decimal
-  valorApagar  Decimal
-  valorEmFalta Decimal
+  total        Int
+  desconto     Int
+  valorApagar  Int
+  valorEmFalta Int
 
   agente   Profile @relation(fields: [agenteId], references: [id])
   agenteId String
