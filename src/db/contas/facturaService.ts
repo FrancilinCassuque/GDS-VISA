@@ -1,4 +1,4 @@
-'use serverg'
+'use server'
 
 import { IFactura, IFacturaStore, IFacturaUpdate, IProcesso } from "@/types"
 import prisma from "../prisma.index"
