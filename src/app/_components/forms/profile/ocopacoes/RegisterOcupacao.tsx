@@ -31,14 +31,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { toast } from "@/components/ui/use-toast"
-import { listaDeOcupacoes } from "@/app/_components/listas/listaDeOcupacoes"
-import { Input } from "@/components/ui/input"
 import { ocupacaoCreate } from "@/db"
 import { authStore } from "@/store"
 import { useState } from "react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
-import { redirect, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { ListaDeCargos } from "@/app/_components/listas/cargos"
 
 
@@ -82,7 +80,7 @@ export function FormOcupacao() {
         title: "sucesso!",
         description: (
           <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">Ocupacao registrada com sucesso!</code>
+            <code className="text-white">Perfil Actualizado com sucesso!</code>
           </pre>
         ),
       })

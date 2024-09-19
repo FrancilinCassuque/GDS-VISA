@@ -21,6 +21,7 @@ import z from 'zod'
 import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
+import { toast } from "@/components/ui/use-toast"
 
 const pessoa = z.object({
   apelido: z.string().min(3),
@@ -62,6 +63,15 @@ export const PerfilData: React.FC = () => {
       auth.startAuth(authUpdate)
       rota.push('/auth/dashboard')
     }
+
+    toast({
+      title: "sucesso!",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">Perfil Actualizado com sucesso!</code>
+        </pre>
+      ),
+    })
   }
 
   const submitProfileForm = form.handleSubmit(async (data: z.infer<typeof pessoa>) => {

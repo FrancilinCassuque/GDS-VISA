@@ -14,6 +14,8 @@ import { Loader, Loader2 } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import { z } from "zod"
+import { useRouter } from "next/navigation"
+import { toast } from "@/components/ui/use-toast"
 
 interface IUpdateUser {
   bio: string
@@ -26,6 +28,7 @@ export const BioData: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const form = useForm<IUpdateUser>()
   const auth = authStore()
+  const rote = useRouter()
 
   const cancelar = () => {
     form.setValue('bio', auth.userauth?.pessoa?.bio || '')
@@ -39,8 +42,27 @@ export const BioData: React.FC = () => {
 
       const id = auth.userauth?.pessoa?.id || ''
       const bioSend = bio.parse(data)
-      
+
       const response = await updateBio(bioSend, id)
+
+      if (!(response instanceof Error)) {
+        const updateAuth = auth.userauth
+        if (updateAuth) {
+          updateAuth.pessoa.bio = response
+
+          auth.startAuth(updateAuth)
+          rote.push('/auth/dashboard')
+
+          toast({
+            title: "sucesso!",
+            description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                <code className="text-white">Perfil Actualizado com sucesso!</code>
+              </pre>
+            ),
+          })
+        }
+      }
 
       setEditar(true)
       setLoading(false)

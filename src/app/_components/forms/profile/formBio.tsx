@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { toast } from "@/components/ui/use-toast"
 import { updateBio } from "@/db"
 import { authStore } from "@/store"
 import { Loader } from "lucide-react"
@@ -48,6 +49,15 @@ export const FormBio: React.FC = () => {
           auth.startAuth(upAuth)
 
           rote.push('/auth/dashboard')
+
+          toast({
+            title: "sucesso!",
+            description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                <code className="text-white">Perfil Actualizado com sucesso!</code>
+              </pre>
+            ),
+          })
         }
       }
       setLoading(false)
