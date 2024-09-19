@@ -36,7 +36,7 @@ export default function Component() {
 
   return (
     <div className="flex flex-col items-center gap-8 min-w-full mx-auto py-12 px-4 md:px-0">
-      <div className="flex flex-col items-center gap-6 md:w-1/3 md:min-w-96">
+      <div className="flex flex-col items-center gap-6 md:w-1/3 md:min-w-96 mb-72">
         <div className="flex flex-col items-center gap-4">
           <Avatar className="w-24 h-24">
             <AvatarImage src={user?.image ? user.image : "/placeholder-user.jpg"} />
@@ -140,54 +140,6 @@ export default function Component() {
 
         </div>
       </div>
-
-      <div className=" grid gap-6 w-full md:w-6/12">
-        <Tabs defaultValue="tudo">
-          <div className="flex items-center">
-            <TabsList>
-              <TabsTrigger value="tudo">Propriedades</TabsTrigger>
-              <TabsTrigger value="Disponiveis">Disponiveis</TabsTrigger>
-              <TabsTrigger value="Pendentes">Pendentes</TabsTrigger>
-            </TabsList>
-          </div>
-          <TabsContent value="tudo">
-            <Card x-chunk="dashboard-05-chunk-3">
-              <CardHeader className="px-7">
-                <CardTitle>{('Propriedades').toUpperCase()}</CardTitle>
-                <CardDescription>Todas as Propriedades.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {/* <DataTableHome listaDeCasas={casas} /> */}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="Disponiveis">
-            <Card x-chunk="dashboard-05-chunk-3">
-              <CardHeader className="px-7">
-                <CardTitle>{('Disponiveis').toUpperCase()}</CardTitle>
-                <CardDescription>Todas as Propriedades Disponiveis.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {/* <DataTableHome listaDeCasas={casas.filter(casa => casa.published)} /> */}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="Pendentes">
-            <Card x-chunk="dashboard-05-chunk-3">
-              <CardHeader className="px-7">
-                <CardTitle>{('Pendentes').toUpperCase()}</CardTitle>
-                <CardDescription>Todas as Propriedades Pendentes.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {/* <DataTableHome listaDeCasas={casas.filter(casa => !casa.published)} /> */}
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-      </div>
-
     </div>
   )
 }

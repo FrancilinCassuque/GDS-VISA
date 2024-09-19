@@ -62,7 +62,7 @@ export const EnderecoForm: React.FC = () => {
       setEditar(true)
       setLoading(false)
       setErro(false)
-      rote.push('/auth/home')
+      rote.push('/auth/user')
 
     } catch (error) {
       setEditar(true)

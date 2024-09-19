@@ -19,7 +19,7 @@ export default async function Component({ params }: { params: { id: string } }) 
 
   return (
     <div className="flex flex-col items-center gap-8 min-w-full mx-auto py-12 px-4 md:px-0">
-      <div className="flex flex-col items-center gap-6 md:w-1/3 md:min-w-96">
+      <div className="flex flex-col items-center gap-6 md:w-1/3 md:min-w-96 mb-72">
         <div className="flex flex-col items-center gap-4">
           <Avatar className="w-24 h-24">
             <AvatarImage src={user?.image ? user.image : "/placeholder-user.jpg"} />
@@ -109,52 +109,6 @@ export default async function Component({ params }: { params: { id: string } }) 
 
         </div>
       </div>
-
-      {/* <div className=" grid gap-6 w-80 items-center">
-        {user.casas?.map((casa: any) => (
-          <Card key={casa.id}>
-            <CardHeader>
-              <Image
-                src="/placeholder.png"
-                width={300}
-                height={350}
-                alt="Project Thumbnail"
-                className="rounded-t-lg object-cover"
-              />
-            </CardHeader>
-            <CardContent className="p-4 items-center">
-              <h3 className="text-lg font-semibold">{casa?.name}</h3>
-              <p className="text-sm text-muted-foreground">
-                <IconCasaLocate className="w-4 h-4 inline-block mr-1" />
-                {`${casa.quarto} quarto, ${casa.sala} Sala, ${casa.casadebanho} Casa de Banho, ${casa.cozinha} Cozinha e Quintal ${casa.quintal}`}
-              </p>
-
-              <Link
-                href={`/auth/home/${casa.id}`}
-                className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-6 text-sm my-4 font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring w-80"
-                prefetch={false}
-              >
-                Ver
-              </Link>
-            </CardContent>
-            <CardFooter>
-              <p>
-                <IconCasaCalendar className="w-4 h-4 inline-block mr-1" />
-                <span>{new Date(casa.updatedAt).toLocaleDateString('pt-Br', {
-                  weekday: 'short',
-                  year: '2-digit',
-                  month: 'short',
-                  day: '2-digit',
-                  hour: '2-digit',
-                  minute: '2-digit'
-                })
-                }</span>
-              </p>
-            </CardFooter>
-          </Card>
-        ))}
-      </div> */}
-
     </div>
   )
 }
