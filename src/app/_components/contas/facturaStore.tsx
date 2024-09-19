@@ -53,14 +53,6 @@ const estados = [
 
 
 export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, processos }) => {
-  if (!clientes) {
-    clientes = []
-  }
-
-  if (!processos) {
-    processos = []
-  }
-
   const form = useForm<z.infer<typeof clientForm>>({
     resolver: zodResolver(clientForm),
   })
@@ -68,13 +60,24 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
   const [loading, setLoading] = useState(false)
   const [editar, setEditar] = useState(true)
 
-  const [selectedClient, setSelectedClient] = useState('')
-  const [processosList, setProcessosList] = useState<IProcesso[]>([])
-
-
   const AUTH = authStore()
-  // const route = useRouter()
+  const rote = useRouter()
   const { status } = useSession()
+  const [processosList, setProcessosList] = useState<IProcesso[]>([])
+  const [escolhidos, setEscolhidos] = useState<IProcesso[]>([])
+  const [selectedClient, setSelectedClient] = useState('')
+
+  if (!clientes) {
+    clientes = []
+  }
+
+  if (!processos) {
+    processos = []
+  }
+  
+  function listaDeSelecionados(lista:IProcesso[]){
+    return setEscolhidos(lista)
+  }
 
   async function submitForm(body: z.infer<typeof clientForm>) {
     try {
@@ -140,18 +143,13 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
   }
 
   const salvar = async () => {
-    const formValue = form.getValues()
-    console.log(formValue)
+    // const formValue = form.getValues()
+    // console.log(formValue)
   }
-
-
+  
   useEffect(() => {
     if (processos.length > 0) {
       const processosDoClient = processos.filter((processo, i) => {
-        console.group('Processo ' + i)
-        console.log(processo.clientId)
-        console.log(selectedClient)
-        console.groupEnd()
         if (processo.clientId == selectedClient) {
           return processo
         }
@@ -336,7 +334,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
                 </div>
 
                 <div className="space-y-2 my-4 min-w-full">
-                  <DataTableProcessos listaDeProcessos={processosList} dataOnly={true} />
+                  <DataTableProcessos listaDeProcessos={processosList} dataOnly={true} dataProcessos={listaDeSelecionados} />
                 </div>
 
               </CollapsibleContent>
