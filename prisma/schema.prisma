@@ -111,6 +111,7 @@ model Profile {
   funcoes     Funcao[]
   Address     Address[]
   processos   Processo[]
+  Factura     Factura[]
 
   @@index([userId])
 }
@@ -151,7 +152,7 @@ model Processo {
   profile   Profile @relation(fields: [profileId], references: [id])
   profileId String
 
-  client   Client @relation(fields: [clientId], references: [id])
+  client   Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
   clientId String
 
   createdAt DateTime @default(now())
@@ -173,6 +174,7 @@ model Client {
   processos Processo[]
   userId    String
   user      User       @relation(fields: [userId], references: [id])
+  Factura   Factura[]
 
   @@index([userId])
 }
@@ -193,4 +195,27 @@ model Address {
   updatedAt DateTime @updatedAt
 
   @@index([profileId])
+}
+
+model Factura {
+  id          String   @id @default(cuid())
+  clientId    String
+  cliente     Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  processosId String[]
+  estado      String
+  descricao   String
+
+  total        Decimal
+  desconto     Decimal
+  valorApagar  Decimal
+  valorEmFalta Decimal
+
+  agente   Profile @relation(fields: [agenteId], references: [id])
+  agenteId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([clientId])
+  @@index([agenteId])
 }

@@ -37,3 +37,5 @@ export * from './user/ListaDeClientes'
 export * from './user/tabClientes'
 
 export * from './processo/create'
+
+export * from './contas/facturaStore'

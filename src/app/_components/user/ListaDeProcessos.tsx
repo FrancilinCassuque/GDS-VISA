@@ -34,14 +34,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { ICasasList, IClient, IProcesso } from "@/types"
+import { IProcesso } from "@/types"
 import { IconListFilter } from "../icons/dashboard"
-import { IconFile } from "../icons"
 import { useEffect, useState } from "react"
 import { Tabelaprocessos } from "./tableProcessos"
 
 interface IDataTableProps {
   listaDeProcessos: IProcesso[]
+  dataProcessos?: (data: IProcesso[]) => void
+  dataOnly?: boolean
 }
 
 export const columns: ColumnDef<IProcesso>[] = [
@@ -161,7 +162,7 @@ export const columns: ColumnDef<IProcesso>[] = [
 ]
 
 
-export const DataTableProcessos: React.FC<IDataTableProps> = ({ listaDeProcessos }) => {
+export const DataTableProcessos: React.FC<IDataTableProps> = ({ listaDeProcessos, dataProcessos, dataOnly }) => {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -197,14 +198,26 @@ export const DataTableProcessos: React.FC<IDataTableProps> = ({ listaDeProcessos
     })
 
     setClientSelection(arreyCli)
+
+    if (dataProcessos) {
+      dataProcessos(arreyCli)
+    }
   }, [rowSelection, setClientSelection])
 
   return (
     <div className="w-full">
-      <div className="text-center">
-        <h1>Processo</h1>
-        <h3 className="text-muted-foreground">Lista de Processos</h3>
-      </div>
+
+      {dataOnly ? (
+        <div className="text-center text-primary">
+          <h1>Processo do Cliente</h1>
+          <h3 className="text-muted-foreground">Selecione os Processos da Factura</h3>
+        </div>
+      ) : (
+        <div className="text-center">
+          <h1>Processo</h1>
+          <h3 className="text-muted-foreground">Lista de Processos</h3>
+        </div >
+      )}
 
       {/* Div do Input de filtro e a dropdown do filtro de comlunas */}
       <div className="flex items-center w-full py-4">
@@ -217,36 +230,41 @@ export const DataTableProcessos: React.FC<IDataTableProps> = ({ listaDeProcessos
           className="max-w-sm mr-10"
         />
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="h-7 gap-1 text-sm ml-auto">
-              <IconListFilter className="h-3.5 w-3.5" />
-              <span className="sr-only sm:not-sr-only">Filtrar</span>
-              <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {!dataOnly && (
+          <>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="h-7 gap-1 text-sm ml-auto">
+                  <IconListFilter className="h-3.5 w-3.5" />
+                  <span className="sr-only sm:not-sr-only">Filtrar</span>
+                  <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {table
+                  .getAllColumns()
+                  .filter((column) => column.getCanHide())
+                  .map((column) => {
+                    return (
+                      <DropdownMenuCheckboxItem
+                        key={column.id}
+                        className="capitalize"
+                        checked={column.getIsVisible()}
+                        onCheckedChange={(value) =>
+                          column.toggleVisibility(!!value)
+                        }
+                      >
+                        {column.id}
+                      </DropdownMenuCheckboxItem>
+                    )
+                  })}
+              </DropdownMenuContent>
+            </DropdownMenu>
 
-        <Tabelaprocessos processos={clientSelection} printOnly={true} />
+            <Tabelaprocessos processos={clientSelection} printOnly={true} />
+          </>
+        )}
+
       </div>
 
       {/* Search */}
@@ -326,6 +344,6 @@ export const DataTableProcessos: React.FC<IDataTableProps> = ({ listaDeProcessos
           </Button>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
