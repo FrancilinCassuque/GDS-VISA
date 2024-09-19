@@ -182,8 +182,13 @@ export const DataTableClientes: React.FC<IDataTableProps> = ({ listaDeClientes }
 
   return (
     <div className="w-full">
-      {/* Div do Input de filtro e a dropdown do filtro de comlunas */}
 
+      <div className="text-center">
+        <h1>Cliente</h1>
+        <h3 className="text-muted-foreground">Lista de Clientes</h3>
+      </div>
+
+      {/* Div do Input de filtro e a dropdown do filtro de comlunas */}
       <div className="flex items-center w-full py-4">
         <Input
           placeholder="Filtrar Por Nome..."
