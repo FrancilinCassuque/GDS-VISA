@@ -1,4 +1,4 @@
-import { ICasas, IProfile, IUser, IUserAuth, IUserProfileHome, TCasasList } from '../types'
+import { IUserAuth } from '../types'
 import { create } from 'zustand'
 
 

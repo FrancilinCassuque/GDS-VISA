@@ -20,6 +20,7 @@ import { Separator } from "@/components/ui/separator"
 import z from 'zod'
 import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "next/navigation"
 
 const pessoa = z.object({
   apelido: z.string().min(3),
@@ -35,6 +36,7 @@ export const PerfilData: React.FC = () => {
   const [editar, setEditar] = useState(true)
   const [loading, setLoading] = useState(false)
   const [erro, setErro] = useState(false)
+  const rota = useRouter()
 
   const form = useForm<z.infer<typeof pessoa>>({
     resolver: zodResolver(pessoa),
@@ -43,9 +45,9 @@ export const PerfilData: React.FC = () => {
   const auth = authStore()
 
   function updateAuth(perfil: IProfile) {
-    if(auth.userauth){
+    if (auth.userauth) {
       const authUpdate = auth.userauth
-  
+
       authUpdate.pessoa.id = perfil.id
       authUpdate.pessoa.nome = perfil.nome
       authUpdate.pessoa.pais = perfil.pais
@@ -56,8 +58,9 @@ export const PerfilData: React.FC = () => {
       authUpdate.pessoa.identidade.id = perfil.identidade?.id || ''
       authUpdate.pessoa.identidade.tipo = perfil.identidade?.tipo || ''
       authUpdate.pessoa.identidade.numero = perfil.identidade?.numero || ''
-  
+
       auth.startAuth(authUpdate)
+      rota.push('/auth/dashboard')
     }
   }
 

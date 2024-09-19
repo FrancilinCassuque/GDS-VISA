@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { updateBio } from "@/db"
 import { authStore } from "@/store"
 import { Loader } from "lucide-react"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -21,7 +21,7 @@ export const FormBio: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const form = useForm<IUpdateUser>()
   const auth = authStore()
-  const rote=useRouter()
+  const rote = useRouter()
 
   // const cancelar = () => {
   //   form.setValue('bio', auth.userauth?.pessoa?.bio || '')
