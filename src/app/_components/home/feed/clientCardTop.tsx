@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { IClient } from "@/types"
-import { CardActionTop, IconUserPlus } from "../.."
+import { CardAction, IconUserPlus } from "../.."
 
 interface ICardProps {
   clientes: IClient[]
@@ -38,7 +38,7 @@ export const CardClientsHomeTop: React.FC<ICardProps> = async ({ clientes }) => 
 
   return (
     <>
-      <CardActionTop
+      <CardAction
         textoDoTitle="Clientes"
         iconDoBotao={<IconUserPlus />}
         textoDoBotao="Registrar novo "

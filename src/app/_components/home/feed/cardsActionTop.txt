@@ -1,21 +1,22 @@
+
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Newspaper } from "lucide-react"
-import { IProcesso } from "@/types"
-import { CardAction } from "../.."
+import { IClient, IFactura, IProcesso } from "@/types"
+import { CardActionTop } from "../.."
 
 interface ICardProps {
-  processos: IProcesso[]
+  lista: IProcesso[] | IClient[] | IFactura[]
 }
 
-export const CardProcessoHomeTop: React.FC<ICardProps> = async ({ processos }) => {
+export const CardProcessoHomeTop: React.FC<ICardProps> = async ({ lista }) => {
 
-  if (processos instanceof Error) return
+  if ((lista as IProcesso[])) return
 
-  const abertos = processos.filter(pro => pro.estado == 'Activo')
-  const abertoPerc = (abertos.length / processos.length) * 100
+  const abertos = lista.filter(pro => pro.estado == 'Activo')
+  const abertoPerc = (abertos.length / lista.length) * 100
 
-  const semanaCliActual = processos.filter(cli => {
+  const semanaCliActual = lista.filter(cli => {
     if ((cli.updatedAt.getFullYear() == new Date().getFullYear()) &&
       (cli.updatedAt.getMonth() == new Date().getMonth()) &&
       (cli.updatedAt.getDate() >= new Date().getDate() - 7) &&
@@ -24,7 +25,7 @@ export const CardProcessoHomeTop: React.FC<ICardProps> = async ({ processos }) =
     }
   })
 
-  const semanaCliPassada = processos.filter(cli => {
+  const semanaCliPassada = lista.filter(cli => {
     if ((cli.updatedAt.getFullYear() == new Date().getFullYear()) &&
       (cli.updatedAt.getMonth() == new Date().getMonth()) &&
       (cli.updatedAt.getDate() >= new Date().getDate() - 14) &&
@@ -37,7 +38,7 @@ export const CardProcessoHomeTop: React.FC<ICardProps> = async ({ processos }) =
 
   return (
     <>
-      <CardAction
+      <CardActionTop
         textoDoTitle="Processos"
         iconDoBotao={<Newspaper />}
         textoDoBotao="Novo Processo "
@@ -46,12 +47,12 @@ export const CardProcessoHomeTop: React.FC<ICardProps> = async ({ processos }) =
       />
 
       {
-        processos.length > 0 && (
+        lista.length > 0 && (
           <>
             <Card x-chunk="dashboard-05-chunk-1">
               <CardHeader className="pb-2">
-                <CardDescription>Total de processos</CardDescription>
-                <CardTitle className="text-4xl text-center">{processos.length}</CardTitle>
+                <CardDescription>Total de lista</CardDescription>
+                <CardTitle className="text-4xl text-center">{lista.length}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-xs text-muted-foreground">{`+${EssaSemanaPorcento}% Essa semana`}</div>

@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from "@/components/ui/card"
+import { IClient, IFactura, IProcesso } from "@/types"
 interface ICardProps {
   textoDoTitle?: string
   textoDaDescricao?: string
@@ -9,8 +10,7 @@ interface ICardProps {
   iconDoBotao?: React.ReactNode
 }
 
-export const CardActionTop: React.FC<ICardProps> = async ({ iconDoBotao, linkDoBotao, textoDaDescricao, textoDoBotao, textoDoTitle }) => {
-
+export const CardAction: React.FC<ICardProps> = async ({ iconDoBotao, linkDoBotao, textoDaDescricao, textoDoBotao, textoDoTitle }) => {
   return (
     <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
       <CardHeader className="pb-3">
@@ -20,7 +20,7 @@ export const CardActionTop: React.FC<ICardProps> = async ({ iconDoBotao, linkDoB
         </CardDescription>
       </CardHeader>
       <CardFooter>
-      {/* '/auth/processo/create' */}
+        {/* '/auth/processo/create' */}
         <Link href={linkDoBotao || ''}>
           <Button>
             {iconDoBotao} <span className="px-4">{textoDoBotao} </span>
