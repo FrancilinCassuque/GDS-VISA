@@ -8,14 +8,14 @@ export default async function middleware(request: NextRequest) {
   // const sessionP = request.cookies.get('next-auth.session-token')
   // const pathname = request.nextUrl.pathname
   const login = request.nextUrl.pathname == '/user'
-  // const home = request.nextUrl.pathname == '/'
+  const home = request.nextUrl.pathname == '/'
   const signUp = request.nextUrl.pathname == '/user/create'
 
   if ((login || signUp) && session) {
     return NextResponse.redirect(new URL(getUrl('/auth/home')))
   }
 
-  if ((!login && !signUp) && (!session)) {
+  if ((!login && !signUp && !home) && (!session)) {
     return NextResponse.redirect(new URL(getUrl('/user')))
   }
 

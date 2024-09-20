@@ -2,9 +2,9 @@ import { IconPackage2, IconHome, IconShoppingCart, IconPackage, IconUsers, IconL
 
 export const listItem = [
   {
-    text: 'Dashboard',
+    text: 'GDS-VISA',
     icon: IconPackage2,
-    path: '/auth/dashboard',
+    path: '/',
     linkClass: 'flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
   },
   {

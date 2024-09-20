@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { Container } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
@@ -22,7 +21,7 @@ export const Home: React.FC = () => {
             <p className="text-2xl text-white mb-8">
               Consultoria Premium em Vistos e Viagens Internacionais
             </p>
-            <Button className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg">
+            <Button className="px-6 py-3 rounded-lg">
               <Link href={'/user'}>
                 Entrar
               </Link>
