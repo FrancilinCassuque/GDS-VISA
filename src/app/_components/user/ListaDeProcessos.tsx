@@ -45,7 +45,7 @@ interface IDataTableProps {
   dataOnly?: boolean
 }
 
-export const columns: ColumnDef<IProcesso>[] = [
+export const columnsProcesso: ColumnDef<IProcesso>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -171,7 +171,7 @@ export const DataTableProcessos: React.FC<IDataTableProps> = ({ listaDeProcessos
 
   const table = useReactTable({
     data: listaDeProcessos,
-    columns,
+    columns: columnsProcesso,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -308,7 +308,7 @@ export const DataTableProcessos: React.FC<IDataTableProps> = ({ listaDeProcessos
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={columnsProcesso.length}
                   className="h-24 text-center"
                 >
                   Sem Resultados.

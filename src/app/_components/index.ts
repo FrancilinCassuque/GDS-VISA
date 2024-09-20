@@ -20,6 +20,10 @@ export * from './home/create/create'
 export * from './home/carouselImage'
 export * from './home/homeDashboard'
 
+export * from './home/feed/cardAction'
+export * from './home/feed/clientCardTop'
+export * from './home/feed/processoCardTop'
+
 export * from './forms/profile/profile'
 export * from './forms/profile/address'
 export * from './forms/profile/formBio'
@@ -34,6 +38,8 @@ export * from './listas/listaDeOcupacoes'
 export * from './listas/cargos'
 
 export * from './user/ListaDeClientes'
+export * from './user/ListaDeProcessos'
+export * from './user/tableProcessos'
 export * from './user/tabClientes'
 
 export * from './processo/create'

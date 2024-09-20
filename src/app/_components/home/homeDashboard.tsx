@@ -1,15 +1,6 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { DataTableClientes, IconUserPlus, TabelaClientes } from ".."
-import { Newspaper } from "lucide-react"
+import { CardClientsHomeTop, CardProcessoHomeTop, DataTableClientes, DataTableProcessos } from ".."
 import { ClientIndex, processoIndex } from "@/db"
-import { CardClientsHomeTop } from "./feed/clientCardTop"
-import { CardProcessoHomeTop } from "./feed/processoCardTop"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Tabelaprocessos } from "../user/tableProcessos"
-import { DataTableProcessos } from "../user/ListaDeProcessos"
 
 export const HomeDashboard: React.FC = async () => {
   const clientes = await ClientIndex()
