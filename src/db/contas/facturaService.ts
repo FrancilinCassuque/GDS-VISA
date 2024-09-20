@@ -1,6 +1,6 @@
 'use server'
 
-import { IFactura, IFacturaStore, IFacturaUpdate, IProcesso } from "@/types"
+import { IFactura, IFacturaList, IFacturaStore, IFacturaUpdate, IProcesso } from "@/types"
 import prisma from "../prisma.index"
 
 export async function facturaStoreService(store: IFacturaStore, listaDeProcessos: IProcesso[]): Promise<string | Error> {
@@ -106,12 +106,39 @@ export async function FacturaUpdate(factura: IFacturaUpdate, listaDeProcessos: I
   }
 }
 
-export async function FacturaIndex(): Promise<IFactura[] | Error> {
+export async function FacturaIndex(): Promise<IFacturaList[] | Error> {
   try {
+    const facturasLis: IFacturaList[] = []
+    const listaDeFacturas = await prisma.factura.findMany({
+      include: {
+        cliente: {
+          select: {
+            nomecompleto: true
+          }
+        }
+      },
+      orderBy: {
+        updatedAt: 'desc'
+      }
+    })
 
-    const listaDeFacturas = await prisma.factura.findMany()
+    listaDeFacturas.map(factura => {
+      const facturaItem = {
+        id: factura.id,
+        nome: factura.cliente.nomecompleto,
+        totalProcessos: factura.processosId.length - 1,
+        updatedAt: factura.updatedAt,
+        estado: factura.estado,
+        descricao: factura.descricao,
+        total: factura.total,
+        valorApagar: factura.valorApagar,
+        valorEmFalta: factura.valorEmFalta
+      }
 
-    return listaDeFacturas
+      facturasLis.push(facturaItem)
+    })
+
+    return facturasLis
 
   } catch (error) {
     return new Error((error as { message: string }).message || 'Erro ao Actualizar Registro')

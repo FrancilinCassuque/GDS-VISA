@@ -1,4 +1,4 @@
-import { FileStack, Newspaper, SunMoon } from "lucide-react"
+import { FileStack, Newspaper, ReceiptText, SunMoon } from "lucide-react"
 
 export const IconFile = (props: any) => {
   return (
@@ -225,6 +225,12 @@ export const IconPlus = (props: any) => {
 export const IconNewInf = (props: any) => {
   return (
     <Newspaper {...props} />
+  )
+}
+
+export const IconNewFactura = (props: any) => {
+  return (
+    <ReceiptText {...props} />
   )
 }
 

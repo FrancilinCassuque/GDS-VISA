@@ -1,4 +1,4 @@
-import { CardAction } from "@/app/_components"
+import { CardAction, columnsFactura, TabelaDeDados, TabFacturas } from "@/app/_components"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { FacturaIndex } from "@/db"
@@ -37,6 +37,10 @@ export default async function Contas() {
               </CardFooter>
             </Card>
           </div>
+        </div>
+
+        <div>
+          <TabFacturas facturas={facturas} />
         </div>
 
       </div>

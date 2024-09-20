@@ -1,4 +1,4 @@
-import { IconPackage2, IconHome, IconShoppingCart, IconPackage, IconUsers, IconLineChart, IconSettings, IconPlus, IconUserPlus, IconNewInf, IconFactura, IconTema } from ".."
+import { IconPackage2, IconHome, IconShoppingCart, IconPackage, IconUsers, IconLineChart, IconSettings, IconPlus, IconUserPlus, IconNewInf, IconFactura, IconTema, IconNewFactura } from ".."
 
 export const listItem = [
   {
@@ -33,6 +33,12 @@ export const listItem = [
     text: 'Novo Processo',
     icon: IconNewInf,
     path: '/auth/processo/create',
+  },
+
+  {
+    text: 'Nova Factura',
+    icon: IconNewFactura,
+    path: '/auth/dashboard/contas/create',
   },
 
   
