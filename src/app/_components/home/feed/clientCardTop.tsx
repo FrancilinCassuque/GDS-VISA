@@ -42,7 +42,7 @@ export const CardClientsHomeTop: React.FC<ICardProps> = async ({ clientes }) => 
         textoDoTitle="Clientes"
         iconDoBotao={<IconUserPlus />}
         textoDoBotao="Registrar novo "
-        textoDaDescricao="Registra o Cliente para poder Abrir um Processo."
+        textoDaDescricao="Registra Cliente para poder Abrir Processo."
         linkDoBotao={'/auth/client/create'}
       />
 
