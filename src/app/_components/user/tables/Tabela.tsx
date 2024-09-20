@@ -1,7 +1,6 @@
 "use client"
 
 import {
-  ColumnDef,
   ColumnFiltersState,
   SortingState,
   VisibilityState,
@@ -12,17 +11,13 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
+import { ChevronDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
@@ -34,144 +29,29 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { IProcesso } from "@/types"
-import { IconListFilter } from "../icons/dashboard"
+import { IconListFilter } from "../../icons/dashboard"
 import { useEffect, useState } from "react"
-import { Tabelaprocessos } from "./tableProcessos"
 
 interface IDataTableProps {
-  listaDeProcessos: IProcesso[]
-  dataProcessos?: (data: IProcesso[]) => void
+  colunaModel: any
+  listaDeDados: any[]
+  listaPrint?: React.ReactNode
+  dataProcessos?: (data: any[]) => void
   dataOnly?: boolean
+  filtrarColunaPor?: string
+  listaDe: string
 }
 
-export const columnsProcesso: ColumnDef<IProcesso>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Selecionar Tudo"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Selecionar Linha"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "nomecompleto",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Nome
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => {
-      const preco = row.getValue("preco") as number
-      const precoFormat = preco.toLocaleString('AO', { style: 'currency', currency: 'AOA' })
-
-      return (
-        <>
-          <div className="capitalize">{row.getValue('nomecompleto')}</div>
-          <div className="text-sm text-muted-foreground md:inline">{precoFormat} </div>
-        </>
-      )
-    },
-  },
-  {
-    accessorKey: "passaport",
-    header: "Passaport",
-    cell: ({ row }) => <div className="uppercase text-center">{row.getValue("passaport")}</div>,
-  },
-
-  {
-    accessorKey: "tipo",
-    header: () => <div className="invisible sm:visible">Categória</div>,
-    cell: ({ row }) => <div className="invisible sm:visible uppercase text-center">{row.getValue("tipo")}</div>,
-  },
-
-
-  {
-    accessorKey: "estado",
-    header: "Estado",
-    cell: ({ row }) => <div className="uppercase text-center">{row.getValue("estado")}</div>,
-  },
-
-  {
-    accessorKey: "updatedAt",
-    header: () => <div className="text-right">Data</div>,
-    cell: ({ row }) => {
-
-      const date = new Date(row.getValue('updatedAt')).toLocaleDateString()
-
-      return <div className="text-right font-medium">{date}</div>
-    },
-  },
-
-  {
-    accessorKey: "preco",
-    header: () => <div className="sr-only hidden">Preço</div>,
-    cell: ({ row }) => {
-      return <div className="text-right font-medium sr-only hidden">{row.getValue('preco')}</div>
-    },
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const payment = row.original
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Abri menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Acçoes</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copiar Id
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
-  },
-]
-
-
-export const DataTableProcessos: React.FC<IDataTableProps> = ({ listaDeProcessos, dataProcessos, dataOnly }) => {
+export const TabelaDeDados: React.FC<IDataTableProps> = ({ listaDeDados, dataProcessos, dataOnly, listaPrint, colunaModel, filtrarColunaPor, listaDe }) => {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
-  const [clientSelection, setClientSelection] = useState<IProcesso[]>([])
+  const [clientSelection, setClientSelection] = useState<any[]>([])
   const [rowSelection, setRowSelection] = useState({})
 
   const table = useReactTable({
-    data: listaDeProcessos,
-    columns: columnsProcesso,
+    data: listaDeDados,
+    columns: colunaModel,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -190,7 +70,7 @@ export const DataTableProcessos: React.FC<IDataTableProps> = ({ listaDeProcessos
 
   useEffect(() => {
     const selectedValues = Object.keys(rowSelection)
-    const arreyCli: IProcesso[] = []
+    const arreyCli: any[] = []
 
     selectedValues.map(linha => {
       const cli = table.getRow(linha).original
@@ -209,23 +89,23 @@ export const DataTableProcessos: React.FC<IDataTableProps> = ({ listaDeProcessos
 
       {dataOnly ? (
         <div className="text-center text-primary">
-          <h1>Processo do Cliente</h1>
-          <h3 className="text-muted-foreground">Selecione os Processos da Factura</h3>
+          <h1>{listaDe} do Cliente</h1>
+          <h3 className="text-muted-foreground">Selecione {listaDe}</h3>
         </div>
       ) : (
         <div className="text-center">
-          <h1>Processo</h1>
-          <h3 className="text-muted-foreground">Lista de Processos</h3>
+          <h1>{listaDe}</h1>
+          <h3 className="text-muted-foreground">Lista de {listaDe}</h3>
         </div >
       )}
 
       {/* Div do Input de filtro e a dropdown do filtro de comlunas */}
       <div className="flex items-center w-full py-4">
         <Input
-          placeholder="Filtrar Por Nome..."
-          value={(table.getColumn("nomecompleto")?.getFilterValue() as string) ?? ""}
+          placeholder="Filtrar..."
+          value={(table.getColumn(filtrarColunaPor ? filtrarColunaPor : "nomecompleto")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("nomecompleto")?.setFilterValue(event.target.value)
+            table.getColumn(filtrarColunaPor ? filtrarColunaPor : "nomecompleto")?.setFilterValue(event.target.value)
           }
           className="max-w-sm mr-10"
         />
@@ -261,7 +141,7 @@ export const DataTableProcessos: React.FC<IDataTableProps> = ({ listaDeProcessos
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Tabelaprocessos processos={clientSelection} printOnly={true} />
+            {listaPrint}
           </>
         )}
 
@@ -308,7 +188,7 @@ export const DataTableProcessos: React.FC<IDataTableProps> = ({ listaDeProcessos
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columnsProcesso.length}
+                  colSpan={colunaModel.length}
                   className="h-24 text-center"
                 >
                   Sem Resultados.

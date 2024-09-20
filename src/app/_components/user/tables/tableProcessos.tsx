@@ -1,11 +1,10 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
-// import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell, TableFooter } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { IconFile } from ".."
+import { IconFile } from "../../icons"
 import { useReactToPrint } from 'react-to-print'
 import { useRef } from "react"
 import { IProcesso } from "@/types"
@@ -16,7 +15,7 @@ interface ITableProps {
   printOnly?: boolean
 }
 
-export const Tabelaprocessos: React.FC<ITableProps> = ({ processos, printOnly }) => {
+export const TabelaProcessos: React.FC<ITableProps> = ({ processos, printOnly }) => {
   const tableProcessoRef = useRef(null)
 
   const printTable = useReactToPrint({

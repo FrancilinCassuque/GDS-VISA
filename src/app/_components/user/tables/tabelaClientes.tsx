@@ -1,14 +1,12 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell, TableFooter } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { IconFile, IconListFilter } from ".."
+import { IconFile } from "../../icons"
 import { useReactToPrint } from 'react-to-print'
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { IClient } from "@/types"
 import Image from "next/image"
 

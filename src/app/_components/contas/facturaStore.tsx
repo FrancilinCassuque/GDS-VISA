@@ -18,11 +18,10 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { IClient, IFacturaStore, IProcesso, TClientShow } from "@/types"
-import { IconChevronDown } from "@/app/_components"
+import { columnsCliente, columnsProcesso, IconChevronDown, TabelaClientes, TabelaDeDados, TabelaProcessos } from "@/app/_components"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
-import { DataTableProcessos } from "../user/ListaDeProcessos"
 import { facturaStoreService } from "@/db"
 
 export const estados = [
@@ -37,7 +36,7 @@ export const estados = [
 
 const facturaForm = z.object({
   desconto: z.string(),
-  estado: z.enum(['1ª Parcela Pendente','2ª Parcela Pendente', '1ª Pago', '2ª Pago', 'Cancelado', 'Aguardando Reembolso', 'Reembolsado', 'Total Pago']),
+  estado: z.enum(['1ª Parcela Pendente', '2ª Parcela Pendente', '1ª Pago', '2ª Pago', 'Cancelado', 'Aguardando Reembolso', 'Reembolsado', 'Total Pago']),
   clientId: z.string(),
   descricao: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(3, 'muito curto!!').max(225, 'Atingiu o Limite de caracter apenas 50'),
 })
@@ -99,7 +98,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
           setLoading(false)
           return toast({
             title: 'Error!',
-            description: <pre><code> Erro ao Registrar Cliente {JSON.stringify(novaFactura )} </code></pre>,
+            description: <pre><code> Erro ao Registrar Cliente {JSON.stringify(novaFactura)} </code></pre>,
             variant: 'destructive'
           })
         }
@@ -331,7 +330,15 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
                 </div>
 
                 <div className="space-y-2 my-4 min-w-full">
-                  <DataTableProcessos listaDeProcessos={processosList} dataOnly={true} dataProcessos={listaDeSelecionados} />
+                  <TabelaDeDados
+                    colunaModel={columnsProcesso}
+                    listaDeDados={processosList}
+                    dataOnly={true}
+                    dataProcessos={listaDeSelecionados}
+                    listaDe="Processos"
+                    listaPrint={<TabelaProcessos processos={escolhidos} printOnly={true} />}
+                  />
+
                 </div>
 
               </CollapsibleContent>

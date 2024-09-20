@@ -23,6 +23,8 @@ export * from './home/homeDashboard'
 export * from './home/feed/cardAction'
 export * from './home/feed/clientCardTop'
 export * from './home/feed/processoCardTop'
+export * from './home/feed/tabs/processos'
+export * from './home/feed/tabs/clients'
 
 export * from './forms/profile/profile'
 export * from './forms/profile/address'
@@ -37,10 +39,11 @@ export * from './listas/listaDeItens'
 export * from './listas/listaDeOcupacoes'
 export * from './listas/cargos'
 
-export * from './user/ListaDeClientes'
-export * from './user/ListaDeProcessos'
-export * from './user/tableProcessos'
-export * from './user/tabClientes'
+export * from './user//tables/tableProcessos'
+export * from './user/tables/tabelaClientes'
+export * from './user/tables/Tabela'
+
+export * from './user/tables/colunasModel/colunas'
 
 export * from './processo/create'
 

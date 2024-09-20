@@ -1,35 +1,19 @@
-import { CardClientsHomeTop, CardProcessoHomeTop, DataTableClientes, DataTableProcessos } from ".."
+import { CardClientsHomeTop, CardProcessoHomeTop, TabProcessos, TabClientes } from ".."
 import { ClientIndex, processoIndex } from "@/db"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useState } from "react"
+import { IClient, IProcesso } from "@/types"
 
 export const HomeDashboard: React.FC = async () => {
   const clientes = await ClientIndex()
   const processos = await processoIndex()
+  // const [selectedClients, setSelectedClientes] = useState<IClient[]>()
 
   if (clientes instanceof Error) return
   if (processos instanceof Error) return
 
   const clientesAtivos = clientes.filter(cli => cli.processos.length > 0)
 
-  const semanaCliActual = clientes.filter(cli => {
-    if ((cli.updatedAt.getFullYear() == new Date().getFullYear()) &&
-      (cli.updatedAt.getMonth() == new Date().getMonth()) &&
-      (cli.updatedAt.getDate() >= new Date().getDate() - 7) &&
-      (cli.updatedAt.getDate() <= new Date().getDate())) {
-      return cli
-    }
-  })
-
-  const semanaCliPassada = clientes.filter(cli => {
-    if ((cli.updatedAt.getFullYear() == new Date().getFullYear()) &&
-      (cli.updatedAt.getMonth() == new Date().getMonth()) &&
-      (cli.updatedAt.getDate() >= new Date().getDate() - 14) &&
-      (cli.updatedAt.getDate() <= new Date().getDate() + 7)) {
-      return cli
-    }
-  })
-
-  const EssaSemanaPorcento = (semanaCliActual.length / semanaCliPassada.length) * 100
 
   return (
     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3 sm:mb-64">
@@ -57,23 +41,23 @@ export const HomeDashboard: React.FC = async () => {
             </TabsList>
 
           </div>
-          
+
           {clientes.length > 0 && (
             <TabsContent value="totalClientes">
-              <DataTableClientes listaDeClientes={clientes} />
+              <TabClientes clientes={clientes} />
             </TabsContent>
           )}
 
 
           {clientesAtivos.length > 0 && (
             <TabsContent value="clientesActivos">
-              <DataTableClientes listaDeClientes={clientesAtivos} />
+              <TabClientes clientes={clientesAtivos} />
             </TabsContent>
           )}
 
           {processos.length > 0 && (
             <TabsContent value="processos">
-              <DataTableProcessos listaDeProcessos={processos} />
+              <TabProcessos processos={processos} />
             </TabsContent>
           )}
         </Tabs>
