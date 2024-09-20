@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { IClient } from "@/types"
-import { IconUserPlus } from "../.."
+import { CardActionTop, IconUserPlus } from "../.."
 
 interface ICardProps {
   clientes: IClient[]
@@ -38,21 +38,13 @@ export const CardClientsHomeTop: React.FC<ICardProps> = async ({ clientes }) => 
 
   return (
     <>
-      <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
-        <CardHeader className="pb-3">
-          <CardTitle>Clientes</CardTitle>
-          <CardDescription className="max-w-lg text-balance leading-relaxed">
-            Registra o Cliente para poder Abrir um Processo.
-          </CardDescription>
-        </CardHeader>
-        <CardFooter>
-          <Link href={'/auth/client/create'}>
-            <Button>
-              <IconUserPlus /> <span className="px-4">Registrar novo </span>
-            </Button>
-          </Link>
-        </CardFooter>
-      </Card>
+      <CardActionTop
+        textoDoTitle="Clientes"
+        iconDoBotao={<IconUserPlus />}
+        textoDoBotao="Registrar novo "
+        textoDaDescricao="Registra o Cliente para poder Abrir um Processo."
+        linkDoBotao={'/auth/client/create'}
+      />
 
       {
         clientes.length > 0 && (
@@ -71,17 +63,17 @@ export const CardClientsHomeTop: React.FC<ICardProps> = async ({ clientes }) => 
             </Card>
 
             <Card x-chunk="dashboard-05-chunk-2">
-                <CardHeader className="pb-2">
-                  <CardDescription>Clientes Activos</CardDescription>
-                  <CardTitle className="text-4xl">{clientesAtivos.length}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-xs text-muted-foreground">{`+${ativosPerc.toFixed()}% com processos Activos`}</div>
-                </CardContent>
-                <CardFooter>
-                  <Progress value={ativosPerc} aria-label="12% increase" />
-                </CardFooter>
-              </Card>
+              <CardHeader className="pb-2">
+                <CardDescription>Clientes Activos</CardDescription>
+                <CardTitle className="text-4xl">{clientesAtivos.length}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-xs text-muted-foreground">{`+${ativosPerc.toFixed()}% com processos Activos`}</div>
+              </CardContent>
+              <CardFooter>
+                <Progress value={ativosPerc} aria-label="12% increase" />
+              </CardFooter>
+            </Card>
           </>
         )
       }

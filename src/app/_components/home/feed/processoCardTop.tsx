@@ -1,9 +1,8 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Newspaper } from "lucide-react"
 import { IProcesso } from "@/types"
+import { CardActionTop } from "../.."
 
 interface ICardProps {
   processos: IProcesso[]
@@ -38,21 +37,13 @@ export const CardProcessoHomeTop: React.FC<ICardProps> = async ({ processos }) =
 
   return (
     <>
-      <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
-        <CardHeader className="pb-3">
-          <CardTitle>Processos</CardTitle>
-          <CardDescription className="max-w-lg text-balance leading-relaxed">
-            Abrir um Processo.
-          </CardDescription>
-        </CardHeader>
-        <CardFooter>
-          <Link href={'/auth/processo/create'}>
-            <Button>
-              <Newspaper /> <span className="px-4">Novo Processo </span>
-            </Button>
-          </Link>
-        </CardFooter>
-      </Card>
+      <CardActionTop
+        textoDoTitle="Processos"
+        iconDoBotao={<Newspaper />}
+        textoDoBotao="Novo Processo "
+        textoDaDescricao="Abra Processos. para poder Gerar Facturas."
+        linkDoBotao={'/auth/processo/create'}
+      />
 
       {
         processos.length > 0 && (
