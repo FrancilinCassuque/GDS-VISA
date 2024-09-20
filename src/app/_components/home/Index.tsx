@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { Footer } from '..'
 
 export const Home: React.FC = () => {
   return (
@@ -22,10 +23,9 @@ export const Home: React.FC = () => {
               Consultoria Premium em Vistos e Viagens Internacionais
             </p>
             <Button className="px-6 py-3 rounded-lg">
-              <Link href={'/user'}>
-                Entrar
+              <Link href={'#'}>
+                Entre em contato
               </Link>
-              {/* Entre em contato */}
             </Button>
           </div>
         </div>
@@ -49,7 +49,14 @@ export const Home: React.FC = () => {
               <p className="text-gray-600">
                 Orientação completa para obtenção de vistos, incluindo análise de documentos e acompanhamento do processo.
               </p>
+
+              <Button className="px-6 py-3  my-4 rounded-lg">
+                <Link href={'#'}>
+                  Saber Mais...
+                </Link>
+              </Button>
             </div>
+
             <div className="bg-gray-100 p-6 rounded-lg shadow-lg max-w-xs text-center">
               <p className="text-xl font-semibold mb-2">
                 Planejamento de Viagens
@@ -57,7 +64,14 @@ export const Home: React.FC = () => {
               <p className="text-gray-600">
                 Assistência na criação de itinerários personalizados e recomendações de viagens.
               </p>
+
+              <Button className="px-6 py-3  my-4 rounded-lg">
+                <Link href={'#'}>
+                  Saber Mais...
+                </Link>
+              </Button>
             </div>
+
             <div className="bg-gray-100 p-6 rounded-lg shadow-lg max-w-xs text-center">
               <p className="text-xl font-semibold mb-2">
                 Suporte Completo
@@ -65,10 +79,17 @@ export const Home: React.FC = () => {
               <p className="text-gray-600">
                 Acompanhamento contínuo durante o processo de visto e viagem, garantindo a tranquilidade de nossos clientes.
               </p>
+
+              <Button className="px-6 py-3  my-4 rounded-lg">
+                <Link href={'#'}>
+                  Saber Mais...
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   )
 }
