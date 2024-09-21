@@ -151,7 +151,6 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
         }
       })
 
-      // alert(processosDoClient)
       setProcessosList(processosDoClient)
     }
 

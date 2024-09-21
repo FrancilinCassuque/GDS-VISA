@@ -36,7 +36,7 @@ export default function Component() {
 
   return (
     <div className="flex flex-col items-center gap-8 min-w-full mx-auto py-12 px-4 md:px-0">
-      <div className="flex flex-col items-center gap-6 md:w-1/3 md:min-w-96 mb-72">
+      <div className="flex flex-col items-center gap-6 md:w-1/3 md:min-w-96 mb-52">
         <div className="flex flex-col items-center gap-4">
           <Avatar className="w-24 h-24">
             <AvatarImage src={user?.image ? user.image : "/placeholder-user.jpg"} />
