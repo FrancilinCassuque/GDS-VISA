@@ -140,8 +140,9 @@ export const TabelaDeDados: React.FC<IDataTableProps> = ({ listaDeDados, dataPro
                   })}
               </DropdownMenuContent>
             </DropdownMenu>
-
-            {listaPrint}
+            <div className="mx-2">
+              {listaPrint}
+            </div>
           </>
         )}
 
