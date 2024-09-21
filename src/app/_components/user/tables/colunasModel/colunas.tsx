@@ -101,7 +101,7 @@ export const columnsProcesso: ColumnDef<IProcesso>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
+            <Button variant="ghost" className="h-2 w-2 p-0">
               <span className="sr-only">Abri menu</span>
               <MoreHorizontal className="h-4 w-2" />
             </Button>
@@ -113,8 +113,8 @@ export const columnsProcesso: ColumnDef<IProcesso>[] = [
             >
               Copiar Id
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            {/* <DropdownMenuItem>View customer</DropdownMenuItem>
+            {/* <DropdownMenuSeparator />
+            <DropdownMenuItem>View customer</DropdownMenuItem>
             <DropdownMenuItem>View payment details</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
@@ -198,7 +198,7 @@ export const columnsCliente: ColumnDef<IClient>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
+            <Button variant="ghost" className="h-2 w-2 p-0">
               <span className="sr-only">Abri menu</span>
               <MoreHorizontal className="h-4 w-2" />
             </Button>
@@ -210,8 +210,8 @@ export const columnsCliente: ColumnDef<IClient>[] = [
             >
               Copiar Id
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            {/* <DropdownMenuItem>View customer</DropdownMenuItem>
+            {/* <DropdownMenuSeparator />
+            <DropdownMenuItem>View customer</DropdownMenuItem>
             <DropdownMenuItem>View payment details</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
@@ -345,7 +345,7 @@ export const columnsFactura: ColumnDef<IFacturaList>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
+            <Button variant="ghost" className="h-2 w-2 p-0">
               <span className="sr-only">Abri menu</span>
               <MoreHorizontal className="h-4 w-2" />
             </Button>
@@ -357,8 +357,8 @@ export const columnsFactura: ColumnDef<IFacturaList>[] = [
             >
               Copiar Id
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            {/* <DropdownMenuItem>View customer</DropdownMenuItem>
+            {/* <DropdownMenuSeparator />
+            <DropdownMenuItem>View customer</DropdownMenuItem>
             <DropdownMenuItem>View payment details</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
