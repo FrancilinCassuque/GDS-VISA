@@ -50,7 +50,7 @@ export const columnsProcesso: ColumnDef<IProcesso>[] = [
       return (
         <>
           <div className="capitalize">{row.getValue('nomecompleto')}</div>
-          <div className="text-sm text-muted-foreground md:inline">{precoFormat} </div>
+          <div className="text-md text-muted-foreground md:inline">{precoFormat} </div>
         </>
       )
     },
@@ -63,8 +63,8 @@ export const columnsProcesso: ColumnDef<IProcesso>[] = [
 
   {
     accessorKey: "tipo",
-    header: () => <div className="sr-only sm:not-sr-only text-center">Categória</div>,
-    cell: ({ row }) => <div className="sr-only sm:not-sr-only uppercase text-center">{row.getValue("tipo")}</div>,
+    header: () => <div className="sr-only md:not-sr-only text-center">Categória</div>,
+    cell: ({ row }) => <div className="sr-only md:not-sr-only uppercase text-center">{row.getValue("tipo")}</div>,
   },
 
 
@@ -76,12 +76,12 @@ export const columnsProcesso: ColumnDef<IProcesso>[] = [
 
   {
     accessorKey: "updatedAt",
-    header: () => <div className="text-right">Data</div>,
+    header: () => <div className="text-right sr-only md:not-sr-only">Data</div>,
     cell: ({ row }) => {
 
       const date = new Date(row.getValue('updatedAt')).toLocaleDateString()
 
-      return <div className="text-right font-medium">{date}</div>
+      return <div className="text-right sr-only md:not-sr-only font-medium">{date}</div>
     },
   },
 
@@ -114,8 +114,8 @@ export const columnsProcesso: ColumnDef<IProcesso>[] = [
               Copiar Id
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            {/* <DropdownMenuItem>View customer</DropdownMenuItem>
+            <DropdownMenuItem>View payment details</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -173,12 +173,12 @@ export const columnsCliente: ColumnDef<IClient>[] = [
   },
   {
     accessorKey: "updatedAt",
-    header: () => <div className="text-right">Data</div>,
+    header: () => <div className="text-right sr-only md:not-sr-only">Data</div>,
     cell: ({ row }) => {
 
       const date = new Date(row.getValue('updatedAt')).toLocaleDateString()
 
-      return <div className="text-right font-medium">{date}</div>
+      return <div className="text-right sr-only md:not-sr-only font-medium">{date}</div>
     },
   },
 
@@ -211,8 +211,8 @@ export const columnsCliente: ColumnDef<IClient>[] = [
               Copiar Id
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            {/* <DropdownMenuItem>View customer</DropdownMenuItem>
+            <DropdownMenuItem>View payment details</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -267,8 +267,8 @@ export const columnsFactura: ColumnDef<IFacturaList>[] = [
   // Total Processos
   {
     accessorKey: "totalProcessos",
-    header: () => <div className="sr-only sm:not-sr-only text-center">Nº de Processos</div>,
-    cell: ({ row }) => <div className="sr-only sm:not-sr-only text-center">{row.getValue("totalProcessos")}</div>,
+    header: () => <div className="sr-only md:not-sr-only text-center">Nº de Processos</div>,
+    cell: ({ row }) => <div className="sr-only md:not-sr-only text-center">{row.getValue("totalProcessos")}</div>,
   },
   // Estado
   {
@@ -280,24 +280,24 @@ export const columnsFactura: ColumnDef<IFacturaList>[] = [
   // Valor em Falta e a Pagar
   {
     accessorKey: "valorApagar",
-    header: () => <div className="text-center sr-only sm:not-sr-only">valor A pagar</div>,
+    header: () => <div className="text-center sr-only md:not-sr-only">valor A pagar</div>,
     cell: ({ row }) => {
       const valor = row.getValue("valorApagar") as number
       const valorFormat = valor.toLocaleString('AO', { style: 'currency', currency: 'AOA' })
       return (
-        <div className="sr-only sm:not-sr-only">{valorFormat}</div>
+        <div className="sr-only md:not-sr-only">{valorFormat}</div>
       )
     },
   },
 
   {
     accessorKey: "valorEmFalta",
-    header: () => <div className="text-center sr-only sm:not-sr-only">valor Em Falta</div>,
+    header: () => <div className="text-center sr-only md:not-sr-only">valor Em Falta</div>,
     cell: ({ row }) => {
       const valor = row.getValue("valorEmFalta") as number
       const valorFormat = valor.toLocaleString('AO', { style: 'currency', currency: 'AOA' })
       return (
-        <div className="sr-only sm:not-sr-only">{valorFormat}</div>
+        <div className="sr-only md:not-sr-only">{valorFormat}</div>
       )
     },
   },
@@ -318,12 +318,12 @@ export const columnsFactura: ColumnDef<IFacturaList>[] = [
   // data
   {
     accessorKey: "updatedAt",
-    header: () => <div className="text-right sr-only sm:not-sr-only">Actualizado Em</div>,
+    header: () => <div className="text-right sr-only md:not-sr-only">Actualizado Em</div>,
     cell: ({ row }) => {
 
       const date = new Date(row.getValue('updatedAt')).toLocaleDateString()
 
-      return <div className="text-right font-medium sr-only sm:not-sr-only">{date}</div>
+      return <div className="text-right font-medium sr-only md:not-sr-only">{date}</div>
     },
   },
   // descrição
@@ -358,8 +358,8 @@ export const columnsFactura: ColumnDef<IFacturaList>[] = [
               Copiar Id
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            {/* <DropdownMenuItem>View customer</DropdownMenuItem>
+            <DropdownMenuItem>View payment details</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       )

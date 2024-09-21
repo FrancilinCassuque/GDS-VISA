@@ -57,9 +57,7 @@ export const HomeDashboard: React.FC = async () => {
 
           {processos.length > 0 && (
             <TabsContent value="processos">
-              <div className="space-y-2 my-4 min-w-full">
                 <TabProcessos processos={processos} />
-              </div>
             </TabsContent>
           )}
         </Tabs>
