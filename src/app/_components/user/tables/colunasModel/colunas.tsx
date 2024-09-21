@@ -305,12 +305,12 @@ export const columnsFactura: ColumnDef<IFacturaList>[] = [
   // Total
   {
     accessorKey: "total",
-    header: () => <div className="text-center">Valor da Factura</div>,
+    header: () => <div className="text-center sr-only md:not-sr-only">Valor da Factura</div>,
     cell: ({ row }) => {
       const valor = row.getValue("total") as number
       const valorFormat = valor.toLocaleString('AO', { style: 'currency', currency: 'AOA' })
       return (
-        <div className="">{valorFormat}</div>
+        <div className=" sr-only md:not-sr-only">{valorFormat}</div>
       )
     },
   },
