@@ -3,6 +3,8 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { Footer } from '..'
+import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
+import { Loader2Icon } from 'lucide-react'
 
 export const Home: React.FC = () => {
   return (
@@ -90,6 +92,22 @@ export const Home: React.FC = () => {
         </div>
       </section>
       <Footer />
+
+      {/* <AlertDialog open={false}>
+          <AlertDialogContent className="w-full mx-auto border-red-600">
+            <AlertDialogHeader>
+              <AlertDialogTitle className="flex flew-col col-end-2 justify-center text-red-500"><FileWarning /> Erro ao Registrar!</AlertDialogTitle>
+            </AlertDialogHeader>
+            <AlertDialogDescription className="text-center">Codigo de Autorizacao Errodo. Por faver🙏, Entra em contacto com a Gota D` Sol ou tenta novamente.</AlertDialogDescription>
+            <AlertDialogFooter>
+              <AlertDialogCancel> <Link href={'/'}>Voltar</Link> </AlertDialogCancel>
+              <Button className="" variant={'destructive'} onClick={(e) => {
+                e.preventDefault()
+                // setFormError(false)
+              }}><Loader2Icon className="h-6 w-6 mx-2" /> Tentar de Novo</Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog> */}
     </div>
   )
 }
