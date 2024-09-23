@@ -6,7 +6,7 @@ export const GDSPrivacy: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <div className="space-y-4">
+      <div className="space-y-4 text-justify">
         <h2 className="text-2xl font-semibold text-center">Política de Privacidade do Aplicativo <strong>GOTA D' SOL - VISA</strong></h2>
         <p className="text-muted-foreground">Data de Vigência: {new Date().toLocaleDateString()}</p>
 
@@ -17,22 +17,21 @@ export const GDSPrivacy: React.FC = () => {
         <h3 className="text-xl font-semibold">1. Informações Coletadas</h3>
         <p>
           Coletamos as seguintes categorias de informações:
-
-          <ol>
-            <li>
-              Informações Pessoais: Nome, e-mail, telefone, endereço, dados de pagamento e outras informações fornecidas ao criar uma conta ou realizar reservas.
-            </li>
-            <li>
-              Informações de Uso: Dados sobre como você interage com o aplicativo, incluindo informações de dispositivos, endereços IP, páginas visitadas e tempo gasto.
-
-            </li>
-          </ol>
         </p>
+
+        <ol className="indent-5">
+          <li>
+            Informações Pessoais: Nome, e-mail, telefone, endereço, dados de pagamento e outras informações fornecidas ao criar uma conta ou realizar reservas.
+          </li>
+          <li>
+            Informações de Uso: Dados sobre como você interage com o aplicativo, incluindo informações de dispositivos, endereços IP, páginas visitadas e tempo gasto.
+          </li>
+        </ol>
 
         <h3 className="text-xl font-semibold">2. Uso das Informações</h3>
         <p>
           Utilizamos suas informações para:
-          <ol>
+          <ol className="indent-5">
             <li>
               Facilitar reservas e pagamentos.
             </li>
@@ -51,7 +50,7 @@ export const GDSPrivacy: React.FC = () => {
         <h3 className="text-xl font-semibold">3. Compartilhamento de Informações</h3>
         <p>
           Não vendemos suas informações pessoais. Podemos compartilhar suas informações com:
-          <ol>
+          <ol className="indent-5">
             <li>
               Fornecedores de Serviços: Empresas parceiras envolvidas na realização de reservas (hotéis, companhias aéreas, etc.).
             </li>

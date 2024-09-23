@@ -6,7 +6,7 @@ export const GDSTerms: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <div className="space-y-4">
+      <div className="space-y-4 text-justify">
         <h2 className="text-2xl font-semibold text-center">Termos e Condições de Uso do Aplicativo <strong>GOTA D' SOL - VISA</strong></h2>
         <p className="text-muted-foreground">Data de Vigência: {new Date().toLocaleDateString()}</p>
 
@@ -18,7 +18,7 @@ export const GDSTerms: React.FC = () => {
         <h3 className="text-xl font-semibold">2. Definições</h3>
         <p>
           Para fins destes Termos, os seguintes termos têm os seguintes significados:
-          <ol>
+          <ol className="indent-5">
             <li>
               <strong>Aplicativo</strong> refere-se ao software disponibilizado pela <strong>GOTA D' SOL - VISA</strong>.
             </li>
