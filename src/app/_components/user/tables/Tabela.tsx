@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/table"
 import { IconListFilter } from "../../icons/dashboard"
 import { useEffect, useState } from "react"
+import { useMediaQuery } from 'usehooks-ts'
 
 interface IDataTableProps {
   colunaModel: any
@@ -48,6 +49,7 @@ export const TabelaDeDados: React.FC<IDataTableProps> = ({ listaDeDados, dataPro
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [clientSelection, setClientSelection] = useState<any[]>([])
   const [rowSelection, setRowSelection] = useState({})
+  const mediaMobile = useMediaQuery('(min-width:768px)')
 
   const table = useReactTable({
     data: listaDeDados,
@@ -83,6 +85,31 @@ export const TabelaDeDados: React.FC<IDataTableProps> = ({ listaDeDados, dataPro
       dataProcessos(arreyCli)
     }
   }, [rowSelection, setClientSelection])
+
+  useEffect(() => {
+    if (mediaMobile) {
+      table
+        .getAllColumns()
+        .filter((column) => column.getCanHide())
+        .map((column) => {
+          column.toggleVisibility(true)
+        })
+    } else {
+      table
+        .getAllColumns()
+        .filter((column) => column.getCanHide())
+        .map((column) => {
+          if (column.id == 'nomecompleto') {
+            column.toggleVisibility(true)
+          } else if (column.id == 'nome') {
+            column.toggleVisibility(true)
+          }else{
+            column.toggleVisibility(false)
+          }
+
+        })
+    }
+  }, [mediaMobile])
 
   return (
     <div className="w-full">

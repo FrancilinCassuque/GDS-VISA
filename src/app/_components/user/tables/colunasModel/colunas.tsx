@@ -3,9 +3,10 @@
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { IClient, IFactura, IFacturaList, IProcesso } from "@/types"
+import { IClient, IFacturaList, IProcesso } from "@/types"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import Link from "next/link"
 
 export const columnsProcesso: ColumnDef<IProcesso>[] = [
   {
@@ -63,8 +64,8 @@ export const columnsProcesso: ColumnDef<IProcesso>[] = [
 
   {
     accessorKey: "tipo",
-    header: () => <div className="sr-only md:not-sr-only text-center">Categória</div>,
-    cell: ({ row }) => <div className="sr-only md:not-sr-only uppercase text-center">{row.getValue("tipo")}</div>,
+    header: () => <div className="text-center">Categória</div>,
+    cell: ({ row }) => <div className="uppercase text-center">{row.getValue("tipo")}</div>,
   },
 
 
@@ -76,12 +77,12 @@ export const columnsProcesso: ColumnDef<IProcesso>[] = [
 
   {
     accessorKey: "updatedAt",
-    header: () => <div className="text-right sr-only md:not-sr-only">Data</div>,
+    header: () => <div className="text-right">Data</div>,
     cell: ({ row }) => {
 
       const date = new Date(row.getValue('updatedAt')).toLocaleDateString()
 
-      return <div className="text-right sr-only md:not-sr-only font-medium">{date}</div>
+      return <div className="text-right font-medium">{date}</div>
     },
   },
 
@@ -96,26 +97,25 @@ export const columnsProcesso: ColumnDef<IProcesso>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original
+      const processo = row.original
 
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-2 w-2 p-0">
+            <Button variant="ghost" className="h-2 w-4 p-0">
               <span className="sr-only">Abri menu</span>
-              <MoreHorizontal className="h-4 w-2" />
+              <MoreHorizontal className="h-4 w-8" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acçoes</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+            // onClick={() => navigator.clipboard.writeText(processo.id)}
             >
-              Copiar Id
+              <Link href={`/auth/processo/${processo.id}`}>
+                Ver
+              </Link>
             </DropdownMenuItem>
-            {/* <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -173,12 +173,12 @@ export const columnsCliente: ColumnDef<IClient>[] = [
   },
   {
     accessorKey: "updatedAt",
-    header: () => <div className="text-right sr-only md:not-sr-only">Data</div>,
+    header: () => <div className="text-right ">Data</div>,
     cell: ({ row }) => {
 
       const date = new Date(row.getValue('updatedAt')).toLocaleDateString()
 
-      return <div className="text-right sr-only md:not-sr-only font-medium">{date}</div>
+      return <div className="text-right  font-medium">{date}</div>
     },
   },
 
@@ -193,26 +193,25 @@ export const columnsCliente: ColumnDef<IClient>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original
+      const cliente = row.original
 
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-2 w-2 p-0">
+            <Button variant="ghost" className="h-2 w-4 p-0">
               <span className="sr-only">Abri menu</span>
-              <MoreHorizontal className="h-4 w-2" />
+              <MoreHorizontal className="h-4 w-8" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acçoes</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+            // onClick={() => navigator.clipboard.writeText(processo.id)}
             >
-              Copiar Id
+              <Link href={`/auth/client/${cliente.id}`}>
+                Ver
+              </Link>
             </DropdownMenuItem>
-            {/* <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -267,8 +266,8 @@ export const columnsFactura: ColumnDef<IFacturaList>[] = [
   // Total Processos
   {
     accessorKey: "totalProcessos",
-    header: () => <div className="sr-only md:not-sr-only text-center">Nº de Processos</div>,
-    cell: ({ row }) => <div className="sr-only md:not-sr-only text-center">{row.getValue("totalProcessos")}</div>,
+    header: () => <div className=" text-center">Nº de Processos</div>,
+    cell: ({ row }) => <div className=" text-center">{row.getValue("totalProcessos")}</div>,
   },
   // Estado
   {
@@ -280,24 +279,24 @@ export const columnsFactura: ColumnDef<IFacturaList>[] = [
   // Valor em Falta e a Pagar
   {
     accessorKey: "valorApagar",
-    header: () => <div className="text-center sr-only md:not-sr-only">valor A pagar</div>,
+    header: () => <div className="text-center ">valor A pagar</div>,
     cell: ({ row }) => {
       const valor = row.getValue("valorApagar") as number
       const valorFormat = valor.toLocaleString('AO', { style: 'currency', currency: 'AOA' })
       return (
-        <div className="sr-only md:not-sr-only">{valorFormat}</div>
+        <div className="">{valorFormat}</div>
       )
     },
   },
 
   {
     accessorKey: "valorEmFalta",
-    header: () => <div className="text-center sr-only md:not-sr-only">valor Em Falta</div>,
+    header: () => <div className="text-center ">valor Em Falta</div>,
     cell: ({ row }) => {
       const valor = row.getValue("valorEmFalta") as number
       const valorFormat = valor.toLocaleString('AO', { style: 'currency', currency: 'AOA' })
       return (
-        <div className="sr-only md:not-sr-only">{valorFormat}</div>
+        <div className="">{valorFormat}</div>
       )
     },
   },
@@ -305,12 +304,12 @@ export const columnsFactura: ColumnDef<IFacturaList>[] = [
   // Total
   {
     accessorKey: "total",
-    header: () => <div className="text-center sr-only md:not-sr-only">Valor da Factura</div>,
+    header: () => <div className="text-center ">Valor da Factura</div>,
     cell: ({ row }) => {
       const valor = row.getValue("total") as number
       const valorFormat = valor.toLocaleString('AO', { style: 'currency', currency: 'AOA' })
       return (
-        <div className=" sr-only md:not-sr-only">{valorFormat}</div>
+        <div className=" ">{valorFormat}</div>
       )
     },
   },
@@ -318,12 +317,12 @@ export const columnsFactura: ColumnDef<IFacturaList>[] = [
   // data
   {
     accessorKey: "updatedAt",
-    header: () => <div className="text-right sr-only md:not-sr-only">Actualizado Em</div>,
+    header: () => <div className="text-right ">Actualizado Em</div>,
     cell: ({ row }) => {
 
       const date = new Date(row.getValue('updatedAt')).toLocaleDateString()
 
-      return <div className="text-right font-medium sr-only md:not-sr-only">{date}</div>
+      return <div className="text-right font-medium ">{date}</div>
     },
   },
   // descrição
@@ -340,26 +339,25 @@ export const columnsFactura: ColumnDef<IFacturaList>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original
+      const factura = row.original
 
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-2 w-2 p-0">
+            <Button variant="ghost" className="h-2 w-4 p-0">
               <span className="sr-only">Abri menu</span>
-              <MoreHorizontal className="h-4 w-2" />
+              <MoreHorizontal className="h-4 w-8" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acçoes</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+            // onClick={() => navigator.clipboard.writeText(processo.id)}
             >
-              Copiar Id
+              <Link href={`/auth/dashboard/contas/factura/${factura.id}`}>
+                Ver
+              </Link>
             </DropdownMenuItem>
-            {/* <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       )
