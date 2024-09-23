@@ -10,16 +10,17 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { toast } from "@/components/ui/use-toast"
+import Image from 'next/image'
 
 const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
+  nome: z.string().min(8, {
+    message: "O nome deve ter pelo menos 8 caracteres.",
   }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
+  whatsapp: z.string().min(9, {
+    message: "Por favor, insira um endereço de whatsapp válido.",
   }),
-  message: z.string().min(10, {
-    message: "Message must be at least 10 characters.",
+  menssagem: z.string().min(10, {
+    message: "A mensagem deve ter pelo menos 10 caracteres.",
   }),
 })
 
@@ -29,9 +30,9 @@ export default function ContactPage() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      message: "",
+      nome: "",
+      whatsapp: "",
+      menssagem: "",
     },
   })
 
@@ -42,34 +43,35 @@ export default function ContactPage() {
       console.log(values)
       setIsSubmitting(false)
       toast({
-        title: "Message sent!",
-        description: "We'll get back to you as soon as possible.",
+        title: "Mensagem enviada!",
+        description: "Entraremos em contato com você o mais breve possível.",
       })
       form.reset()
     }, 2000)
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4">
+      <Image src="/placeholder.svg" alt="Gota D' Sol Logo" width={350} height={350} className="mx-auto" />
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
-          <CardTitle>Contact Us</CardTitle>
-          <CardDescription>Fill out the form below to get in touch with us.</CardDescription>
+          <CardTitle>Contacte-nos</CardTitle>
+          <CardDescription>Preencha o formulário abaixo para entrar em contato conosco.</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <FormField
                 control={form.control}
-                name="name"
+                name="nome"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>Nome</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your name" {...field} />
+                      <Input placeholder="Teu nome" {...field} />
                     </FormControl>
                     <FormDescription>
-                      Please enter your full name.
+                      Por favor insira seu nome completo.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -77,15 +79,15 @@ export default function ContactPage() {
               />
               <FormField
                 control={form.control}
-                name="email"
+                name="whatsapp"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>Whatsapp</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="your.email@example.com" {...field} />
+                      <Input type="text" placeholder="+244 900 000 123" {...field} />
                     </FormControl>
                     <FormDescription>
-                      We'll never share your email with anyone else.
+                      Nunca compartilharemos seu contacto com mais ninguém.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -93,26 +95,26 @@ export default function ContactPage() {
               />
               <FormField
                 control={form.control}
-                name="message"
+                name="menssagem"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Message</FormLabel>
+                    <FormLabel>Mensagem</FormLabel>
                     <FormControl>
-                      <Textarea 
-                        placeholder="How can we help you?" 
+                      <Textarea
+                        placeholder="Como podemos ajudá-lo?"
                         className="min-h-[100px]"
-                        {...field} 
+                        {...field}
                       />
                     </FormControl>
                     <FormDescription>
-                      Please provide as much detail as possible.
+                      Forneça o máximo de detalhes possível.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Sending..." : "Send Message"}
+                {isSubmitting ? "Enviando..." : "Enviar mensagem"}
               </Button>
             </form>
           </Form>
