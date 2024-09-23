@@ -25,7 +25,7 @@ export const Home: React.FC = () => {
               Consultoria Premium em Vistos e Viagens Internacionais
             </p>
             <Button className="px-6 py-3 rounded-lg">
-              <Link href={'#'}>
+              <Link href={'/gds-visa/contactos'}>
                 Entre em contato
               </Link>
             </Button>
