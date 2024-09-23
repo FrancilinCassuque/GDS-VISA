@@ -230,7 +230,7 @@ export const SignUp = () => {
             </div>
           </form>
         </Form>
-        <SocialAuth action={GoogleLogin} />
+        {/* <SocialAuth action={GoogleLogin} /> */}
       </div>
     </div>
   )

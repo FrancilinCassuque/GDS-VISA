@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -30,12 +32,14 @@ const services = [
   }
 ]
 
-export default function ServicesPage() {
+export const ServicesPage: React.FC = () => {
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-3xl font-bold mb-8 text-center">Our Services</h1>
+      <Image src="/placeholder.svg" alt="Gota D' Sol Logo" width={350} height={350} className="mx-auto" />
+
+      <h1 className="text-3xl font-bold mb-8 text-center">Nossos serviços</h1>
       <Tabs defaultValue={services[0].category} className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="">
           {services.map((category) => (
             <TabsTrigger key={category.category} value={category.category}>
               {category.category}
@@ -49,10 +53,10 @@ export default function ServicesPage() {
                 <Card key={item.name} className="flex flex-col">
                   <div className="relative w-full pt-[56.25%]">
                     <Image
-                      src={item.image}
+                      src={'/placeholder.png'}
                       alt={`Image representing ${item.name}`}
                       layout="fill"
-                      objectFit="cover"
+                      // objectFit="cover"
                       className="rounded-t-lg"
                     />
                   </div>
@@ -72,6 +76,8 @@ export default function ServicesPage() {
           </TabsContent>
         ))}
       </Tabs>
+
+      <Button onClick={() => window.history.back()} variant={'secondary'} className='my-4 p-4'>Voltar</Button>
     </div>
   )
 }

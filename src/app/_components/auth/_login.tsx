@@ -140,15 +140,15 @@ export const Login: React.FC = () => {
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <div className="flex items-center">
+              {/* <div className="flex items-center">
                 <Checkbox id="remember-me" name="remember-me" className="h-4 w-4 text-primary focus:ring-primary" />
                 <Label htmlFor="remember-me" className="ml-2 block text-sm text-muted-foreground">
                   Remember me
                 </Label>
-              </div>
+              </div> */}
               <div className="text-sm">
-                <Link href="/test" className="font-medium text-primary hover:text-primary/80" prefetch={false}>
-                  Forgot your password?
+                <Link href="/" className="font-medium text-primary hover:text-primary/80" prefetch={false}>
+                  Voltar ao Início.
                 </Link>
               </div>
             </div>
@@ -158,7 +158,7 @@ export const Login: React.FC = () => {
             </Button>
           </form>
 
-          <SocialAuth action={GoogleLogin} />
+          {/* <SocialAuth action={GoogleLogin} /> */}
 
         </div>
       </div>
