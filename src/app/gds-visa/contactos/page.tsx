@@ -1,10 +1,9 @@
+import { ContactPage } from "@/app/_components/gds-visa/contacto";
 
 
-export default function ContactPage() {
+export default function Component() {
 
   return (
-    <div className="">
-      <ContactPage />
-    </div>
+    <ContactPage />
   )
 }
