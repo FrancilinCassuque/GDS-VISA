@@ -41,7 +41,7 @@ export default function Component({ children }: Readonly<{ children: React.React
   }, [status, userMail, authUser, data?.user?.email,])
 
   return (
-    <div className="max-h-svh">
+    <div className="bg-gradient-to-r from-blue-100">
       <div className="mb-6">
         {children}
       </div>
