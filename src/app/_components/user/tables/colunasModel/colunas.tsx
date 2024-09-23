@@ -109,13 +109,13 @@ export const columnsProcesso: ColumnDef<IProcesso>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acçoes</DropdownMenuLabel>
-            <DropdownMenuItem
-            // onClick={() => navigator.clipboard.writeText(processo.id)}
-            >
-              <Link href={`/auth/processo/${processo.id}`}>
+            <Link href={`/auth/processo/${processo.id}`}>
+              <DropdownMenuItem
+              // onClick={() => navigator.clipboard.writeText(processo.id)}
+              >
                 Ver
-              </Link>
-            </DropdownMenuItem>
+              </DropdownMenuItem>
+            </Link>
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -205,13 +205,13 @@ export const columnsCliente: ColumnDef<IClient>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acçoes</DropdownMenuLabel>
-            <DropdownMenuItem
-            // onClick={() => navigator.clipboard.writeText(processo.id)}
-            >
-              <Link href={`/auth/client/${cliente.id}`}>
+            <Link href={`/auth/client/${cliente.id}`}>
+              <DropdownMenuItem
+              // onClick={() => navigator.clipboard.writeText(processo.id)}
+              >
                 Ver
-              </Link>
-            </DropdownMenuItem>
+              </DropdownMenuItem>
+            </Link>
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -351,13 +351,13 @@ export const columnsFactura: ColumnDef<IFacturaList>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acçoes</DropdownMenuLabel>
-            <DropdownMenuItem
-            // onClick={() => navigator.clipboard.writeText(processo.id)}
-            >
-              <Link href={`/auth/dashboard/contas/factura/${factura.id}`}>
+            <Link href={`/auth/dashboard/contas/factura/${factura.id}`}>
+              <DropdownMenuItem
+              // onClick={() => navigator.clipboard.writeText(processo.id)}
+              >
                 Ver
-              </Link>
-            </DropdownMenuItem>
+              </DropdownMenuItem>
+            </Link>
           </DropdownMenuContent>
         </DropdownMenu>
       )

@@ -27,7 +27,10 @@ export const TabelaProcessos: React.FC<ITableProps> = ({ processos, printOnly })
     <>
       {printOnly && (
         <div className="ml-auto flex items-center gap-2">
-          <Button size="sm" variant="outline" className="h-7 gap-1 text-sm" onClick={printTable}>
+          <Button size="sm" variant="outline" className="h-7 gap-1 text-sm" onClick={(e) => {
+            e.preventDefault()
+            printTable()
+          }}>
             <IconFile className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only">Imprimir</span>
           </Button>
@@ -37,7 +40,10 @@ export const TabelaProcessos: React.FC<ITableProps> = ({ processos, printOnly })
       <Card x-chunk="dashboard-05-chunk-3" className={printOnly ? "sr-only" : ''} >
         <CardHeader className="px-7">
           <div className="ml-auto flex items-center gap-2">
-            <Button size="sm" variant="outline" className="h-7 gap-1 text-sm" onClick={printTable}>
+            <Button size="sm" variant="outline" className="h-7 gap-1 text-sm" onClick={(e) => {
+              e.preventDefault()
+              printTable()
+            }}>
               <IconFile className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only">Imprimir</span>
             </Button>

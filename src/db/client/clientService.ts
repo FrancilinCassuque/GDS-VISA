@@ -36,7 +36,7 @@ async function ClientIndex(): Promise<IClient[] | Error> {
         updatedAt: "desc",
       },
 
-      include:{
+      include: {
         processos: true
       }
     })
@@ -110,11 +110,36 @@ async function ClientDelete(id: string): Promise<String | Error> {
       return client.id
     }
 
-    return new Error('Residência não Encontrada')
+    return new Error('Cliente não Encontrada')
 
   } catch (err) {
     return new Error((err as { message: string }).message || 'Erro ao Apagar Registro')
   }
 }
 
-export { storeClient, ClientIndex, UserClientes, ClientShow, ClientDelete }
+async function ClientUpdate(clientEdit: IClientStore): Promise<Omit<IClient, 'processos'> | Error> {
+  'use server'
+  try {
+    const client = await prisma.client.update({
+      where: {
+        id: clientEdit.id
+      },
+      data: {
+        descricao: clientEdit.descricao,
+        nomecompleto: clientEdit.nomecompleto,
+        telefone: clientEdit.telefone,
+      }
+    })
+
+    if (client) {
+      return client
+    }
+
+    return new Error('Cliente não Encontrada')
+
+  } catch (err) {
+    return new Error((err as { message: string }).message || 'Erro ao Apagar Registro')
+  }
+}
+
+export { storeClient, ClientIndex, UserClientes, ClientShow, ClientDelete, ClientUpdate }

@@ -16,7 +16,7 @@ export * from './auth/_create'
 export * from './auth/socialAuth'
 
 export * from './home/Index'
-export * from './home/create/create'
+export * from './client/create'
 export * from './home/carouselImage'
 export * from './home/homeDashboard'
 

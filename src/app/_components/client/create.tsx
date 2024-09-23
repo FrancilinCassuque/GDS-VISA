@@ -1,16 +1,13 @@
 'use client'
 
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible"
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectGroup } from "@/components/ui/select"
-import { IconLeft, IconRight } from "react-day-picker"
-import { Controller, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
-import { IconChevronDown } from "../../icons"
+import { IconChevronDown } from "../icons"
 import { useSession } from "next-auth/react"
 import { authStore } from "@/store"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
@@ -19,8 +16,9 @@ import Link from "next/link"
 import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { IClientStore, TClientShow } from "@/types"
-import { storeClient } from "@/db"
+import { IClientStore, IProcesso, TClientShow } from "@/types"
+import { ClientUpdate, storeClient } from "@/db"
+import { columnsProcesso, TabelaDeDados, TabelaProcessos } from ".."
 
 const clientForm = z.object({
   telefone: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(9, 'Contacto Pequeno de mais').max(20, 'Contacto Grande de mais'),
@@ -36,11 +34,17 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
     resolver: zodResolver(clientForm),
   })
 
+  const [escolhidos, setEscolhidos] = useState<IProcesso[]>([])
   const [loading, setLoading] = useState(false)
   const [editar, setEditar] = useState(true)
   const AUTH = authStore()
   // const route = useRouter()
   const { status } = useSession()
+
+
+  function listaDeSelecionados(lista: IProcesso[]) {
+    return setEscolhidos(lista)
+  }
 
   async function submitForm(clientBody: z.infer<typeof clientForm>) {
     try {
@@ -48,14 +52,15 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
       const user = AUTH.userauth
 
       if (user?.id) {
-        const client: Omit<IClientStore, 'id'> = {
+
+        const clientData: Omit<IClientStore, 'id'> = {
           telefone: clientBody.telefone,
           nomecompleto: clientBody.nomecompleto,
           descricao: clientBody.descricao,
           userId: user.id,
         }
 
-        const newClient = await storeClient(client)
+        const newClient = await storeClient(clientData)
 
         if (newClient instanceof Error) {
           setLoading(false)
@@ -65,7 +70,6 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
             variant: 'destructive'
           })
         }
-
 
         toast({
           title: 'Success',
@@ -88,18 +92,71 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
   }
 
   const cancelar = () => {
-    form.setValue('telefone', '')
-    form.setValue('descricao', '')
-    form.setValue('nomecompleto', '')
+    if (client) {
+      form.setValue('telefone', client.telefone)
+      form.setValue('descricao', client.descricao || '')
+      form.setValue('nomecompleto', client.nomecompleto)
 
-    setEditar(true)
-    setLoading(false)
+      setEditar(true)
+      setLoading(false)
+    } else {
+      form.setValue('telefone', '')
+      form.setValue('descricao', '')
+      form.setValue('nomecompleto', '')
+
+      setEditar(true)
+      setLoading(false)
+    }
 
   }
 
   const salvar = async () => {
-    const formValue = form.getValues()
-    console.log(formValue)
+    try {
+      setLoading(true)
+      const clientEditar = form.getValues()
+
+      if (client) {
+        const clientData: IClientStore = {
+          id: client.id,
+          telefone: clientEditar.telefone,
+          nomecompleto: clientEditar.nomecompleto,
+          descricao: clientEditar.descricao,
+          userId: client.id,
+        }
+
+        const clientEdited = await ClientUpdate(clientData)
+
+        if (clientEdited instanceof Error) {
+          setLoading(false)
+          return toast({
+            title: 'Error!',
+            description: <pre><code> Erro ao Registrar Cliente </code></pre>,
+            variant: 'destructive'
+          })
+        }
+
+        client.descricao = clientEdited.descricao
+        client.createdAt = clientEdited.createdAt
+        client.id = clientEdited.id
+        client.nomecompleto = clientEdited.nomecompleto
+        client.telefone = clientEdited.telefone
+        client.updatedAt = clientEdited.updatedAt
+
+        toast({
+          title: 'Success',
+          description: <pre><code>Cliente Registrado com sucesso.</code></pre>
+        })
+
+        cancelar()
+      }
+    } catch (error) {
+      toast({
+        title: 'Error!',
+        description: <pre><code>Erro ao Registrar novo Cliente</code></pre>,
+        variant: 'destructive'
+      })
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -128,8 +185,8 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
       )}
 
       <div className="space-y-4 text-center">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-primary">{client?.id ? 'Actualize As Definiçoes Do Cliente' : 'Registre Novo Cliente'}</h1>
-        <p className="text-muted-foreground md:text-lg">{client?.id ? 'Configura facilmente um novo Cliente.' : 'Registra facilmente um novo Cliente.'}</p>
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-primary">{client?.id ? 'Actualize as Definiçoes do Cliente' : 'Registre Novo Cliente'}</h1>
+        <p className="text-muted-foreground md:text-lg">{client?.id ? 'Configura facilmente o Cliente.' : 'Registra facilmente um novo Cliente.'}</p>
       </div>
 
       <Form {...form}>
@@ -138,8 +195,8 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
             <Collapsible open={true} className="border rounded-lg overflow-hidden">
               <CollapsibleTrigger className="flex items-center justify-between bg-muted px-6 py-4 cursor-pointer">
                 <div className="flex items-center gap-4">
-                  <div className="font-medium">Detalhes da Cliente</div>
-                  <div className="text-muted-foreground text-sm">Forneça detalhes sobre o Cliente a ser Registrado</div>
+                  <div className="font-medium">Detalhes do Cliente</div>
+                  <div className="text-muted-foreground text-sm">Detalhes sobre o Cliente</div>
                 </div>
                 <IconChevronDown className="h-5 w-5 transition-transform" />
               </CollapsibleTrigger>
@@ -153,7 +210,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Nome Completo</FormLabel>
-                          <Input {...field} type="text" placeholder="Fulano de Tal" />
+                          <Input {...field} type="text" placeholder="Fulano de Tal" defaultValue={client?.nomecompleto} readOnly={editar} />
                           <FormDescription>Primeiro e o Ultimo no Do Cliente</FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -167,7 +224,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Contacto</FormLabel>
-                          <Input {...field} type="text" placeholder="+244 999 000 000" />
+                          <Input {...field} type="text" placeholder="+244 999 000 000" defaultValue={client?.telefone} readOnly={editar} />
                           <FormDescription>Telefone do Cliente</FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -183,12 +240,24 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Sobre</FormLabel>
-                          <Textarea {...field} placeholder="Descreva o Cliente" />
+                          <Textarea {...field} placeholder="Descreva o Cliente" defaultValue={client?.descricao || ''} readOnly={editar} />
                           <FormDescription>Decricao do Cliente</FormDescription>
                           <FormMessage />
                         </FormItem>
                       )} />
                   </div>
+                </div>
+
+                <div className="space-y-2 my-4 min-w-full">
+                  <TabelaDeDados
+                    colunaModel={columnsProcesso}
+                    listaDeDados={client?.processos || []}
+                    dataOnly={false}
+                    dataProcessos={listaDeSelecionados}
+                    listaDe="Processos"
+                    listaPrint={<TabelaProcessos processos={escolhidos} printOnly={true} />}
+                  />
+
                 </div>
 
 
@@ -220,6 +289,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                 }}>
                   {loading ? <Loader2 className="animate-spin h-8 w-8" /> : 'Salvar'}
                 </Button>
+
                 <Button variant='destructive' className="mx-2 px-6" disabled={loading}
                   onClick={(e) => {
                     e.preventDefault()

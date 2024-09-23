@@ -163,8 +163,8 @@ export const CreateProcess: React.FC<ICreateProps> = ({ client, clientes }) => {
       )}
 
       <div className="space-y-4 text-center">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-primary">{client?.id ? 'Actualize As Definiçoes Do Cliente' : 'Registre Novo Cliente'}</h1>
-        <p className="text-muted-foreground md:text-lg">{client?.id ? 'Configura facilmente um novo Cliente.' : 'Registra facilmente um novo Cliente.'}</p>
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-primary">{client?.id ? 'Actualize As Definiçoes Do Processo' : 'Registre Novo Processo'}</h1>
+        <p className="text-muted-foreground md:text-lg">{client?.id ? 'Configura facilmente um novo Processo.' : 'Registra facilmente um novo Processo.'}</p>
       </div>
 
       <Form {...form}>
@@ -173,8 +173,8 @@ export const CreateProcess: React.FC<ICreateProps> = ({ client, clientes }) => {
             <Collapsible open={true} className="border rounded-lg overflow-hidden">
               <CollapsibleTrigger className="flex items-center justify-between bg-muted px-6 py-4 cursor-pointer">
                 <div className="flex items-center gap-4">
-                  <div className="font-medium">Detalhes da Cliente</div>
-                  <div className="text-muted-foreground text-sm">Forneça detalhes sobre o Cliente a ser Registrado</div>
+                  <div className="font-medium">Detalhes da Processo</div>
+                  <div className="text-muted-foreground text-sm">Forneça detalhes sobre o Processo a ser Registrado</div>
                 </div>
                 <IconChevronDown className="h-5 w-5 transition-transform" />
               </CollapsibleTrigger>
@@ -189,7 +189,7 @@ export const CreateProcess: React.FC<ICreateProps> = ({ client, clientes }) => {
                         <FormItem>
                           <FormLabel>Nome Completo</FormLabel>
                           <Input {...field} type="text" placeholder="Fulano de Tal" />
-                          <FormDescription>Primeiro e o Ultimo no Do Cliente</FormDescription>
+                          <FormDescription>Primeiro e o Ultimo nome Do Cliente</FormDescription>
                           <FormMessage />
                         </FormItem>
                       )} />
