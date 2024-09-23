@@ -144,7 +144,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
 
         toast({
           title: 'Success',
-          description: <pre><code>Cliente Registrado com sucesso.</code></pre>
+          description: <pre><code>Cliente Actualizado com sucesso.</code></pre>
         })
 
         cancelar()
