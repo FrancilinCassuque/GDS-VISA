@@ -7,7 +7,7 @@ export const GDSPrivacy: React.FC = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="space-y-4 text-justify">
-        <h2 className="text-2xl font-semibold text-center">Política de Privacidade do Aplicativo <strong>GOTA D' SOL - VISA</strong></h2>
+        <h2 className="text-2xl font-semibold text-center">Política de Privacidade do Aplicativo GOTA D' SOL - VISA</h2>
         <p className="text-muted-foreground">Data de Vigência: {new Date().toLocaleDateString()}</p>
 
         <p>
