@@ -4,7 +4,7 @@ import { IProcesso, IProcessoStore } from "@/types"
 import prisma from "../prisma.index"
 import { revalidatePath } from "next/cache"
 import { processoStore } from "@/store"
-// import { redirect } from "next/navigation"
+import { FacturaUpdateDeletedProcesso, FacturaUpdatePreco } from "../contas/facturaService"
 
 export async function storeProcesso(processo: IProcessoStore): Promise<String | Error> {
   'use server'
@@ -15,7 +15,7 @@ export async function storeProcesso(processo: IProcessoStore): Promise<String | 
         nomecompleto: processo.nomecompleto.toUpperCase(),
         descricao: processo.descricao,
         estado: processo.estado,
-        tipo:processo.tipo,
+        tipo: processo.tipo,
         preco: processo.preco,
         passaport: processo.passaport,
 
@@ -73,50 +73,72 @@ export async function processoIndex(): Promise<IProcesso[] | Error> {
 // }
 
 
-// async function ClientShow(id: string): Promise<TClientShow | Error> {
-//   'use server'
-//   try {
-//     const client = await prisma.client.findUniqueOrThrow({
-//       where: {
-//         id
-//       },
+export async function processoShow(id: string): Promise<IProcesso | Error> {
+  'use server'
+  try {
+    const processo = await prisma.processo.findUniqueOrThrow({
+      where: {
+        id
+      },
+    })
 
-//       include: {
-//         processos: true,
-//         user: true
-//       }
-//     })
+    if (processo) {
+      return processo
+    }
 
-//     if (client) {
-//       return client
-//     }
+    return new Error('Cliente não existe')
 
-//     return new Error('Cliente não existe')
+  } catch (err) {
+    return new Error((err as { message: string }).message || 'Erro ao buscar Registro')
+  }
+}
 
-//   } catch (err) {
-//     return new Error((err as { message: string }).message || 'Erro ao buscar Registro')
-//   }
-// }
+export async function processoUpdate(id: string, processo: IProcessoStore, precoAntigo: number): Promise<IProcesso | Error> {
+  'use server'
+  try {
+    const processoEditado = await prisma.processo.update({
+      where: {
+        id
+      },
+      data: {
+        ...processo
+      }
+    })
 
-// async function ClientDelete(id: string): Promise<String | Error> {
-//   'use server'
-//   try {
-//     const client = await prisma.client.delete({
-//       where: {
-//         id: id
-//       }
-//     })
+    if (processoEditado.preco != precoAntigo) {
+      await FacturaUpdatePreco(processoEditado.clientId, processoEditado.preco, precoAntigo, processoEditado.id)
+    }
 
-//     if (client) {
-//       return client.id
-//     }
+    if (processo) {
+      return processoEditado
+    }
 
-//     return new Error('Residência não Encontrada')
+    return new Error('Cliente não existe')
 
-//   } catch (err) {
-//     return new Error((err as { message: string }).message || 'Erro ao Apagar Registro')
-//   }
-// }
+  } catch (err) {
+    return new Error((err as { message: string }).message || 'Erro ao buscar Registro')
+  }
+}
 
+export async function processoDelete(id: string): Promise<String | Error> {
+  'use server'
+  try {
+    const processo = await prisma.processo.delete({
+      where: {
+        id: id
+      }
+    })
 
-// export { storeProcesso, processoIndex }
+    await FacturaUpdateDeletedProcesso(processo.clientId, processo.id, processo.preco)
+
+    if (processo) {
+      return processo.id
+    }
+
+    return new Error('Processo não Encontrada')
+
+  } catch (err) {
+    return new Error((err as { message: string }).message || 'Erro ao Apagar Registro')
+  }
+}
+

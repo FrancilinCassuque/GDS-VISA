@@ -11,7 +11,7 @@ import { IconChevronDown } from "../icons"
 import { useSession } from "next-auth/react"
 import { authStore } from "@/store"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
-import { FileWarning, Loader2, Newspaper } from "lucide-react"
+import { FileWarning, Loader2, Newspaper, Trash } from "lucide-react"
 import Link from "next/link"
 import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { z } from "zod"
@@ -36,6 +36,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
   })
 
   const [escolhidos, setEscolhidos] = useState<IProcesso[]>([])
+  const [eliminar, SetEliminar] = useState(false)
   const [loading, setLoading] = useState(false)
   const [editar, setEditar] = useState(true)
   const AUTH = authStore()
@@ -339,19 +340,34 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                 <Button disabled={loading} className="w-6/12" variant={'secondary'} onClick={(e) => {
                   e.preventDefault()
                   setEditar(false)
-                  // alert('Clickou...')
                 }} >{loading ? <Loader2 className="animate-spin" /> : 'Configuar Cliente'}</Button>
 
                 <Button variant='destructive' className="mx-4 px-6" disabled={loading}
                   onClick={(e) => {
                     e.preventDefault()
-                    deleteClient()
+                    SetEliminar(true)
                   }}>{loading ? <Loader2 className="animate-spin" /> : 'Eliminar Cliente'} </Button>
               </div>
             )}
           </div>
         </>
       )}
+
+      <AlertDialog open={eliminar} onOpenChange={SetEliminar}>
+        <AlertDialogContent className="w-full mx-auto">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex flew-col col-end-2 justify-center"><FileWarning /> Eliminar Processo!</AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogDescription>Tem certeza que pretende Eliminar este Processo?</AlertDialogDescription>
+          <AlertDialogFooter>
+            <AlertDialogCancel> Não </AlertDialogCancel>
+            <AlertDialogAction className="bg-destructive hover:bg-destructive"><Button variant={'destructive'} onClick={(e) => {
+              e.preventDefault()
+              deleteClient()
+            }}> Sim, Eliminar <Trash className="h-5 w-5 mx-2" /></Button></AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

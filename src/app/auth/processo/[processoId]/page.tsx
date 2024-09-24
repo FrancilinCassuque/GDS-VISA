@@ -1,12 +1,16 @@
+import { CreateProcess } from "@/app/_components"
+import { ClientIndex, processoShow } from "@/db"
 
 
-export default function Component({ params }: { params: { processoId: string } }) {
+export default async function Component({ params }: { params: { processoId: string } }) {
   const id = params.processoId
+  const processo = await processoShow(id)
+  const clientes = await ClientIndex()
+
+  if (processo instanceof Error) return
+  if (clientes instanceof Error) return
 
   return (
-    <div className="text-center">
-      <h1>Page</h1>
-      <p>{id}</p>
-    </div>
+    <CreateProcess processo={processo} clientes={clientes} />
   )
 }

@@ -82,7 +82,10 @@ export async function FacturaUpdate(factura: IFacturaUpdate, listaDeProcessos: I
       factura.valorEmFalta = 0
     }
 
-    const novaFactura = await prisma.factura.create({
+    const novaFactura = await prisma.factura.update({
+      where: {
+        id: factura.id
+      },
       data: {
         desconto: factura.desconto,
         descricao: factura.descricao,
@@ -101,6 +104,114 @@ export async function FacturaUpdate(factura: IFacturaUpdate, listaDeProcessos: I
     }
 
     return new Error('Erro ao Actualiza a factura')
+  } catch (error) {
+    return new Error((error as { message: string }).message || 'Erro ao Actualizar Registro')
+  }
+}
+
+export async function FacturaUpdatePreco(clientId: string, precoNovo: number, precoAntigo: number, processoId: string): Promise<string | Error> {
+  'use server'
+
+  try {
+    const facturas = await prisma.factura.findMany({
+      where: {
+        clientId: clientId
+      }
+    })
+
+    facturas.map(async (factura) => {
+
+      const processoFind = factura.processosId.find(id => id == processoId)
+
+      if (processoFind) {
+        factura.total = factura.total - precoAntigo + precoNovo
+
+        if (factura.estado === '1ª Parcela Pendente') {
+          factura.valorApagar = (factura.total / 2) - factura.desconto
+          factura.valorEmFalta = factura.total / 2
+        } else if (factura.estado === '2ª Parcela Pendente') {
+          factura.valorApagar = factura.valorEmFalta - factura.desconto
+          factura.valorEmFalta = 0
+        } else if (factura.estado === '1ª Pago') {
+          factura.valorApagar = 0
+        } else {
+          factura.valorApagar = 0
+          factura.valorEmFalta = 0
+        }
+
+        await prisma.factura.update({
+          where: {
+            id: factura.id
+          },
+          data: {
+            ...factura,
+            updatedAt: undefined
+          }
+        })
+      }
+
+    })
+
+    return processoId
+
+  } catch (error) {
+    return new Error((error as { message: string }).message || 'Erro ao Actualizar Registro')
+  }
+}
+
+export async function FacturaUpdateDeletedProcesso(clientId: string, processoId: string, preco: number): Promise<string | Error> {
+  'use server'
+
+  try {
+    const facturas = await prisma.factura.findMany({
+      where: {
+        clientId: clientId
+      }
+    })
+
+    facturas.map(async (factura) => {
+      const processoFind = factura.processosId.find(id => id == processoId)
+
+      if (processoFind) {
+        factura.total = factura.total - preco
+
+        if (factura.estado === '1ª Parcela Pendente') {
+          factura.valorApagar = (factura.total / 2) - factura.desconto
+          factura.valorEmFalta = factura.total / 2
+        } else if (factura.estado === '2ª Parcela Pendente') {
+          factura.valorApagar = factura.valorEmFalta - factura.desconto
+          factura.valorEmFalta = 0
+        } else if (factura.estado === '1ª Pago') {
+          factura.valorApagar = 0
+        } else {
+          factura.valorApagar = 0
+          factura.valorEmFalta = 0
+        }
+
+        if (factura.total <= 0) {
+          await prisma.factura.delete({
+            where: {
+              id: factura.id
+            }
+          })
+        } else {
+          await prisma.factura.update({
+            where: {
+              id: factura.id
+            },
+            data: {
+              ...factura,
+              updatedAt: undefined
+            }
+          })
+        }
+
+      }
+
+    })
+
+    return processoId
+
   } catch (error) {
     return new Error((error as { message: string }).message || 'Erro ao Actualizar Registro')
   }
