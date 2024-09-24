@@ -17,8 +17,9 @@ import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } fr
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { IClientStore, IProcesso, TClientShow } from "@/types"
-import { ClientUpdate, storeClient } from "@/db"
+import { ClientDelete, ClientUpdate, storeClient } from "@/db"
 import { columnsProcesso, TabelaDeDados, TabelaProcessos } from ".."
+import { useRouter } from "next/navigation"
 
 const clientForm = z.object({
   telefone: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(9, 'Contacto Pequeno de mais').max(20, 'Contacto Grande de mais'),
@@ -38,7 +39,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
   const [loading, setLoading] = useState(false)
   const [editar, setEditar] = useState(true)
   const AUTH = authStore()
-  // const route = useRouter()
+  const route = useRouter()
   const { status } = useSession()
 
 
@@ -149,6 +150,42 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
 
         cancelar()
       }
+    } catch (error) {
+      toast({
+        title: 'Error!',
+        description: <pre><code>Erro ao Registrar novo Cliente</code></pre>,
+        variant: 'destructive'
+      })
+      setLoading(false)
+    }
+  }
+
+  const deleteClient = async () => {
+    try {
+      setLoading(true)
+
+      if (client) {
+
+        const response = await ClientDelete(client.id)
+
+        if (response instanceof Error) {
+          setLoading(false)
+          return toast({
+            title: 'Error!',
+            description: <pre><code> Erro ao Registrar Cliente </code></pre>,
+            variant: 'destructive'
+          })
+        }
+
+        route.push('/auth/home')
+        toast({
+          title: 'Success',
+          description: <pre><code>Cliente Eliminado com sucesso.</code></pre>
+        })
+      }
+
+      setLoading(false)
+
     } catch (error) {
       toast({
         title: 'Error!',
@@ -297,13 +334,20 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                   }}> Cancelar </Button>
               </>
             ) : (
-              <>
+              <div className="flex items-center justify-between w-full">
+
                 <Button disabled={loading} className="w-6/12" variant={'secondary'} onClick={(e) => {
                   e.preventDefault()
                   setEditar(false)
                   // alert('Clickou...')
                 }} >{loading ? <Loader2 className="animate-spin" /> : 'Configuar Cliente'}</Button>
-              </>
+
+                <Button variant='destructive' className="mx-4 px-6" disabled={loading}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    deleteClient()
+                  }}>{loading ? <Loader2 className="animate-spin" /> : 'Eliminar Cliente'} </Button>
+              </div>
             )}
           </div>
         </>

@@ -126,7 +126,7 @@ async function ClientUpdate(clientEdit: IClientStore): Promise<Omit<IClient, 'pr
       },
       data: {
         descricao: clientEdit.descricao,
-        nomecompleto: clientEdit.nomecompleto,
+        nomecompleto: clientEdit.nomecompleto.toUpperCase(),
         telefone: clientEdit.telefone,
       }
     })

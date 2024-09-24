@@ -38,8 +38,8 @@ export const ServicesPage: React.FC = () => {
       <Image src="/placeholder.svg" alt="Gota D' Sol Logo" width={350} height={350} className="mx-auto" />
 
       <h1 className="text-3xl font-bold mb-8 text-center">Nossos serviços</h1>
-      <Tabs defaultValue={services[0].category} className="w-full">
-        <TabsList className="">
+      <Tabs defaultValue={services[0].category}>
+        <TabsList>
           {services.map((category) => (
             <TabsTrigger key={category.category} value={category.category}>
               {category.category}
