@@ -255,3 +255,21 @@ export async function FacturaIndex(): Promise<IFacturaList[] | Error> {
     return new Error((error as { message: string }).message || 'Erro ao Actualizar Registro')
   }
 }
+
+export async function FacturaShow(id: string): Promise<IFactura | Error> {
+  try {
+    const factura = await prisma.factura.findFirstOrThrow({
+      where: {
+        id: id
+      }
+    })
+
+    if (factura) {
+      return factura
+    }
+
+    return new Error('Erro ao buscar a factura')
+  } catch (error) {
+    return new Error((error as { message: string }).message || 'Erro ao Actualizar Registro')
+  }
+}

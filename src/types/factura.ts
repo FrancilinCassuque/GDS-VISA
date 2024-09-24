@@ -25,27 +25,6 @@ export interface IFactura {
   updatedAt: Date
 }
 
-export interface IFacturaShow {
-  id: string
-  clientId: string
-  processosId: string[]
-
-  estado: string
-  descricao: string
-  total: number
-  desconto: number
-
-  valorApagar: number
-  valorEmFalta: number
-  profileId: string
-
-  createdAt: Date
-  updatedAt: Date
-
-  client: IClient
-  processos: IProcesso[]
-}
-
 export interface IFacturaList {
   id: string
 

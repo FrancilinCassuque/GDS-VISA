@@ -17,7 +17,7 @@ import Link from "next/link"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { IClient, IFacturaStore, IProcesso, TClientShow } from "@/types"
+import { IClient, IFactura, IFacturaStore, IProcesso, TClientShow } from "@/types"
 import { columnsCliente, columnsProcesso, IconChevronDown, TabelaClientes, TabelaDeDados, TabelaProcessos } from "@/app/_components"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
@@ -25,31 +25,34 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { facturaStoreService } from "@/db"
 
 export const estados = [
-  "1ª Parcela Pendente",
-  "2ª Parcela Pendente",
-  "Cancelado",
+  '1ª Parcela Pendente',
+  '2ª Parcela Pendente',
+  '1ª Pago',
+  '2ª Pago',
+  'Cancelado',
   'Aguardando Reembolso',
   'Reembolsado',
   'Total Pago'
 ]
 
-
 const facturaForm = z.object({
   desconto: z.string(),
-  estado: z.enum(['1ª Parcela Pendente', '2ª Parcela Pendente', '1ª Pago', '2ª Pago', 'Cancelado', 'Aguardando Reembolso', 'Reembolsado', 'Total Pago']),
+  total: z.string(),
+  valorApagar: z.string(),
+  valorEmFalta: z.string(),
+  estado: z.string(),
   clientId: z.string(),
   descricao: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(3, 'muito curto!!').max(225, 'Atingiu o Limite de caracter apenas 50'),
 })
 
 interface IFacturaProps {
-  client?: TClientShow
+  factura?: IFactura
   clientes?: IClient[]
   processos?: IProcesso[]
 }
 
 
-
-export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, processos }) => {
+export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, processos }) => {
   const form = useForm<z.infer<typeof facturaForm>>({
     resolver: zodResolver(facturaForm),
   })
@@ -128,12 +131,19 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
   }
 
   const cancelar = () => {
-    form.setValue('descricao', '')
-    form.setValue('estado', '1ª Parcela Pendente')
-    form.setValue('desconto', '')
-    form.setValue('clientId', '')
+    if (factura) {
+      form.setValue('descricao', factura.descricao)
+      form.setValue('estado', factura.estado)
+      form.setValue('desconto', JSON.stringify(factura.desconto))
+      form.setValue('clientId', factura.clientId)
+    } else {
+      form.setValue('descricao', '')
+      form.setValue('estado', '1ª Parcela Pendente')
+      form.setValue('desconto', '')
+      form.setValue('clientId', '')
+    }
 
-    // setEditar(true)
+    setEditar(true)
     setLoading(false)
 
   }
@@ -156,12 +166,29 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
 
   }, [selectedClient, setSelectedClient])
 
+
   useEffect(() => {
-    if (!client) {
+    if (!factura) {
       setEditar(false)
     }
+  }, [setEditar, factura,])
 
-  }, [setEditar, client,])
+
+  useEffect(() => {
+    if (factura) {
+      const processosDaFactura: IProcesso[] = []
+      processos.filter(processo => {
+        factura.processosId.map(id => {
+          if (processo.id == id) {
+            processosDaFactura.push(processo)
+            return processo
+          }
+        })
+      })
+
+      setProcessosList(processosDaFactura)
+    }
+  }, [editar])
 
   return (
     <div className="w-full max-w-4xl mx-auto py-12 md:py-16 lg:py-20">
@@ -182,8 +209,8 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
       )}
 
       <div className="space-y-4 text-center">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-primary">{client?.id ? 'Actualize A Factura' : 'Registre Nova Factura'}</h1>
-        <p className="text-muted-foreground md:text-lg">{client?.id ? 'Configura facilmente uma nova Factura.' : 'Registra facilmente uma nova Factura.'}</p>
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-primary">{factura?.id ? 'Actualize A Factura' : 'Registre Nova Factura'}</h1>
+        <p className="text-muted-foreground md:text-lg">{factura?.id ? 'Configura facilmente uma Factura.' : 'Registra facilmente uma nova Factura.'}</p>
       </div>
 
       <Form {...form}>
@@ -203,12 +230,13 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
 
                   <div className="space-y-2 my-4">
                     <FormField
-                      control={form.control}
                       name="clientId"
+                      control={form.control}
+                      defaultValue={factura?.clientId || ''}
                       render={({ field }) => (
                         <FormItem className="w-full">
                           <FormLabel>Cliente Responsavél pela Factura</FormLabel>
-                          <Popover>
+                          <Popover open={editar ? false : undefined}>
                             <PopoverTrigger asChild>
                               <FormControl>
                                 <Button
@@ -274,11 +302,12 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
                     <FormField
                       name="estado"
                       control={form.control}
+                      defaultValue={factura?.estado}
                       render={({ field: { value, onChange } }) =>
                         <FormItem>
                           <FormLabel>Estado da Factura</FormLabel>
                           <Select onValueChange={onChange} value={value} required
-                            disabled={editar}
+                            open={editar ? false : undefined}
                           // defaultValue={auth.userauth?.pessoa?.identidade?.tipo || ''}
                           >
                             <SelectTrigger>
@@ -298,29 +327,81 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
 
                   <div className="space-y-2 my-4">
                     <FormField
-                      control={form.control}
                       name="desconto"
+                      defaultValue={JSON.stringify(factura?.desconto)}
+                      control={form.control}
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Valor do Desconto Aplicado</FormLabel>
-                          <Input {...field} type="number" placeholder="100000" />
+                          <Input {...field} type="number" placeholder="100000" readOnly={editar} />
                           <FormDescription>Informa o valor, zero no caso de não haver.</FormDescription>
                           <FormMessage />
                         </FormItem>
                       )} />
                   </div>
 
+                  {factura && (
+                    <>
+
+                      <div className="space-y-2 my-4">
+                        <FormField
+                          name="valorApagar"
+                          defaultValue={JSON.stringify(factura?.valorApagar)}
+                          control={form.control}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Valor a Cobrar</FormLabel>
+                              <Input {...field} type="number" placeholder="100000" readOnly={true} />
+                              <FormDescription>Valor a pagar pela factura actual.</FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )} />
+                      </div>
+
+                      <div className="space-y-2 my-4">
+                        <FormField
+                          name="valorEmFalta"
+                          defaultValue={JSON.stringify(factura?.valorEmFalta)}
+                          control={form.control}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Valor em Falta</FormLabel>
+                              <Input {...field} type="number" placeholder="100000" readOnly={true} />
+                              <FormDescription>Valor a pagar na proxima factura.</FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )} />
+                      </div>
+
+                      <div className="space-y-2 my-4">
+                        <FormField
+                          name="total"
+                          defaultValue={JSON.stringify(factura?.total)}
+                          control={form.control}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Valor Total da Factura</FormLabel>
+                              <Input {...field} type="number" placeholder="100000" readOnly={true} />
+                              <FormDescription>Valor total a pagar pela factura.</FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )} />
+                      </div>
+                    </>
+                  )}
+
                 </div>
 
                 <div className="grid grid-cols-1 gap-4">
                   <div className="space-y-2">
                     <FormField
-                      control={form.control}
                       name="descricao"
+                      control={form.control}
+                      defaultValue={factura?.descricao}
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Sobre</FormLabel>
-                          <Textarea {...field} placeholder="Descreva o Cliente" />
+                          <Textarea {...field} placeholder="Descreva o Cliente" readOnly={editar} />
                           <FormDescription>Descrição da Factura</FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -346,7 +427,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
             <div className="flex justify-end">
               <div className="flex items-center justify-center w-full">
 
-                {!client && (
+                {!factura && (
                   <Button disabled={loading} className="w-6/12" >{loading ? <Loader2 className="animate-spin" /> : 'Registar Factura'}</Button>
                 )}
 
@@ -357,7 +438,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ client, clientes, proces
       </Form>
 
 
-      {client && (
+      {factura && (
         <>
           <div className="flex items-center justify-center w-full my-10" >
             {!editar ? (
