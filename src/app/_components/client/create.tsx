@@ -356,9 +356,9 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
       <AlertDialog open={eliminar} onOpenChange={SetEliminar}>
         <AlertDialogContent className="w-full mx-auto">
           <AlertDialogHeader>
-            <AlertDialogTitle className="flex flew-col col-end-2 justify-center"><FileWarning /> Eliminar Processo!</AlertDialogTitle>
+            <AlertDialogTitle className="flex flew-col col-end-2 justify-center"><FileWarning /> Eliminar Cliente!</AlertDialogTitle>
           </AlertDialogHeader>
-          <AlertDialogDescription>Tem certeza que pretende Eliminar este Processo?</AlertDialogDescription>
+          <AlertDialogDescription>Tem certeza que pretende Eliminar este Cliente?</AlertDialogDescription>
           <AlertDialogFooter>
             <AlertDialogCancel> Não </AlertDialogCancel>
             <AlertDialogAction className="bg-destructive hover:bg-destructive"><Button variant={'destructive'} onClick={(e) => {
