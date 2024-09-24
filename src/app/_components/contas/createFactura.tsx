@@ -22,7 +22,7 @@ import { columnsCliente, columnsProcesso, IconChevronDown, TabelaClientes, Tabel
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
-import { facturaStoreService, FacturaUpdate } from "@/db"
+import { FacturaDelete, facturaStoreService, FacturaUpdate } from "@/db"
 
 export const estados = [
   '1ª Parcela Pendente',
@@ -154,13 +154,10 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
 
   const salvar = async () => {
     try {
-
       setLoading(true)
       const facturaDate = form.getValues()
 
-
       if (factura) {
-
         const store: IFacturaUpdate = {
           id: factura.id,
           desconto: Number.parseInt(facturaDate.desconto),
@@ -174,7 +171,6 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
         }
 
         const novaFactura = await FacturaUpdate(store, escolhidos)
-
 
         if (novaFactura instanceof Error) {
           setLoading(false)
@@ -213,6 +209,32 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
         variant: 'destructive'
       })
       setLoading(false)
+    }
+  }
+
+  const deletarFactura = async () => {
+    try {
+      if (factura) {
+        const response = await FacturaDelete(factura.id)
+        if(!(response instanceof Error)){
+
+          setEditar(true)
+          setLoading(false)
+          rote.push('/auth/dashboard/contas')
+          toast({
+            title: 'Sucesso!',
+            description: <pre><code>Factura Eliminada com  sucesso.</code></pre>,
+          })
+        }
+      }
+    } catch (error) {
+      setEditar(true)
+      setLoading(false)
+      toast({
+        title: 'Error!',
+        description: <pre><code>Erro ao Eliminar novo Factura</code></pre>,
+        variant: 'destructive'
+      })
     }
   }
 
@@ -548,7 +570,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
             <AlertDialogCancel> Não </AlertDialogCancel>
             <AlertDialogAction className="bg-destructive hover:bg-destructive"><Button variant={'destructive'} onClick={(e) => {
               e.preventDefault()
-              // deleteClient()
+              deletarFactura()
             }}> Sim, Eliminar <Trash className="h-5 w-5 mx-2" /></Button></AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

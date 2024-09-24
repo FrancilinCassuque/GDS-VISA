@@ -275,3 +275,21 @@ export async function FacturaShow(id: string): Promise<IFactura | Error> {
     return new Error((error as { message: string }).message || 'Erro ao Actualizar Registro')
   }
 }
+
+export async function FacturaDelete(id: string): Promise<string | Error> {
+  try {
+    const factura = await prisma.factura.delete({
+      where: {
+        id: id
+      }
+    })
+
+    if (factura) {
+      return factura.id
+    }
+
+    return new Error('Erro ao buscar a factura')
+  } catch (error) {
+    return new Error((error as { message: string }).message || 'Erro ao Actualizar Registro')
+  }
+}
