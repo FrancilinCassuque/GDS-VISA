@@ -12,17 +12,17 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { authStore } from "@/store"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
-import { Check, ChevronsUpDown, FileWarning, HandHelpingIcon, Loader2, Newspaper } from "lucide-react"
+import { Check, ChevronsUpDown, FileWarning, HandHelpingIcon, Loader2, Newspaper, Trash } from "lucide-react"
 import Link from "next/link"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { IClient, IFactura, IFacturaStore, IProcesso, TClientShow } from "@/types"
+import { IClient, IFactura, IFacturaStore, IFacturaUpdate, IProcesso, TClientShow } from "@/types"
 import { columnsCliente, columnsProcesso, IconChevronDown, TabelaClientes, TabelaDeDados, TabelaProcessos } from "@/app/_components"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
-import { facturaStoreService } from "@/db"
+import { facturaStoreService, FacturaUpdate } from "@/db"
 
 export const estados = [
   '1ª Parcela Pendente',
@@ -65,6 +65,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
   const { status } = useSession()
   const [processosList, setProcessosList] = useState<IProcesso[]>([])
   const [escolhidos, setEscolhidos] = useState<IProcesso[]>([])
+  const [eliminar, SetEliminar] = useState(false)
   const [selectedClient, setSelectedClient] = useState('')
 
   if (!clientes) {
@@ -136,6 +137,9 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
       form.setValue('estado', factura.estado)
       form.setValue('desconto', JSON.stringify(factura.desconto))
       form.setValue('clientId', factura.clientId)
+      form.setValue('total', JSON.stringify(factura.total))
+      form.setValue('valorApagar', JSON.stringify(factura.valorApagar))
+      form.setValue('valorEmFalta', JSON.stringify(factura.valorEmFalta))
     } else {
       form.setValue('descricao', '')
       form.setValue('estado', '1ª Parcela Pendente')
@@ -149,8 +153,67 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
   }
 
   const salvar = async () => {
-    // const formValue = form.getValues()
-    // console.log(formValue)
+    try {
+
+      setLoading(true)
+      const facturaDate = form.getValues()
+
+
+      if (factura) {
+
+        const store: IFacturaUpdate = {
+          id: factura.id,
+          desconto: Number.parseInt(facturaDate.desconto),
+          estado: facturaDate.estado,
+          descricao: facturaDate.descricao,
+          profileId: factura.profileId,
+          clientId: facturaDate.clientId,
+          total: factura.total,
+          valorApagar: factura.valorApagar,
+          valorEmFalta: factura.valorEmFalta,
+        }
+
+        const novaFactura = await FacturaUpdate(store, escolhidos)
+
+
+        if (novaFactura instanceof Error) {
+          setLoading(false)
+          return toast({
+            title: 'Error!',
+            description: <pre><code> Erro ao Actualizar Factura {JSON.stringify(novaFactura)} </code></pre>,
+            variant: 'destructive'
+          })
+        }
+
+        toast({
+          title: 'Success',
+          description:
+            <pre>
+              <HandHelpingIcon />
+              <code>Factura actualizada com sucesso.</code>
+            </pre>
+        })
+
+        factura.clientId = novaFactura.clientId
+        factura.desconto = novaFactura.desconto
+        factura.descricao = novaFactura.descricao
+        factura.estado = novaFactura.estado
+        factura.processosId = novaFactura.processosId
+        factura.total = novaFactura.total
+        factura.valorApagar = novaFactura.valorApagar
+        factura.valorEmFalta = novaFactura.valorEmFalta
+      }
+
+      cancelar()
+
+    } catch (error) {
+      toast({
+        title: 'Error!',
+        description: <pre><code>Erro ao Actualizar novo Factura</code></pre>,
+        variant: 'destructive'
+      })
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -449,6 +512,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
                 }}>
                   {loading ? <Loader2 className="animate-spin h-8 w-8" /> : 'Salvar'}
                 </Button>
+
                 <Button variant='destructive' className="mx-2 px-6" disabled={loading}
                   onClick={(e) => {
                     e.preventDefault()
@@ -456,17 +520,39 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
                   }}> Cancelar </Button>
               </>
             ) : (
-              <>
+              <div className="flex items-center justify-between w-full">
+
                 <Button disabled={loading} className="w-6/12" variant={'secondary'} onClick={(e) => {
                   e.preventDefault()
                   setEditar(false)
-                  // alert('Clickou...')
-                }} >{loading ? <Loader2 className="animate-spin" /> : 'Editar Factura'}</Button>
-              </>
+                }} >{loading ? <Loader2 className="animate-spin" /> : 'Configuar Cliente'}</Button>
+
+                <Button variant='destructive' className="mx-4 px-6" disabled={loading}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    SetEliminar(true)
+                  }}>{loading ? <Loader2 className="animate-spin" /> : 'Eliminar Cliente'} </Button>
+              </div>
             )}
           </div>
         </>
       )}
+
+      <AlertDialog open={eliminar} onOpenChange={SetEliminar}>
+        <AlertDialogContent className="w-full mx-auto">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex flew-col col-end-2 justify-center"><FileWarning /> Eliminar Factura!</AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogDescription>Tem certeza que pretende Eliminar este Factura?</AlertDialogDescription>
+          <AlertDialogFooter>
+            <AlertDialogCancel> Não </AlertDialogCancel>
+            <AlertDialogAction className="bg-destructive hover:bg-destructive"><Button variant={'destructive'} onClick={(e) => {
+              e.preventDefault()
+              // deleteClient()
+            }}> Sim, Eliminar <Trash className="h-5 w-5 mx-2" /></Button></AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

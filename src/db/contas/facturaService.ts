@@ -59,14 +59,16 @@ export async function facturaStoreService(store: IFacturaStore, listaDeProcessos
 }
 
 
-export async function FacturaUpdate(factura: IFacturaUpdate, listaDeProcessos: IProcesso[]): Promise<string | Error> {
+export async function FacturaUpdate(factura: IFacturaUpdate, listaDeProcessos: IProcesso[]): Promise<IFactura | Error> {
   'use server'
 
   try {
     const processosId = ['']
+    factura.total = 0
 
     listaDeProcessos.map(processo => {
       processosId.push(processo.id)
+      factura.total += processo.preco
     })
 
     if (factura.estado === '1ª Parcela Pendente') {
@@ -100,7 +102,7 @@ export async function FacturaUpdate(factura: IFacturaUpdate, listaDeProcessos: I
     })
 
     if (novaFactura.id) {
-      return novaFactura.id
+      return novaFactura
     }
 
     return new Error('Erro ao Actualiza a factura')
