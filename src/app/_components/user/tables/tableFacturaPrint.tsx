@@ -133,7 +133,7 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
                     </div>
 
                     <p className="text-center mt-4"> <small>Documento Processado por computador</small></p>
-                    <p className="text-center"><strong>Lembrete: </strong>Factura referente a {factura.estado} parcela dos valores</p>
+                    <p className="text-center"><strong>Lembrete: </strong>Factura referente a {factura.estado}.</p>
 
                   </TableCell>
                 </TableRow>
