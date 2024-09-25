@@ -91,7 +91,7 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
 
                 <TableRow className="border-none">
                   <TableCell colSpan={2}>
-                    <p className="text-lg font-bold bg-slate-400/25 text-primary mt-10 text-center">Resumo</p>
+                    <p className="text-lg font-bold bg-slate-400/25 text-primary mt-5 text-center">Resumo</p>
                     <div className="flex w-full justify-center">
                       <div className="text-end">
                         <p className="text-muted-foreground my-2"> <strong>Total:</strong></p>
@@ -114,10 +114,10 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
 
                 <TableRow>
                   <TableCell colSpan={5}>
-                    <p className="text-lg font-bold bg-slate-400/25 text-primary mt-10 text-center w-fit mx-auto px-44">Coordenadas Bancárias</p>
+                    <p className="text-lg font-bold bg-slate-400/25 text-primary mt-5 text-center w-fit mx-auto px-44">Coordenadas Bancárias</p>
                     <div className="flex wfull- justify-center">
                       <div className="text-end">
-                        <p className="text-muted-foreground my-2"> <strong>BCGA:</strong></p>
+                        <p className="text-muted-foreground my-2"> <strong>Banco Caixa Angola:</strong></p>
                         <p className="text-muted-foreground my-2"> <strong>BCI: </strong></p>
                         {/* <p className="text-muted-foreground my-2"> <strong>BCS: </strong></p> */}
                         {/* <p className="text-muted-foreground my-2"> <strong>Valor Em Falta: </strong></p> */}
@@ -132,9 +132,9 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
                       </div>
                     </div>
 
-                    <p className="text-center mt-16"> <small>Documento Processado por computador</small></p>
-                    <p className="text-center">Lembrete: <strong>Factura referente a primeira parcela dos valores</strong></p>
- 
+                    <p className="text-center mt-4"> <small>Documento Processado por computador</small></p>
+                    <p className="text-center"><strong>Lembrete: </strong>Factura referente a {factura.estado} parcela dos valores</p>
+
                   </TableCell>
                 </TableRow>
               </TableBody>
