@@ -56,6 +56,11 @@ interface IFacturaProps {
 export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, processos }) => {
   const form = useForm<z.infer<typeof facturaForm>>({
     resolver: zodResolver(facturaForm),
+    defaultValues: {
+      valorApagar: '0',
+      valorEmFalta: '0',
+      total: '0'
+    }
   })
 
   const [loading, setLoading] = useState(false)
@@ -147,6 +152,9 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
       form.setValue('estado', '1ª Parcela Pendente')
       form.setValue('desconto', '')
       form.setValue('clientId', '')
+      form.setValue('total', '0')
+      form.setValue('valorApagar', '0')
+      form.setValue('valorEmFalta', '0')
     }
 
     setEditar(true)
@@ -604,7 +612,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
       </AlertDialog>
 
       {facturaPrint && (
-        <TabelaFacturaPrint factura={facturaPrint} printOnly/>
+        <TabelaFacturaPrint factura={facturaPrint} printOnly />
       )}
     </div>
   )
