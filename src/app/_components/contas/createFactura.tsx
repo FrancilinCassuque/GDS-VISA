@@ -449,7 +449,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
                   <div className="space-y-2 my-4">
                     <FormField
                       name="desconto"
-                      defaultValue={JSON.stringify(factura?.desconto)}
+                      defaultValue={JSON.stringify(factura?.desconto || '0')}
                       control={form.control}
                       render={({ field }) => (
                         <FormItem>
@@ -467,7 +467,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
                       <div className="space-y-2 my-4">
                         <FormField
                           name="valorApagar"
-                          defaultValue={JSON.stringify(factura?.valorApagar)}
+                          defaultValue={JSON.stringify(factura?.valorApagar || '0')}
                           control={form.control}
                           render={({ field }) => (
                             <FormItem>
@@ -482,7 +482,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
                       <div className="space-y-2 my-4">
                         <FormField
                           name="valorEmFalta"
-                          defaultValue={JSON.stringify(factura?.valorEmFalta)}
+                          defaultValue={JSON.stringify(factura?.valorEmFalta || '0')}
                           control={form.control}
                           render={({ field }) => (
                             <FormItem>
