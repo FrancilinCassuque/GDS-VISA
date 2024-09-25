@@ -105,7 +105,7 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
                         <p className="font-bold text-muted-foreground my-2"><span className="text-black">{factura.total.toLocaleString('AO', { style: 'currency', currency: 'AOA' })}</span></p>
                         <p className="font-bold text-muted-foreground my-2"><span className="text-black">{factura.desconto.toLocaleString('AO', { style: 'currency', currency: 'AOA' })}</span></p>
                         <p className="font-bold text-muted-foreground my-2"><span className="text-primary">{factura.valorApagar.toLocaleString('AO', { style: 'currency', currency: 'AOA' })}</span></p>
-                        <p className="font-bold text-muted-foreground my-2"><span className="text-red-600">{factura.valorEmFalta.toLocaleString('AO', { style: 'currency', currency: 'AOA' })}</span></p>
+                        <p className="font-bold text-muted-foreground my-2"><span className="text-black">{factura.valorEmFalta.toLocaleString('AO', { style: 'currency', currency: 'AOA' })}</span></p>
 
                       </div>
                     </div>
