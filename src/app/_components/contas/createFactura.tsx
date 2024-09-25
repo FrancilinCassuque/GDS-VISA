@@ -17,12 +17,13 @@ import Link from "next/link"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { IClient, IFactura, IFacturaStore, IFacturaUpdate, IProcesso, TClientShow } from "@/types"
+import { IClient, IFactura, IFacturaPrint, IFacturaStore, IFacturaUpdate, IProcesso, TClientShow } from "@/types"
 import { columnsCliente, columnsProcesso, IconChevronDown, TabelaClientes, TabelaDeDados, TabelaProcessos } from "@/app/_components"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { FacturaDelete, facturaStoreService, FacturaUpdate } from "@/db"
+import { TabelaFacturaPrint } from "../user/tables/tableFacturaPrint"
 
 export const estados = [
   '1ª Parcela Pendente',
@@ -65,6 +66,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
   const { status } = useSession()
   const [processosList, setProcessosList] = useState<IProcesso[]>([])
   const [escolhidos, setEscolhidos] = useState<IProcesso[]>([])
+  const [facturaPrint, SetFacturaPrint] = useState<IFacturaPrint>()
   const [eliminar, SetEliminar] = useState(false)
   const [selectedClient, setSelectedClient] = useState('')
 
@@ -216,7 +218,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
     try {
       if (factura) {
         const response = await FacturaDelete(factura.id)
-        if(!(response instanceof Error)){
+        if (!(response instanceof Error)) {
 
           setEditar(true)
           setLoading(false)
@@ -261,17 +263,43 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
 
   useEffect(() => {
     if (factura) {
-      const processosDaFactura: IProcesso[] = []
+
+      const fPrint: IFacturaPrint = {
+        id: factura.id,
+        desconto: factura.desconto,
+        descricao: factura.descricao,
+        estado: factura.estado,
+        total: factura.total,
+        profileId: factura.profileId,
+        updatedAt: factura.updatedAt,
+        createdAt: factura.createdAt,
+        valorApagar: factura.valorApagar,
+        valorEmFalta: factura.valorEmFalta,
+        processos: [],
+        cliente: {
+          id: '',
+          nome: '',
+          telefone: '',
+        },
+      }
+
+      const userFactura = clientes.find(client => client.id == factura.clientId)
+
+      fPrint.cliente.id = userFactura?.id || ''
+      fPrint.cliente.nome = userFactura?.nomecompleto || ''
+      fPrint.cliente.telefone = userFactura?.telefone || ''
+
       processos.filter(processo => {
         factura.processosId.map(id => {
           if (processo.id == id) {
-            processosDaFactura.push(processo)
+            fPrint.processos.push(processo)
             return processo
           }
         })
       })
 
-      setProcessosList(processosDaFactura)
+      setProcessosList(fPrint.processos)
+      SetFacturaPrint(fPrint)
     }
   }, [editar])
 
@@ -522,7 +550,6 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
         </form>
       </Form>
 
-
       {factura && (
         <>
           <div className="flex items-center justify-center w-full my-10" >
@@ -575,6 +602,10 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {facturaPrint && (
+        <TabelaFacturaPrint factura={facturaPrint} printOnly/>
+      )}
     </div>
   )
 }

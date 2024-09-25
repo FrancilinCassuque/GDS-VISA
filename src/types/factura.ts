@@ -52,3 +52,23 @@ export interface IFacturaUpdate {
   valorEmFalta: number
   profileId: string
 }
+
+export interface IFacturaPrint {
+  id: string
+  cliente: {
+    id:string
+    nome: string,
+    telefone: string
+  }
+  processos: IProcesso[]
+  estado: string
+  descricao: string
+  total: number
+  desconto: number
+  valorApagar: number
+  valorEmFalta: number
+  profileId: string
+
+  createdAt: Date
+  updatedAt: Date
+}
