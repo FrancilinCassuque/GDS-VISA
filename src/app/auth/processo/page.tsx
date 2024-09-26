@@ -85,7 +85,7 @@ export default async function Page() {
 
 
             <TabsContent value="activos">
-              <TabProcessos processos={activos} />
+              <TabProcessos processos={activos} free />
             </TabsContent>
 
             <TabsContent value="aceites">
@@ -93,7 +93,7 @@ export default async function Page() {
             </TabsContent>
 
             <TabsContent value="Pagamentos">
-              <TabProcessos processos={pagamento} />
+              <TabProcessos processos={pagamento} free />
             </TabsContent>
 
             <TabsContent value="Passaporte">
