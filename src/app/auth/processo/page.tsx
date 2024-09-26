@@ -14,6 +14,8 @@ export default async function Page() {
   const recusado = processos.filter(proc => proc.estado == 'Recusado')
   const pagamento = processos.filter(proc => proc.estado == 'Pendente a Pagamento')
   const passaport = processos.filter(proc => proc.estado == 'Pendente a Passaporte')
+  const nacional = processos.filter(proc => proc.tipo.toLowerCase() != 'visto de turismo')
+  const turismo = processos.filter(proc => proc.tipo.toLowerCase() == 'visto de turismo')
 
   return (
     <>
@@ -47,6 +49,7 @@ export default async function Page() {
           </div>
 
 
+          <p className="text-center text-lg font-mono font-semibold bg-slate-300/25">Estado dos Processos</p>
           <Tabs defaultValue="activos">
             <div className="flex items-center">
               <TabsList>
@@ -71,7 +74,7 @@ export default async function Page() {
                     )}
                   </>
                 )}
-                
+
               </TabsList>
 
             </div>
@@ -99,6 +102,27 @@ export default async function Page() {
 
             <TabsContent value="Recusados">
               <TabProcessos processos={recusado} />
+            </TabsContent>
+          </Tabs>
+
+          <p className="text-center text-lg font-mono font-semibold bg-slate-300/25">Tipo de Processos</p>
+          <Tabs defaultValue="Nacional">
+            <div className="flex items-center">
+              <TabsList>
+                <TabsTrigger value="Nacional">Nacional</TabsTrigger>
+                <TabsTrigger value="Schengen">Schengen</TabsTrigger>
+
+              </TabsList>
+
+            </div>
+
+            <TabsContent value="Nacional">
+              <TabProcessos processos={nacional} />
+            </TabsContent>
+
+
+            <TabsContent value="Schengen">
+              <TabProcessos processos={turismo} />
             </TabsContent>
           </Tabs>
 
