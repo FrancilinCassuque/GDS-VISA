@@ -28,9 +28,12 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
     <>
       {printOnly && (
         <div className="ml-auto flex items-center gap-2">
-          <Button size="sm" variant="outline" className="h-7 gap-1 text-sm" onClick={printTable}>
-            <IconFile className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only">Imprimir</span>
+          <Button size="sm" variant="outline" className="h-7 gap-1 text-sm" onClick={(e)=>{
+            e.preventDefault()
+            printTable()
+          }}>
+            <IconFile className="h-3.5 w-3.5 text-primary" />
+            <span className="text-primary">Imprimir Factura</span>
           </Button>
         </div>
       )}
@@ -92,7 +95,7 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
                 <TableRow className="border-none">
                   <TableCell colSpan={2}>
                     <p className="text-lg font-bold bg-slate-400/25 text-primary mt-5 text-center">Resumo</p>
-                    <div className="flex w-full justify-center">
+                    <div className="flex w-full justify-center border-b">
                       <div className="text-end">
                         <p className="text-muted-foreground my-2"> <strong>Total:</strong></p>
                         <p className="text-muted-foreground my-2"> <strong>Descontos: </strong></p>
@@ -100,7 +103,7 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
                         <p className="text-muted-foreground my-2"> <strong>Valor Em Falta: </strong></p>
                       </div>
 
-                      <Separator orientation="vertical" className="h-36 w-0.5 mx-1" />
+                      <Separator orientation="vertical" className="h-28 w-0.5 mx-1" />
                       <div className="text-start">
                         <p className="font-bold text-muted-foreground my-2"><span className="text-black">{factura.total.toLocaleString('AO', { style: 'currency', currency: 'AOA' })}</span></p>
                         <p className="font-bold text-muted-foreground my-2"><span className="text-black">{factura.desconto.toLocaleString('AO', { style: 'currency', currency: 'AOA' })}</span></p>
@@ -115,18 +118,27 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
                 <TableRow>
                   <TableCell colSpan={5}>
                     <p className="text-lg font-bold bg-slate-400/25 text-primary mt-5 text-center w-fit mx-auto px-44">Coordenadas Bancárias</p>
-                    <div className="flex wfull- justify-center">
-                      <div className="text-end">
+                    <div className="flex justify-center">
+                      <div className="text-end border-b">
                         <p className="text-muted-foreground my-2"> <strong>Banco Caixa Angola:</strong></p>
                         <p className="text-muted-foreground my-2"> <strong>BCI: </strong></p>
                         {/* <p className="text-muted-foreground my-2"> <strong>BCS: </strong></p> */}
                         {/* <p className="text-muted-foreground my-2"> <strong>Valor Em Falta: </strong></p> */}
                       </div>
 
-                      <Separator orientation="vertical" className="h-16 w-0.5 mx-1" />
-                      <div className="text-start">
+                      <Separator orientation="vertical" className="h-14 w-0.5 mx-1" />
+                      <div className="text-start border-b">
                         <p className="font-bold text-muted-foreground my-2"><span className="text-black">AO06 0004 0000 1103 8911 1017 4</span></p>
                         <p className="font-bold text-muted-foreground my-2"><span className="text-black">AO06 0005 0000 8118 0659 1019 7</span></p>
+                        {/* <p className="font-bold text-muted-foreground my-2"><span className="text-black">AO06 0004 0000 1103 8911 1017 4</span></p> */}
+
+                      </div>
+
+                      <Separator orientation="vertical" className="h-14 w-0.5 mx-1" />
+
+                      <div className="text-start border-b">
+                        <p className="font-bold text-muted-foreground my-2"><span className="text-black">Gota D' Sol, LDA</span></p>
+                        <p className="font-bold text-muted-foreground my-2"><span className="text-black">Gota D' Sol, LDA</span></p>
                         {/* <p className="font-bold text-muted-foreground my-2"><span className="text-black">AO06 0004 0000 1103 8911 1017 4</span></p> */}
 
                       </div>

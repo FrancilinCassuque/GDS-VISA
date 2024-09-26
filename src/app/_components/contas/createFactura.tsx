@@ -57,9 +57,11 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
   const form = useForm<z.infer<typeof facturaForm>>({
     resolver: zodResolver(facturaForm),
     defaultValues: {
-      valorApagar: '0',
-      valorEmFalta: '0',
-      total: '0'
+      valorEmFalta: factura?.valorEmFalta ? JSON.stringify(factura.valorEmFalta) : '0',
+      valorApagar: factura?.valorApagar ? JSON.stringify(factura.valorApagar) : '0',
+      descricao: factura?.descricao ? JSON.stringify(factura.descricao) : undefined,
+      desconto: factura?.desconto ? JSON.stringify(factura.desconto) : '0',
+      total: factura?.total ? JSON.stringify(factura.total) : '0',
     }
   })
 
@@ -347,8 +349,13 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
               </CollapsibleTrigger>
 
               <CollapsibleContent className="px-6 py-4 space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1">
+                  {(facturaPrint && editar) && (
+                    <TabelaFacturaPrint factura={facturaPrint} printOnly />
+                  )}
+                </div>
 
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="space-y-2 my-4">
                     <FormField
                       name="clientId"
@@ -518,7 +525,6 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
                     <FormField
                       name="descricao"
                       control={form.control}
-                      defaultValue={factura?.descricao}
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Sobre</FormLabel>
@@ -545,14 +551,10 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
               </CollapsibleContent>
             </Collapsible>
 
-            <div className="flex justify-end">
-              <div className="flex items-center justify-center w-full">
-
-                {!factura && (
-                  <Button disabled={loading} className="w-6/12" >{loading ? <Loader2 className="animate-spin" /> : 'Registar Factura'}</Button>
-                )}
-
-              </div>
+            <div className="flex items-center justify-center w-full">
+              {!factura && (
+                <Button disabled={loading} className="w-6/12" >{loading ? <Loader2 className="animate-spin" /> : 'Registar Factura'}</Button>
+              )}
             </div>
           </div>
         </form>
@@ -610,10 +612,6 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
-      {facturaPrint && (
-        <TabelaFacturaPrint factura={facturaPrint} printOnly />
-      )}
     </div>
   )
 }
