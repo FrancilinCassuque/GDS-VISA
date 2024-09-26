@@ -13,9 +13,10 @@ import Image from "next/image"
 interface ITableProps {
   processos: IProcesso[]
   printOnly?: boolean
+  free?: boolean
 }
 
-export const TabelaProcessos: React.FC<ITableProps> = ({ processos, printOnly }) => {
+export const TabelaProcessos: React.FC<ITableProps> = ({ processos, printOnly, free }) => {
   const tableProcessoRef = useRef(null)
 
   const printTable = useReactToPrint({
@@ -91,31 +92,31 @@ export const TabelaProcessos: React.FC<ITableProps> = ({ processos, printOnly })
                   <TableCell colSpan={4} className="border-none">
                     <div className='flex flex-col items-center my-10 justify-center'>
                       <Image width={175} height={175} src={'/placeholder.png'} alt="Logotipo da Gota De Sol" />
-                      <CardTitle>GOTA D' SOL - processos</CardTitle>
-                      <CardDescription>A Luz que Falta em Tua Direcção.</CardDescription>
+                      <CardTitle>GOTA D' SOL</CardTitle>
+                      <CardDescription>{free ? 'Lista De Clientes' : 'A Luz que Falta em Tua Direcção.'}</CardDescription>
                     </div>
                   </TableCell>
                 </TableRow>
 
                 <TableRow>
-                  <TableHead>Nome</TableHead>
-                  <TableHead className="">Passaport</TableHead>
-                  <TableHead className=" sm:table-cell">Categória</TableHead>
-                  <TableHead className="text-center">Estado</TableHead>
-                  <TableHead className=" md:table-cell">Date</TableHead>
+                  <TableHead className="text-center">{free ? 'Nome & Apelido' : 'Nome'}</TableHead>
+                  <TableHead className="text-center">Passaport</TableHead>
+                  <TableHead className="sm:table-cell text-center">Categória</TableHead>
+                  <TableHead className={free ? "sr-only" : 'text-center'}>Estado</TableHead>
+                  <TableHead className={free ? "sr-only" : 'md:table-cell'}>Date</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {processos.map((processo) => (
                   <TableRow className="bg-accent" key={processo.id}>
                     <TableCell>
-                      <div className="font-medium">{processo.nomecompleto}</div>
-                      <div className="text-sm text-muted-foreground md:inline">{processo.preco.toLocaleString('AO', { style: 'currency', currency: 'AOA' })}</div>
+                      <div className="font-medium text-center">{processo.nomecompleto}</div>
+                      <div className={free ? "sr-only" : 'text-sm text-muted-foreground md:inline'}>{processo.preco.toLocaleString('AO', { style: 'currency', currency: 'AOA' })}</div>
                     </TableCell>
-                    <TableCell className="font-medium"> <Badge className="text-xs" variant="secondary">{processo.passaport} </Badge> </TableCell>
-                    <TableCell className="font-medium  md:table-cell"> <Badge className="text-xs" variant="secondary">{processo.tipo} </Badge> </TableCell>
-                    <TableCell className="font-medium"> <Badge className="text-xs" variant="secondary">{processo.estado} </Badge> </TableCell>
-                    <TableCell className=" md:table-cell">{processo.updatedAt.toLocaleDateString()}</TableCell>
+                    <TableCell className="font-medium text-center"> <Badge className="text-xs" variant="secondary">{processo.passaport} </Badge> </TableCell>
+                    <TableCell className="font-medium text-center  md:table-cell"> <Badge className="text-xs" variant="secondary">{(processo.tipo.toLowerCase() != 'visto de turismo') ? 'Visto Schengen' : 'Visto Naciol'} </Badge> </TableCell>
+                    <TableCell className={free ? "sr-only" : 'font-medium'}> <Badge className="text-xs" variant="secondary">{processo.estado} </Badge> </TableCell>
+                    <TableCell className={free ? "sr-only" : 'font-medium'}>{processo.updatedAt.toLocaleDateString()}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

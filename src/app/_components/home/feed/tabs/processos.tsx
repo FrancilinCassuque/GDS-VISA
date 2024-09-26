@@ -6,9 +6,10 @@ import { useState } from "react"
 
 interface ITabProps {
   processos: IProcesso[]
+  free?: boolean
 }
 
-export const TabProcessos: React.FC<ITabProps> = ({ processos }) => {
+export const TabProcessos: React.FC<ITabProps> = ({ processos, free }) => {
 
   const [selectedProcessos, setselectedProcessos] = useState<IProcesso[]>()
   function setSelectedPro(lista: any[]) {
@@ -21,7 +22,7 @@ export const TabProcessos: React.FC<ITabProps> = ({ processos }) => {
       colunaModel={columnsProcesso}
       listaDeDados={processos} dataProcessos={setSelectedPro}
       listaDe="Processos"
-      listaPrint={<TabelaProcessos processos={selectedProcessos ? selectedProcessos : []} printOnly={true} />}
+      listaPrint={<TabelaProcessos processos={selectedProcessos ? selectedProcessos : []} free={free} printOnly />}
     />
   )
 }

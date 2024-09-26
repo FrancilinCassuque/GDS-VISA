@@ -54,6 +54,7 @@ export default async function Page() {
                 <TabsTrigger value="activos">Ativos</TabsTrigger>
                 <TabsTrigger value="aceites">Aceites</TabsTrigger>
                 <TabsTrigger value="Pagamentos">Pagamentos</TabsTrigger>
+
                 {(passaport.length > 0 && recusado.length > 0) ? (
                   <>
                     <TabsTrigger value="Passaporte">Passaporte</TabsTrigger>
@@ -70,6 +71,7 @@ export default async function Page() {
                     )}
                   </>
                 )}
+                
               </TabsList>
 
             </div>
