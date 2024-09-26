@@ -25,11 +25,11 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { FacturaDelete, facturaStoreService, FacturaUpdate } from "@/db"
 import { TabelaFacturaPrint } from "../user/tables/tableFacturaPrint"
 
-export const estados = [
+export const estadosDeFactura = [
   '1ª Parcela Pendente',
   '2ª Parcela Pendente',
-  '1ª Pago',
-  '2ª Pago',
+  '1ª Parcela Paga',
+  '2ª Parcela Paga',
   'Cancelado',
   'Aguardando Reembolso',
   'Reembolsado',
@@ -442,7 +442,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
                               <SelectValue placeholder="Seleciona o Estado" />
                             </SelectTrigger>
                             <SelectContent>
-                              {estados.map((estado, index) => (
+                              {estadosDeFactura.map((estado, index) => (
                                 <SelectItem value={estado} key={index}>{estado}</SelectItem>
                               ))}
                             </SelectContent>

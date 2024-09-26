@@ -1,28 +1,25 @@
 'use client'
 
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible"
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectGroup } from "@/components/ui/select"
-import { IconLeft, IconRight } from "react-day-picker"
-import { Controller, useForm } from "react-hook-form"
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
+import { useForm } from "react-hook-form"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import { authStore, ClientStore } from "@/store"
+import { authStore } from "@/store"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
 import { Check, ChevronsUpDown, FileWarning, HandHelpingIcon, Loader2, Newspaper, Trash } from "lucide-react"
 import Link from "next/link"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { IClient, IProcesso, IProcessoStore, TClientShow } from "@/types"
-import { ClientIndex, processoDelete, processoUpdate, storeProcesso } from "@/db"
+import { IClient, IProcesso, IProcessoStore } from "@/types"
+import { processoDelete, processoUpdate, storeProcesso } from "@/db"
 import { IconChevronDown } from "@/app/_components"
-import { error } from "console"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
@@ -42,8 +39,9 @@ interface ICreateProps {
   clientes?: IClient[]
 }
 
-const estados = [
-  "Pendente",
+export const estadosDeProcessos = [
+ "Pendente a Pagamento",
+  "Pendente a Passaporte",
   "Activo",
   "Recusado",
   "Aceite"
@@ -337,7 +335,7 @@ export const CreateProcess: React.FC<ICreateProps> = ({ processo, clientes }) =>
                               <SelectValue placeholder="Seleciona o Estado" />
                             </SelectTrigger>
                             <SelectContent>
-                              {estados.map((estado, index) => (
+                              {estadosDeProcessos.map((estado, index) => (
                                 <SelectItem value={estado} key={index}>{estado}</SelectItem>
                               ))}
                             </SelectContent>
@@ -505,7 +503,7 @@ export const CreateProcess: React.FC<ICreateProps> = ({ processo, clientes }) =>
                 <AlertDialogDescription>Tem certeza que pretende Eliminar este Processo?</AlertDialogDescription>
                 <AlertDialogFooter>
                   <AlertDialogCancel> Não </AlertDialogCancel>
-                  <AlertDialogAction className="bg-destructive hover:bg-destructive"><Button variant={'destructive'} onClick={(e)=>{
+                  <AlertDialogAction className="bg-destructive hover:bg-destructive"><Button variant={'destructive'} onClick={(e) => {
                     e.preventDefault()
                     deletarProcesso()
                   }}> Sim, Eliminar <Trash className="h-5 w-5 mx-2" /></Button></AlertDialogAction>

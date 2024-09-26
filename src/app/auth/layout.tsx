@@ -48,19 +48,6 @@ export default function Component({ children }: Readonly<{ children: React.React
           <TooggleMenu />
 
           <div className="flex flex-1 items-center justify-between">
-            {/* {!authUser?.password && (
-              <div className="mx-4">
-                <Alert variant='destructive'>
-                  <ExclamationTriangleIcon />
-                  <AlertTitle>Perfil incompleto</AlertTitle>
-                  <AlertDescription className="flex flex-col">
-                    <Link href={`/auth/dashboard/settings`}>Crie uma Senha!</Link>
-
-                  </AlertDescription>
-                </Alert>
-              </div>
-            )} */}
-
             <div className="w-full flex-1 m-2 md-m-auto ">
               {/* <form>
                 <div className="relative">
