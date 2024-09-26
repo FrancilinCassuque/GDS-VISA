@@ -17,7 +17,7 @@ export default async function Page() {
 
   return (
     <>
-      <Breadcrumb className="hidden md:flex">
+      <Breadcrumb className="hidden md:flex m-4">
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
@@ -37,7 +37,13 @@ export default async function Page() {
 
         <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
-            <CardProcessoHomeTop processos={processos} aceites={aceite} pagamento={pagamento} passaport={passaport} recusado={recusado} />
+            <CardProcessoHomeTop
+              processos={processos}
+              aceites={aceite.length ? aceite : undefined}
+              pagamento={pagamento.length ? pagamento : undefined}
+              passaport={passaport.length ? passaport : undefined}
+              recusado={recusado.length ? recusado : undefined}
+            />
           </div>
 
 
@@ -48,8 +54,22 @@ export default async function Page() {
                 <TabsTrigger value="activos">Ativos</TabsTrigger>
                 <TabsTrigger value="aceites">Aceites</TabsTrigger>
                 <TabsTrigger value="Pagamentos">Pagamentos</TabsTrigger>
-                <TabsTrigger value="Passaporte">Passaporte</TabsTrigger> 
-                {/* <TabsTrigger value="Recusados">Recusados</TabsTrigger> */}
+                {(passaport.length > 0 && recusado.length > 0) ? (
+                  <>
+                    <TabsTrigger value="Passaporte">Passaporte</TabsTrigger>
+                  </>
+
+                ) : (
+                  <>
+                    {passaport.length ? (
+                      <TabsTrigger value="Passaporte">Passaporte</TabsTrigger>
+
+                    ) : (
+                      <TabsTrigger value="Recusados">Recusados</TabsTrigger>
+
+                    )}
+                  </>
+                )}
               </TabsList>
 
             </div>
@@ -65,6 +85,18 @@ export default async function Page() {
 
             <TabsContent value="aceites">
               <TabProcessos processos={aceite} />
+            </TabsContent>
+
+            <TabsContent value="Pagamentos">
+              <TabProcessos processos={pagamento} />
+            </TabsContent>
+
+            <TabsContent value="Passaporte">
+              <TabProcessos processos={passaport} />
+            </TabsContent>
+
+            <TabsContent value="Recusados">
+              <TabProcessos processos={recusado} />
             </TabsContent>
           </Tabs>
 

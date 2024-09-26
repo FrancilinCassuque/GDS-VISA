@@ -55,10 +55,10 @@ export const UserData: React.FC = () => {
           await image.deleteFile(auth.userauth.image)
 
           const img = await image.imgUpload(data.file)
-          userSave.image = img || ''
+          userSave.image = img || 'https://firebasestorage.googleapis.com/v0/b/next-sara.appspot.com/o/gds%2F2506b671ed18abc523b097c56289ee56.png?alt=media&token=8f24128d-18e7-4260-8114-9e84195588e1'
         } else {
           const img = await image.imgUpload(data.file)
-          userSave.image = img || ''
+          userSave.image = img || 'https://firebasestorage.googleapis.com/v0/b/next-sara.appspot.com/o/gds%2F2506b671ed18abc523b097c56289ee56.png?alt=media&token=8f24128d-18e7-4260-8114-9e84195588e1'
         }
       }
 

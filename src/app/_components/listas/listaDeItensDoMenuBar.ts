@@ -31,15 +31,15 @@ export const listItem = [
   },
   
   {
-    text: 'Processos',
-    icon: IconPackage,
-    path: '/auth/processo/',
-  },
-  
-  {
     text: 'Nova Factura',
     icon: IconNewFactura,
     path: '/auth/dashboard/contas/create',
+  },
+  
+  {
+    text: 'Processos',
+    icon: IconPackage,
+    path: '/auth/processo/',
   },
 
   
