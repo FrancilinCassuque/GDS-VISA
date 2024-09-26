@@ -36,7 +36,7 @@ export * from './forms/user/userData'
 export * from './forms/formDialog'
 
 export * from './listas/listadepaises'
-export * from './listas/listaDeItens'
+export * from './listas/listaDeItensDoMenuBar'
 export * from './listas/listaDeOcupacoes'
 export * from './listas/cargos'
 

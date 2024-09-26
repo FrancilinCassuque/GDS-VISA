@@ -2,7 +2,7 @@
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import Link from "next/link"
-import { listItem, subListItem } from "../../listas/listaDeItens"
+import { listItem, subListItem } from "../../listas/listaDeItensDoMenuBar"
 import { ConfigButton } from "../config"
 
 

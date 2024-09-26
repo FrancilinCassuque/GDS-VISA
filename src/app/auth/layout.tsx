@@ -48,22 +48,6 @@ export default function Component({ children }: Readonly<{ children: React.React
           <TooggleMenu />
 
           <div className="flex flex-1 items-center justify-between">
-            {/* <Breadcrumb className="hidden md:flex">
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link href="#" prefetch={false}>
-                      Dashboard
-                    </Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Overview </BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb> */}
-
             {/* {!authUser?.password && (
               <div className="mx-4">
                 <Alert variant='destructive'>
@@ -78,16 +62,17 @@ export default function Component({ children }: Readonly<{ children: React.React
             )} */}
 
             <div className="w-full flex-1 m-2 md-m-auto ">
-              <form>
-                {/* <div className="relative">
+              {/* <form>
+                <div className="relative">
                   <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                   <Input
                     type="search"
                     placeholder="Search products..."
                     className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
                   />
-                </div> */}
-              </form>
+                </div>
+              </form> */}
+              <p className="text-muted-foreground font-mono font-semibold text-lg">Gota D' Sol - Visa</p>
             </div>
 
             <DropMenu />

@@ -1,13 +1,10 @@
 import { CardClientsHomeTop, CardProcessoHomeTop, TabProcessos, TabClientes } from ".."
 import { ClientIndex, processoIndex } from "@/db"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useState } from "react"
-import { IClient, IProcesso } from "@/types"
 
 export const HomeDashboard: React.FC = async () => {
   const clientes = await ClientIndex()
   const processos = await processoIndex()
-  // const [selectedClients, setSelectedClientes] = useState<IClient[]>()
 
   if (clientes instanceof Error) return
   if (processos instanceof Error) return

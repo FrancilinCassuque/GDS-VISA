@@ -18,23 +18,24 @@ export const listItem = [
   //   icon: IconShoppingCart,
   //   path: '#',
   // },
-  // {
-  //   text: 'Products',
-  //   icon: IconPackage,
-  //   path: '/auth/home',
-  // },
   {
     text: 'Novo Cliente',
     icon: IconUserPlus,
     path: '/auth/client/create',
   },
-
+  
   {
     text: 'Novo Processo',
     icon: IconNewInf,
     path: '/auth/processo/create',
   },
-
+  
+  {
+    text: 'Processos',
+    icon: IconPackage,
+    path: '/auth/processo/',
+  },
+  
   {
     text: 'Nova Factura',
     icon: IconNewFactura,
