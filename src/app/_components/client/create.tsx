@@ -20,6 +20,7 @@ import { IClientStore, IProcesso, TClientShow } from "@/types"
 import { ClientDelete, ClientUpdate, storeClient } from "@/db"
 import { columnsProcesso, TabelaDeDados, TabelaProcessos } from ".."
 import { useRouter } from "next/navigation"
+import InputMask from 'react-input-mask'
 
 const clientForm = z.object({
   telefone: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(9, 'Contacto Pequeno de mais').max(20, 'Contacto Grande de mais'),
@@ -262,7 +263,17 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Contacto</FormLabel>
-                          <Input {...field} type="text" placeholder="+244 999 000 000" defaultValue={client?.telefone} readOnly={editar} />
+                          {/* <Input {...field} type="text" placeholder="+244 999 000 000" defaultValue={client?.telefone} readOnly={editar} /> */}
+                          <InputMask
+                            type='tel'
+                            mask={'(+999) 999 999 999'}
+                            maskChar={' '}
+                            placeholder='(+244) 912 345 678'
+                            className='border py-1 px-4 w-full rounded-lg'
+                            readOnly={editar}
+                            defaultValue={client?.telefone}
+                            {...field} />
+
                           <FormDescription>Telefone do Cliente</FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -286,18 +297,18 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
                   </div>
                 </div>
 
-                <div className="space-y-2 my-4 min-w-full">
-                  <TabelaDeDados
-                    colunaModel={columnsProcesso}
-                    listaDeDados={client?.processos || []}
-                    dataOnly={false}
-                    dataProcessos={listaDeSelecionados}
-                    listaDe="Processos"
-                    listaPrint={<TabelaProcessos processos={escolhidos} printOnly={true} />}
-                  />
-
-                </div>
-
+                {client && (
+                  <div className="space-y-2 my-4 min-w-full">
+                    <TabelaDeDados
+                      colunaModel={columnsProcesso}
+                      listaDeDados={client?.processos || []}
+                      dataOnly={false}
+                      dataProcessos={listaDeSelecionados}
+                      listaDe="Processos"
+                      listaPrint={<TabelaProcessos processos={escolhidos} printOnly={true} />}
+                    />
+                  </div>
+                )}
 
               </CollapsibleContent>
             </Collapsible>

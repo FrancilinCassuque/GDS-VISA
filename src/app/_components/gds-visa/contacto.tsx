@@ -11,6 +11,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { toast } from "@/components/ui/use-toast"
 import Image from 'next/image'
+import InputMask from 'react-input-mask'
 
 const formSchema = z.object({
   nome: z.string().min(8, {
@@ -23,6 +24,7 @@ const formSchema = z.object({
     message: "A mensagem deve ter pelo menos 10 caracteres.",
   }),
 })
+
 
 export const ContactPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -84,7 +86,7 @@ export const ContactPage: React.FC = () => {
                   <FormItem>
                     <FormLabel>Whatsapp</FormLabel>
                     <FormControl>
-                      <Input type="text" placeholder="+244 900 000 123" {...field} />
+                      <InputMask type='tel' mask={'(+999) 999 999 999'} maskChar={' '} placeholder='(+244) 912 345 678' className='border py-1.5 px-4 w-full rounded-lg' {...field} />
                     </FormControl>
                     <FormDescription>
                       Nunca compartilharemos seu contacto com mais ninguém.
