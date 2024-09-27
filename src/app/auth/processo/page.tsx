@@ -14,8 +14,9 @@ export default async function Page() {
   const recusado = processos.filter(proc => proc.estado == 'Recusado')
   const pagamento = processos.filter(proc => proc.estado == 'Pendente a Pagamento')
   const passaport = processos.filter(proc => proc.estado == 'Pendente a Passaporte')
-  const nacional = processos.filter(proc => proc.tipo.toLowerCase() != 'visto de turismo')
-  const turismo = processos.filter(proc => proc.tipo.toLowerCase() == 'visto de turismo')
+
+  const nacional = activos.filter(proc => proc.tipo.toLowerCase() != 'visto de turismo')
+  const turismo = activos.filter(proc => proc.tipo.toLowerCase() == 'visto de turismo')
 
   return (
     <>
@@ -53,28 +54,32 @@ export default async function Page() {
           <Tabs defaultValue="activos">
             <div className="flex items-center">
               <TabsList>
-                <TabsTrigger value="total">Total</TabsTrigger>
-                <TabsTrigger value="activos">Ativos</TabsTrigger>
-                <TabsTrigger value="aceites">Aceites</TabsTrigger>
-                <TabsTrigger value="Pagamentos">Pagamentos</TabsTrigger>
-
-                {(passaport.length > 0 && recusado.length > 0) ? (
-                  <>
-                    <TabsTrigger value="Passaporte">Passaporte</TabsTrigger>
-                  </>
-
-                ) : (
-                  <>
-                    {passaport.length ? (
-                      <TabsTrigger value="Passaporte">Passaporte</TabsTrigger>
-
-                    ) : (
-                      <TabsTrigger value="Recusados">Recusados</TabsTrigger>
-
-                    )}
-                  </>
+                {processos.length && (
+                  <TabsTrigger className="" value="total">Total</TabsTrigger>
+                )}
+                {activos.length && (
+                  <TabsTrigger className="" value="activos">Ativos</TabsTrigger>
                 )}
 
+                {aceite.length && (
+                  <TabsTrigger className="" value="aceites">Aceites</TabsTrigger>
+                )}
+
+                {pagamento.length && (
+                  <TabsTrigger className="" value="Pagamentos">Pagamentos</TabsTrigger>
+                )}
+
+                {passaport.length && (
+                  <div className="sr-only md:not-sr-only">
+                    <TabsTrigger className="sr-only md:not-sr-only" value="Passaporte">Passaporte</TabsTrigger>
+                  </div>
+                )}
+
+                {recusado.length && (
+                  <div className="sr-only md:not-sr-only">
+                    <TabsTrigger className="" value="Recusados">Recusados</TabsTrigger>
+                  </div>
+                )}
               </TabsList>
 
             </div>
@@ -85,7 +90,7 @@ export default async function Page() {
 
 
             <TabsContent value="activos">
-              <TabProcessos processos={activos} free />
+              <TabProcessos processos={activos} />
             </TabsContent>
 
             <TabsContent value="aceites">
@@ -117,12 +122,12 @@ export default async function Page() {
             </div>
 
             <TabsContent value="Nacional">
-              <TabProcessos processos={nacional} />
+              <TabProcessos processos={nacional} free />
             </TabsContent>
 
 
             <TabsContent value="Schengen">
-              <TabProcessos processos={turismo} />
+              <TabProcessos processos={turismo} free />
             </TabsContent>
           </Tabs>
 
