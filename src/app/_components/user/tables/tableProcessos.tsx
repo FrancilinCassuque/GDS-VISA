@@ -92,8 +92,8 @@ export const TabelaProcessos: React.FC<ITableProps> = ({ processos, printOnly, f
                   <TableCell colSpan={4} className="border-none">
                     <div className='flex flex-col items-center my-10 justify-center'>
                       <Image width={175} height={175} src={'/placeholder.png'} alt="Logotipo da Gota De Sol" />
-                      <CardTitle>GOTA D' SOL</CardTitle>
-                      <CardDescription>{free ? 'Lista De Clientes' : 'A Luz que Falta em Tua Direcção.'}</CardDescription>
+                      <CardTitle>{free? 'Lista De Clientes': 'Lista de Processos'}</CardTitle>
+                      <CardDescription>{free ? 'Clientes por agendar' : 'A Luz que Falta em Tua Direcção.'}</CardDescription>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -114,7 +114,7 @@ export const TabelaProcessos: React.FC<ITableProps> = ({ processos, printOnly, f
                       <div className={free ? "sr-only" : 'text-sm text-muted-foreground md:inline'}>{processo.preco.toLocaleString('AO', { style: 'currency', currency: 'AOA' })}</div>
                     </TableCell>
                     <TableCell className="font-medium text-center"> <Badge className="text-xs" variant="secondary">{processo.passaport} </Badge> </TableCell>
-                    <TableCell className="font-medium text-center  md:table-cell"> <Badge className="text-xs" variant="secondary">{(processo.tipo.toLowerCase() == 'visto de turismo') ? 'Visto Schengen' : 'Visto Naciol'} </Badge> </TableCell>
+                    <TableCell className="font-medium text-center  md:table-cell"> <Badge className="text-xs" variant="secondary">{(processo.tipo.toLowerCase() == 'visto de turismo') ? 'Visto Schengen' : 'Visto Nacional'} </Badge> </TableCell>
                     <TableCell className={free ? "sr-only" : 'font-medium'}> <Badge className="text-xs" variant="secondary">{processo.estado} </Badge> </TableCell>
                     <TableCell className={free ? "sr-only" : 'font-medium'}>{processo.updatedAt.toLocaleDateString()}</TableCell>
                   </TableRow>
