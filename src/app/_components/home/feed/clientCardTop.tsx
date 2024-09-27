@@ -55,7 +55,7 @@ export const CardClientsHomeTop: React.FC<ICardProps> = async ({ clientes }) => 
                 <CardTitle className="text-4xl text-center">{clientes.length}</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">{`+${EssaSemanaPorcento}% Essa semana`}</div>
+                <div className="text-xs text-muted-foreground">{`+${EssaSemanaPorcento.toFixed()}% Essa semana`}</div>
               </CardContent>
               <CardFooter>
                 <Progress value={EssaSemanaPorcento} aria-label="25% increase" />
@@ -65,10 +65,10 @@ export const CardClientsHomeTop: React.FC<ICardProps> = async ({ clientes }) => 
             <Card x-chunk="dashboard-05-chunk-2">
               <CardHeader className="pb-2">
                 <CardDescription>Clientes Activos</CardDescription>
-                <CardTitle className="text-4xl">{clientesAtivos.length}</CardTitle>
+                <CardTitle className="text-4xl">{ativosPerc.toFixed()}%</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">{`+${ativosPerc.toFixed()}% com processos Activos`}</div>
+                <div className="text-xs text-muted-foreground">{`${clientesAtivos.length} Clientes com processos Activos`}</div>
               </CardContent>
               <CardFooter>
                 <Progress value={ativosPerc} aria-label="12% increase" />
