@@ -114,7 +114,7 @@ export const TabelaProcessos: React.FC<ITableProps> = ({ processos, printOnly, f
                       <div className={free ? "sr-only" : 'text-sm text-muted-foreground md:inline'}>{processo.preco.toLocaleString('AO', { style: 'currency', currency: 'AOA' })}</div>
                     </TableCell>
                     <TableCell className="font-medium text-center"> <Badge className="text-xs" variant="secondary">{processo.passaport} </Badge> </TableCell>
-                    <TableCell className="font-medium text-center  md:table-cell"> <Badge className="text-xs" variant="secondary">{(processo.tipo.toLowerCase() != 'visto de turismo') ? 'Visto Schengen' : 'Visto Naciol'} </Badge> </TableCell>
+                    <TableCell className="font-medium text-center  md:table-cell"> <Badge className="text-xs" variant="secondary">{(processo.tipo.toLowerCase() == 'visto de turismo') ? 'Visto Schengen' : 'Visto Naciol'} </Badge> </TableCell>
                     <TableCell className={free ? "sr-only" : 'font-medium'}> <Badge className="text-xs" variant="secondary">{processo.estado} </Badge> </TableCell>
                     <TableCell className={free ? "sr-only" : 'font-medium'}>{processo.updatedAt.toLocaleDateString()}</TableCell>
                   </TableRow>

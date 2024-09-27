@@ -58,7 +58,7 @@ export const CardProcessoHomeTop: React.FC<ICardProps> = async ({ processos, ace
                 <CardTitle className="text-4xl text-center">{processos.length}</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">{`+${EssaSemanaPorcento}% Essa semana`}</div>
+                <div className="text-xs text-muted-foreground">{`+${Number.parseInt(EssaSemanaPorcento.toPrecision(2))}% Registrados Essa semana`}</div>
               </CardContent>
               <CardFooter>
                 <Progress value={EssaSemanaPorcento} aria-label="25% increase" />
@@ -71,21 +71,21 @@ export const CardProcessoHomeTop: React.FC<ICardProps> = async ({ processos, ace
                 <CardTitle className="text-4xl text-center">{abertos.length}</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">{`${abertoPerc.toFixed()}% com a primeira parcela Paga`}</div>
+                <div className="text-xs text-muted-foreground text-center">{`${abertoPerc.toFixed()}% com a processos activos`}</div>
               </CardContent>
               <CardFooter>
                 <Progress value={abertoPerc} aria-label="12% increase" />
               </CardFooter>
             </Card>
-            
+
             {aceites && (
               <Card x-chunk="dashboard-05-chunk-3">
                 <CardHeader className="pb-2">
                   <CardDescription>Processos Aceites</CardDescription>
-                  <CardTitle className="text-4xl text-center">{aceites?.length}</CardTitle>
+                  <CardTitle className="text-4xl text-center mb-2">{`${aceites?.length ? ((aceites.length / processos.length) * 100).toFixed() : 0}%`}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-xs text-muted-foreground">{`${aceites?.length ? ((aceites.length / processos.length) * 100).toFixed() : 0}% com a primeira parcela Paga`}</div>
+                  <div className="text-xs text-muted-foreground">{`${aceites.length} Processos que o Visto Saio.`}</div>
                 </CardContent>
                 <CardFooter>
                   <Progress value={((aceites.length / processos.length) * 100)} aria-label="12% increase" />
@@ -96,11 +96,11 @@ export const CardProcessoHomeTop: React.FC<ICardProps> = async ({ processos, ace
             {pagamento && (
               <Card x-chunk="dashboard-05-chunk-4">
                 <CardHeader className="pb-2">
-                  <CardDescription>Processos Pendentes a Pagamento</CardDescription>
-                  <CardTitle className="text-4xl text-center">{pagamento?.length}</CardTitle>
+                  <CardDescription>Pagamentos em Atraso.</CardDescription>
+                  <CardTitle className="text-4xl text-center">{`${pagamento?.length ? ((pagamento.length / processos.length) * 100).toFixed() : 0}`}%</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-xs text-muted-foreground">{`${pagamento?.length ? ((pagamento.length / processos.length) * 100).toFixed() : 0}% com a primeira parcela Paga`}</div>
+                  <div className="text-xs text-muted-foreground">{`${pagamento?.length} Processos com a pagamentos em atraso`}</div>
                 </CardContent>
                 <CardFooter>
                   <Progress value={((pagamento.length / processos.length) * 100)} aria-label="12% increase" />
@@ -113,13 +113,13 @@ export const CardProcessoHomeTop: React.FC<ICardProps> = async ({ processos, ace
               <Card x-chunk="dashboard-05-chunk-5">
                 <CardHeader className="pb-2">
                   <CardDescription>Processos Pendentes a Passaporte</CardDescription>
-                  <CardTitle className="text-4xl text-center">{passaport?.length}</CardTitle>
+                  <CardTitle className="text-4xl text-center">{passaport.length ? ((passaport.length / processos.length) * 100).toFixed() : 0}%</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-xs text-muted-foreground">{`${passaport?.length ? ((passaport.length / processos.length) * 100).toFixed() : 0}% com a primeira parcela Paga`}</div>
+                  <div className="text-xs text-muted-foreground">{`${passaport.length} Passaport por receber no centro`}</div>
                 </CardContent>
                 <CardFooter>
-                  <Progress value={((passaport.length / processos.length) * 100)} aria-label="12% increase" />
+                  <Progress value={((passaport.length / processos.length) * 100)} aria-label="increase" />
                 </CardFooter>
               </Card>
             )}
@@ -128,13 +128,13 @@ export const CardProcessoHomeTop: React.FC<ICardProps> = async ({ processos, ace
               <Card x-chunk="dashboard-05-chunk-6">
                 <CardHeader className="pb-2">
                   <CardDescription>Processos Recusados</CardDescription>
-                  <CardTitle className="text-4xl text-center">{recusado?.length}</CardTitle>
+                  <CardTitle className="text-4xl text-center">{recusado?.length ? ((recusado.length / processos.length) * 100).toFixed() : 0}%</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-xs text-muted-foreground">{`${recusado?.length ? ((recusado.length / processos.length) * 100).toFixed() : 0}% com a primeira parcela Paga`}</div>
+                  <div className="text-xs text-muted-foreground">{`${recusado.length} Processos Recusados`}</div>
                 </CardContent>
                 <CardFooter>
-                  <Progress value={((recusado.length / processos.length) * 100)} aria-label="12% increase" />
+                  <Progress value={((recusado.length / processos.length) * 100)} aria-label="increase" />
                 </CardFooter>
               </Card>
             )}
