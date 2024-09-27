@@ -58,7 +58,7 @@ export const CardProcessoHomeTop: React.FC<ICardProps> = async ({ processos, ace
                 <CardTitle className="text-4xl text-center">{processos.length}</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">{`+${Number.parseInt(EssaSemanaPorcento.toPrecision(2))}% Registrados Essa semana`}</div>
+                <div className="text-xs text-muted-foreground">{`+${Number.parseInt(EssaSemanaPorcento.toPrecision(2))}% Essa semana`}</div>
               </CardContent>
               <CardFooter>
                 <Progress value={EssaSemanaPorcento} aria-label="25% increase" />
@@ -68,10 +68,10 @@ export const CardProcessoHomeTop: React.FC<ICardProps> = async ({ processos, ace
             <Card x-chunk="dashboard-05-chunk-2">
               <CardHeader className="pb-2">
                 <CardDescription>Processos Activos</CardDescription>
-                <CardTitle className="text-4xl text-center">{abertos.length}</CardTitle>
+                <CardTitle className="text-4xl text-center">{`${abertoPerc.toFixed()}%`}</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground text-center">{`${abertoPerc.toFixed()}% com a processos activos`}</div>
+                <div className="text-xs text-muted-foreground text-center">{`${abertos.length} processos activos`}</div>
               </CardContent>
               <CardFooter>
                 <Progress value={abertoPerc} aria-label="12% increase" />
