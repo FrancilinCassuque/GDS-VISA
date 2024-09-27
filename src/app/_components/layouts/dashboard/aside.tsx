@@ -55,12 +55,14 @@ export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-                <span>
-                  <Bell className="h-5 w-5" />
-                  {notificacoes?.length && (
-                    <Badge className="ml-auto flex h-6 w-4 shrink-0 items-center justify-center rounded-full">{notificacoes?.length ? notificacoes.length : ''}</Badge>
-                  )}
-                </span>
+              <Link href={'#'} className={notificacoes?.length ? "grid grid-cols-2" : "grid grid-cols-1"} onClick={(e) => {
+                e.preventDefault()
+              }}>
+                <Bell className="h-5 w-5" />
+                {(notificacoes && notificacoes.length > 0) && (
+                  <Badge className="ml-auto flex h-6 w-4 shrink-0 items-center justify-center rounded-full bg-primary">{notificacoes.length ? notificacoes.length : ''}</Badge>
+                )}
+              </Link>
 
             </TooltipTrigger>
             <TooltipContent>Notificações</TooltipContent>
