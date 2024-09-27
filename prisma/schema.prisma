@@ -244,5 +244,6 @@ model notificacao {
   id       String  @id @default(uuid())
   mensagem String
   eventId  String
+  tipo     String
   visto    Boolean
 }

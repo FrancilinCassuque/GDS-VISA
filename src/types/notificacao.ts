@@ -5,4 +5,5 @@ export interface INotificacao {
   mensagem: string
   eventId: string
   visto: boolean
+  tipo: string
 }
