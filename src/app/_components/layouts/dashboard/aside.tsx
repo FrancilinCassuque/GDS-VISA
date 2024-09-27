@@ -4,9 +4,16 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import Link from "next/link"
 import { listItem, subListItem } from "../../listas/listaDeItensDoMenuBar"
 import { ConfigButton } from "../config"
+import { Button } from "@/components/ui/button"
+import { Bell } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { INotificacao } from "@/types"
 
+interface IAsideProps {
+  notificacoes?: INotificacao[]
+}
 
-export const AsideBar: React.FC = () => {
+export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
   const classLink = 'flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
 
   return (
@@ -46,6 +53,19 @@ export const AsideBar: React.FC = () => {
       </nav>
       <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
         <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+                <span>
+                  <Bell className="h-5 w-5" />
+                  {notificacoes?.length && (
+                    <Badge className="ml-auto flex h-6 w-4 shrink-0 items-center justify-center rounded-full">{notificacoes?.length ? notificacoes.length : ''}</Badge>
+                  )}
+                </span>
+
+            </TooltipTrigger>
+            <TooltipContent>Notificações</TooltipContent>
+          </Tooltip>
+
           {subListItem.map((link, index) => (
             <Tooltip>
               <TooltipTrigger asChild>

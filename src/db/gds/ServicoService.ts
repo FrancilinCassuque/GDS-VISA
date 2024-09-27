@@ -1,7 +1,10 @@
+'use server'
+
 import { IService, IServiceShow } from "@/types"
 import prisma from "../prisma.index"
 
 export async function ServicoStore(servico: Omit<IService, 'id'>): Promise<string | Error> {
+  'use server'
   try {
     const novoServico = await prisma.servico.create({
       data: {
@@ -38,6 +41,7 @@ export async function ServicoStore(servico: Omit<IService, 'id'>): Promise<strin
 }
 
 export async function ServicoIndex(): Promise<IService[] | Error> {
+  'use server'
   try {
     const servicos = await prisma.servico.findMany()
 
@@ -52,6 +56,7 @@ export async function ServicoIndex(): Promise<IService[] | Error> {
 }
 
 export async function ServicoShow(id: string): Promise<IServiceShow | Error> {
+  'use server'
   try {
     const servico = await prisma.servico.findUniqueOrThrow({
       where: {
@@ -73,6 +78,7 @@ export async function ServicoShow(id: string): Promise<IServiceShow | Error> {
 }
 
 export async function ServicoUpdate(servicoDate: IService): Promise<IService | Error> {
+  'use server'
   try {
     const servico = await prisma.servico.update({
       where: {
@@ -97,6 +103,7 @@ export async function ServicoUpdate(servicoDate: IService): Promise<IService | E
 }
 
 export async function ServicoDelete(id: string): Promise<string | Error> {
+  'use server'
   try {
     const servico = await prisma.servico.delete({
       where: {

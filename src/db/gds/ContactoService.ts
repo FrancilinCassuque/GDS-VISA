@@ -1,8 +1,11 @@
+'use server'
+
 import { IContacto } from "@/types"
 import prisma from '../prisma.index'
 
 
 export async function ContactoStore(contacto: Omit<IContacto, 'id'>): Promise<string | Error> {
+  'use server'
   try {
     const novoContacto = await prisma.contacto.create({
       data: {
@@ -35,6 +38,7 @@ export async function ContactoStore(contacto: Omit<IContacto, 'id'>): Promise<st
 }
 
 export async function ContactoIndex(): Promise<IContacto[] | Error> {
+  'use server'
   try {
     const contactos = await prisma.contacto.findMany()
 
@@ -49,6 +53,7 @@ export async function ContactoIndex(): Promise<IContacto[] | Error> {
 }
 
 export async function ContactoShow(id:string): Promise<IContacto | Error> {
+  'use server'
   try {
     const contacto = await prisma.contacto.findFirstOrThrow({
       where:{
@@ -67,6 +72,7 @@ export async function ContactoShow(id:string): Promise<IContacto | Error> {
 }
 
 export async function ContactoDeletar(id:string): Promise<IContacto | Error> {
+  'use server'
   try {
     const contacto = await prisma.contacto.delete({
       where:{

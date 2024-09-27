@@ -4,10 +4,11 @@ import { DropMenu, Footer, AsideBar, TooggleMenu, } from "../_components"
 import { useEffect, useState } from "react"
 import { authStore } from "@/store"
 import { signOut, useSession } from "next-auth/react"
-import { auth } from "@/db"
+import { auth, NotificacaoIndex } from "@/db"
 // import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import { Input } from "@/components/ui/input"
 import { Loader2, Search } from "lucide-react"
+import { INotificacao } from "@/types"
 
 export default function Component({ children }: Readonly<{ children: React.ReactNode }>) {
   const { data, status } = useSession()
@@ -15,21 +16,31 @@ export default function Component({ children }: Readonly<{ children: React.React
   const authUser = authStore()
   const [userMail, setUSerMail] = useState(data?.user?.email)
 
+  const [notificacoes, SetNotificacoes] = useState<INotificacao[]>()
+
+  const abastecerNotificacoes = async () => {
+    const notificacoesget = await NotificacaoIndex()
+    if (!(notificacoesget instanceof Error)) {
+      return SetNotificacoes(notificacoesget)
+
+    }
+  }
+
   useEffect(() => {
     setLoading(true)
     setUSerMail(data?.user?.email)
 
     if ((status == 'authenticated') && userMail) {
 
+      abastecerNotificacoes()
+
       if (!authUser.userauth?.id) {
-        const user = auth(userMail).then((res) => {
+        auth(userMail).then((res) => {
           if (res instanceof Error) return
           authStore.getState().startAuth(res)
         })
 
-        // console.log(user)
         setLoading(false)
-
 
       } else {
         setLoading(false)
@@ -42,7 +53,7 @@ export default function Component({ children }: Readonly<{ children: React.React
 
   return (
     <div className="">
-      <AsideBar />
+      <AsideBar notificacoes={notificacoes} />
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
         <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
           <TooggleMenu />

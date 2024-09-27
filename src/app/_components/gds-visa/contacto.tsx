@@ -12,6 +12,14 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { toast } from "@/components/ui/use-toast"
 import Image from 'next/image'
 import InputMask from 'react-input-mask'
+import { Loader2 } from 'lucide-react'
+import { Metadata } from 'next'
+import { ContactoStore } from '@/db'
+import { useRouter } from 'next/navigation'
+
+export const metadata: Metadata = {
+  title: "GOTA D' SOL - Entrar Em Contacto",
+}
 
 const formSchema = z.object({
   nome: z.string().min(8, {
@@ -28,6 +36,7 @@ const formSchema = z.object({
 
 export const ContactPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const rota = useRouter()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -38,18 +47,38 @@ export const ContactPage: React.FC = () => {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsSubmitting(true)
-    // Simulate API call
-    setTimeout(() => {
-      console.log(values)
-      setIsSubmitting(false)
-      toast({
-        title: "Mensagem enviada!",
-        description: "Entraremos em contato com você o mais breve possível.",
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      setIsSubmitting(true)
+
+      const response = await ContactoStore({
+        descricao: values.menssagem,
+        telefone: values.whatsapp,
+        nome: values.nome,
       })
+
+      if (!(response instanceof Error)) {
+        setIsSubmitting(false)
+        
+        rota.push('/')
+
+        toast({
+          title: "Mensagem enviada!",
+          description: "Entraremos em contato com você o mais breve possível.",
+        })
+      }
+
+    } catch (error) {
+      setIsSubmitting(false)
+
+      toast({
+        title: "Mensagem não enviada!",
+        description: "Entraremos em contato com você o mais breve possível.",
+        variant: 'destructive'
+      })
+      
       form.reset()
-    }, 2000)
+    }
   }
 
   return (
@@ -116,7 +145,7 @@ export const ContactPage: React.FC = () => {
                 )}
               />
               <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Enviando..." : "Enviar mensagem"}
+                Enviar mensagem  <Loader2 className={!isSubmitting ? 'sr-only' : ' not-sr-only w-8 h-8 animate-spin'} />
               </Button>
             </form>
           </Form>
