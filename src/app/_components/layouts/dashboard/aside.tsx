@@ -145,8 +145,8 @@ export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
             <TooltipContent>Notificações</TooltipContent>
           </Tooltip>
 
-          {subListItem.map((link, index) => (
-            <Tooltip>
+          {subListItem.map((link, index) => ( 
+            <Tooltip key={index}>
               <TooltipTrigger asChild>
                 <Link
                   href={link.path}

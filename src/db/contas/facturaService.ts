@@ -77,8 +77,8 @@ export async function FacturaUpdate(factura: IFacturaUpdate, listaDeProcessos: I
     } else if (factura.estado === '2ª Parcela Pendente') {
       factura.valorApagar = factura.valorEmFalta - factura.desconto
       factura.valorEmFalta = 0
-    } else if (factura.estado === '1ª Pago') {
-      factura.valorApagar = 0
+    } else if (factura.estado === '1ª Parcela Paga') {
+      factura.valorApagar = 0 
     } else {
       factura.valorApagar = 0
       factura.valorEmFalta = 0

@@ -50,7 +50,7 @@ export const Home: React.FC = () => {
                 Orientação completa para obtenção de vistos, incluindo análise de documentos e acompanhamento do processo.
               </p>
 
-              <Button className="px-6 py-3  my-4 rounded-lg">
+              <Button className="px-6 py-3  my-4 rounded-lg sr-only">
                 <Link href={'/gds-visa/service/visa'}>
                   Saber Mais...
                 </Link>
@@ -65,7 +65,7 @@ export const Home: React.FC = () => {
                 Assistência na criação de itinerários personalizados e recomendações de viagens.
               </p>
 
-              <Button className="px-6 py-3  my-4 rounded-lg">
+              <Button className="sr-only px-6 py-3  my-4 rounded-lg">
                 <Link href={'#'}>
                   Saber Mais...
                 </Link>
@@ -80,7 +80,7 @@ export const Home: React.FC = () => {
                 Acompanhamento contínuo durante o processo de visto e viagem, garantindo a tranquilidade de nossos clientes.
               </p>
 
-              <Button className="px-6 py-3  my-4 rounded-lg">
+              <Button className="sr-only px-6 py-3  my-4 rounded-lg">
                 <Link href={'#'}>
                   Saber Mais...
                 </Link>
