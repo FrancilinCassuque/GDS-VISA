@@ -40,7 +40,7 @@ interface IDataTableProps {
   dataProcessos?: (data: any[]) => void
   dataOnly?: boolean
   filtrarColunaPor?: string
-  listaDe: string
+  listaDe?: string
 }
 
 export const TabelaDeDados: React.FC<IDataTableProps> = ({ listaDeDados, dataProcessos, dataOnly, listaPrint, colunaModel, filtrarColunaPor, listaDe }) => {
@@ -116,13 +116,13 @@ export const TabelaDeDados: React.FC<IDataTableProps> = ({ listaDeDados, dataPro
 
       {dataOnly ? (
         <div className="text-center text-primary">
-          <h1>{listaDe} do Cliente</h1>
-          <h3 className="text-muted-foreground">Selecione {listaDe}</h3>
+          <h1> {listaDe? `${listaDe} do Cliente`: null} </h1>
+          <h3 className="text-muted-foreground">{listaDe? `Selecione ${listaDe}`: null}</h3>
         </div>
       ) : (
         <div className="text-center">
           <h1>{listaDe}</h1>
-          <h3 className="text-muted-foreground">Lista de {listaDe}</h3>
+          <h3 className="text-muted-foreground">{listaDe? `Lista de ${listaDe}`: null}</h3>
         </div >
       )}
 

@@ -49,85 +49,105 @@ export default async function Page() {
             />
           </div>
 
-
-          <p className="text-center text-lg font-mono font-semibold bg-slate-300/25">Estado dos Processos</p>
-          <Tabs defaultValue="activos">
+          <Tabs defaultValue="Estado">
             <div className="flex items-center">
-              <TabsList>
-                {processos.length && (
-                  <TabsTrigger className="" value="total">Total</TabsTrigger>
-                )}
-                {activos.length && (
-                  <TabsTrigger className="" value="activos">Ativos</TabsTrigger>
-                )}
-
-                {aceite.length && (
-                  <TabsTrigger className="" value="aceites">Aceites</TabsTrigger>
-                )}
-
-                {pagamento.length && (
-                  <TabsTrigger className="" value="Pagamentos">Pagamentos</TabsTrigger>
-                )}
-
-                {passaport.length && (
-                  <div className="sr-only md:not-sr-only">
-                    <TabsTrigger className="sr-only md:not-sr-only" value="Passaporte">Passaporte</TabsTrigger>
-                  </div>
-                )}
-
-                {recusado.length && (
-                  <div className="sr-only md:not-sr-only">
-                    <TabsTrigger className="" value="Recusados">Recusados</TabsTrigger>
-                  </div>
-                )}
+              <TabsList className="w-full flex flex-row">
+                <TabsTrigger value="Estado">Estado</TabsTrigger>
+                <TabsTrigger value="Tipo">Tipo</TabsTrigger>
               </TabsList>
 
             </div>
 
-            <TabsContent value="total">
-              <TabProcessos processos={processos} />
+            <TabsContent value="Estado">
+              <div className="">
+
+                <p className="text-center text-lg font-mono font-semibold bg-slate-300/25 my-10">Estado dos Processos</p>
+
+                <Tabs defaultValue="activos">
+                  <div className="flex items-center">
+                    <TabsList>
+                      {processos.length && (
+                        <TabsTrigger className="" value="total">Total</TabsTrigger>
+                      )}
+                      {activos.length && (
+                        <TabsTrigger className="" value="activos">Ativos</TabsTrigger>
+                      )}
+
+                      {aceite.length && (
+                        <TabsTrigger className="" value="aceites">Aceites</TabsTrigger>
+                      )}
+
+                      {pagamento.length && (
+                        <TabsTrigger className="" value="Pagamentos">Pagamentos</TabsTrigger>
+                      )}
+
+                      {passaport.length && (
+                        <div className="sr-only md:not-sr-only">
+                          <TabsTrigger value="Passaporte">Passaporte</TabsTrigger>
+                        </div>
+                      )}
+
+                      {recusado.length && (
+                        <div className="sr-only md:not-sr-only">
+                          <TabsTrigger className="" value="Recusados">Recusados</TabsTrigger>
+                        </div>
+                      )}
+                    </TabsList>
+
+                  </div>
+
+                  <TabsContent value="total">
+                    <TabProcessos processos={processos} />
+                  </TabsContent>
+
+
+                  <TabsContent value="activos">
+                    <TabProcessos processos={activos} />
+                  </TabsContent>
+
+                  <TabsContent value="aceites">
+                    <TabProcessos processos={aceite} />
+                  </TabsContent>
+
+                  <TabsContent value="Pagamentos">
+                    <TabProcessos processos={pagamento} free />
+                  </TabsContent>
+
+                  <TabsContent value="Passaporte">
+                    <TabProcessos processos={passaport} />
+                  </TabsContent>
+
+                  <TabsContent value="Recusados">
+                    <TabProcessos processos={recusado} />
+                  </TabsContent>
+                </Tabs>
+              </div>
             </TabsContent>
 
 
-            <TabsContent value="activos">
-              <TabProcessos processos={activos} />
-            </TabsContent>
+            <TabsContent value="Tipo">
+              <div className="m-4">
+                <p className="text-center text-lg font-mono font-semibold bg-slate-300/25 my-10">Tipo de Processos</p>
 
-            <TabsContent value="aceites">
-              <TabProcessos processos={aceite} />
-            </TabsContent>
+                <Tabs defaultValue="Nacional">
+                  <div className="flex items-center">
+                    <TabsList>
+                      <TabsTrigger value="Nacional">Nacional</TabsTrigger>
+                      <TabsTrigger value="Schengen">Schengen</TabsTrigger>
 
-            <TabsContent value="Pagamentos">
-              <TabProcessos processos={pagamento} free />
-            </TabsContent>
+                    </TabsList>
+                  </div>
 
-            <TabsContent value="Passaporte">
-              <TabProcessos processos={passaport} />
-            </TabsContent>
-
-            <TabsContent value="Recusados">
-              <TabProcessos processos={recusado} />
-            </TabsContent>
-          </Tabs>
-
-          <p className="text-center text-lg font-mono font-semibold bg-slate-300/25">Tipo de Processos</p>
-          <Tabs defaultValue="Nacional">
-            <div className="flex items-center">
-              <TabsList>
-                <TabsTrigger value="Nacional">Nacional</TabsTrigger>
-                <TabsTrigger value="Schengen">Schengen</TabsTrigger>
-
-              </TabsList>
-
-            </div>
-
-            <TabsContent value="Nacional">
-              <TabProcessos processos={nacional} free />
-            </TabsContent>
+                  <TabsContent value="Nacional">
+                    <TabProcessos processos={nacional} free />
+                  </TabsContent>
 
 
-            <TabsContent value="Schengen">
-              <TabProcessos processos={turismo} free />
+                  <TabsContent value="Schengen">
+                    <TabProcessos processos={turismo} free />
+                  </TabsContent>
+                </Tabs>
+              </div>
             </TabsContent>
           </Tabs>
 

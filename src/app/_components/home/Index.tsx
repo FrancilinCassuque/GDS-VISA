@@ -50,7 +50,7 @@ export const Home: React.FC = () => {
                 Orientação completa para obtenção de vistos, incluindo análise de documentos e acompanhamento do processo.
               </p>
 
-              <Button className="px-6 py-3  my-4 rounded-lg sr-only">
+              <Button className="px-6 py-3  my-4 rounded-lg">
                 <Link href={'/gds-visa/service/visa'}>
                   Saber Mais...
                 </Link>

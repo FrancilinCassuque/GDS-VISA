@@ -21,7 +21,7 @@ export const TabProcessos: React.FC<ITabProps> = ({ processos, free }) => {
     <TabelaDeDados
       colunaModel={columnsProcesso}
       listaDeDados={processos} dataProcessos={setSelectedPro}
-      listaDe="Processos"
+      // listaDe="Processos"
       listaPrint={<TabelaProcessos processos={selectedProcessos ? selectedProcessos : []} free={free} printOnly />}
     />
   )
