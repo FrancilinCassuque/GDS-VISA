@@ -1,13 +1,26 @@
 import { ShowTwin } from "@/app/_components"
-import { ContactoShow } from "@/db"
+import { ContactoShow, NotificacaoShow, NotificacaoUpdate } from "@/db"
+import { redirect } from "next/navigation"
 
 
 export default async function ContactoShowPage({ params }: { params: { contactoId: string } }) {
   const id = params.contactoId
-  const contacto = await ContactoShow(id)
+  const notificacao = await NotificacaoShow(id)
 
-  if (contacto instanceof Error) return
+  if (notificacao instanceof Error) {
+    return (
+      redirect('/auth/home')
+    )
+  }
+  const contacto = await ContactoShow(id)
+  if (contacto instanceof Error) {
+    redirect('/auth/home')
+  }
+
+  await NotificacaoUpdate(notificacao.id, true)
+
+
   return (
-    <ShowTwin contacto={contacto} />
+    <ShowTwin contacto={contacto} notId={notificacao.id} />
   )
 }

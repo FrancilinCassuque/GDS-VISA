@@ -55,13 +55,13 @@ export async function ContactoIndex(): Promise<IContacto[] | Error> {
 export async function ContactoShow(id:string): Promise<IContacto | Error> {
   'use server'
   try {
-    const contacto = await prisma.contacto.findFirstOrThrow({
+    const contacto = await prisma.contacto.findUniqueOrThrow({
       where:{
         id
       }
     })
 
-    if (!(contacto instanceof Error)) {
+    if (contacto) {
       return contacto
     }
 

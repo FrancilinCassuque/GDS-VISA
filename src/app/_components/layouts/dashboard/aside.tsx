@@ -77,32 +77,12 @@ export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
               <AlertDialogHeader>
                 <AlertDialogTitle>Notificações</AlertDialogTitle>
               </AlertDialogHeader>
-              <div className="w-full flex items-center justify-start">
+              <div className="w-full flex items-center justify-start flex-col">
                 {notificacoes?.map(not => (
                   <>
-                    {/* <Card className="w-[350px]">
-                            <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                              <Avatar>
-                                <AvatarImage src="/placeholder.svg?height=40&width=40" alt="User avatar" />
-                                <AvatarFallback>UN</AvatarFallback>
-                              </Avatar>
-                              <div>
-                                <h4 className="font-semibold">{not.tipo}</h4>
-                                <p className="text-sm text-muted-foreground">{not.mensagem}</p>
-                              </div>
-                            </CardHeader>
-                            <CardContent>
-                            <p className="text-sm">
-                              Hey there! I just wanted to check in and see how you're doing with the project. Let me know if you need any help!
-                            </p>
-                          </CardContent>
-                            <CardFooter className="flex justify-between">
-                              <Button variant="outline">Dismiss</Button>
-                              <Button>Reply</Button>
-                            </CardFooter>
-                          </Card> */}
+                    {/*  */}
 
-                    <div className="flex items-center space-x-4 rounded-full p-1 shadow-md bg-black/5">
+                    <div className="flex items-center space-x-4 rounded-full p-1 shadow-md bg-black/5 max-w-sm mt-5" key={not.id}>
                       <Avatar className="h-12 w-12">
                         {/* <AvatarImage src="/placeholder.svg?height=48&width=48" alt="User avatar" /> */}
                         {not.tipo == 'contacto' ? (
@@ -116,54 +96,60 @@ export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
                       </div>
                       <div className="flex space-x-2">
                         <Button size="icon" variant="ghost">
+                          <Link href={`/auth/dashboard/Contacto/${not.id}`} onClick={(e)=>{
+                            setAbrir(false)
+                          }}>
                           <Bell className="h-4 w-4 text-primary" />
                           <span className="sr-only">Vier notificação</span>
-                        </Button>
-                        <Button size="sm" variant="ghost" className="">
+                        </Link>
+                      </Button>
+                      <Button size="sm" variant="ghost" className="">
+                        <Link href={'#'}>
                           <Eye className="h-4 w-4 text-primary" />
                           <span className="sr-only">Marcar como lida</span>
-                        </Button>
-                      </div>
+                        </Link>
+                      </Button>
                     </div>
+                  </div >
                   </>
                 ))}
-              </div>
-              <AlertDialogCancel className="my-4">Fechar</AlertDialogCancel>
-            </AlertDialogContent>
+            </div>
+            <AlertDialogCancel className="my-4">Fechar</AlertDialogCancel>
+          </AlertDialogContent>
 
-            <AlertDialogFooter>
-            </AlertDialogFooter>
-          </AlertDialog>
+          <AlertDialogFooter>
+          </AlertDialogFooter>
+        </AlertDialog>
 
-          <Tooltip>
-            {/* <TooltipTrigger>Notificações</TooltipTrigger> */}
-            <TooltipContent>Notificações</TooltipContent>
-          </Tooltip>
+        <Tooltip>
+          {/* <TooltipTrigger>Notificações</TooltipTrigger> */}
+          <TooltipContent>Notificações</TooltipContent>
+        </Tooltip>
 
-          {subListItem.map((link, index) => (
-            <Tooltip key={index}>
-              <TooltipTrigger asChild>
-                <Link
-                  href={link.path}
-                  className={`${classLink}`}
-                  prefetch={false}
-                >
-                  {link.icon({ className: `h-5 w-5` })}
-                  <span className="sr-only">{link.text}</span>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent side="right">{link.text}</TooltipContent>
-            </Tooltip>
-          ))}
-
-          <Tooltip>
+        {subListItem.map((link, index) => (
+          <Tooltip key={index}>
             <TooltipTrigger asChild>
-              <ConfigButton />
+              <Link
+                href={link.path}
+                className={`${classLink}`}
+                prefetch={false}
+              >
+                {link.icon({ className: `h-5 w-5` })}
+                <span className="sr-only">{link.text}</span>
+              </Link>
             </TooltipTrigger>
-            <TooltipContent side="right">Tema</TooltipContent>
+            <TooltipContent side="right">{link.text}</TooltipContent>
           </Tooltip>
-        </TooltipProvider>
-      </nav>
-    </aside>
+        ))}
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <ConfigButton />
+          </TooltipTrigger>
+          <TooltipContent side="right">Tema</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </nav>
+    </aside >
   )
 } 

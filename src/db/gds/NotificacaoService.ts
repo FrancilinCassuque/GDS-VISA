@@ -39,3 +39,22 @@ export async function NotificacaoIndex(): Promise<INotificacao[] | Error> {
     return new Error((error as { message: string }).message || 'Erro ao Registrar.')
   }
 }
+
+export async function NotificacaoShow(id:string): Promise<INotificacao | Error> {
+  'use server'
+  try {
+    const notificacao = await prisma.notificacao.findUniqueOrThrow({
+      where:{
+        id
+      }
+    })
+
+    if (!(notificacao instanceof Error)) {
+      return notificacao
+    }
+
+    return new Error('Erro ao registrar Pedido, Consulta o fornecedor de Rede.')
+  } catch (error) {
+    return new Error((error as { message: string }).message || 'Erro ao Registrar.')
+  }
+}
