@@ -25,7 +25,7 @@ export async function ServicoStore(servico: Omit<IService, 'id'>): Promise<strin
 
       await prisma.notificacao.create({
         data: {
-          mensagem: `${userName} adicionou novo Serviço`,
+          mensagem: `${userName?.name} adicionou novo Serviço`,
           eventId: novoServico.id,
           tipo: 'servico',
           visto: false,

@@ -18,7 +18,7 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { IService, } from "@/types"
 import { ServicoStore, } from "@/db"
-import { useRouter } from "next/navigation"
+// import { useRouter } from "next/navigation"
 import InputMask from 'react-input-mask'
 
 const clientForm = z.object({
@@ -65,7 +65,7 @@ export const NewService: React.FC<ICreateProps> = ({ service }) => {
           setLoading(false)
           return toast({
             title: 'Error!',
-            description: <pre><code> Erro ao Registrar Serviço </code></pre>,
+            description: <pre><code> Erro ao Registrar. Serviço já existe. </code></pre>,
             variant: 'destructive'
           })
         }
@@ -76,8 +76,8 @@ export const NewService: React.FC<ICreateProps> = ({ service }) => {
         })
 
         cancelar()
-
         form.setFocus('nome')
+        return
       }
 
     } catch (error) {
@@ -105,7 +105,7 @@ export const NewService: React.FC<ICreateProps> = ({ service }) => {
       form.setValue('nome', '')
       form.setValue('preco', '0')
 
-      setEditar(true)
+      setEditar(false)
       setLoading(false)
     }
 
@@ -275,12 +275,9 @@ export const NewService: React.FC<ICreateProps> = ({ service }) => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Preço do Serviço</FormLabel>
-                          <InputMask
-                            type='text'
-                            mask={'999 999,00'}
-                            maskChar={'.'}
+                          <Input
+                            type='number'
                             placeholder='350.000,00'
-                            className='border py-1 px-4 w-full rounded-lg'
                             readOnly={editar}
                             defaultValue={service?.preco}
                             {...field} />

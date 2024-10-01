@@ -4,7 +4,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import Link from "next/link"
 import { listItem, subListItem } from "../../listas/listaDeItensDoMenuBar"
 import { ConfigButton } from "../config"
-import { Bell, Eye, MessageCircleWarning } from "lucide-react"
+import { Bell, CalendarArrowUp, Eye, MessageCircleWarning } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { INotificacao } from "@/types"
 import { AlertDialogHeader, AlertDialogTrigger, AlertDialog, AlertDialogTitle, AlertDialogContent, AlertDialogFooter } from "@/components/ui/alert-dialog"
@@ -87,7 +87,9 @@ export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
                         {/* <AvatarImage src="/placeholder.svg?height=48&width=48" alt="User avatar" /> */}
                         {not.tipo == 'contacto' ? (
                           <MessageCircleWarning className="w-10 h-10 m-2" />
-                        ) : null}
+                        ) : (
+                          <CalendarArrowUp className="w-10 h-10 m-2" />
+                        )}
 
                       </Avatar>
                       <div className="flex-grow">

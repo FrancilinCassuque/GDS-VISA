@@ -53,7 +53,7 @@ export const ShowTwin: React.FC<ITwinProps> = ({ contacto, notId, servico }) => 
       )}
 
       {servico && (
-        <Card className="w-[350px]">
+        <Card className="w-[400px]">
           <CardHeader className="flex flex-row items-center gap-4 space-y-0">
             <Avatar>
               <AvatarImage src="/placeholder.svg?height=40&width=40" alt="User avatar" />
@@ -61,7 +61,8 @@ export const ShowTwin: React.FC<ITwinProps> = ({ contacto, notId, servico }) => 
             </Avatar>
             <div>
               <h4 className="font-semibold">{servico.nome}</h4>
-              <p className="text-sm text-muted-foreground">{servico.preco}</p>
+              <p className="text-sm text-muted-foreground my-4">Tipo: {servico.tipo}</p>
+              <p className="text-sm text-muted-foreground">Preço: {servico.preco.toLocaleString('AO', { style: 'currency', currency: 'AOA' })}</p>
             </div>
           </CardHeader>
           <CardContent>
@@ -73,8 +74,6 @@ export const ShowTwin: React.FC<ITwinProps> = ({ contacto, notId, servico }) => 
           <CardFooter className="flex justify-between">
             <Button variant="outline" onClick={naoLidaNotify}>{loading ? <Loader2 className="w-4 h-4 animate-spin" /> : null} Marca como Não Lida</Button>
             <Button>Arquivar</Button>
-
-            <p className="text-sm text-muted-foreground my-4">{servico.tipo}</p>
           </CardFooter>
         </Card>
       )}
