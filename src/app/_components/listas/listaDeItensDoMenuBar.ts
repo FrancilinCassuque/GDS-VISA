@@ -1,4 +1,4 @@
-import { IconPackage2, IconHome, IconShoppingCart, IconPackage, IconUsers, IconLineChart, IconSettings, IconPlus, IconUserPlus, IconNewInf, IconFactura, IconTema, IconNewFactura } from ".."
+import { IconPackage2, IconHome, IconShoppingCart, IconPackage, IconUsers, IconLineChart, IconSettings, IconPlus, IconUserPlus, IconNewInf, IconFactura, IconTema, IconNewFactura, IconNewInf2, IconNewInf3 } from ".."
 
 export const listItem = [
   {
@@ -23,26 +23,26 @@ export const listItem = [
     icon: IconUserPlus,
     path: '/auth/client/create',
   },
-  
+
   {
     text: 'Novo Processo',
     icon: IconNewInf,
     path: '/auth/processo/create',
   },
-  
+
   {
     text: 'Nova Factura',
     icon: IconNewFactura,
     path: '/auth/dashboard/contas/create',
   },
-  
+
   {
     text: 'Processos',
-    icon: IconPackage,
+    icon: IconNewInf2,
     path: '/auth/processo/',
   },
 
-  
+
   {
     text: 'Contas',
     icon: IconFactura,
@@ -50,10 +50,17 @@ export const listItem = [
   },
 
   {
+    text: 'Novo Serviço',
+    icon: IconNewInf3,
+    path: '/auth/dashboard/service/new',
+  },
+
+  {
     text: 'Usuarios',
     icon: IconUsers,
     path: '/auth/user',
   },
+
   // {
   //   text: 'Analytics',
   //   icon: IconLineChart,

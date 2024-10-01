@@ -11,7 +11,8 @@ export async function ServicoStore(servico: Omit<IService, 'id'>): Promise<strin
         descricao: servico.descricao,
         preco: servico.preco,
         tipo: servico.tipo.toUpperCase(),
-        userId: servico.userId
+        userId: servico.userId,
+        nome: servico.nome
       }
     })
 

@@ -8,6 +8,7 @@ import { IContacto, IServiceShow } from "@/types"
 import { Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { CardAction } from "../home/feed/cardAction"
 
 interface ITwinProps {
   contacto?: IContacto
@@ -59,7 +60,7 @@ export const ShowTwin: React.FC<ITwinProps> = ({ contacto, notId, servico }) => 
               <AvatarFallback>UN</AvatarFallback>
             </Avatar>
             <div>
-              <h4 className="font-semibold">{servico.tipo}</h4>
+              <h4 className="font-semibold">{servico.nome}</h4>
               <p className="text-sm text-muted-foreground">{servico.preco}</p>
             </div>
           </CardHeader>
@@ -68,9 +69,12 @@ export const ShowTwin: React.FC<ITwinProps> = ({ contacto, notId, servico }) => 
               {servico.descricao}
             </p>
           </CardContent>
+
           <CardFooter className="flex justify-between">
             <Button variant="outline" onClick={naoLidaNotify}>{loading ? <Loader2 className="w-4 h-4 animate-spin" /> : null} Marca como Não Lida</Button>
             <Button>Arquivar</Button>
+
+            <p className="text-sm text-muted-foreground my-4">{servico.tipo}</p>
           </CardFooter>
         </Card>
       )}

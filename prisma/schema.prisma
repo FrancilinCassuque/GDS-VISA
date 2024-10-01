@@ -224,7 +224,8 @@ model Factura {
 
 model Servico {
   id        String @id @default(uuid())
-  tipo      String @unique
+  tipo      String
+  nome      String @unique
   preco     Int
   descricao String @db.Text
   user      User   @relation(fields: [userId], references: [id])
