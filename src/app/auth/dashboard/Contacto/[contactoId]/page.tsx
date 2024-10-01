@@ -1,5 +1,5 @@
 import { ShowTwin } from "@/app/_components"
-import { ContactoShow, NotificacaoShow, NotificacaoUpdate } from "@/db"
+import { ContactoShow, NotificacaoShow, NotificacaoUpdate, ServicoShow } from "@/db"
 import { redirect } from "next/navigation"
 
 
@@ -12,15 +12,37 @@ export default async function ContactoShowPage({ params }: { params: { contactoI
       redirect('/auth/home')
     )
   }
-  const contacto = await ContactoShow(notificacao.eventId)
-  if (contacto instanceof Error) {
-    redirect('/auth/home')
+
+  if (notificacao.tipo == 'contacto') {
+    const contacto = await ContactoShow(notificacao.eventId)
+    if (contacto instanceof Error) {
+      redirect('/auth/home')
+    }
+
+    await NotificacaoUpdate(notificacao.id, true)
+
+
+    return (
+      <ShowTwin contacto={contacto} notId={notificacao.id} />
+    )
+  } else if (notificacao.tipo == 'servico') {
+    const contacto = await ServicoShow(notificacao.eventId)
+    if (contacto instanceof Error) {
+      redirect('/auth/home')
+    }
+
+    await NotificacaoUpdate(notificacao.id, true)
+
+
+    return (
+      <ShowTwin servico={contacto} notId={notificacao.id} />
+    )
+  } else {
+    return (
+      redirect('/auth/home')
+
+    )
   }
 
-  await NotificacaoUpdate(notificacao.id, true)
 
-
-  return (
-    <ShowTwin contacto={contacto} notId={notificacao.id} />
-  )
 }
