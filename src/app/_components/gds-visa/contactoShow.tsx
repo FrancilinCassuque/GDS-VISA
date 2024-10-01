@@ -1,17 +1,23 @@
+'use client'
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { NotificacaoUpdate } from "@/db"
 import { IContacto } from "@/types"
+import { useRouter } from "next/navigation"
 
 interface ITwinProps {
   contacto: IContacto,
   notId: string
 }
 export const ShowTwin: React.FC<ITwinProps> = ({ contacto, notId }) => {
+const rota=useRouter()
+
 
   const naoLida = async () => {
     await NotificacaoUpdate(notId, false)
+    rota.push('/auth/home')
   }
 
   return (

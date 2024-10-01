@@ -12,7 +12,7 @@ export default async function ContactoShowPage({ params }: { params: { contactoI
       redirect('/auth/home')
     )
   }
-  const contacto = await ContactoShow(id)
+  const contacto = await ContactoShow(notificacao.eventId)
   if (contacto instanceof Error) {
     redirect('/auth/home')
   }

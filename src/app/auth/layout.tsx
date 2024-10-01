@@ -21,8 +21,9 @@ export default function Component({ children }: Readonly<{ children: React.React
   const abastecerNotificacoes = async () => {
     const notificacoesget = await NotificacaoIndex()
     if (!(notificacoesget instanceof Error)) {
-      return SetNotificacoes(notificacoesget)
 
+      const naoLidas = notificacoesget.filter(notify => notify.visto == false)
+      return SetNotificacoes(naoLidas)
     }
   }
 
@@ -49,7 +50,7 @@ export default function Component({ children }: Readonly<{ children: React.React
       signOut()
     }
 
-  }, [status, userMail, authUser, data?.user?.email,])
+  }, [status, userMail, authUser, data?.user?.email, notificacoes])
 
   return (
     <div className="">
