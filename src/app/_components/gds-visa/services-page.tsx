@@ -4,71 +4,126 @@ import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { IService } from '@/types'
+import { useEffect, useState } from 'react'
+import { set } from 'date-fns'
+import Link from 'next/link'
 
-const services = [
-  {
-    category: "Web Development",
-    items: [
-      { name: "Custom Website Design", description: "Tailored websites for your brand", price: "$1000+", image: "/placeholder.svg?height=200&width=300" },
-      { name: "E-commerce Solutions", description: "Online stores with secure payments", price: "$1500+", image: "/placeholder.svg?height=200&width=300" },
-      { name: "Web App Development", description: "Interactive web applications", price: "$2000+", image: "/placeholder.svg?height=200&width=300" },
-    ]
-  },
-  {
-    category: "Digital Marketing",
-    items: [
-      { name: "SEO Optimization", description: "Improve your search engine rankings", price: "$500/month", image: "/placeholder.svg?height=200&width=300" },
-      { name: "Social Media Management", description: "Engage your audience on social platforms", price: "$700/month", image: "/placeholder.svg?height=200&width=300" },
-      { name: "Content Marketing", description: "Compelling content to attract customers", price: "$800/month", image: "/placeholder.svg?height=200&width=300" },
-    ]
-  },
-  {
-    category: "Graphic Design",
-    items: [
-      { name: "Logo Design", description: "Unique brand identity creation", price: "$300+", image: "/placeholder.svg?height=200&width=300" },
-      { name: "Brochure Design", description: "Eye-catching marketing materials", price: "$200+", image: "/placeholder.svg?height=200&width=300" },
-      { name: "UI/UX Design", description: "User-friendly interface designs", price: "$1000+", image: "/placeholder.svg?height=200&width=300" },
-    ]
+interface IServiceProps {
+  servicos?: IService[]
+}
+
+export const ServicesPage: React.FC<IServiceProps> = ({ servicos }) => {
+  if (!servicos) {
+    servicos = []
   }
-]
 
-export const ServicesPage: React.FC = () => {
+  const removeDuplicates = (arr: string[]): string[] => {
+    return arr.filter((item, index) => arr.indexOf(item) === index)
+  }
+
+  // Example
+  // const arr = ['apple', 'banana', 'orange', 'apple', 'banana'];
+  // const uniqueArr = removeDuplicates(arr);
+  // console.log(uniqueArr); // Output: ['apple', 'banana', 'orange']
+
+
+  const [tipos, setTipos] = useState<string[]>([])
+
+  useEffect(() => {
+    const t: string[] = []
+
+    servicos.map(serv => {
+      t.push(serv.tipo)
+    })
+
+    const fiter = removeDuplicates(t)
+    setTipos(fiter)
+  }, [])
+
   return (
     <div className="container mx-auto py-10">
       <Image src="/placeholder.svg" alt="Gota D' Sol Logo" width={350} height={350} className="mx-auto" />
 
-      <h1 className="text-3xl font-bold mb-8 text-center">Nossos serviços</h1>
-      <Tabs defaultValue={services[0].category}>
-        <TabsList>
-          {services.map((category) => (
-            <TabsTrigger key={category.category} value={category.category}>
-              {category.category}
-            </TabsTrigger>
+      <h1 className="text-xl font-bold mb-8 text-center bg-primary/10">serviços</h1>
+      <Tabs defaultValue={tipos.length > 0 ? tipos[0] : 'VISTO'}>
+        <TabsList className='w-full'>
+          {tipos.map((service, i) => (
+            <>
+              <TabsTrigger key={i} value={service}>
+                {service}
+              </TabsTrigger>
+            </>
           ))}
         </TabsList>
-        {services.map((category) => (
-          <TabsContent key={category.category} value={category.category}>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {category.items.map((item) => (
-                <Card key={item.name} className="flex flex-col">
+
+        {tipos.map((tipo) => (
+          <TabsContent key={tipo} value={tipo}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
+
+              {servicos.filter(serv => serv.tipo == tipo).map((item) => (
+                <Card key={item.id} className="flex flex-col">
                   <div className="relative w-full pt-[56.25%]">
-                    <Image
-                      src={'/placeholder.png'}
-                      alt={`Image representing ${item.name}`}
-                      layout="fill"
-                      // objectFit="cover"
-                      className="rounded-t-lg"
-                    />
+
+                    {item.nome == 'Visto de Estada Temporária da CPLP' ? (
+                      <Image
+                        src={'/services/estadaTemporaria.jpg'}
+                        alt={`Image representing ${item.nome}`}
+                        layout="fill"
+                        // objectFit="cover"
+                        className="rounded-t-lg"
+                      />
+                    ) : item.nome == 'Visto de Saúde da CPLP' ? (
+                      <Image
+                        src={'/services/vitoSaude.jpg'}
+                        alt={`Image representing ${item.nome}`}
+                        layout="fill"
+                        // objectFit="cover"
+                        className="rounded-t-lg"
+                      />
+                    ) : item.nome == 'Promoção de Bilhetes de Passagens - AirFrances' ? (
+
+                      <Image
+                        src={'/services/airFrances.jpg'}
+                        alt={`Image representing ${item.nome}`}
+                        layout="fill"
+                        // objectFit="cover"
+                        className="rounded-t-lg"
+                      />
+                    ) : item.nome == 'Visto de Turismo' ? (
+
+                      <Image
+                        src={'/services/vistoDeTurismo.jpg'}
+                        alt={`Image representing ${item.nome}`}
+                        layout="fill"
+                        // objectFit="cover"
+                        className="rounded-t-lg"
+                      />
+                    ) : (
+                      <Image
+                        src={'/placeholder.png'}
+                        alt={`Image representing ${item.nome}`}
+                        layout="fill"
+                        // objectFit="cover"
+                        className="rounded-t-lg"
+                      />
+                    )}
                   </div>
                   <CardHeader>
-                    <CardTitle>{item.name}</CardTitle>
-                    <CardDescription>{item.description}</CardDescription>
+                    <CardTitle>{item.nome}</CardTitle>
+                    <CardDescription>
+                      <div className="mt-5">
+                        {item.descricao}
+                      </div>
+                    </CardDescription>
                   </CardHeader>
                   <CardContent className="flex-grow">
-                    <p className="text-2xl font-bold">{item.price}</p>
+                    <p className="text-xl font-semibold text-green-800">{item.preco.toLocaleString('AO', { style: 'currency', currency: 'AOA' })}</p>
                   </CardContent>
                   <CardFooter>
-                    <Button className="w-full">Learn More</Button>
+                    <Button className="w-full">
+                      <Link href={'/gds-visa/contactos'}>Agendar Serviço</Link>
+                    </Button>
                   </CardFooter>
                 </Card>
               ))}
