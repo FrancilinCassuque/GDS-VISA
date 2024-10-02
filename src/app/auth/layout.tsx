@@ -74,7 +74,7 @@ export default function Component({ children }: Readonly<{ children: React.React
               <p className="text-muted-foreground font-mono font-semibold text-lg">Gota D' Sol - Visa</p>
             </div>
 
-            <DropMenu />
+            <DropMenu notifys={notificacoes} />
           </div>
         </header>
 
