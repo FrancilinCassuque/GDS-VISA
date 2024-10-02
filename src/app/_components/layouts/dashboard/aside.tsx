@@ -8,10 +8,8 @@ import { Bell, CalendarArrowUp, Eye, MessageCircleWarning } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { INotificacao } from "@/types"
 import { AlertDialogHeader, AlertDialogTrigger, AlertDialog, AlertDialogTitle, AlertDialogContent, AlertDialogFooter } from "@/components/ui/alert-dialog"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { AvatarIcon } from "@radix-ui/react-icons"
 import { useState } from "react"
 import { AlertDialogCancel } from "@radix-ui/react-alert-dialog"
 
@@ -97,61 +95,61 @@ export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
                         <p className="text-xs text-muted-foreground">{not.mensagem}</p>
                       </div>
                       <div className="flex space-x-2">
-                        <Button size="icon" variant="ghost">
-                          <Link href={`/auth/dashboard/Contacto/${not.id}`} onClick={(e)=>{
-                            setAbrir(false)
-                          }}>
-                          <Bell className="h-4 w-4 text-primary" />
-                          <span className="sr-only">Vier notificação</span>
-                        </Link>
-                      </Button>
-                      <Button size="sm" variant="ghost" className="">
-                        <Link href={'#'}>
-                          <Eye className="h-4 w-4 text-primary" />
-                          <span className="sr-only">Marcar como lida</span>
-                        </Link>
-                      </Button>
-                    </div>
-                  </div >
+                        <Button size="icon" variant="ghost" onClick={(e) => {
+                          setAbrir(false)
+                        }}>
+                          <Link href={`/auth/dashboard/Contacto/${not.id}`} >
+                            <Bell className="h-4 w-4 text-primary" />
+                            <span className="sr-only">Vier notificação</span>
+                          </Link>
+                        </Button>
+                        <Button size="sm" variant="ghost" className="">
+                          <Link href={'#'}>
+                            <Eye className="h-4 w-4 text-primary" />
+                            <span className="sr-only">Marcar como lida</span>
+                          </Link>
+                        </Button>
+                      </div>
+                    </div >
                   </>
                 ))}
-            </div>
-            <AlertDialogCancel className="my-4">Fechar</AlertDialogCancel>
-          </AlertDialogContent>
+              </div>
+              <AlertDialogCancel className="my-4">Fechar</AlertDialogCancel>
+            </AlertDialogContent>
 
-          <AlertDialogFooter>
-          </AlertDialogFooter>
-        </AlertDialog>
+            <AlertDialogFooter>
+            </AlertDialogFooter>
+          </AlertDialog>
 
-        <Tooltip>
-          {/* <TooltipTrigger>Notificações</TooltipTrigger> */}
-          <TooltipContent>Notificações</TooltipContent>
-        </Tooltip>
-
-        {subListItem.map((link, index) => (
-          <Tooltip key={index}>
-            <TooltipTrigger asChild>
-              <Link
-                href={link.path}
-                className={`${classLink}`}
-                prefetch={false}
-              >
-                {link.icon({ className: `h-5 w-5` })}
-                <span className="sr-only">{link.text}</span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side="right">{link.text}</TooltipContent>
+          <Tooltip>
+            {/* <TooltipTrigger>Notificações</TooltipTrigger> */}
+            <TooltipContent>Notificações</TooltipContent>
           </Tooltip>
-        ))}
 
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <ConfigButton />
-          </TooltipTrigger>
-          <TooltipContent side="right">Tema</TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    </nav>
+          {subListItem.map((link, index) => (
+            <Tooltip key={index}>
+              <TooltipTrigger asChild>
+                <Link
+                  href={link.path}
+                  className={`${classLink}`}
+                  prefetch={false}
+                >
+                  {link.icon({ className: `h-5 w-5` })}
+                  <span className="sr-only">{link.text}</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right">{link.text}</TooltipContent>
+            </Tooltip>
+          ))}
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <ConfigButton />
+            </TooltipTrigger>
+            <TooltipContent side="right">Tema</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </nav>
     </aside >
   )
 } 

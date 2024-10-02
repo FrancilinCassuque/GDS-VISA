@@ -1,7 +1,7 @@
 'use client'
 
 import { DropMenu, Footer, AsideBar, TooggleMenu, } from "../_components"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { authStore } from "@/store"
 import { signOut, useSession } from "next-auth/react"
 import { auth, NotificacaoIndex } from "@/db"
@@ -18,32 +18,32 @@ export default function Component({ children }: Readonly<{ children: React.React
 
   const [notificacoes, SetNotificacoes] = useState<INotificacao[]>()
 
-  const abastecerNotificacoes = async () => {
+  const abastecerNotificacoes = useCallback(async () => {
     const notificacoesget = await NotificacaoIndex()
     if (!(notificacoesget instanceof Error)) {
 
-      const naoLidas = notificacoesget.filter(notify => notify.visto == false)
+      const naoLidas = notificacoesget.filter(notify => notify.visto == true)
       return SetNotificacoes(naoLidas)
     }
-  }
+  }, [notificacoes])
 
   useEffect(() => {
     setLoading(true)
     setUSerMail(data?.user?.email)
 
     if ((status == 'authenticated') && userMail) {
-
-      abastecerNotificacoes()
-
+      
+      
       if (!authUser.userauth?.id) {
         auth(userMail).then((res) => {
           if (res instanceof Error) return
           authStore.getState().startAuth(res)
         })
-
+        
         setLoading(false)
-
+        
       } else {
+        abastecerNotificacoes()
         setLoading(false)
       }
     } else if (status == 'unauthenticated') {
