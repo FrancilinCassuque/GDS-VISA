@@ -1,4 +1,4 @@
-import { ClipboardPlus, FileBox, FilePlus2, FileStack, Newspaper, ReceiptText, SunMoon } from "lucide-react"
+import { ClipboardList, ClipboardPlus, FileBox, FilePlus2, FileStack, Newspaper, ReceiptText, SunMoon } from "lucide-react"
 
 export const IconFile = (props: any) => {
   return (
@@ -237,6 +237,12 @@ export const IconNewInf2 = (props: any) => {
 export const IconNewInf3 = (props: any) => {
   return (
     <ClipboardPlus {...props} />
+  )
+}
+
+export const IconNewInf4 = (props: any) => {
+  return (
+    <ClipboardList {...props} />
   )
 }
 

@@ -26,6 +26,7 @@ export * from './home/feed/processoCardTop'
 export * from './home/feed/tabs/processos'
 export * from './home/feed/tabs/clients'
 export * from './home/feed/tabs/facturas'
+export * from './home/feed/tabs/service'
 
 export * from './forms/profile/profile'
 export * from './forms/profile/address'

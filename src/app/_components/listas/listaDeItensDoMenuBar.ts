@@ -1,4 +1,4 @@
-import { IconPackage2, IconHome, IconShoppingCart, IconPackage, IconUsers, IconLineChart, IconSettings, IconPlus, IconUserPlus, IconNewInf, IconFactura, IconTema, IconNewFactura, IconNewInf2, IconNewInf3 } from ".."
+import { IconPackage2, IconHome, IconShoppingCart, IconPackage, IconUsers, IconLineChart, IconSettings, IconPlus, IconUserPlus, IconNewInf, IconFactura, IconTema, IconNewFactura, IconNewInf2, IconNewInf3, IconNewInf4 } from ".."
 
 export const listItem = [
   {
@@ -53,6 +53,12 @@ export const listItem = [
     text: 'Novo Serviço',
     icon: IconNewInf3,
     path: '/auth/dashboard/service/new',
+  },
+
+  {
+    text: 'Serviços',
+    icon: IconNewInf4,
+    path: '/auth/dashboard/service',
   },
 
   {
