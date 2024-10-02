@@ -14,32 +14,27 @@ interface IServiceProps {
 }
 
 export const ServicesPage: React.FC<IServiceProps> = ({ servicos }) => {
-  if (!servicos) {
-    servicos = []
-  }
+  const [tipos, setTipos] = useState<string[]>([])
+  const [services, setServices] = useState<IService[]>([])
 
   const removeDuplicates = (arr: string[]): string[] => {
     return arr.filter((item, index) => arr.indexOf(item) === index)
   }
 
-  // Example
-  // const arr = ['apple', 'banana', 'orange', 'apple', 'banana'];
-  // const uniqueArr = removeDuplicates(arr);
-  // console.log(uniqueArr); // Output: ['apple', 'banana', 'orange']
-
-
-  const [tipos, setTipos] = useState<string[]>([])
 
   useEffect(() => {
     const t: string[] = []
+    if (servicos) {
+      servicos.map(serv => {
+        t.push(serv.tipo)
+      })
 
-    servicos.map(serv => {
-      t.push(serv.tipo)
-    })
+      setServices(servicos)
+    }
 
     const fiter = removeDuplicates(t)
     setTipos(fiter)
-  }, [])
+  }, [tipos, services])
 
   return (
     <div className="container mx-auto py-10">
@@ -61,7 +56,7 @@ export const ServicesPage: React.FC<IServiceProps> = ({ servicos }) => {
           <TabsContent key={tipo} value={tipo}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
 
-              {servicos.filter(serv => serv.tipo == tipo).map((item) => (
+              {services.filter(serv => serv.tipo == tipo).map((item) => (
                 <Card key={item.id} className="flex flex-col">
                   <div className="relative w-full pt-[56.25%]">
 
