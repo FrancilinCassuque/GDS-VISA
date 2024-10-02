@@ -22,10 +22,10 @@ export default function Component({ children }: Readonly<{ children: React.React
     const notificacoesget = await NotificacaoIndex()
     if (!(notificacoesget instanceof Error)) {
 
-      const naoLidas = notificacoesget.filter(notify => notify.visto == true)
+      const naoLidas = notificacoesget.filter(notify => notify.visto == false)
       return SetNotificacoes(naoLidas)
     }
-  }, [notificacoes])
+  }, [])
 
   useEffect(() => {
     setLoading(true)
