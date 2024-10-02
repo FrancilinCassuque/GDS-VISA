@@ -3,7 +3,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import { NotificacaoUpdate } from "@/db"
+import { NotificacaoDelete, NotificacaoUpdate } from "@/db"
 import { IContacto, IServiceShow } from "@/types"
 import { Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation"
@@ -23,7 +23,7 @@ export const ShowTwin: React.FC<ITwinProps> = ({ contacto, notId, servico }) => 
   const naoLidaNotify = async () => {
     setLoading(true)
     await NotificacaoUpdate(notId, false)
-    rota.push('/auth/home')
+    window.location.replace('/auth/home')
   }
 
   return (
@@ -73,7 +73,9 @@ export const ShowTwin: React.FC<ITwinProps> = ({ contacto, notId, servico }) => 
 
           <CardFooter className="flex justify-between">
             <Button variant="outline" onClick={naoLidaNotify}>{loading ? <Loader2 className="w-4 h-4 animate-spin" /> : null} Marca como Não Lida</Button>
-            <Button>Arquivar</Button>
+            <Button onClick={() => {
+              NotificacaoDelete(notId)
+            }}>Arquivar</Button>
           </CardFooter>
         </Card>
       )}

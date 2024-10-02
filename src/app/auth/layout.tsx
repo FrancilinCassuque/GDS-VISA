@@ -6,8 +6,7 @@ import { authStore } from "@/store"
 import { signOut, useSession } from "next-auth/react"
 import { auth, NotificacaoIndex } from "@/db"
 // import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
-import { Input } from "@/components/ui/input"
-import { Loader2, Search } from "lucide-react"
+import { Loader2 } from "lucide-react"
 import { INotificacao } from "@/types"
 
 export default function Component({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -25,24 +24,25 @@ export default function Component({ children }: Readonly<{ children: React.React
       const naoLidas = notificacoesget.filter(notify => notify.visto == false)
       return SetNotificacoes(naoLidas)
     }
-  }, [])
+  }, [notificacoes])
+
 
   useEffect(() => {
     setLoading(true)
     setUSerMail(data?.user?.email)
 
     if ((status == 'authenticated') && userMail) {
-      
-      abastecerNotificacoes()
-      
+
+
       if (!authUser.userauth?.id) {
-        auth(userMail).then((res) => {
+        auth(userMail).then(async (res) => {
           if (res instanceof Error) return
           authStore.getState().startAuth(res)
+
+          await abastecerNotificacoes()
         })
-        
+
         setLoading(false)
-        
       } else {
         setLoading(false)
       }
