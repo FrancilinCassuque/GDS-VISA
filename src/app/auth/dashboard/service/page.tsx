@@ -1,7 +1,6 @@
 
 import { TabService } from "@/app/_components"
 import { ServicoIndex } from "@/db"
-import { redirect } from "next/navigation"
 
 export default async function ServicePage() {
   const servicos = await ServicoIndex()
@@ -10,7 +9,7 @@ export default async function ServicePage() {
 
   return (
     <div className="flex flex-col items-center">
-      <p className="text-center text-lg font-mono font-semibold bg-slate-300/25 my-10 w-full">Estado dos Processos</p>
+      <p className="text-center text-lg font-mono font-semibold bg-slate-300/25 my-10 w-full">Serviços Disponíveis</p>
       <TabService servicos={servicos} />
     </div>
   )

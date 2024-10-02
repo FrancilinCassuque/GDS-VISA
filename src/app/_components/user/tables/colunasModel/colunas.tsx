@@ -3,10 +3,12 @@
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { ServicoDelete } from "@/db"
 import { IClient, IFacturaList, IProcesso, IService } from "@/types"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, ClipboardPlus, MoreHorizontal, Trash2 } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export const columnsProcesso: ColumnDef<IProcesso>[] = [
   {
@@ -403,7 +405,7 @@ export const columnsService: ColumnDef<IService>[] = [
     cell: ({ row }) => (
       <>
         <div className="capitalize">{row.getValue('nome')}</div>
-        <div className="text-sm text-muted-foreground md:inline">{row.getValue("descricao")} </div>
+        <div className="text-sm text-muted-foreground md:inline sr-only sm:not-sr-only">{row.getValue("descricao")} </div>
       </>
     ),
   },
@@ -437,7 +439,7 @@ export const columnsService: ColumnDef<IService>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const cliente = row.original
+      const service = row.original
 
       return (
         <DropdownMenu>
@@ -449,13 +451,29 @@ export const columnsService: ColumnDef<IService>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acçoes</DropdownMenuLabel>
-            <Link href={`/auth/client/${cliente.id}`}>
-              <DropdownMenuItem
-              // onClick={() => navigator.clipboard.writeText(processo.id)}
+            <Link href={`#`}>
+              <DropdownMenuItem className="text-blue-400"
+              onClick={() => {
+                alert('Aguardando implementação!🐱‍💻😎')
+              }}
               >
-                Ver
+                <ClipboardPlus className="w-4 h-4" />
+                Editar
               </DropdownMenuItem>
             </Link>
+
+            <DropdownMenuItem className="text-red-700"
+              onClick={() => {
+                ServicoDelete(service.id).then(res => {
+                  if (!(res instanceof Error)) {
+                    window.location.reload()
+                  }
+                })
+              }}
+            >
+              <Trash2 className="w-4 h-4" />
+              Eliminar
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
