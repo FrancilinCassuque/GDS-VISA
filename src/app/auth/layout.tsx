@@ -33,6 +33,7 @@ export default function Component({ children }: Readonly<{ children: React.React
 
     if ((status == 'authenticated') && userMail) {
       
+      abastecerNotificacoes()
       
       if (!authUser.userauth?.id) {
         auth(userMail).then((res) => {
@@ -43,7 +44,6 @@ export default function Component({ children }: Readonly<{ children: React.React
         setLoading(false)
         
       } else {
-        abastecerNotificacoes()
         setLoading(false)
       }
     } else if (status == 'unauthenticated') {
