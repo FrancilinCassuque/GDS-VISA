@@ -1,14 +1,9 @@
-import { ServicesPage } from "@/app/_components";
-import { ServicoIndex } from "@/db";
-import { redirect } from "next/navigation";
-
-
+import { ServicesPage } from "@/app/_components"
+import { ServicoIndex } from "@/db"
 
 export default async function Component() {
   const services = await ServicoIndex()
-  if (services instanceof Error) {
-    redirect('/')
-  }
+  if (services instanceof Error) return
 
   return (
     <ServicesPage servicos={services} />

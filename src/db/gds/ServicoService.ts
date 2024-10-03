@@ -2,7 +2,6 @@
 
 import { IService, IServiceShow } from "@/types"
 import prisma from "../prisma.index"
-import { redirect } from "next/navigation"
 
 export async function ServicoStore(servico: Omit<IService, 'id'>): Promise<string | Error> {
   'use server'

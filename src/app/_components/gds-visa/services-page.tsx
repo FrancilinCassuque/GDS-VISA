@@ -6,7 +6,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { IService } from '@/types'
 import { useEffect, useState } from 'react'
-import { set } from 'date-fns'
 import Link from 'next/link'
 
 interface IServiceProps {
@@ -15,12 +14,10 @@ interface IServiceProps {
 
 export const ServicesPage: React.FC<IServiceProps> = ({ servicos }) => {
   const [tipos, setTipos] = useState<string[]>([])
-  const [services, setServices] = useState<IService[]>([])
 
   const removeDuplicates = (arr: string[]): string[] => {
     return arr.filter((item, index) => arr.indexOf(item) === index)
   }
-
 
   useEffect(() => {
     const t: string[] = []
@@ -28,13 +25,11 @@ export const ServicesPage: React.FC<IServiceProps> = ({ servicos }) => {
       servicos.map(serv => {
         t.push(serv.tipo)
       })
-
-      setServices(servicos)
     }
 
     const fiter = removeDuplicates(t)
     setTipos(fiter)
-  }, [tipos, services])
+  }, [])
 
   return (
     <div className="container mx-auto py-10">
@@ -56,7 +51,7 @@ export const ServicesPage: React.FC<IServiceProps> = ({ servicos }) => {
           <TabsContent key={tipo} value={tipo}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
 
-              {services.filter(serv => serv.tipo == tipo).map((item) => (
+              {servicos?.filter(serv => serv.tipo == tipo).map((item) => (
                 <Card key={item.id} className="flex flex-col">
                   <div className="relative w-full pt-[56.25%]">
 
@@ -77,7 +72,6 @@ export const ServicesPage: React.FC<IServiceProps> = ({ servicos }) => {
                         className="rounded-t-lg"
                       />
                     ) : item.nome == 'Promoção de Bilhetes de Passagens - AirFrances' ? (
-
                       <Image
                         src={'/services/airFrances.jpg'}
                         alt={`Image representing ${item.nome}`}
@@ -94,7 +88,15 @@ export const ServicesPage: React.FC<IServiceProps> = ({ servicos }) => {
                         // objectFit="cover"
                         className="rounded-t-lg"
                       />
-                    ) : (
+                    ) : item.nome == 'Visto de Estudante' ? (
+                      <Image
+                        src={'/services/estudante.jpg'}
+                        alt={`Image representing ${item.nome}`}
+                        layout="fill"
+                        // objectFit="cover"
+                        className="rounded-t-lg"
+                      />
+                    ) :(
                       <Image
                         src={'/placeholder.png'}
                         alt={`Image representing ${item.nome}`}
