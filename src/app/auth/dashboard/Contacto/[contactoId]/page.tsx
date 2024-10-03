@@ -10,9 +10,7 @@ export default async function ContactoShowPage({ params }: { params: { contactoI
   if (notificacao instanceof Error) {
     await NotificacaoDelete(id)
 
-    return (
-      window.location.replace('/auth/home')
-    )
+    return
   }
 
   if (notificacao.tipo == 'contacto') {
@@ -20,7 +18,6 @@ export default async function ContactoShowPage({ params }: { params: { contactoI
     if (contacto instanceof Error) {
       await NotificacaoDelete(notificacao.id)
 
-      window.location.replace('/auth/home')
       return
     }
 
@@ -35,7 +32,6 @@ export default async function ContactoShowPage({ params }: { params: { contactoI
     if (contacto instanceof Error) {
       await NotificacaoDelete(notificacao.id)
 
-      window.location.replace('/auth/home')
       return
     }
 
@@ -48,7 +44,6 @@ export default async function ContactoShowPage({ params }: { params: { contactoI
   } else {
     return (
       redirect('/auth/home')
-
     )
   }
 
