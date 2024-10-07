@@ -7,6 +7,7 @@ import { IUser } from "@/types"
 import { Separator } from "@radix-ui/react-select"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import ImageUpload from "../_components/image/upload"
 
 function stringToColor(string: string) {
   let hash = 0;
@@ -39,47 +40,8 @@ function stringToColor(string: string) {
 // }
 
 export default function Test() {
-  const [users, setUsers] = useState<IUser[]>(userStore.getState().users)
-  const [total, setTotal] = useState(userStore.getState().total)
-
-
-  useEffect(() => {
-    if (userStore.getState().users.length == 0) {
-      userIndex().then((res) => {
-        if (res instanceof Error) return
-
-        if (res.length > 0) {
-          setUsers(res)
-          setTotal(res.length)
-          userStore.getState().start(res)
-        }
-      })
-    }
-  }, [setUsers, setTotal])
-
+  
   return (
-    <div className="min-h-[85dvh] flex flex-col items-center justify-center">
-      <h1>User page</h1>
-      <ul>
-        {users.map((user: IUser) => (
-          <div key={user.id}>
-            <div className="grid grid-cols-2 my-3">
-              <li>
-                <Link href="#">
-                  <Avatar className="mx-0 px-0">
-                    <AvatarImage src={user.image || ''} alt={user.name || ''} />
-                    <AvatarFallback>{user?.name ? `${user.name[0].toUpperCase()}${user.name[user.name.length - 1]}` : 'MC'}</AvatarFallback>
-                  </Avatar>
-                </Link>
-              </li>
-              <li> <Link href="#">{user.email}</Link></li>
-            </div>
-            <Separator />
-          </div>
-        ))}
-
-        <p><strong>Total = </strong> <i> {total} </i></p>
-      </ul>
-    </div>
+    <ImageUpload/>
   )
 }

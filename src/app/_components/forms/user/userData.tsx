@@ -9,7 +9,7 @@ import { EnderecoForm, IconChevronDown, PerfilData } from "@/app/_components"
 import { useForm } from "react-hook-form"
 import { authStore } from "@/store"
 import { update } from "@/db"
-import { image } from "@/firebase/uploadImage"
+// import { image } from "@/firebase/uploadImage"
 import { Loader, Loader2 } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { BioData } from "./bioData"
@@ -52,13 +52,13 @@ export const UserData: React.FC = () => {
 
       if (data.file) {
         if (auth.userauth?.image) {
-          await image.deleteFile(auth.userauth.image)
+          // await image.deleteFile(auth.userauth.image)
 
-          const img = await image.imgUpload(data.file)
-          userSave.image = img || 'https://firebasestorage.googleapis.com/v0/b/next-sara.appspot.com/o/gds%2F2506b671ed18abc523b097c56289ee56.png?alt=media&token=8f24128d-18e7-4260-8114-9e84195588e1'
+          // const img = await image.imgUpload(data.file)
+          userSave.image = 'https://firebasestorage.googleapis.com/v0/b/next-sara.appspot.com/o/gds%2F2506b671ed18abc523b097c56289ee56.png?alt=media&token=8f24128d-18e7-4260-8114-9e84195588e1'
         } else {
-          const img = await image.imgUpload(data.file)
-          userSave.image = img || 'https://firebasestorage.googleapis.com/v0/b/next-sara.appspot.com/o/gds%2F2506b671ed18abc523b097c56289ee56.png?alt=media&token=8f24128d-18e7-4260-8114-9e84195588e1'
+          // const img = await image.imgUpload(data.file)
+          userSave.image = 'https://firebasestorage.googleapis.com/v0/b/next-sara.appspot.com/o/gds%2F2506b671ed18abc523b097c56289ee56.png?alt=media&token=8f24128d-18e7-4260-8114-9e84195588e1'
         }
       }
 
