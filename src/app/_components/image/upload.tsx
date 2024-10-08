@@ -1,45 +1,46 @@
 'use client'
 
-import { uploadFile } from '@/firebase/image';
-// components/ImageUpload.js
-import { useState } from 'react';
+// components/UploadForm.tsx
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
-const ImageUpload: React.FC = () => {
-  const [file, setFile] = useState(null);
-  const [imageUrl, setImageUrl] = useState('');
+interface IFormInput {
+  file: FileList
+}
 
-  const handleChange = (event: any) => {
-    setFile(event.target.files[0]);
-  };
+const UploadForm: React.FC = () => {
+  const { register, handleSubmit, setValue } = useForm<IFormInput>();
 
-  const handleUpload = async () => {
-    if (!file) return;
-
+  const onSubmit = async (data: IFormInput) => {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', data.file[0]);
 
     try {
-      const response = await uploadFile(formData)
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
 
-      const data = await response
-      if (response) {
-        setImageUrl(JSON.stringify(data));
-        console.log('Arquivo enviado com sucesso:', data);
+      const result = await response.json();
+      if (response.ok) {
+        alert(result.message);
       } else {
-        console.error('Erro ao enviar arquivo:', data);
+        alert(result.error);
       }
     } catch (error) {
-      console.error('Erro ao enviar arquivo:', error);
+      console.error('Erro ao fazer o upload:', error);
     }
   };
 
   return (
-    <div>
-      <input type="file" onChange={handleChange} />
-      <button onClick={handleUpload}>Upload</button>
-      {imageUrl && <img src={imageUrl} alt="Uploaded" style={{ width: '200px', marginTop: '10px' }} />}
-    </div>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input
+        type="file"
+        {...register('file', { required: true })}
+      />
+      <button type="submit">Upload</button>
+    </form>
   );
 };
 
-export default ImageUpload;
+export default UploadForm;
