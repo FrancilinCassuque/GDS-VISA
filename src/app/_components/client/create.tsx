@@ -107,7 +107,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
       form.setValue('descricao', '')
       form.setValue('nomecompleto', '')
 
-      setEditar(true)
+      setEditar(false)
       setLoading(false)
     }
 
