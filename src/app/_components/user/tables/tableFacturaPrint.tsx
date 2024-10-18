@@ -130,7 +130,7 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
                       <Separator orientation="vertical" className="h-14 w-0.5 mx-1" />
                       <div className="text-start border-b">
                         <p className="font-bold text-muted-foreground my-2"><span className="text-black">AO06 0058 0000 0736 3794 1019 5</span></p>
-                        <p className="font-bold text-muted-foreground my-2"><span className="text-black">AO06 0005 0000 8118 0659 1019 7</span></p>
+                        <p className="font-bold text-muted-foreground my-2"><span className="text-black">AO06 0004 0000 1103 8911 1017 4</span></p>
                         <p className="font-bold text-muted-foreground my-2"><span className="text-black">AO06 0005 0000 8118 0659 1019 7</span></p>
                         {/* <p className="font-bold text-muted-foreground my-2"><span className="text-black">AO06 0004 0000 1103 8911 1017 4</span></p> */}
 
