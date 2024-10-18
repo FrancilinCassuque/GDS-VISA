@@ -40,7 +40,7 @@ interface ICreateProps {
 }
 
 export const estadosDeProcessos = [
- "Pendente a Pagamento",
+  "Pendente a Pagamento",
   "Pendente a Passaporte",
   "Activo",
   "Recusado",
@@ -126,6 +126,7 @@ export const CreateProcess: React.FC<ICreateProps> = ({ processo, clientes }) =>
       form.setValue('preco', JSON.stringify(processo.preco))
       form.setValue('passaport', processo.passaport)
       form.setValue('clientId', processo.clientId)
+      setEditar(true)
     } else {
       form.setValue('tipo', '')
       form.setValue('descricao', '')
@@ -134,10 +135,10 @@ export const CreateProcess: React.FC<ICreateProps> = ({ processo, clientes }) =>
       form.setValue('preco', '')
       form.setValue('passaport', '')
       form.setValue('clientId', '')
+      setEditar(false)
     }
 
     setLoading(false)
-    setEditar(true)
 
   }
 
