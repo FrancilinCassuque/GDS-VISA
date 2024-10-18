@@ -33,7 +33,8 @@ export const estadosDeFactura = [
   'Cancelado',
   'Aguardando Reembolso',
   'Reembolsado',
-  'Total Pago'
+  'Total Pago',
+  'Total Pendente'
 ]
 
 const facturaForm = z.object({
@@ -149,6 +150,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
       form.setValue('total', JSON.stringify(factura.total))
       form.setValue('valorApagar', JSON.stringify(factura.valorApagar))
       form.setValue('valorEmFalta', JSON.stringify(factura.valorEmFalta))
+      setEditar(true)
     } else {
       form.setValue('descricao', '')
       form.setValue('estado', '1ª Parcela Pendente')
@@ -157,11 +159,10 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
       form.setValue('total', '0')
       form.setValue('valorApagar', '0')
       form.setValue('valorEmFalta', '0')
+      setEditar(false)
     }
 
-    setEditar(true)
     setLoading(false)
-
   }
 
   const salvar = async () => {

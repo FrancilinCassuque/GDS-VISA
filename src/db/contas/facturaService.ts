@@ -25,6 +25,9 @@ export async function facturaStoreService(store: IFacturaStore, listaDeProcessos
     } else if (store.estado === '2ª Parcela Pendente') {
       calculo.valorApagar = (calculo.total / 2) - store.desconto
       calculo.valorEmFalta = 0
+    } else if (store.estado === 'Total Pendente') {
+      calculo.valorApagar = calculo.total
+      calculo.valorEmFalta = 0
     } else if (store.estado === '1ª Pago') {
       calculo.valorApagar = 0
       calculo.valorEmFalta = (calculo.total / 2) - store.desconto
@@ -78,7 +81,7 @@ export async function FacturaUpdate(factura: IFacturaUpdate, listaDeProcessos: I
       factura.valorApagar = factura.valorEmFalta - factura.desconto
       factura.valorEmFalta = 0
     } else if (factura.estado === '1ª Parcela Paga') {
-      factura.valorApagar = 0 
+      factura.valorApagar = 0
     } else {
       factura.valorApagar = 0
       factura.valorEmFalta = 0
