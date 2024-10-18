@@ -120,6 +120,7 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
                     <p className="text-lg font-bold bg-slate-400/25 text-primary mt-5 text-center w-fit mx-auto px-44">Coordenadas Bancárias</p>
                     <div className="flex justify-center">
                       <div className="text-end border-b">
+                        <p className="text-muted-foreground my-2"> <strong>BCS:</strong></p>
                         <p className="text-muted-foreground my-2"> <strong>Banco Caixa Angola:</strong></p>
                         <p className="text-muted-foreground my-2"> <strong>BCI: </strong></p>
                         {/* <p className="text-muted-foreground my-2"> <strong>BCS: </strong></p> */}
@@ -128,7 +129,8 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
 
                       <Separator orientation="vertical" className="h-14 w-0.5 mx-1" />
                       <div className="text-start border-b">
-                        <p className="font-bold text-muted-foreground my-2"><span className="text-black">AO06 0004 0000 1103 8911 1017 4</span></p>
+                        <p className="font-bold text-muted-foreground my-2"><span className="text-black">AO06 0058 0000 0736 3794 1019 5</span></p>
+                        <p className="font-bold text-muted-foreground my-2"><span className="text-black">AO06 0005 0000 8118 0659 1019 7</span></p>
                         <p className="font-bold text-muted-foreground my-2"><span className="text-black">AO06 0005 0000 8118 0659 1019 7</span></p>
                         {/* <p className="font-bold text-muted-foreground my-2"><span className="text-black">AO06 0004 0000 1103 8911 1017 4</span></p> */}
 
@@ -137,6 +139,7 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
                       <Separator orientation="vertical" className="h-14 w-0.5 mx-1" />
 
                       <div className="text-start border-b">
+                        <p className="font-bold text-muted-foreground my-2"><span className="text-black">Gota D' Sol, LDA</span></p>
                         <p className="font-bold text-muted-foreground my-2"><span className="text-black">Gota D' Sol, LDA</span></p>
                         <p className="font-bold text-muted-foreground my-2"><span className="text-black">Gota D' Sol, LDA</span></p>
                         {/* <p className="font-bold text-muted-foreground my-2"><span className="text-black">AO06 0004 0000 1103 8911 1017 4</span></p> */}
