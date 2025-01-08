@@ -56,6 +56,8 @@ export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
 
         </TooltipProvider>
       </nav>
+
+      {/* Sub Lista */}
       <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
         <TooltipProvider>
 
@@ -71,7 +73,7 @@ export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
                 )}
               </Link>
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent className="max-w-full w-screen h-screen p-0 m-0">
               <AlertDialogHeader>
                 <AlertDialogTitle>Notificações</AlertDialogTitle>
               </AlertDialogHeader>
