@@ -21,6 +21,7 @@ export async function storeProcesso(processo: IProcessoStore): Promise<String | 
 
         profileId: processo.profileId,
         clientId: processo.clientId,
+        anexos: []
       },
 
       // select: {

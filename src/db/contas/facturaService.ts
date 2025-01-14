@@ -20,8 +20,8 @@ export async function facturaStoreService(store: IFacturaStore, listaDeProcessos
     })
 
     if (store.estado === '1ª Parcela Pendente') {
-      calculo.valorApagar = (calculo.total / 2) - store.desconto
-      calculo.valorEmFalta = calculo.total / 2
+      calculo.valorApagar = (calculo.total / 2)
+      calculo.valorEmFalta = calculo.total / 2 - store.desconto
     } else if (store.estado === '2ª Parcela Pendente') {
       calculo.valorApagar = (calculo.total / 2) - store.desconto
       calculo.valorEmFalta = 0
@@ -75,8 +75,8 @@ export async function FacturaUpdate(factura: IFacturaUpdate, listaDeProcessos: I
     })
 
     if (factura.estado === '1ª Parcela Pendente') {
-      factura.valorApagar = (factura.total / 2) - factura.desconto
-      factura.valorEmFalta = factura.total / 2
+      factura.valorApagar = (factura.total / 2) 
+      factura.valorEmFalta = factura.total / 2 - factura.desconto
     } else if (factura.estado === '2ª Parcela Pendente') {
       factura.valorApagar = factura.valorEmFalta - factura.desconto
       factura.valorEmFalta = 0
@@ -132,8 +132,8 @@ export async function FacturaUpdatePreco(clientId: string, precoNovo: number, pr
         factura.total = factura.total - precoAntigo + precoNovo
 
         if (factura.estado === '1ª Parcela Pendente') {
-          factura.valorApagar = (factura.total / 2) - factura.desconto
-          factura.valorEmFalta = factura.total / 2
+          factura.valorApagar = (factura.total / 2) 
+          factura.valorEmFalta = factura.total / 2 - factura.desconto
         } else if (factura.estado === '2ª Parcela Pendente') {
           factura.valorApagar = factura.valorEmFalta - factura.desconto
           factura.valorEmFalta = 0
@@ -181,8 +181,8 @@ export async function FacturaUpdateDeletedProcesso(clientId: string, processoId:
         factura.total = factura.total - preco
 
         if (factura.estado === '1ª Parcela Pendente') {
-          factura.valorApagar = (factura.total / 2) - factura.desconto
-          factura.valorEmFalta = factura.total / 2
+          factura.valorApagar = (factura.total / 2) 
+          factura.valorEmFalta = factura.total / 2 - factura.desconto
         } else if (factura.estado === '2ª Parcela Pendente') {
           factura.valorApagar = factura.valorEmFalta - factura.desconto
           factura.valorEmFalta = 0

@@ -29,7 +29,7 @@ const clientForm = z.object({
   estado: z.string(),
   clientId: z.string(),
   tipo: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(4, 'Contacto Pequeno de mais').max(50, 'Contacto Grande de mais'),
-  nomecompleto: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(3, 'Nome muito curto!!').max(25, 'Atingiu o Limite de caracter apenas 50'),
+  nomecompleto: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(3, 'Nome muito curto!!').max(50, 'Atingiu o Limite de caracter apenas 50'),
   descricao: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(3, 'muito curto!!').max(225, 'Atingiu o Limite de caracter apenas 50'),
   passaport: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(5, 'Muito curto').max(15, 'Muito longo apenas 15 caracteres'),
 })
@@ -70,9 +70,10 @@ export const CreateProcess: React.FC<ICreateProps> = ({ processo, clientes }) =>
 
 
       if (user?.pessoa?.id) {
+        const preco = Number.parseInt(body.preco)
         const processo: IProcessoStore = {
           tipo: body.tipo,
-          preco: Number.parseInt(body.preco),
+          preco: preco,
           estado: body.estado,
           descricao: body.descricao,
           nomecompleto: body.nomecompleto,
@@ -83,6 +84,8 @@ export const CreateProcess: React.FC<ICreateProps> = ({ processo, clientes }) =>
         }
 
         const novoProcesso = await storeProcesso(processo)
+        console.log(processo)
+
 
         if (novoProcesso instanceof Error) {
           setLoading(false)
