@@ -128,6 +128,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
 
         cancelar()
 
+        window.location.replace('/auth/dashboard/contas')
         form.setFocus('desconto')
       }
 
