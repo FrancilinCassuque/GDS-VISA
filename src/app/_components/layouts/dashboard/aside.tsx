@@ -12,26 +12,28 @@ import { Avatar } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { AlertDialogCancel } from "@radix-ui/react-alert-dialog"
+import Image from "next/image"
 
 interface IAsideProps {
   notificacoes?: INotificacao[]
 }
 
 export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
-  const classLink = 'flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
+  const classLink = 'flex h-9 w-9 rounded-lg text-muted-foreground transition-colors hover:text-foreground md:w-full'
   const [abrir, setAbrir] = useState(false)
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
-      <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
+    <aside className="fixed inset-y-0 left-0 z-10 hidden w-52 flex-col border-r bg-background sm:flex">
+      <nav className="flex flex-col  gap-4 px-2 sm:py-5">
         <TooltipProvider>
           <Link
             href={listItem[0].path}
-            className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
+            className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-16 md:w-16 md:text-base"
             prefetch={false}
           >
-            {listItem[0].icon({ className: "h-4 w-4 transition-all group-hover:scale-110" })}
-            <span className="sr-only">{listItem[0].text}</span>
+            {/* {listItem[0].icon({ className: "h-10 w-10 transition-all group-hover:scale-110" })}
+            <span className="sr-only">{listItem[0].text}</span> */}
+            <Image src={'/placeholder.svg'} alt="Logo da Gota de Sol" width={350} height={350} className="w-96 h-96"/>
           </Link>
 
           {listItem.map((link, index) => (
@@ -44,8 +46,8 @@ export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
                       className={`${classLink}`}
                       prefetch={false}
                     >
-                      {link.icon({ className: `h-5 w-5` })}
-                      <span className="sr-only">{link.text}</span>
+                      
+                      <span className="flex"><strong className="mx-1 p-1 text-primary">{link.icon({ className: `h-8 w-8` })}</strong> <strong className="mx-1 p-2">{link.text}</strong></span>
                     </Link>
                   </TooltipTrigger>
                   <TooltipContent side="right">{link.text}</TooltipContent>
@@ -58,19 +60,20 @@ export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
       </nav>
 
       {/* Sub Lista */}
-      <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
+      <nav className="mt-auto flex flex-col items-start gap-4 px-2 sm:py-5">
         <TooltipProvider>
 
           <AlertDialog open={abrir} onOpenChange={setAbrir}>
             <AlertDialogTrigger>
-              <Link href={'#'} className={notificacoes?.length ? "grid grid-cols-2" : "grid grid-cols-1"} onClick={(e) => {
+              <Link href={'#'} className={"flex text-muted-foreground transition-colors hover:text-foreground"} onClick={(e) => {
                 e.preventDefault()
                 setAbrir(!abrir)
               }}>
-                <Bell className="h-5 w-5" />
+                <Bell className="h-8 w-8 mx-2" color={"#f77902"}/>Notificações
                 {(notificacoes && notificacoes.length > 0) && (
                   <Badge className="ml-auto flex h-6 w-4 shrink-0 items-center justify-center rounded-full bg-primary">{notificacoes.length ? notificacoes.length : ''}</Badge>
                 )}
+                
               </Link>
             </AlertDialogTrigger>
             <AlertDialogContent className="max-w-full w-screen h-screen p-0 m-0">
@@ -123,10 +126,7 @@ export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
             </AlertDialogFooter>
           </AlertDialog>
 
-          <Tooltip>
-            {/* <TooltipTrigger>Notificações</TooltipTrigger> */}
-            <TooltipContent>Notificações</TooltipContent>
-          </Tooltip>
+          
 
           {subListItem.map((link, index) => (
             <Tooltip key={index}>
@@ -136,8 +136,8 @@ export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
                   className={`${classLink}`}
                   prefetch={false}
                 >
-                  {link.icon({ className: `h-5 w-5` })}
-                  <span className="sr-only">{link.text}</span>
+                  <span className="text-primary">{link.icon({ className: `h-8 w-8 mx-2` })}</span>
+                  <span className="">{link.text}</span>
                 </Link>
               </TooltipTrigger>
               <TooltipContent side="right">{link.text}</TooltipContent>
@@ -146,7 +146,7 @@ export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
 
           <Tooltip>
             <TooltipTrigger asChild>
-              <ConfigButton />
+              <ConfigButton text="Mudar Tema" />
             </TooltipTrigger>
             <TooltipContent side="right">Tema</TooltipContent>
           </Tooltip>

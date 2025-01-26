@@ -24,17 +24,12 @@ export const listItem = [
     path: '/auth/client/create',
   },
 
-  {
-    text: 'Novo Processo',
-    icon: IconNewInf,
-    path: '/auth/processo/create',
-  },
-
-  {
-    text: 'Nova Factura',
-    icon: IconNewFactura,
-    path: '/auth/dashboard/contas/create',
-  },
+  
+  // {
+  //   text: 'Nova Factura',
+  //   icon: IconNewFactura,
+  //   path: '/auth/dashboard/contas/create',
+  // },
 
   {
     text: 'Processos',
@@ -42,17 +37,10 @@ export const listItem = [
     path: '/auth/processo/',
   },
 
-
   {
-    text: 'Contas',
-    icon: IconFactura,
-    path: '/auth/dashboard/contas',
-  },
-
-  {
-    text: 'Novo Serviço',
-    icon: IconNewInf3,
-    path: '/auth/dashboard/service/new',
+    text: 'Novo Processo',
+    icon: IconNewInf,
+    path: '/auth/processo/create',
   },
 
   {
@@ -60,9 +48,21 @@ export const listItem = [
     icon: IconNewInf4,
     path: '/auth/dashboard/service',
   },
+  
+  {
+    text: 'Novo Serviço',
+    icon: IconNewInf3,
+    path: '/auth/dashboard/service/new',
+  },
 
   {
-    text: 'Usuarios',
+    text: 'Finanças',
+    icon: IconFactura,
+    path: '/auth/dashboard/contas',
+  },
+
+  {
+    text: 'Recursos Humanos',
     icon: IconUsers,
     path: '/auth/user',
   },

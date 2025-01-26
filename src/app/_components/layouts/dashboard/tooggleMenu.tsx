@@ -19,7 +19,7 @@ export const TooggleMenu: React.FC = () => {
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="sm:max-w-xs">
+      <SheetContent side="top" className="sm:max-w-xs h-full overflow-auto">
         <nav className="grid gap-6 text-lg font-medium">
           <Link
             href={listItem[0].path}

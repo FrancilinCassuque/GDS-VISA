@@ -33,7 +33,7 @@ export const ConfigButton: React.FC<IConfigProps> = ({text}) => {
           className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-muted hover:text-foreground"
           prefetch={false}
         >
-          <SunMoon className="h-5 w-5" />
+          <SunMoon className="h-8 w-8" color="#f77902" />
           {text}
         </Link>
       </PopoverTrigger>
