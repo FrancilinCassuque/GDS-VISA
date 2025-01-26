@@ -8,7 +8,6 @@ import { IClient, IFacturaList, IProcesso, IService } from "@/types"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, ClipboardPlus, MoreHorizontal, Trash2 } from "lucide-react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 
 export const columnsProcesso: ColumnDef<IProcesso>[] = [
   {
@@ -67,7 +66,7 @@ export const columnsProcesso: ColumnDef<IProcesso>[] = [
   {
     accessorKey: "tipo",
     header: () => <div className="text-center">Categória</div>,
-    cell: ({ row }) => <div className="uppercase text-center">{row.getValue("tipo")}</div>,
+    cell: ({ row }) => <div className="uppercase text-cente">{row.getValue("tipo")}</div>,
   },
 
 

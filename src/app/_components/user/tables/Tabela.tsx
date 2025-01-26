@@ -92,7 +92,18 @@ export const TabelaDeDados: React.FC<IDataTableProps> = ({ listaDeDados, dataPro
         .getAllColumns()
         .filter((column) => column.getCanHide())
         .map((column) => {
-          column.toggleVisibility(true)
+          if (column.id == 'preco') {
+            column.toggleVisibility(false)
+          } else if (column.id == 'passaport') {
+            column.toggleVisibility(false)
+          }else if (column.id == 'descricao') {
+            column.toggleVisibility(false)
+          }else if (column.id == 'valorEmFalta') {
+            column.toggleVisibility(false)
+          }else if (column.id == 'valorApagar') {
+            column.toggleVisibility(false)
+          }
+
         })
     } else {
       table
@@ -103,7 +114,7 @@ export const TabelaDeDados: React.FC<IDataTableProps> = ({ listaDeDados, dataPro
             column.toggleVisibility(true)
           } else if (column.id == 'nome') {
             column.toggleVisibility(true)
-          }else{
+          } else {
             column.toggleVisibility(false)
           }
 
@@ -116,13 +127,13 @@ export const TabelaDeDados: React.FC<IDataTableProps> = ({ listaDeDados, dataPro
 
       {dataOnly ? (
         <div className="text-center text-primary">
-          <h1> {listaDe? `${listaDe} do Cliente`: null} </h1>
-          <h3 className="text-muted-foreground">{listaDe? `Selecione ${listaDe}`: null}</h3>
+          <h1> {listaDe ? `${listaDe} do Cliente` : null} </h1>
+          <h3 className="text-muted-foreground">{listaDe ? `Selecione ${listaDe}` : null}</h3>
         </div>
       ) : (
         <div className="text-center">
           <h1>{listaDe}</h1>
-          <h3 className="text-muted-foreground">{listaDe? `Lista de ${listaDe}`: null}</h3>
+          <h3 className="text-muted-foreground">{listaDe ? `Lista de ${listaDe}` : null}</h3>
         </div >
       )}
 
