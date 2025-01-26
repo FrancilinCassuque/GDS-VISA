@@ -20,8 +20,6 @@ import { Metadata } from "next"
 export default function Component() {
   const { status } = useSession()
   const [user, setUser] = useState<IUserAuth | undefined>(undefined)
-  const [casasdisponiveis, setdisponiveis] = useState(0)
-  const [open, setopen] = useState(false)
   const u = authStore()
 
   
@@ -32,7 +30,7 @@ export default function Component() {
       // setdisponiveis(u.casas.filter(casa => casa.published == true).length)
     }
 
-  }, [status, setUser, u, setdisponiveis])
+  }, [status, setUser, u])
 
   return (
     <div className="flex flex-col items-center gap-8 min-w-full mx-auto py-12 px-4 md:px-0">
