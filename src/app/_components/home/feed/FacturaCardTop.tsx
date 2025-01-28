@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent }
 import { Progress } from "@/components/ui/progress"
 import { IClient, IFacturaList } from "@/types"
 import { CardAction, IconUserPlus } from "../.."
-import { ReceiptText } from "lucide-react"
+import { Newspaper, ReceiptText } from "lucide-react"
 
 interface ICardProps {
   facturas: IFacturaList[]
@@ -62,13 +62,46 @@ export const CardFacturasHomeTop: React.FC<ICardProps> = async ({ facturas }) =>
 
   return (
     <>
-      <CardAction
-        textoDoTitle="Fazer Nova Facturas"
-        iconDoBotao={<ReceiptText />}
-        textoDoBotao="Nova Factura"
-        textoDaDescricao="Registra para poder fazer Contas."
-        linkDoBotao={'/auth/dashboard/contas/create'}
-      />
+      <div className="">
+        <CardAction
+          textoDoTitle="Facturas"
+          iconDoBotao={<ReceiptText />}
+          textoDoBotao="Nova"
+          textoDaDescricao="Facturas registradas no sistema."
+          linkDoBotao={'/auth/dashboard/contas/create'}
+
+          iconDoBotao2={<Newspaper />}
+          textoDoBotao2="Ver Facturas"
+          linkDoBotao2="#"
+        />
+      </div>
+
+      <div className="">
+        <CardAction
+          textoDoTitle="Relatório"
+          iconDoBotao={<ReceiptText />}
+          textoDoBotao="Nova"
+          textoDaDescricao="Fazer relatório das Facturas."
+          linkDoBotao={'/auth/dashboard/contas/create'}
+
+          iconDoBotao2={<Newspaper />}
+          textoDoBotao2="Ver Relatórios"
+          linkDoBotao2="#"
+        />
+      </div>
+      <div className="">
+        <CardAction
+          textoDoTitle="Relatório"
+          iconDoBotao={<ReceiptText />}
+          textoDoBotao="Nova"
+          textoDaDescricao="Fazer relatório das Facturas."
+          linkDoBotao={'/auth/dashboard/contas/create'}
+
+          iconDoBotao2={<Newspaper />}
+          textoDoBotao2="Ver Relatórios"
+          linkDoBotao2="#"
+        />
+      </div>
 
       {
         facturas.length > 0 && (
@@ -162,7 +195,6 @@ export const CardFacturasHomeTop: React.FC<ICardProps> = async ({ facturas }) =>
                   </p>
                   <br />
                   <p>{`Possível Total em kwanzas ${valorSegundaCobrarKwanza.toLocaleString('AOA', { currency: 'AOA', style: 'currency' })}`}</p>
-
                 </div>
               </CardContent>
               <CardFooter>
