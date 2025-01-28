@@ -47,8 +47,8 @@ export async function processoIndex(): Promise<IProcesso[] | Error> {
       },
     })
 
-    // processoStore.getState().start(processos)
-    // revalidatePath('/')
+    revalidatePath('/')
+    processoStore.getState().start(processos)
 
     return processos
   } catch (error) {

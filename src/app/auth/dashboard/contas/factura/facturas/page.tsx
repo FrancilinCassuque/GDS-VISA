@@ -5,7 +5,7 @@ import { FacturaIndex } from "@/db"
 import { ReceiptText } from "lucide-react"
 
 
-export default async function Contas() {
+export default async function FacturasShow() {
   const facturas = await FacturaIndex()
 
   if (facturas instanceof Error) return
@@ -13,11 +13,11 @@ export default async function Contas() {
   return (
     <main className="sm:mb-32">
         <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-3">
-          <CardFacturasHomeTop facturas={facturas} />
+          {/* <CardFacturasHomeTop facturas={facturas} /> */}
         </div>
 
         <div>
-          {/* <TabFacturas facturas={facturas} /> */}
+          <TabFacturas facturas={facturas} />
         </div>
 
     </main>

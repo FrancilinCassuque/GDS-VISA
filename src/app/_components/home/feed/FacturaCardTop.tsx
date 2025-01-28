@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { IClient, IFacturaList } from "@/types"
-import { CardAction, IconUserPlus } from "../.."
+import { CardAction, IconFactura, IconNewInf, IconNewInf2, IconNewInf3, IconUserPlus } from "../.."
 import { Newspaper, ReceiptText } from "lucide-react"
 
 interface ICardProps {
@@ -72,12 +72,26 @@ export const CardFacturasHomeTop: React.FC<ICardProps> = async ({ facturas }) =>
 
           iconDoBotao2={<Newspaper />}
           textoDoBotao2="Ver Facturas"
-          linkDoBotao2="#"
+          linkDoBotao2="/auth/dashboard/contas/factura/facturas"
         />
       </div>
 
       <div className="">
         <CardAction
+          textoDoTitle="Relatório"
+          iconDoBotao={<IconNewInf />}
+          textoDoBotao="Nova"
+          textoDaDescricao="Fazer relatório das Facturas."
+          linkDoBotao={'#'}
+
+          iconDoBotao2={<IconFactura />}
+          textoDoBotao2="Ver Relatórios"
+          linkDoBotao2={"#"}
+        />
+      </div>
+      
+      <div className="">
+        {/* <CardAction
           textoDoTitle="Relatório"
           iconDoBotao={<ReceiptText />}
           textoDoBotao="Nova"
@@ -87,20 +101,7 @@ export const CardFacturasHomeTop: React.FC<ICardProps> = async ({ facturas }) =>
           iconDoBotao2={<Newspaper />}
           textoDoBotao2="Ver Relatórios"
           linkDoBotao2="#"
-        />
-      </div>
-      <div className="">
-        <CardAction
-          textoDoTitle="Relatório"
-          iconDoBotao={<ReceiptText />}
-          textoDoBotao="Nova"
-          textoDaDescricao="Fazer relatório das Facturas."
-          linkDoBotao={'/auth/dashboard/contas/create'}
-
-          iconDoBotao2={<Newspaper />}
-          textoDoBotao2="Ver Relatórios"
-          linkDoBotao2="#"
-        />
+        /> */}
       </div>
 
       {
