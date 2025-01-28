@@ -4,7 +4,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import Link from "next/link"
 import { listItem, subListItem } from "../../listas/listaDeItensDoMenuBar"
 import { ConfigButton } from "../config"
-import { Bell, CalendarArrowUp, Eye, MessageCircleWarning } from "lucide-react"
+import { Bell, CalendarArrowUp, Check, Eye, MessageCircleWarning } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { INotificacao } from "@/types"
 import { AlertDialogHeader, AlertDialogTrigger, AlertDialog, AlertDialogTitle, AlertDialogContent, AlertDialogFooter } from "@/components/ui/alert-dialog"
@@ -13,6 +13,14 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { AlertDialogCancel } from "@radix-ui/react-alert-dialog"
 import Image from "next/image"
+import { DrawerDialog } from "../../forms/formDialog"
+import { Form } from "react-hook-form"
+import { FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Popover, PopoverContent } from "@/components/ui/popover"
+import { Command, CommandGroup, CommandItem, CommandList, CommandSeparator } from "@/components/ui/command"
+import { cn } from "@/lib/utils"
+import { Input } from "@/components/ui/input"
+import { AutorizacaoCheck } from "./autorizacaoCheck"
 
 interface IAsideProps {
   notificacoes?: INotificacao[]
@@ -33,7 +41,7 @@ export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
           >
             {/* {listItem[0].icon({ className: "h-10 w-10 transition-all group-hover:scale-110" })}
             <span className="sr-only">{listItem[0].text}</span> */}
-            <Image src={'/placeholder.svg'} alt="Logo da Gota de Sol" width={350} height={350} className="w-96 h-96"/>
+            <Image src={'/placeholder.svg'} alt="Logo da Gota de Sol" width={350} height={350} className="w-96 h-96" />
           </Link>
 
           {listItem.map((link, index) => (
@@ -46,7 +54,7 @@ export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
                       className={`${classLink}`}
                       prefetch={false}
                     >
-                      
+
                       <span className="flex"><strong className="mx-1 p-1 text-primary">{link.icon({ className: `h-8 w-8` })}</strong> <strong className="mx-1 p-2">{link.text}</strong></span>
                     </Link>
                   </TooltipTrigger>
@@ -69,11 +77,11 @@ export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
                 e.preventDefault()
                 setAbrir(!abrir)
               }}>
-                <Bell className="h-8 w-8 mx-2" color={"#f77902"}/>Notificações
+                <Bell className="h-8 w-8 mx-2" color={"#f77902"} />Notificações
                 {(notificacoes && notificacoes.length > 0) && (
                   <Badge className="ml-auto flex h-6 w-4 shrink-0 items-center justify-center rounded-full bg-primary">{notificacoes.length ? notificacoes.length : ''}</Badge>
                 )}
-                
+
               </Link>
             </AlertDialogTrigger>
             <AlertDialogContent className="max-w-full w-screen h-screen p-0 m-0">
@@ -126,7 +134,9 @@ export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
             </AlertDialogFooter>
           </AlertDialog>
 
-          
+          <DrawerDialog descricao="teste de descrição" textoDoBotao="Draw">
+            <AutorizacaoCheck />
+          </DrawerDialog>
 
           {subListItem.map((link, index) => (
             <Tooltip key={index}>

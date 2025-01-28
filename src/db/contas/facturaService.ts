@@ -2,6 +2,8 @@
 
 import { IFactura, IFacturaList, IFacturaStore, IFacturaUpdate, IProcesso } from "@/types"
 import prisma from "../prisma.index"
+import { facturastore } from "@/store"
+import { revalidatePath } from "next/cache"
 
 export async function facturaStoreService(store: IFacturaStore, listaDeProcessos: IProcesso[]): Promise<string | Error> {
   'use server'
@@ -75,7 +77,7 @@ export async function FacturaUpdate(factura: IFacturaUpdate, listaDeProcessos: I
     })
 
     if (factura.estado === '1ª Parcela Pendente') {
-      factura.valorApagar = (factura.total / 2) 
+      factura.valorApagar = (factura.total / 2)
       factura.valorEmFalta = factura.total / 2 - factura.desconto
     } else if (factura.estado === '2ª Parcela Pendente') {
       factura.valorApagar = factura.valorEmFalta - factura.desconto
@@ -132,7 +134,7 @@ export async function FacturaUpdatePreco(clientId: string, precoNovo: number, pr
         factura.total = factura.total - precoAntigo + precoNovo
 
         if (factura.estado === '1ª Parcela Pendente') {
-          factura.valorApagar = (factura.total / 2) 
+          factura.valorApagar = (factura.total / 2)
           factura.valorEmFalta = factura.total / 2 - factura.desconto
         } else if (factura.estado === '2ª Parcela Pendente') {
           factura.valorApagar = factura.valorEmFalta - factura.desconto
@@ -181,7 +183,7 @@ export async function FacturaUpdateDeletedProcesso(clientId: string, processoId:
         factura.total = factura.total - preco
 
         if (factura.estado === '1ª Parcela Pendente') {
-          factura.valorApagar = (factura.total / 2) 
+          factura.valorApagar = (factura.total / 2)
           factura.valorEmFalta = factura.total / 2 - factura.desconto
         } else if (factura.estado === '2ª Parcela Pendente') {
           factura.valorApagar = factura.valorEmFalta - factura.desconto
@@ -253,6 +255,9 @@ export async function FacturaIndex(): Promise<IFacturaList[] | Error> {
 
       facturasLis.push(facturaItem)
     })
+
+    revalidatePath('/')
+    facturastore.getState().start(facturasLis)
 
     return facturasLis
 
