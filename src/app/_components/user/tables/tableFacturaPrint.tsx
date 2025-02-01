@@ -10,6 +10,7 @@ import { useRef } from "react"
 import { IFacturaPrint, IProcesso } from "@/types"
 import Image from "next/image"
 import { Separator } from "@/components/ui/separator"
+import { TermoFactura } from "../.."
 
 interface ITableProps {
   factura: IFacturaPrint
@@ -173,6 +174,8 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
           </CardContent>
         </div>
       </Card>
+
+          <TermoFactura factura={factura} />
     </>
   )
 }

@@ -60,3 +60,5 @@ export * from './gds-visa/NotifyShow'
 export * from './gds-visa/newService'
 
 export * from './image/upload'
+
+export * from './user/tables/termosfactura'
