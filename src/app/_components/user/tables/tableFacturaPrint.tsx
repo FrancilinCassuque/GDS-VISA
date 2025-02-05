@@ -154,14 +154,29 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
                   </TableCell>
                 </TableRow>
 
-                <br /><br /><br />
+
+                {factura.processos.length > 1 ? (
+                  <>
+                    <br /><br /><br />
+                    <br /><br /><br /><br /><br /><br />
+                    <br /><br /><br /><br /><br /><br />
+                    <br /><br /><br /><br /><br /><br />
+                    <br /><br /><br /><br /><br /><br />
+                    <br /><br /><br /><br /><br />
+                  </>
+
+                ) : (
+                  <>
+                    <br /><br /><br />
+                  </>
+                )}
 
                 <TableRow>
                   <TableCell colSpan={5}>
                     <div className='flex flex-col items-center justify-center'>
                       <Image width={275} height={275} src={'/placeholder.png'} alt="Logotipo da Gota De Sol" />
                     </div>
-                    
+
                     <TermoFactura factura={factura} />
                   </TableCell>
                 </TableRow>
