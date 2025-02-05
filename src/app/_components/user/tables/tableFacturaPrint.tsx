@@ -29,7 +29,7 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
     <>
       {printOnly && (
         <div className="ml-auto flex items-center gap-2">
-          <Button size="sm" variant="outline" className="h-7 gap-1 text-sm" onClick={(e)=>{
+          <Button size="sm" variant="outline" className="h-7 gap-1 text-sm" onClick={(e) => {
             e.preventDefault()
             printTable()
           }}>
@@ -153,9 +153,24 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
 
                   </TableCell>
                 </TableRow>
+
+                <br /><br /><br />
+
+                <TableRow>
+                  <TableCell colSpan={5}>
+                    <div className='flex flex-col items-center justify-center'>
+                      <Image width={275} height={275} src={'/placeholder.png'} alt="Logotipo da Gota De Sol" />
+                    </div>
+                    
+                    <TermoFactura factura={factura} />
+                  </TableCell>
+                </TableRow>
+
               </TableBody>
 
               <br />
+
+
 
               <TableFooter>
                 <TableRow>
@@ -174,8 +189,6 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
           </CardContent>
         </div>
       </Card>
-
-          <TermoFactura factura={factura} />
     </>
   )
 }
