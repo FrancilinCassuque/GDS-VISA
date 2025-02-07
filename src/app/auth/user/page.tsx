@@ -2,16 +2,19 @@
 
 import { AutorizacaoCheck, } from "@/app/_components"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { userIndex } from "@/db"
+import { Button } from "@/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { deletUser, userIndex } from "@/db"
 import { userStore } from "@/store"
 import { IUser } from "@/types"
-import { Separator } from "@radix-ui/react-select"
+import { ClipboardPlus, Loader2, MoreHorizontal, Trash2 } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
 export default function UserList() {
   const [users, setUsers] = useState<IUser[]>(userStore.getState().users)
   const [total, setTotal] = useState(userStore.getState().total)
+  const [loading, setLoading] = useState(false)
 
 
   useEffect(() => {
@@ -30,31 +33,62 @@ export default function UserList() {
 
   return (
     <div className="min-h-[81dvh] flex flex-col items-center justify-center">
-        <AutorizacaoCheck />
+      <AutorizacaoCheck />
 
-      <h1 className="text-3xl font-bold tracking-tight sm:text-4xl my-10">Lista de Usuarios.</h1>
+      <h1 className="text-xl font-bold tracking-tight sm:text-4xl">Usuarios.</h1>
 
-      <ul>
+      <ul className="overflow-auto max-h-96 border-b border-primary/15">
         {users.map((user: IUser) => (
-          <div key={user.id}>
-            <div>
-              <li>
-                <Link href={`/auth/dashboard/${user.id}`} className="grid grid-cols-2 my-3">
-                  <Avatar className="mx-0 px-0">
-                    <AvatarImage src={user.image || ''} alt={user.name || ''} />
-                    <AvatarFallback>{user?.name ? `${user.name[0].toUpperCase()}${user.name[user.name.length - 1]}` : 'MC'}</AvatarFallback>
-                  </Avatar>
+          <li key={user.id} className="flex justify-center items-center hover:bg-primary/10 rounded-full my-5 border-l border-r border-b  border-primary/15">
+            <Link href={`/auth/dashboard/${user.id}`} className="flex justify-center items-center">
+              <Avatar className="mx-3 px-0">
+                <AvatarImage src={user.image || ''} alt={user.name || ''} />
+                <AvatarFallback>{user?.name ? `${user.name[0].toUpperCase()}${user.name[user.name.length - 1]}` : 'MC'}</AvatarFallback>
+              </Avatar>
 
-                  <span className="text-foreground">{user.email}</span>
+              <span className="text-foreground">{user.name}</span>
+            </Link>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="mx-5">
+                  <span className="sr-only">Abri menu</span>
+                  {loading ? <Loader2 className="h-6 w-6 animate-spin" /> : <MoreHorizontal className="h-6 w-6 " />}
+
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Menu de Opções</DropdownMenuLabel>
+                <Link href={`/auth/dashboard/settings/${user.email}`}>
+                  <DropdownMenuItem className="text-blue-400">
+                    <ClipboardPlus className="w-4 h-4" />
+                    Editar
+                  </DropdownMenuItem>
                 </Link>
-              </li>
-            </div>
-            <Separator />
-          </div>
+
+                <DropdownMenuItem className="text-red-700"
+                  onClick={() => {
+                    setLoading(true)
+                    deletUser(user.id).then(res => {
+                      if (!(res instanceof Error)) {
+                        setLoading(false)
+                        window.location.reload()
+
+                      }
+                    })
+                  }}
+                >
+                  <Trash2 className="w-4 h-4" />
+                  Eliminar
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </li>
         ))}
 
-        <p><strong>Total = {total} </strong></p>
       </ul>
+
+      <p className="m-4 text-lg"><strong>Total = {total} </strong></p>
     </div>
   )
 }

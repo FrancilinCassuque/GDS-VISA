@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator"
 import { BioData } from "./bioData"
 import { toast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
+import { IUserAuth } from "@/types"
 
 interface IUpdateUser {
   id: string
@@ -23,16 +24,20 @@ interface IUpdateUser {
   file: [any]
 }
 
-export const UserData: React.FC = () => {
+interface IUserSettings {
+  userAuth: IUserAuth
+}
+
+export const UserData: React.FC<IUserSettings> = ({ userAuth }) => {
   const [editar, setEditar] = useState(true)
   const [loading, setLoading] = useState(false)
   const form = useForm<IUpdateUser>()
-  const auth = authStore()
+  // const auth = authStore()
   const rote = useRouter()
 
   const cancelar = () => {
-    form.setValue('name', auth.userauth?.name || '')
-    form.setValue('email', auth.userauth?.email || '')
+    form.setValue('name', userAuth?.name || '')
+    form.setValue('email', userAuth?.email || '')
 
     setEditar(true)
   }
@@ -41,15 +46,15 @@ export const UserData: React.FC = () => {
     try {
       setLoading(true)
       const userSave = {
-        id: auth.userauth?.id || '',
-        name: auth.userauth?.name || '',
-        email: auth.userauth?.email || '',
-        image: auth.userauth?.image || '',
+        id: userAuth?.id || '',
+        name: userAuth?.name || '',
+        email: userAuth?.email || '',
+        image: userAuth?.image || '',
       }
 
       if (data.file) {
-        if (auth.userauth?.image) {
-          await image.deleteFile(auth.userauth.image)
+        if (userAuth?.image) {
+          await image.deleteFile(userAuth.image)
 
           const img = await image.imgUpload(data.file)
           userSave.image = img || ''
@@ -59,22 +64,23 @@ export const UserData: React.FC = () => {
         }
       }
 
-      const response = await update(auth.userauth?.id || '', userSave)
+      const response = await update(userAuth?.id || '', userSave)
 
       if (!(response instanceof Error)) {
-        const upAuth = auth.userauth
+        const upAuth = userAuth
 
-        if (upAuth) {
-          upAuth.image = userSave.image
-          auth.startAuth(upAuth)
-        }
+        // if (upAuth) {
+        //   upAuth.image = userSave.image
+        //   auth.startAuth(upAuth)
+        // }
 
         setEditar(true)
         setLoading(false)
-        rote.push('/auth/dashboard')
+        // rote.push('/auth/dashboard')
+        window.location.reload()
         toast({
           title: 'Sucesso!',
-          description: 'Usuario actualizado com successo! Por favor, actualiza a Pagina.',
+          description: 'Usuario actualizado com successo!',
           variant: 'default'
         })
 
@@ -110,7 +116,7 @@ export const UserData: React.FC = () => {
                 <Label htmlFor="name">Nome de Usuário</Label>
                 <Input id="name" placeholder="John Doe"
                   {...form.register('name')}
-                  defaultValue={auth.userauth?.name || ''}
+                  defaultValue={userAuth?.name || ''}
                   readOnly={true}
 
                 />
@@ -119,7 +125,7 @@ export const UserData: React.FC = () => {
                 <Label htmlFor="email">E-mail do proprietário</Label>
                 <Input id="email" type="email" placeholder="john@example.com"
                   {...form.register('email')}
-                  defaultValue={auth.userauth?.email || ''}
+                  defaultValue={userAuth?.email || ''}
                   readOnly={true}
                 />
               </div>
@@ -161,11 +167,11 @@ export const UserData: React.FC = () => {
 
       <PerfilData />
 
-      {auth.userauth?.pessoa?.id && (
+      {userAuth?.pessoa?.id && (
         <>
           <EnderecoForm />
 
-          {auth.userauth?.pessoa?.bio && (
+          {userAuth?.pessoa?.bio && (
             <BioData />
           )}
         </>

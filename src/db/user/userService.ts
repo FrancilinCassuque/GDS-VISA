@@ -345,3 +345,24 @@ export async function update(userId = '', user?: IUpdateUser, userName = ''): Pr
   }
 }
 
+export async function deletUser(id: string): Promise<string | Error> {
+  'use server'
+
+  try {
+    const userDeleted = await prisma.user.delete({
+      where: {
+        id
+      }
+    })
+
+    if (userDeleted instanceof Error) {
+      return new Error('usuário não encontrado')
+    }
+
+    return userDeleted.id
+
+  } catch (err) {
+    return new Error((err as { message: string }).message || 'Erro ao buscar Usuário')
+  }
+}
+
