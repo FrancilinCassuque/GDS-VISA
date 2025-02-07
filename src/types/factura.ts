@@ -7,6 +7,7 @@ export interface IFacturaStore {
   descricao: string
   desconto: number
   profileId: string
+  valorApagar?:number
 }
 
 export interface IFactura {

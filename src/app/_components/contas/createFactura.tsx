@@ -101,6 +101,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
         const store: IFacturaStore = {
           desconto: Number.parseInt(body.desconto),
           estado: body.estado,
+          valorApagar: Number.parseInt(body.valorApagar),
           descricao: body.descricao,
           profileId: user.pessoa.id,
           clientId: body.clientId,
@@ -180,7 +181,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
           profileId: factura.profileId,
           clientId: facturaDate.clientId,
           total: factura.total,
-          valorApagar: factura.valorApagar,
+          valorApagar: Number.parseInt(facturaDate.valorApagar),
           valorEmFalta: factura.valorEmFalta,
         }
 
@@ -481,7 +482,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Valor a Cobrar</FormLabel>
-                              <Input {...field} type="number" placeholder="100000" readOnly={true} />
+                              <Input {...field} type="number" placeholder="100000" readOnly={editar} />
                               <FormDescription>Valor a pagar pela factura actual.</FormDescription>
                               <FormMessage />
                             </FormItem>
