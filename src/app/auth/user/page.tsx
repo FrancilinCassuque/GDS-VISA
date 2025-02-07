@@ -1,5 +1,6 @@
 'use client'
 
+import { AutorizacaoCheck, } from "@/app/_components"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { userIndex } from "@/db"
 import { userStore } from "@/store"
@@ -29,6 +30,8 @@ export default function UserList() {
 
   return (
     <div className="min-h-[81dvh] flex flex-col items-center justify-center">
+        <AutorizacaoCheck />
+
       <h1 className="text-3xl font-bold tracking-tight sm:text-4xl my-10">Lista de Usuarios.</h1>
 
       <ul>

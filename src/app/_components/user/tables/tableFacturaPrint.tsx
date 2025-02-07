@@ -169,7 +169,8 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
                   <>
                     <br /><br /><br />
                   </>
-                )}
+                )
+                }
 
                 <TableRow>
                   <TableCell colSpan={5}>

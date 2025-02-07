@@ -3,17 +3,14 @@
 import Link from "next/link"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
 import { signIn } from 'next-auth/react'
 import { useRouter } from "next/navigation"
 import { toast } from "@/components/ui/use-toast"
-import { SocialAuth } from "./socialAuth"
 import { IconEye, IconLogIn, IconUserPlus } from "../icons"
 import { useState } from "react"
 import { Loader2 } from "lucide-react"
-import Image from "next/image"
 
 export const GoogleLogin = async () => {
   try {

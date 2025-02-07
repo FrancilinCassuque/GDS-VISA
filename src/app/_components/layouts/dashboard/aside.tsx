@@ -13,14 +13,6 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { AlertDialogCancel } from "@radix-ui/react-alert-dialog"
 import Image from "next/image"
-import { DrawerDialog } from "../../forms/formDialog"
-import { Form } from "react-hook-form"
-import { FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Popover, PopoverContent } from "@/components/ui/popover"
-import { Command, CommandGroup, CommandItem, CommandList, CommandSeparator } from "@/components/ui/command"
-import { cn } from "@/lib/utils"
-import { Input } from "@/components/ui/input"
-import { AutorizacaoCheck } from "./autorizacaoCheck"
 
 interface IAsideProps {
   notificacoes?: INotificacao[]
@@ -133,10 +125,6 @@ export const AsideBar: React.FC<IAsideProps> = ({ notificacoes }) => {
             <AlertDialogFooter>
             </AlertDialogFooter>
           </AlertDialog>
-
-          <DrawerDialog descricao="teste de descrição" textoDoBotao="Draw">
-            <AutorizacaoCheck />
-          </DrawerDialog>
 
           {subListItem.map((link, index) => (
             <Tooltip key={index}>

@@ -1,60 +1,39 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Check, ChevronsUpDown, Loader2, Newspaper } from "lucide-react"
+import { Loader2, } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-} from "@/components/ui/command"
-import {
   Form,
-  FormControl,
   FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
 import { toast } from "@/components/ui/use-toast"
-import { ocupacaoCreate, ocupacaoUpdate } from "@/db"
 import { authStore } from "@/store"
 import { useState } from "react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
-import { useRouter } from "next/navigation"
-import { ListaDeCargos } from "@/app/_components/listas/cargos"
 import { Input } from "@/components/ui/input"
+import { IconEye, listCode } from "../.."
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
 
 
 const FormSchema = z.object({
-  funcao: z.string({ required_error: "Por favor Selecciona a ocupacao..", }),
+  autirizationCode: z.string({ required_error: "Por favor Selecciona a ocupacao..", }).min(8, 'Autorização Muito curta!'),
 })
 
-interface IOcupacaoProps {
-  update?: boolean
-  id?: number
-}
-
-export const AutorizacaoCheck: React.FC<IOcupacaoProps> = ({ update, id }) => {
+export const AutorizacaoCheck: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [erro, setErro] = useState(false)
   const authUser = authStore()
-  const route = useRouter()
+  const [showPass, setShowPass] = useState(false)
+  const [open, setOpen] = useState(true)
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -65,65 +44,34 @@ export const AutorizacaoCheck: React.FC<IOcupacaoProps> = ({ update, id }) => {
     try {
       setLoading(true)
 
-      if (update) {
-        if (id) {
-          const ocupacao = await ocupacaoUpdate(id, data.funcao)
-
-          if (ocupacao instanceof Error) {
-            setErro(true)
-            setLoading(false)
-            return
-          }
-          const upAuth = authUser.userauth
-    
-          if (upAuth) {
-            upAuth.pessoa.funcoes = ocupacao
-    
-            authUser.startAuth(upAuth)
-    
-            route.push('/auth/home')
-          }
-          setLoading(false)
-    
-          toast({
-            title: "sucesso!",
-            description: (
-              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                <code className="text-white">Perfil Actualizado com sucesso!</code>
-              </pre>
-            ),
-          })
-        }
-
-      } else {
-        const ocupacao = await ocupacaoCreate({ ...data, profileId: authUser.userauth?.pessoa?.id || '' })
-
-        if (ocupacao instanceof Error) {
-          setErro(true)
-          setLoading(false)
-          return
-        }
-        const upAuth = authUser.userauth
-  
-        if (upAuth) {
-          upAuth.pessoa.funcoes = ocupacao
-  
-          authUser.startAuth(upAuth)
-  
-          route.push('/auth/dashboard')
-        }
+      const code = listCode.find(code => code.authCode == data.autirizationCode)
+      if (code) {
+        setOpen(false)
         setLoading(false)
-  
+
         toast({
           title: "sucesso!",
           description: (
             <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-              <code className="text-white">Perfil Actualizado com sucesso!</code>
+              <code className="text-white">Autorizado com sucesso✔!</code>
+            </pre>
+          ),
+        })
+      } else {
+        form.setError('autirizationCode', { type: 'max', message: 'Código Não autorizado!❌' })
+        // setErro(true)
+        setLoading(false)
+
+        toast({
+          title: "Recusa!",
+          variant: 'destructive',
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+              <code className="text-white">Código Recuzado❌!</code>
             </pre>
           ),
         })
       }
-
     } catch (error) {
       setErro(true)
       setLoading(false)
@@ -132,42 +80,84 @@ export const AutorizacaoCheck: React.FC<IOcupacaoProps> = ({ update, id }) => {
   }
 
   return (
-    <Form {...form}>
+    <Dialog open={open}>
+      <DialogTrigger asChild>
+        {/* <Button variant="outline" className="bg-none border-none max-w-min max-h-min">
+          {icon}
+          {textoDoBotao}
+        </Button> */}
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>{"Autorização para Nivél Superior🐱‍👤"}</DialogTitle>
+          <DialogDescription>
+            {"É necessário autorição de nivél superior para aceder a está página!"}
+          </DialogDescription>
+        </DialogHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex flex-col items-center w-full mt-2">
 
-<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex flex-col items-center w-full mt-10">
+            {erro && (
+              <div>
+                <Alert variant='destructive'>
+                  <ExclamationTriangleIcon />
+                  <AlertTitle>Erro!</AlertTitle>
+                  <AlertDescription className="flex flex-col text-center">
+                    <p>
+                      Erro de Autorização!.
+                    </p>
+                  </AlertDescription>
+                </Alert>
+              </div>
+            )}
 
-  {erro && (
-    <div>
-      <Alert variant='destructive'>
-        <ExclamationTriangleIcon />
-        <AlertTitle>Erro!</AlertTitle>
-        <AlertDescription className="flex flex-col text-center">
-          <p>
-            Erro ao Registrar Ocupacao!.
-          </p>
-        </AlertDescription>
-      </Alert>
-    </div>
-  )}
+            <div className="flex flex-col items-center justify-center w-full">
+              <FormField
+                control={form.control}
+                name="autirizationCode"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col mx-6 w-full">
+                    <div className="relative">
+                      <FormLabel>Autorização</FormLabel>
 
-  <div className="flex flex-col items-center justify-center w-full">
-    <FormField
-      // control={form.control}
-      name="funcao"
-      render={({ field }) => (
-        <FormItem className="flex flex-col mx-6 w-full">
-          <FormLabel>Ocupacao Actual</FormLabel>
-          <Input type="text" />
-          <FormDescription>
-            O que fazes?
-          </FormDescription>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
-  </div>
-  <Button type="submit" className="w-11/12" disabled={loading}> {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Submit'}</Button>
-</form>
-</Form>
+                      <div className="mt-1">
+                        <Input
+                          {...field}
+                          type={showPass ? "text" : "password"}
+                          required
+                          placeholder="Código de Autorização"
+                          className="block w-full appearance-none rounded-md border border-input bg-background px-3 py-2 placeholder-muted-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
+                        />
+                        <Button variant="ghost" size="icon" className="absolute bottom-1 right-1 h-7 w-7" onClick={(e) => {
+                          e.preventDefault()
+                          setShowPass(!showPass)
+                        }}>
+                          <IconEye className="h-4 w-4" />
+                          <span className="sr-only">botão para mostrar palavra passe</span>
+                        </Button>
+                      </div>
+                    </div>
+                    <FormDescription>
+                      Insira o teu código de autorização para poder acessar está página!
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="flex items-center justify-between w-full">
+              <Button className="w-6/12 mx-2" disabled={loading} variant={'ghost'} onClick={(e) => {
+                e.preventDefault()
+                window.history.back()
+              }}> {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Voltar'}</Button>
+              <Button type="submit" className="w-6/12 mx-2" disabled={loading}> {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Enviar'}</Button>
+            </div>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
+
   )
 }
+

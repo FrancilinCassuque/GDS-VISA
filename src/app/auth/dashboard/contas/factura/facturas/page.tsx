@@ -1,8 +1,5 @@
-import { CardAction, CardFacturasHomeTop, columnsFactura, TabelaDeDados, TabFacturas } from "@/app/_components"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
+import { TabFacturas, AutorizacaoCheck } from "@/app/_components"
 import { FacturaIndex } from "@/db"
-import { ReceiptText } from "lucide-react"
 
 
 export default async function FacturasShow() {
@@ -12,13 +9,15 @@ export default async function FacturasShow() {
 
   return (
     <main className="sm:mb-32">
-        <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-3">
-          {/* <CardFacturasHomeTop facturas={facturas} /> */}
-        </div>
+      <AutorizacaoCheck />
 
-        <div>
-          <TabFacturas facturas={facturas} />
-        </div>
+      <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-3">
+        {/* <CardFacturasHomeTop facturas={facturas} /> */}
+      </div>
+
+      <div>
+        <TabFacturas facturas={facturas} />
+      </div>
 
     </main>
   )
