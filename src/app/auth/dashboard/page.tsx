@@ -22,7 +22,7 @@ export default function Component() {
   const [user, setUser] = useState<IUserAuth | undefined>(undefined)
   const u = authStore()
 
-  
+
   useEffect(() => {
     if (status == 'authenticated') {
       setUser(u.userauth)
@@ -69,22 +69,20 @@ export default function Component() {
             <>
               <div className="text-center md:text-left items-center">
                 {(user?.pessoa?.funcoes && user.pessoa.funcoes.funcao) ? (
-                  <div>
-                    <div className="grid grid-flow-col grid-cols-1 items-center justify-center">
-                      <IconBriefcase className="w-4 h-4 text-muted-foreground" />
-                      <span className="text-sm text-muted-foreground m-4">
-                        {user.pessoa.funcoes.funcao}
-                      </span>
+                  <div className="grid grid-flow-col grid-cols-1 items-center justify-center">
+                    <IconBriefcase className="w-4 h-4 text-muted-foreground" />
+                    <span className="text-sm text-muted-foreground m-4">
+                      {user.pessoa.funcoes.funcao}
+                    </span>
 
-                      <DrawerDialog  descricao="Actualiza sua Função aqui. Clique em salvar quando terminar."
-                        icon={<Pencil className="w-5 text-primary" />}>
-                        <FormOcupacao id={user.pessoa.funcoes.id} update={true} />
-                      </DrawerDialog>
-                    </div>
+                    <DrawerDialog descricao="Actualiza sua Função aqui. Clique em salvar quando terminar."
+                      icon={<Pencil className="w-5 text-primary" />}>
+                      <FormOcupacao id={user.pessoa.funcoes.id} update={true} />
+                    </DrawerDialog>
                   </div>
                 ) : (
                   <div>
-                    <DrawerDialog  textoDoBotao="Registrar Função" descricao="Registra sua Função aqui. Clique em salvar quando terminar.">
+                    <DrawerDialog textoDoBotao="Registrar Função" descricao="Registra sua Função aqui. Clique em salvar quando terminar.">
                       <FormOcupacao />
                     </DrawerDialog>
                   </div>
@@ -93,7 +91,7 @@ export default function Component() {
 
               {(user?.pessoa && user.pessoa.bio) ? <p className="text-sm text-muted-foreground max-w-[300px] text-center">{user.pessoa.bio}</p> : (
                 <div>
-                  <DrawerDialog  textoDoBotao="Editar Biografia" descricao="Faça alterações em sua Biografia aqui. Clique em salvar quando terminar.">
+                  <DrawerDialog textoDoBotao="Editar Biografia" descricao="Faça alterações em sua Biografia aqui. Clique em salvar quando terminar.">
                     <FormBio />
                   </DrawerDialog>
                 </div>

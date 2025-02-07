@@ -7,6 +7,7 @@ import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
 import { ShowUser } from "@/db"
 import { redirect } from "next/navigation"
+import { Pencil } from "lucide-react"
 
 export default async function Component({ params }: { params: { id: string } }) {
   const id = params.id
@@ -46,17 +47,22 @@ export default async function Component({ params }: { params: { id: string } }) 
             <>
               <div className="text-center md:text-left items-center">
                 {(user?.pessoa?.funcao && user.pessoa.funcao.funcao) ? (
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <IconBriefcase className="w-4 h-4 text-muted-foreground" />
-                      <span className="text-sm text-muted-foreground">{user.pessoa.funcao.funcao}</span>
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <IconBriefcase className="w-4 h-4 text-muted-foreground" />
+                    <span className="text-sm text-muted-foreground">{user.pessoa.funcao.funcao}</span>
+
+                    <DrawerDialog
+                      // textoDoBotao="Registrar Ocupaçao"
+                      descricao="Registra sua Ocupaçao aqui. Clique em salvar quando terminar."
+                      icon={<Pencil className="w-5 text-primary" />} >
+                      <FormOcupacao update={true} id={user.pessoa.funcao?.id} />
+                    </DrawerDialog>
                   </div>
                 ) : (
                   <div>
 
                     <DrawerDialog textoDoBotao="Registrar Ocupaçao" descricao="Registra sua Ocupaçao aqui. Clique em salvar quando terminar.">
-                      <FormOcupacao />
+                      <FormOcupacao update={true} />
                     </DrawerDialog>
                   </div>
                 )}
@@ -64,7 +70,7 @@ export default async function Component({ params }: { params: { id: string } }) 
 
               {(user?.pessoa && user.pessoa.bio) ? <p className="text-sm text-muted-foreground max-w-[300px] text-center">{user.pessoa.bio}</p> : (
                 <div>
-                  <DrawerDialog textoDoBotao="Editar Biografia" descricao="Faça alterações em sua Biografia aqui. Clique em salvar quando terminar.">
+                  <DrawerDialog textoDoBotao="Editar Biografia" descricao="Faça alterações em sua Biografia aqui. Clique em salvar quando terminar." >
                     <FormBio />
                   </DrawerDialog>
                 </div>
@@ -77,11 +83,11 @@ export default async function Component({ params }: { params: { id: string } }) 
           <div className="flex items-center justify-between">
             <div className="flex flex-col items-center">
               {/* <span className="text-2xl font-bold">{user.casas.length}</span> */}
-              <span className="text-sm text-muted-foreground">Casas</span>
+              <Button variant={'outline'}><span className="text-sm text-muted-foreground">Vencimento</span></Button>
             </div>
             <div className="flex flex-col items-center">
-              {/* <span className="text-2xl font-bold">{casasdisponiveis}</span> */}
-              <span className="text-sm text-muted-foreground">Casas Disponíveis</span>
+              {/* <span className="text-2xl font-bold">casasdisponiveis</span> */}
+              <Button variant={'outline'}><span className="text-sm text-muted-foreground">Declaração de Efetividade</span></Button>
             </div>
           </div>
 
