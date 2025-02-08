@@ -264,10 +264,8 @@ export const CreateVencimento: React.FC<ICreateProps> = ({ client }) => {
                         <FormItem>
                           <FormLabel>Valor</FormLabel>
                           {/* <Input {...field} type="text" placeholder="+244 999 000 000" defaultValue={client?.telefone} readOnly={editar} /> */}
-                          <InputMask
-                            type='number'
-                            mask={'9 999 999,00'}
-                            maskChar={' '}
+                          <Input
+                            type='text'
                             placeholder='Valor do Abono'
                             className='border py-1 px-4 w-full rounded-lg'
                             readOnly={editar}
