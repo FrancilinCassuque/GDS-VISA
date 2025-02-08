@@ -127,18 +127,7 @@ model Identidade {
   profileId String  @unique
 }
 
-model Funcao {
-  id     Int    @id @default(autoincrement())
-  funcao String @db.VarChar(50)
 
-  profile   Profile @relation(fields: [profileId], references: [id])
-  profileId String
-
-  updatedAt DateTime @updatedAt
-  createdAt DateTime @default(now())
-
-  @@index([profileId])
-}
 
 model Processo {
   id           String @id @default(cuid())
@@ -247,4 +236,38 @@ model notificacao {
   eventId  String
   tipo     String
   visto    Boolean
+}
+
+model Funcao {
+  id     Int    @id @default(autoincrement())
+  funcao String @db.VarChar(50)
+
+  profile   Profile @relation(fields: [profileId], references: [id])
+  profileId String
+
+  updatedAt   DateTime     @updatedAt
+  createdAt   DateTime     @default(now())
+  Vencimentos Vencimento[]
+
+  @@index([profileId])
+}
+
+model Vencimento {
+  id       Int     @id @default(autoincrement())
+  funcaoid Int
+  base     Int
+  funcao   Funcao  @relation(fields: [funcaoid], references: [id], onDelete: Cascade)
+  Abono    Abono[]
+
+  @@index([funcaoid])
+}
+
+model Abono {
+  id           Int        @id @default(autoincrement())
+  descricao    String
+  valor        Int
+  vencimentoid Int
+  vencimento   Vencimento @relation(fields: [vencimentoid], references: [id], onDelete: Cascade)
+
+  @@index([vencimentoid])
 }

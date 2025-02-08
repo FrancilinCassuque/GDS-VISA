@@ -83,7 +83,7 @@ export default async function Component({ params }: { params: { id: string } }) 
           <div className="flex items-center justify-between">
             <div className="flex flex-col items-center">
               {/* <span className="text-2xl font-bold">{user.casas.length}</span> */}
-              <Button variant={'outline'}><span className="text-sm text-muted-foreground">Vencimento</span></Button>
+              <Button variant={'outline'}> <Link href={`/auth/dashboard/settings/vencimento/${user.pessoa?.id}`}><span className="text-sm text-muted-foreground">Vencimento</span></Link> </Button>
             </div>
             <div className="flex flex-col items-center">
               {/* <span className="text-2xl font-bold">casasdisponiveis</span> */}

@@ -53,6 +53,7 @@ export * from './user/tables/colunasModel/colunas'
 export * from './processo/create'
 
 export * from './contas/createFactura'
+export * from './contas/vencimento/create'
 
 export * from './gds-visa/privacy'
 export * from './gds-visa/terms'
