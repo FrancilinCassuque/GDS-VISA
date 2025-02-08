@@ -299,7 +299,7 @@ export const CreateVencimento: React.FC<ICreateProps> = ({ client }) => {
               <div className="flex items-center justify-center w-full">
 
                 {!client && (
-                  <Button disabled={loading} className="w-6/12" >{loading ? <Loader2 className="animate-spin" /> : 'Registar Cliente'}</Button>
+                  <Button disabled={loading} className="w-6/12" >{loading ? <Loader2 className="animate-spin" /> : 'Registar'}</Button>
                 )}
 
               </div>
