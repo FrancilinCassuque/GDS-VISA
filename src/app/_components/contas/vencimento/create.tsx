@@ -250,7 +250,7 @@ export const CreateVencimento: React.FC<ICreateProps> = ({ client }) => {
                         <FormItem>
                           <FormLabel>Abono</FormLabel>
                           <Input {...field} type="text" placeholder="Abono de transporte" defaultValue={client?.descricao || ''} readOnly={editar} />
-                          <FormDescription>Decricao do Cliente</FormDescription>
+                          <FormDescription>Descrição do Abono</FormDescription>
                           <FormMessage />
                         </FormItem>
                       )} />
@@ -266,13 +266,13 @@ export const CreateVencimento: React.FC<ICreateProps> = ({ client }) => {
                           {/* <Input {...field} type="text" placeholder="+244 999 000 000" defaultValue={client?.telefone} readOnly={editar} /> */}
                           <Input
                             type='text'
-                            placeholder='Valor do Abono'
+                            placeholder='10000'
                             className='border py-1 px-4 w-full rounded-lg'
                             readOnly={editar}
                             defaultValue={client?.telefone}
                             {...field} />
 
-                          <FormDescription>Telefone do Cliente</FormDescription>
+                          <FormDescription>Valor do Abono</FormDescription>
                           <FormMessage />
                         </FormItem>
                       )} />
