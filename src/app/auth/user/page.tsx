@@ -46,12 +46,12 @@ export default function UserList() {
           Colaboradores
         </span></Link> </Button>
 
-        <Button variant={'outline'}> <Link href={`/auth/dashboard/settings/vencimento/${0}`}><span className="text-sm text-muted-foreground flex items-center gap-2">
+        <Button variant={'outline'}> <Link href={`/auth/user/agentes/create`}><span className="text-sm text-muted-foreground flex items-center gap-2">
           <UserPlus className="w-6 h-6 text-muted-foreground" />
           Novo Colaborador
         </span></Link> </Button>
 
-        <Button variant={'outline'}> <Link href={`/auth/dashboard/settings/vencimento/${0}`}><span className="text-sm text-muted-foreground flex items-center gap-2">
+        <Button variant={'outline'}> <Link href={`#`}><span className="text-sm text-muted-foreground flex items-center gap-2">
           <IconMapPin className="w-6 h-6 text-muted-foreground" />
           Gota D` Sol
         </span></Link> </Button>

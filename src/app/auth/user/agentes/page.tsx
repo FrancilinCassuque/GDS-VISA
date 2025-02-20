@@ -1,6 +1,6 @@
 'use client'
 
-import { AutorizacaoCheck, IconBriefcase, IconHeart, IconMapPin, } from "@/app/_components"
+// import { AutorizacaoCheck, IconBriefcase, IconHeart, IconMapPin, } from "@/app/_components"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -33,7 +33,7 @@ export default function UserList() {
   }, [setUsers, setTotal])
 
   return (
-    <div className="">
+    <div className="h-[80dvh]">
       {/* <AutorizacaoCheck /> */}
 
       <h1 className="text-xl font-bold tracking-tight sm:text-4xl">Gota D' Sol - Agentes</h1>
@@ -57,7 +57,7 @@ export default function UserList() {
         </span></Link> </Button>
       </div> */}
 
-      <div className="h-[72dvh] flex flex-col items-center justify-center overflow-auto">
+      <div className="max-h-[52dvh] flex flex-col items-center justify-center overflow-auto">
 
         <ul className="overflow-auto max-h-96 border-b border-primary/15">
           {users.map((user: IUser) => (
@@ -107,10 +107,7 @@ export default function UserList() {
               </DropdownMenu>
             </li>
           ))}
-
         </ul>
-
-        <p className="m-4 text-lg"><strong>Total = {total} </strong></p>
       </div>
     </div>
   )
