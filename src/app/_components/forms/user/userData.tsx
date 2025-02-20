@@ -165,7 +165,7 @@ export const UserData: React.FC<IUserSettings> = ({ userAuth }) => {
         </CollapsibleContent>
       </Collapsible>
 
-      <PerfilData />
+      <PerfilData authUser={userAuth} />
 
       {userAuth?.pessoa?.id && (
         <>

@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Lista } from "../../listas/listadepaises"
 import { useCallback, useState } from "react"
-import { IProfile, IProfileStore } from "@/types"
+import { IProfile, IUserAuth } from "@/types"
 import { authStore } from "@/store"
 import { storeProfile, updateProfile } from "@/db"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -33,7 +33,11 @@ const pessoa = z.object({
   tipo: z.string().min(3),
 })
 
-export const PerfilData: React.FC = () => {
+interface IProfileProps {
+  authUser: IUserAuth
+}
+
+export const PerfilData: React.FC<IProfileProps> = ({ authUser }) => {
   const [editar, setEditar] = useState(true)
   const [loading, setLoading] = useState(false)
   const [erro, setErro] = useState(false)
@@ -46,8 +50,8 @@ export const PerfilData: React.FC = () => {
   const auth = authStore()
 
   function updateAuth(perfil: IProfile) {
-    if (auth.userauth) {
-      const authUpdate = auth.userauth
+    if (authUser) {
+      const authUpdate = authUser
 
       authUpdate.pessoa.id = perfil.id
       authUpdate.pessoa.nome = perfil.nome
@@ -78,12 +82,12 @@ export const PerfilData: React.FC = () => {
     try {
       setLoading(true)
 
-      if (auth.userauth?.id) {
+      if (authUser?.id) {
         const userData = data
 
         if (userData) {
-          if (auth.userauth.pessoa?.id) {
-            const perfil = await updateProfile(userData, auth.userauth.pessoa.id, auth.userauth.pessoa.identidade?.id)
+          if (authUser.pessoa?.id) {
+            const perfil = await updateProfile(userData, authUser.pessoa.id, authUser.pessoa.identidade?.id)
 
             if (perfil instanceof Error) {
               return setErro(true)
@@ -92,7 +96,7 @@ export const PerfilData: React.FC = () => {
             updateAuth(perfil)
 
           } else {
-            const perfil = await storeProfile(userData, auth.userauth.id)
+            const perfil = await storeProfile(userData, authUser.id)
 
             if (perfil instanceof Error) {
               return setErro(true)
@@ -113,13 +117,13 @@ export const PerfilData: React.FC = () => {
   })
 
   const cancelar = useCallback(() => {
-    form.setValue('apelido', auth.userauth?.pessoa?.Apelido || '')
-    form.setValue('genero', auth.userauth?.pessoa?.genero || '')
-    form.setValue('nome', auth.userauth?.pessoa?.nome || '')
-    form.setValue('pais', auth.userauth?.pessoa?.pais || '')
-    form.setValue('telefone', auth.userauth?.pessoa?.telefone || '')
-    form.setValue('numero', auth.userauth?.pessoa?.identidade?.numero || '')
-    form.setValue('tipo', auth.userauth?.pessoa?.identidade?.tipo || '')
+    form.setValue('apelido', authUser?.pessoa?.Apelido || '')
+    form.setValue('genero', authUser?.pessoa?.genero || '')
+    form.setValue('nome', authUser?.pessoa?.nome || '')
+    form.setValue('pais', authUser?.pessoa?.pais || '')
+    form.setValue('telefone', authUser?.pessoa?.telefone || '')
+    form.setValue('numero', authUser?.pessoa?.identidade?.numero || '')
+    form.setValue('tipo', authUser?.pessoa?.identidade?.tipo || '')
 
     setEditar(true)
   }, [form])
@@ -161,7 +165,7 @@ export const PerfilData: React.FC = () => {
                     render={({ field: { onChange, value } }) =>
                       <FormItem>
                         <FormLabel>Nacionalidade</FormLabel>
-                        <Select onValueChange={onChange} value={value} required defaultValue={auth.userauth?.pessoa?.pais || ''}
+                        <Select onValueChange={onChange} value={value} required defaultValue={authUser?.pessoa?.pais || ''}
                           disabled={editar}>
                           <SelectTrigger>
                             <SelectValue placeholder="País" />
@@ -188,7 +192,7 @@ export const PerfilData: React.FC = () => {
                       onChange(e)
                       setTipo(e.toUpperCase())
                     }
-                    } value={value} defaultValue={auth.userauth?.pessoa?.pessoatipo || ''} disabled={editar}>
+                    } value={value} defaultValue={authUser?.pessoa?.pessoatipo || ''} disabled={editar}>
                       <SelectTrigger>
                         <SelectValue placeholder="Pessoa Tipo" />
                       </SelectTrigger>
@@ -214,7 +218,7 @@ export const PerfilData: React.FC = () => {
                           autoComplete="nome"
                           type="text" {...field}
                           placeholder={'Fulano Beutrano Cicrano'}
-                          defaultValue={auth.userauth?.pessoa?.nome || ''} readOnly={editar} />
+                          defaultValue={authUser?.pessoa?.nome || ''} readOnly={editar} />
                         <FormDescription>Todos os nomes Excepto o Apelido</FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -234,7 +238,7 @@ export const PerfilData: React.FC = () => {
                           autoComplete="apelido"
                           type="text" {...field}
                           placeholder={'Fulano Beutrano Cicrano'}
-                          defaultValue={auth.userauth?.pessoa?.Apelido || ''} readOnly={editar} />
+                          defaultValue={authUser?.pessoa?.Apelido || ''} readOnly={editar} />
                         <FormDescription>Ultimo Nome</FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -250,7 +254,7 @@ export const PerfilData: React.FC = () => {
                         <FormLabel>Tipo de Documento</FormLabel>
                         <Select onValueChange={onChange} value={value} required
                           disabled={editar}
-                          defaultValue={auth.userauth?.pessoa?.identidade?.tipo || ''}
+                          defaultValue={authUser?.pessoa?.identidade?.tipo || ''}
                         >
                           <SelectTrigger>
                             <SelectValue placeholder="Seleciona o Tipo" />
@@ -276,7 +280,7 @@ export const PerfilData: React.FC = () => {
                         <FormLabel>Número de Documento</FormLabel>
                         <Input {...field} placeholder='Nº do Documento'
                           // readOnly={editar}
-                          defaultValue={auth.userauth?.pessoa?.identidade?.numero || ''}
+                          defaultValue={authUser?.pessoa?.identidade?.numero || ''}
                           readOnly={editar}
                         />
                         <FormDescription>Número de Identificaçõa</FormDescription>
@@ -294,7 +298,7 @@ export const PerfilData: React.FC = () => {
                         <FormLabel>Número de Contacto</FormLabel>
                         <Input {...field} placeholder='Nº do Telefone'
                           // readOnly={editar}
-                          defaultValue={auth.userauth?.pessoa?.identidade?.numero || ''}
+                          defaultValue={authUser?.pessoa?.identidade?.numero || ''}
                           readOnly={editar}
                         />
                         <FormDescription>Número de Telefone</FormDescription>
@@ -310,7 +314,7 @@ export const PerfilData: React.FC = () => {
                     render={({ field: { value, onChange } }) =>
                       <FormItem>
                         <FormLabel>Genero</FormLabel>
-                        <Select required value={value} onValueChange={onChange} defaultValue={auth.userauth?.pessoa?.genero || ''} disabled={editar}>
+                        <Select required value={value} onValueChange={onChange} defaultValue={authUser?.pessoa?.genero || ''} disabled={editar}>
                           <SelectTrigger>
                             <SelectValue placeholder="Genero" />
                           </SelectTrigger>
@@ -346,7 +350,7 @@ export const PerfilData: React.FC = () => {
                   <Button className="mx-2 px-6" variant='secondary' onClick={(e) => {
                     e.preventDefault()
                     setEditar(false)
-                  }}> {auth.userauth?.pessoa?.id ? 'Editar' : 'Registrar'} </Button>
+                  }}> {authUser?.pessoa?.id ? 'Editar' : 'Registrar'} </Button>
                 )}
               </div>
 
