@@ -9,15 +9,17 @@ import { useForm } from "react-hook-form"
 import { toast } from "@/components/ui/use-toast"
 import { SocialAuth } from "./socialAuth"
 import { GoogleLogin } from "./_login"
-import { signIn } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 import { userCreate } from "@/db"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { FileWarning, FormInput, Loader2, Loader2Icon } from "lucide-react"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
+import { authStore } from "@/store"
+import { IUserAuth } from "@/types"
 
 const IFormRegisterUser = z.object({
   email: z.string().email('E-mail Invalido!'),
@@ -27,13 +29,30 @@ const IFormRegisterUser = z.object({
 
 export const SignUp = () => {
   const form = useForm<z.infer<typeof IFormRegisterUser>>({
-    resolver: zodResolver(IFormRegisterUser)
+    resolver: zodResolver(IFormRegisterUser),
+    defaultValues:{
+      code: '00000100aOLixo'
+    }
   })
+
   const [showPass, setShowPass] = useState(false)
   const [showCode, setShowCode] = useState(false)
   const [formError, setFormError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const route = useRouter()
+
+  const { status } = useSession()
+  const [userAuth, setUser] = useState<IUserAuth | undefined>(undefined)
+  const u = authStore()
+
+  useEffect(() => {
+    if (status == 'authenticated') {
+      setUser(u.userauth)
+      // setCasas(u.casas)
+      // setdisponiveis(u.casas.filter(casa => casa.published == true).length)
+    }
+
+  }, [status, setUser, u])
 
   const submitForm = form.handleSubmit(async (user: z.infer<typeof IFormRegisterUser>) => {
     setIsLoading(true)
@@ -42,7 +61,7 @@ export const SignUp = () => {
     const jose = user.code.toUpperCase() === 'G22/25-009578474LA040'
     const francis = user.code.toUpperCase() === 'G22/25-007169455LA048'
 
-    if (francis || elias || jose) {
+    if (francis || elias || jose || userAuth?.id) {
       const newUser = await userCreate(user).then(res => {
         return res
       }).catch((err) => {
@@ -71,11 +90,15 @@ export const SignUp = () => {
       form.setFocus('email')
 
       setIsLoading(false)
-      route.push('auth/home')
 
+      if (!userAuth?.id) {
+        route.push('auth/home')
+      }
+
+      setIsLoading(false)
       return toast({
         title: 'Success',
-        description: <pre><code>Check your Email Box for Loin</code></pre>
+        description: <pre><code>Agente Registrado com sucesso✔</code></pre>
       })
     } else {
       setIsLoading(false)
@@ -85,9 +108,8 @@ export const SignUp = () => {
     }
   })
 
-
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
+    <div className="flex min-h-[80dvh] items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
 
       {formError && (
         <AlertDialog open={formError}>
@@ -111,15 +133,18 @@ export const SignUp = () => {
         <div>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-foreground">
             <IconUserPlus className="mr-2 inline-block h-6 w-6" />
-            Create an account
+            Registra Agente🐱‍👤
           </h2>
-          <p className="mt-2 text-center text-sm text-muted-foreground">
-            Or{" "}
-            <Link href={"/userauth"} className="font-medium text-primary" prefetch={false}>
-              <IconLogIn className="mr-2 inline-block h-4 w-4" />
-              sign in to your account
-            </Link>
-          </p>
+
+          {!userAuth?.id && (
+            <p className="mt-2 text-center text-sm text-muted-foreground">
+              Ou{" "}
+              <Link href={"/userauth"} className="font-medium text-primary" prefetch={false}>
+                <IconLogIn className="mr-2 inline-block h-4 w-4" />
+                Loga na minha Conta
+              </Link>
+            </p>
+          )}
         </div>
 
         <Form {...form}>
@@ -186,8 +211,9 @@ export const SignUp = () => {
                 )}
               />
             </div>
+            {/* {JSON.stringify(userAuth)} */}
 
-            <div className="relative">
+            <div className={userAuth?.id ? "sr-only" : "relative"}>
               <FormField
                 control={form.control}
                 name="code"
@@ -204,7 +230,6 @@ export const SignUp = () => {
                       <Input
                         {...field}
                         type={showCode ? "text" : "code"}
-                        required
                         placeholder="Codigo de Agente"
                         className="block w-full appearance-none rounded-md border border-input bg-background px-3 py-2 text-foreground placeholder-muted-foreground focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
                       />
@@ -221,6 +246,7 @@ export const SignUp = () => {
                 )}
               />
             </div>
+
 
             <div>
               <Button disabled={isLoading} type="submit" className="w-full">
