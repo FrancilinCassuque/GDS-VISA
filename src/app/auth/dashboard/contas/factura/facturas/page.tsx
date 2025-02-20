@@ -9,7 +9,7 @@ export default async function FacturasShow() {
 
   return (
     <main className="sm:mb-32">
-      <AutorizacaoCheck />
+      {/* <AutorizacaoCheck /> */}
 
       <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-3">
         {/* <CardFacturasHomeTop facturas={facturas} /> */}

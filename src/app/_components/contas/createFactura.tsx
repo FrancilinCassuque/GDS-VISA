@@ -113,7 +113,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
           setLoading(false)
           return toast({
             title: 'Error!',
-            description: <pre><code> Erro ao Registrar Cliente {JSON.stringify(novaFactura)} </code></pre>,
+            description: <pre><code> Erro ao Registrar Factura {JSON.stringify(novaFactura)} </code></pre>,
             variant: 'destructive'
           })
         }
@@ -123,20 +123,19 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
           description:
             <pre>
               <HandHelpingIcon />
-              <code>Processo Registrado com sucesso.</code>
+              <code>Factura Registrada com sucesso.</code>
             </pre>
         })
 
         cancelar()
 
-        window.location.replace('/auth/dashboard/contas')
-        form.setFocus('desconto')
+        window.location.replace('/auth/dashboard/contas/factura/facturas')
       }
 
     } catch (error) {
       toast({
         title: 'Error!',
-        description: <pre><code>Erro ao Registrar novo Processo</code></pre>,
+        description: <pre><code>Erro ao Registrar nova Factura</code></pre>,
         variant: 'destructive'
       })
       setLoading(false)

@@ -85,6 +85,7 @@ export default async function Component({ params }: { params: { id: string } }) 
               {/* <span className="text-2xl font-bold">{user.casas.length}</span> */}
               <Button variant={'outline'}> <Link href={`/auth/dashboard/settings/vencimento/${user.pessoa?.id}`}><span className="text-sm text-muted-foreground">Vencimento</span></Link> </Button>
             </div>
+
             <div className="flex flex-col items-center">
               {/* <span className="text-2xl font-bold">casasdisponiveis</span> */}
               <Button variant={'outline'}><span className="text-sm text-muted-foreground">Declaração de Efetividade</span></Button>
@@ -112,7 +113,6 @@ export default async function Component({ params }: { params: { id: string } }) 
               <span className="text-sm text-muted-foreground">{user.pessoa.address.rua}, {user.pessoa.address.bairro}, {user.pessoa.address.comuna}, {user.pessoa.address.municipio}, {user.pessoa.address.provincia}, {user.pessoa.address.pais}</span>
             </div>
           )}
-
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ export default async function ContasCreate() {
 
   return (
     <>
-      <AutorizacaoCheck />
+      {/* <AutorizacaoCheck /> */}
       <FacturaStore clientes={clientes} processos={processos} />
     </>
   )
