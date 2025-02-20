@@ -1,13 +1,14 @@
 'use client'
 
-import { AutorizacaoCheck, } from "@/app/_components"
+import { AutorizacaoCheck, IconBriefcase, IconHeart, IconMapPin, } from "@/app/_components"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Separator } from "@/components/ui/separator"
 import { deletUser, userIndex } from "@/db"
 import { userStore } from "@/store"
 import { IUser } from "@/types"
-import { ClipboardPlus, Loader2, MoreHorizontal, Trash2 } from "lucide-react"
+import { ClipboardPlus, Loader2, MoreHorizontal, Trash2, UserPlus, Users } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
@@ -32,63 +33,77 @@ export default function UserList() {
   }, [setUsers, setTotal])
 
   return (
-    <div className="min-h-[81dvh] flex flex-col items-center justify-center">
+    <div className="h-[80dvh] overflow-auto">
       <AutorizacaoCheck />
 
-      <h1 className="text-xl font-bold tracking-tight sm:text-4xl">Usuarios.</h1>
+      <h1 className="text-xl font-bold tracking-tight sm:text-4xl my-8">Gota D' Sol - Porta do R.H</h1>
 
-      <ul className="overflow-auto max-h-96 border-b border-primary/15">
-        {users.map((user: IUser) => (
-          <li key={user.id} className="flex justify-center items-center hover:bg-primary/10 rounded-full my-5 border-l border-r border-b  border-primary/15">
-            <Link href={`/auth/dashboard/${user.id}`} className="flex justify-center items-center">
-              <Avatar className="mx-3 px-0">
-                <AvatarImage src={user.image || ''} alt={user.name || ''} />
-                <AvatarFallback>{user?.name ? `${user.name[0].toUpperCase()}${user.name[user.name.length - 1]}` : 'MC'}</AvatarFallback>
-              </Avatar>
+      <Separator className="my-4" />
 
-              <span className="text-foreground">{user.name}</span>
+      <div className="grid gap-2">
+        <Button variant={'outline'}> <Link href={`/auth/user/agentes`}><span className="text-sm text-muted-foreground flex items-center gap-2">
+          <Users className="w-6 h-6 text-muted-foreground" />
+          Colaboradores
+        </span></Link> </Button>
+
+        <Button variant={'outline'}> <Link href={`/auth/dashboard/settings/vencimento/${0}`}><span className="text-sm text-muted-foreground flex items-center gap-2">
+          <UserPlus className="w-6 h-6 text-muted-foreground" />
+          Novo Colaborador
+        </span></Link> </Button>
+
+        <Button variant={'outline'}> <Link href={`/auth/dashboard/settings/vencimento/${0}`}><span className="text-sm text-muted-foreground flex items-center gap-2">
+          <IconMapPin className="w-6 h-6 text-muted-foreground" />
+          Gota D` Sol
+        </span></Link> </Button>
+      </div>
+
+      <div className="flex items-center mt-32 gap-2">
+        <div className="bg-gray-100 p-6 rounded-lg shadow-lg max-w-xs text-center">
+          <p className="text-xl font-semibold mb-2 flex ">
+            Agentes
+            <UserPlus className="w-5 h-5 text-muted-foreground m-2" />
+          </p>
+          <p className="text-gray-600">
+            Temos <strong>{users.length} 🐱‍👤</strong> Agentes Disponíveis na Gota D' Sol até o momento.
+          </p>
+
+          <Button className="sr-only px-6 py-3  my-4 rounded-lg">
+            <Link href={'#'}>
+              Saber Mais...
             </Link>
+          </Button>
+        </div>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="mx-5">
-                  <span className="sr-only">Abri menu</span>
-                  {loading ? <Loader2 className="h-6 w-6 animate-spin" /> : <MoreHorizontal className="h-6 w-6 " />}
+        {/* <div className="bg-gray-100 p-6 rounded-lg shadow-lg max-w-xs text-center mx-4">
+          <p className="text-xl font-semibold mb-2">
+            Suporte Completo
+          </p>
+          <p className="text-gray-600">
+            {JSON.stringify(users)}
+          </p>
 
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Menu de Opções</DropdownMenuLabel>
-                <Link href={`/auth/dashboard/settings/${user.email}`}>
-                  <DropdownMenuItem className="text-blue-400">
-                    <ClipboardPlus className="w-4 h-4" />
-                    Editar
-                  </DropdownMenuItem>
-                </Link>
+          <Button className="sr-only px-6 py-3  my-4 rounded-lg">
+            <Link href={'#'}>
+              Saber Mais...
+            </Link>
+          </Button>
+        </div>
 
-                <DropdownMenuItem className="text-red-700"
-                  onClick={() => {
-                    setLoading(true)
-                    deletUser(user.id).then(res => {
-                      if (!(res instanceof Error)) {
-                        setLoading(false)
-                        window.location.reload()
+        <div className="bg-gray-100 p-6 rounded-lg shadow-lg max-w-xs text-center">
+          <p className="text-xl font-semibold mb-2">
+            Suporte Completo
+          </p>
+          <p className="text-gray-600">
+            Acompanhamento contínuo durante o processo de visto e viagem, garantindo a tranquilidade de nossos clientes.
+          </p>
 
-                      }
-                    })
-                  }}
-                >
-                  <Trash2 className="w-4 h-4" />
-                  Eliminar
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </li>
-        ))}
-
-      </ul>
-
-      <p className="m-4 text-lg"><strong>Total = {total} </strong></p>
+          <Button className="sr-only px-6 py-3  my-4 rounded-lg">
+            <Link href={'#'}>
+              Saber Mais...
+            </Link>
+          </Button>
+        </div> */}
+      </div>
     </div>
   )
 }
