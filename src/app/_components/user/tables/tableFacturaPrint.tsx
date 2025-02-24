@@ -49,7 +49,7 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
                 <TableRow>
                   <TableCell colSpan={5} className="border-none text-center">
                     <div className='flex flex-col items-center my-10 justify-center'>
-                      <Image width={275} height={275} src={'/placeholder.png'} alt="Logotipo da Gota De Sol" />
+                      <Image width={250} height={250} src={'/placeholder.png'} alt="Logotipo da Gota De Sol" />
                     </div>
 
                     <div className="flex w-full justify-between ">
@@ -155,27 +155,12 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
                 </TableRow>
 
 
-                {factura.processos.length > 1 ? (
-                  <>
-                    <br /><br /><br />
-                    <br /><br /><br /><br /><br /><br />
-                    <br /><br /><br /><br /><br /><br />
-                    <br /><br /><br /><br /><br /><br />
-                    <br /><br /><br /><br /><br /><br />
-                    <br /><br /><br /><br /><br />
-                  </>
-
-                ) : (
-                  <>
-                    <br /><br /><br />
-                  </>
-                )
-                }
+                <div className={factura.processos.length <= 2 ? "h-10" : factura.processos.length > 2 && factura.processos.length <=4?"h-[880px]":"h-[770px]"}></div>
 
                 <TableRow>
                   <TableCell colSpan={5}>
                     <div className='flex flex-col items-center justify-center'>
-                      <Image width={275} height={275} src={'/placeholder.png'} alt="Logotipo da Gota De Sol" />
+                      <Image width={250} height={250} src={'/placeholder.png'} alt="Logotipo da Gota De Sol" />
                     </div>
 
                     <TermoFactura factura={factura} />
@@ -191,7 +176,7 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
               <TableFooter>
                 <TableRow>
                   <TableCell colSpan={4}>
-                    <div className="flex flex-col items-start my-4">
+                    <div className="flex flex-col items-start mt-4">
                       <p className="text-muted-foreground"> <strong>NIF:</strong> 5001292218</p>
                       <p className="text-muted-foreground"> Destrito urbano do sambizanga casa 109 zona 16</p>
                       <p className="text-muted-foreground"> <strong>Email:</strong> gotadesol01@gmail.com</p>
