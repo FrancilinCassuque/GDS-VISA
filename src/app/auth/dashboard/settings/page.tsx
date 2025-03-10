@@ -166,7 +166,9 @@ export default function Settings({ params }: { params: { userId: string } }) {
           </CollapsibleContent>
         </Collapsible>
 
-        <PerfilData />
+        {auth.userauth && (
+          <PerfilData authUser={auth.userauth} />
+        )}
 
         {auth.userauth?.pessoa?.id && (
           <>
