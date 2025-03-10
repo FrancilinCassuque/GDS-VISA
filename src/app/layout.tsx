@@ -26,10 +26,10 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt">
-      <header>
+      <head>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7552816316876082"
           crossOrigin="anonymous"></script>
-      </header>
+      </head>
 
       <body
         className={cn(
