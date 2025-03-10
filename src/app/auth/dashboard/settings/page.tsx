@@ -168,7 +168,8 @@ export default function Settings({ params }: { params: { userId: string } }) {
 
         {auth.userauth && (
           <PerfilData authUser={auth.userauth} />
-        )}
+    // Pico do gohst
+      )}
 
         {auth.userauth?.pessoa?.id && (
           <>
