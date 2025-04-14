@@ -42,7 +42,7 @@ export const TESTIMONIALS = [
     name: "Carlos Mendes",
     role: "Engenheiro em Lisboa",
     quote: "A Gota D' Sol tornou o processo muito mais simples do que eu imaginava. Recomendo!",
-    image: "/images/clientes/cliente1.jpg"
+    image: "/placeholder.jpg"
   },
   // Adicionar outros depoimentos...
 ];

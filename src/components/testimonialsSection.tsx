@@ -37,7 +37,7 @@ export default function TestimonialsSection() {
               <div className="flex items-center gap-4 mb-4">
                 <div className="relative w-12 h-12 rounded-full overflow-hidden">
                   <Image
-                    src={testimonial.image}
+                    src={'/placeholder.jpg'}
                     alt={testimonial.name}
                     fill
                     className="object-cover"
