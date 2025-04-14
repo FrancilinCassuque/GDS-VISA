@@ -5,6 +5,7 @@ import MySessionProvider from "@/provider/session"
 import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "next-themes"
 import { cn } from "@/lib/utils"
+import { Header } from "@/components/header"
 
 const fontHeading = Inter({
   subsets: ['latin'],
@@ -19,8 +20,8 @@ const fontBody = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Gota D' Sol Visa",
-  description: "Gota D' Sol Agencia",
+  title: 'Gota D\' Sol | Consultoria de Vistos Internacionais',
+  description: 'Consultoria especializada para obtenção de vistos para Portugal, Espanha, França, Bélgica, Brasil, Alemanha e África do Sul.',
 }
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
