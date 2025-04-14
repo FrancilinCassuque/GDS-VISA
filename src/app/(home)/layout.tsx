@@ -6,7 +6,7 @@ export default function Component({ children }: Readonly<{ children: React.React
   return (
     <>
       <Header />
-      <div className="mb-6">
+      <div className="">
         {children}
       </div>
       <Footer />

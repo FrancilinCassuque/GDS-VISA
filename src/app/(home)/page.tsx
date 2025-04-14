@@ -1,13 +1,19 @@
-import { Metadata } from 'next'
-import { Hero } from '@/components/hero'
+import { Hero } from "@/components";
+import ContactFormSection from "@/components/ContactFormSection";
+import DiferenciaisSection from "@/components/DiferenciaisSection";
+import PortfolioSection from "@/components/PortfolioSection";
+import ServicesSection from "@/components/services";
+import TestimonialsSection from "@/components/testimonialsSection";
 
-const metadata: Metadata = {
-  title: "GOTA D' SOL - VISA",
-}
-
-
-export default function PaginaInicial() {
+export default function Home() {
   return (
-    <Hero />
+    <>
+      <Hero />
+      <ServicesSection />
+      <DiferenciaisSection />
+      <PortfolioSection />
+      <TestimonialsSection />
+      <ContactFormSection />
+    </>
   )
 }
