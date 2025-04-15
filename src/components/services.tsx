@@ -10,7 +10,7 @@ const iconComponents = {
   // Adicionar outros ícones conforme necessário
 }
 
-export default function ServicesSection() {
+export const ServicesSection: React.FC = () => {
   return (
     <section id="servicos" className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -44,11 +44,11 @@ export default function ServicesSection() {
                   <span className="text-3xl">{country.flag}</span>
                   <h3 className="text-2xl font-bold text-foreground">{country.country}</h3>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {country.services.map((service, serviceIndex) => {
                     const IconComponent = iconComponents[service.icon as keyof typeof iconComponents]
-                    
+
                     return (
                       <motion.div
                         key={serviceIndex}

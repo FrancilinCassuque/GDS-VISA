@@ -5,7 +5,7 @@ import { TESTIMONIALS } from '@/lib/constantes'
 import Image from 'next/image'
 import { Star } from 'lucide-react'
 
-export default function TestimonialsSection() {
+export const TestimonialsSection: React.FC = () => {
   return (
     <section id="depoimentos" className="py-20 bg-secondary/30">
       <div className="container mx-auto px-4">
@@ -48,13 +48,13 @@ export default function TestimonialsSection() {
                   <p className="text-sm text-muted-foreground">{testimonial.role}</p>
                 </div>
               </div>
-              
+
               <div className="flex mb-3">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
-              
+
               <blockquote className="text-muted-foreground italic">
                 "{testimonial.quote}"
               </blockquote>

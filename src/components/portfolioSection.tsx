@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { PORTFOLIO } from '@/lib/constantes'
 import Image from 'next/image'
 
-export default function PortfolioSection() {
+export const PortfolioSection: React.FC = () => {
   return (
     <section id="portfolio" className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -16,7 +16,7 @@ export default function PortfolioSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Nossos Cases de Sucesso
+            Nossos Casos de Sucesso
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Veja alguns dos projetos que realizamos com excelência.

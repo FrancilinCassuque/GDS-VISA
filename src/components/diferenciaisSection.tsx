@@ -10,7 +10,7 @@ const iconComponents = {
   // Adicionar outros ícones conforme necessário
 }
 
-export default function DiferenciaisSection() {
+export const DiferenciaisSection: React.FC = () => {
   return (
     <section id="diferenciais" className="py-20 bg-secondary/30">
       <div className="container mx-auto px-4">
@@ -32,7 +32,7 @@ export default function DiferenciaisSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {DIFFERENCIAIS.map((diferencial, index) => {
             const IconComponent = iconComponents[diferencial.icon as keyof typeof iconComponents]
-            
+
             return (
               <motion.div
                 key={index}
@@ -47,7 +47,7 @@ export default function DiferenciaisSection() {
                     <IconComponent className="w-8 h-8" />
                   </div>
                 </div>
-                
+
                 <h3 className="text-xl font-bold text-foreground mb-2">{diferencial.title}</h3>
                 <p className="text-muted-foreground">{diferencial.description}</p>
               </motion.div>

@@ -17,12 +17,12 @@ export const SERVICES = [
 export const DIFFERENCIAIS = [
   {
     title: "Experiência Comprovada",
-    description: "Mais de 10 anos ajudando clientes a realizarem o sonho de morar no exterior.",
+    description: "Mais de 8 anos ajudando clientes a realizarem o sonho de morar no exterior.",
     icon: "Award"
   },
   {
     title: "Taxa de Aprovação",
-    description: "95% de sucesso nos processos que acompanhamos.",
+    description: "93% de sucesso nos processos que acompanhamos.",
     icon: "CheckCircle"
   },
   // Adicionar outros diferenciais...
@@ -30,7 +30,7 @@ export const DIFFERENCIAIS = [
 
 export const PORTFOLIO = [
   {
-    image: "/images/projetos/projeto1.jpg",
+    image: "/placeholder.jpg",
     title: "Família Silva - Portugal",
     description: "Processo de visto de trabalho concluído em 3 meses"
   },
