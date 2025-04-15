@@ -14,15 +14,15 @@ export default function AboutPage() {
 
   const team = [
     {
-      name: "Ana Silva",
-      role: "Fundadora & Consultora Sênior",
-      bio: "Especialista em vistos para Europa com 12 anos de experiência.",
+      name: "Mateus F.L. Cassuque",
+      role: "Có-Fundador & Consultora Sênior",
+      bio: "Especialista em vistos para Europa com 8 anos de experiência.",
       image: "/placeholder.jpg"
     },
     {
-      name: "Carlos Mendes",
-      role: "Consultor de Vistos",
-      bio: "Focado em vistos de trabalho para Alemanha e Bélgica.",
+      name: "José Severino Sambuanda",
+      role: "Có-Fundador Consultor de Vistos",
+      bio: "Focado em vistos de trabalho para Alemanha, Portugal e Bélgica.",
       image: "/placeholder.jpg"
     }
     // Adicionar mais membros conforme necessário
