@@ -17,13 +17,13 @@ export default function AboutPage() {
       name: "Ana Silva",
       role: "Fundadora & Consultora Sênior",
       bio: "Especialista em vistos para Europa com 12 anos de experiência.",
-      image: "/images/vitoSaude.jpg"
+      image: "/placeholder.jpg"
     },
     {
       name: "Carlos Mendes",
       role: "Consultor de Vistos",
       bio: "Focado em vistos de trabalho para Alemanha e Bélgica.",
-      image: "/images/vitoSaude.jpg"
+      image: "/placeholder.jpg"
     }
     // Adicionar mais membros conforme necessário
   ]
@@ -32,7 +32,7 @@ export default function AboutPage() {
     <div className="bg-background">
       {/* Hero Section */}
       <section className="relative h-[60vh] min-h-[500px] flex items-center">
-        <div className="absolute inset-0 bg-[url('/about.jpg')] bg-cover bg-center brightness-75" />
+        <div className="absolute inset-0 bg-[url('/placeholder.jpg')] bg-cover bg-center brightness-75" />
         <div className="container mx-auto px-4 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -89,7 +89,7 @@ export default function AboutPage() {
               <div className="bg-primary/10 p-8 rounded-xl">
                 <div className="aspect-w-16 aspect-h-9 bg-gray-200 rounded-lg overflow-hidden">
                   <Image
-                    src="/images/about-mission.jpg"
+                    src="/placeholder.jpg"
                     alt="Equipe Gota D' Sol"
                     width={800}
                     height={600}
