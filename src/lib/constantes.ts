@@ -69,7 +69,16 @@ export const SERVICES_BY_COUNTRY = [
     country: "Espanha",
     flag: "🇪🇸",
     services: [
-      // Serviços para Espanha...
+      {
+        title: "Visto de Trabalho",
+        description: "Processo completo para vistos de trabalho em Espanhã.",
+        icon: "Briefcase"
+      },
+      {
+        title: "Visto de Estudo",
+        description: "Assessoria para vistos de estudante em universidades Espanhola.",
+        icon: "GraduationCap"
+      },
     ]
   },
   // Outros países...
