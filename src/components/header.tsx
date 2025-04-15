@@ -12,9 +12,9 @@ export const Header: React.FC = () => {
 
   const navItems = [
     { name: 'Início', path: '/' },
-    { name: 'Serviços', path: '/servicos' },
-    { name: 'Sobre Nós', path: '/sobre' },
-    { name: 'Contato', path: '/contato' },
+    { name: 'Serviços', path: '/#servicos' },
+    { name: 'Sobre Nós', path: '/about' },
+    { name: 'Contato', path: '/#contato' },
   ]
 
   return (

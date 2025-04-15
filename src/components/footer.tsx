@@ -76,7 +76,7 @@ export const Footer: React.FC = () => {
         </div>
 
         <div className="border-t border-muted/20 mt-12 pt-8 text-center text-muted text-sm">
-          <p>© {new Date().getFullYear()} Dev-Cute. Todos os direitos reservados.</p>
+          <p>© {new Date().getFullYear()} Dev-Cute. Todos os direitos reservados. <strong><Link href={"/terms-and-privacy/terms"}>Termos</Link></strong> & <strong><Link href={"/terms-and-privacy/privacy"}>Privacidade</Link></strong>.</p>
         </div>
       </div>
     </footer>
