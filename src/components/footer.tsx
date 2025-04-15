@@ -12,9 +12,9 @@ export const Footer: React.FC = () => {
   ]
 
   const socialLinks = [
-    { icon: <Facebook className="w-5 h-5" />, url: '#' },
-    { icon: <Instagram className="w-5 h-5" />, url: '#' },
-    { icon: <Linkedin className="w-5 h-5" />, url: '#' },
+    { icon: <Facebook className="w-5 h-5" />, url: 'https://www.facebook.com/profile.php?id=61560951252497' },
+    { icon: <Instagram className="w-5 h-5" />, url: 'https://www.instagram.com/gds_visa/' },
+    { icon: <Linkedin className="w-5 h-5" />, url: 'https://www.linkedin.com/in/mateus-cassuque-729a76345/?trk=opento_sprofile_goalscard' },
   ]
 
   return (
@@ -61,22 +61,22 @@ export const Footer: React.FC = () => {
             <ul className="space-y-3 text-muted">
               <li className="flex items-center gap-2">
                 <Mail className="w-5 h-5" />
-                contato@gotadsol.com
+                gotadesol01@gmail.com
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-5 h-5" />
-                (11) 99999-9999
+                (+244) 935 072 404 | 935 044 500
               </li>
               <li className="flex items-center gap-2">
-                <MapPin className="w-5 h-5" />
-                Av. Paulista, 1000 - SP
+                <MapPin className="w-10 h-10" />
+                Luanda, Ngola-Kiluange, Edf. do Banco BIC, 2º Andar, Angola
               </li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-muted/20 mt-12 pt-8 text-center text-muted text-sm">
-          <p>© {new Date().getFullYear()} Gota D' Sol. Todos os direitos reservados.</p>
+          <p>© {new Date().getFullYear()} Dev-Cute. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>
