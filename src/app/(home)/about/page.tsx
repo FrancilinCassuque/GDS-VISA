@@ -34,7 +34,7 @@ export default function AboutPage() {
       <section className="relative h-[60vh] min-h-[500px] flex items-center">
         <div className="absolute inset-0 bg-[url('/about.jpg')] bg-cover bg-center brightness-75" />
         <div className="container mx-auto px-4 relative z-10">
-          <motion.div
+          <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
