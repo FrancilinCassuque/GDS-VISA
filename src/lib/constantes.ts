@@ -49,6 +49,33 @@ export const TESTIMONIALS = [
 
 export const SERVICES_BY_COUNTRY = [
   {
+    country: "Brazil",
+    flag: "br",
+    services: [
+      {
+        title: "Visto de Trabalho",
+        description: "Processo completo para vistos de trabalho em Brazil.",
+        icon: "Briefcase"
+      },
+      
+      {
+        title: "Visto de Estudo",
+        description: "Assessoria para vistos de estudante em universidades Bazileiras e não só.",
+        icon: "GraduationCap"
+      },
+      {
+        title: "Visto de Formação Proficional",
+        description: "Assessoria para vistos de Formação Proficional.",
+        icon: "BookType"
+      },
+      {
+        title: "Visto de Turismo",
+        description: "Assessoria para vistos Schengen.",
+        icon: "MapPinPlus"
+      },
+    ]
+  },
+  {
     country: "Portugal",
     flag: "🇵🇹",
     services: [
@@ -58,13 +85,60 @@ export const SERVICES_BY_COUNTRY = [
         icon: "Briefcase"
       },
       {
+        title: "Visto de Procura de Trabalho",
+        description: "Assessoria para vistos de Procura de Trabalho.",
+        icon: "BriefcaseBusiness"
+      },
+      {
         title: "Visto de Estudo",
-        description: "Assessoria para vistos de estudante em universidades portuguesas.",
+        description: "Assessoria para vistos de estudante em universidades portuguesas e não só.",
         icon: "GraduationCap"
       },
-      // Outros serviços para Portugal...
+      {
+        title: "Visto de Formação Proficional",
+        description: "Assessoria para vistos de Formação Proficional.",
+        icon: "BookType"
+      },
+      {
+        title: "Visto de Turismo",
+        description: "Assessoria para vistos Schengen.",
+        icon: "MapPinPlus"
+      },
     ]
   },
+
+  {
+    country: "França",
+    flag: "fr",
+    services: [
+      {
+        title: "Visto de Trabalho",
+        description: "Processo completo para vistos de trabalho em França.",
+        icon: "Briefcase"
+      },
+      {
+        title: "Visto de Procura de Trabalho",
+        description: "Assessoria para vistos de Procura de Trabalho.",
+        icon: "BriefcaseBusiness"
+      },
+      {
+        title: "Visto de Estudo",
+        description: "Assessoria para vistos de estudante em universidades portuguesas e não só.",
+        icon: "GraduationCap"
+      },
+      {
+        title: "Visto de Formação Proficional",
+        description: "Assessoria para vistos de Formação Proficional.",
+        icon: "BookType"
+      },
+      {
+        title: "Visto de Turismo",
+        description: "Assessoria para vistos Schengen.",
+        icon: "MapPinPlus"
+      },
+    ]
+  },
+
   {
     country: "Espanha",
     flag: "🇪🇸",
@@ -75,9 +149,25 @@ export const SERVICES_BY_COUNTRY = [
         icon: "Briefcase"
       },
       {
+        title: "Visto de Procura de Trabalho",
+        description: "Assessoria para vistos de Procura de Trabalho.",
+        icon: "BriefcaseBusiness"
+      },
+      {
         title: "Visto de Estudo",
-        description: "Assessoria para vistos de estudante em universidades Espanhola.",
+        description: "Assessoria para vistos de estudante em universidades Espanhola e não só.",
         icon: "GraduationCap"
+      },
+
+      {
+        title: "Visto de Formação Proficional",
+        description: "Assessoria para vistos de Formação Proficional.",
+        icon: "BookType"
+      },
+      {
+        title: "Visto de Turismo",
+        description: "Assessoria para vistos Schengen.",
+        icon: "MapPinPlus"
       },
     ]
   },

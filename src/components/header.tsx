@@ -2,20 +2,19 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Menu, X } from 'lucide-react'
+import { Menu, Moon, Sun, X } from 'lucide-react'
 import { useState } from 'react'
-import { useTheme } from 'next-themes'
+import { Tema } from './tema'
+
+export const navItems = [
+  { name: 'Início', path: '/' },
+  { name: 'Serviços', path: '/servicos' },
+  { name: 'Sobre Nós', path: '/about' },
+  { name: 'Contato', path: '/contato' },
+]
 
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const { theme } = useTheme()
-
-  const navItems = [
-    { name: 'Início', path: '/' },
-    { name: 'Serviços', path: '/#servicos' },
-    { name: 'Sobre Nós', path: '/about' },
-    { name: 'Contato', path: '/contato' },
-  ]
 
   return (
     <header className="sticky top-0 z-50 bg-background border-b">
@@ -47,6 +46,8 @@ export const Header: React.FC = () => {
               </Link>
             </motion.div>
           ))}
+
+          <Tema />
         </nav>
 
         {/* Mobile Menu Button */}
@@ -77,6 +78,8 @@ export const Header: React.FC = () => {
                   {item.name}
                 </Link>
               ))}
+
+              <Tema isMobile/>
             </div>
           </motion.div>
         )}

@@ -2,15 +2,24 @@
 
 import { motion } from 'framer-motion'
 import { SERVICES_BY_COUNTRY } from '@/lib/constantes'
-import { Briefcase, GraduationCap } from 'lucide-react'
+import { Briefcase, BriefcaseBusiness, GraduationCap, BookType, MapPinPlus, ArrowRight, Feather } from 'lucide-react'
+import Link from 'next/link'
+import { Button } from './ui/button'
 
 const iconComponents = {
   Briefcase,
-  GraduationCap
+  GraduationCap,
+  BriefcaseBusiness,
+  BookType,
+  MapPinPlus
   // Adicionar outros ícones conforme necessário
 }
 
-export const ServicesSection: React.FC = () => {
+interface IServiceProps {
+  isPage?: boolean
+}
+
+export const ServicesSection: React.FC<IServiceProps> = ({ isPage }) => {
   return (
     <section id="servicos" className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -49,6 +58,8 @@ export const ServicesSection: React.FC = () => {
                   {country.services.map((service, serviceIndex) => {
                     const IconComponent = iconComponents[service.icon as keyof typeof iconComponents]
 
+                    if (serviceIndex >= 2 && !isPage) return
+
                     return (
                       <motion.div
                         key={serviceIndex}
@@ -62,6 +73,15 @@ export const ServicesSection: React.FC = () => {
                           <h4 className="font-bold text-foreground">{service.title}</h4>
                         </div>
                         <p className="text-muted-foreground text-sm">{service.description}</p>
+
+                        {isPage && (
+                          <Link href={'/contato'} className='flex w-fit'>
+                            <Button variant={'outline'} className='flex bg-secondary hover:bg-green-700 hover:text-white mt-10 justify-end items-end'>
+                              Seguir Processo
+                              <Feather className='w-5 h-5 mx-1' />
+                            </Button>
+                          </Link>
+                        )}
                       </motion.div>
                     )
                   })}
@@ -70,6 +90,15 @@ export const ServicesSection: React.FC = () => {
             )
           })}
         </div>
+
+        {!isPage && (
+          <Button className='flex w-full justify-center items-center'>
+            <Link href={'/service'} className='flex w-fit'>
+              Todos os Serviços
+              <ArrowRight className='w-5 h-5 mx-1' />
+            </Link>
+          </Button>
+        )}
       </div>
     </section>
   )
