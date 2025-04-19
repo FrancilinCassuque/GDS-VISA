@@ -36,19 +36,41 @@ export const PORTFOLIO = [
   {
     image: "/images/familiaPiscina.jpg",
     title: "Família Silva - Portugal",
-    description: "Processo de visto de trabalho concluído em 3 meses"
+    description: "Processo de visto de trabalho concluído em 2 meses"
   },
-  // Adicionar outros projetos...
+  {
+    image: "/images/conceicao.jpg",
+    title: "Família Conceição - Portugal",
+    description: "Processo de visto de turismo de família de 6 membros concluído em 4 meses"
+  },
+  {
+    image: "/images/vitoSaude.jpg",
+    title: "Sr. Maria - Holanda",
+    description: "Processo de visto de turismo para Holanda concluído em 1 mese."
+  },
 ];
 
 export const TESTIMONIALS = [
   {
-    name: "Carlos Mendes",
-    role: "Engenheiro em Lisboa",
-    quote: "A Gota D' Sol tornou o processo muito mais simples do que eu imaginava. Recomendo!",
+    name: "José Mendes",
+    role: "Dr. em Luanda",
+    quote: "A Gota D' Sol tornou o processo muito mais simples do que eu imaginava. Recomendo✔!",
     image: "/placeholder.jpg"
   },
-  // Adicionar outros depoimentos...
+
+  {
+    name: "Basílio Mbala",
+    role: "Engenheiro em Luanda",
+    quote: "A Gota D' Sol tornou o processo muito mais simples do que eu imaginava, por um instante achei que não seria possível dado índice de trapassa que tem acontecido na cidade, mas a Gota D' Sol mostrou-me que ainda há Agências sérias na Cidade. Super Recomendo👍🏼✔!",
+    image: "/placeholder.jpg"
+  },
+
+  {
+    name: "Ana Paula José",
+    role: "Professora em Luanda",
+    quote: "A aquisição de visto é um processo e muitos não querem seguir o processo e desejam pular alguns passos e com a Gota D' Sol, não funciona assim, Eles são bastantes sérios e proficionais, super Recomentdo, só não recomento aqueles que gostam de pular etapas do processo",
+    image: "/placeholder.jpg"
+  },
 ];
 
 export const SERVICES_BY_COUNTRY = [

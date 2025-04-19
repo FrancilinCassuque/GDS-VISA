@@ -92,7 +92,7 @@ export const ServicesSection: React.FC<IServiceProps> = ({ isPage }) => {
         </div>
 
         {!isPage && (
-          <Button className='flex w-full justify-center items-center'>
+          <Button className='flex w-full justify-center items-center mt-2'>
             <Link href={'/service'} className='flex w-fit'>
               Todos os Serviços
               <ArrowRight className='w-5 h-5 mx-1' />
