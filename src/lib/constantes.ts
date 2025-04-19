@@ -50,7 +50,7 @@ export const TESTIMONIALS = [
 export const SERVICES_BY_COUNTRY = [
   {
     country: "Brazil",
-    flag: "br",
+    flag: "BR",
     services: [
       {
         title: "Visto de Trabalho",
@@ -109,7 +109,7 @@ export const SERVICES_BY_COUNTRY = [
 
   {
     country: "França",
-    flag: "fr",
+    flag: "FR",
     services: [
       {
         title: "Visto de Trabalho",

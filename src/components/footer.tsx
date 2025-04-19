@@ -4,11 +4,12 @@ import { Facebook, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react
 export const Footer: React.FC = () => {
   const links = [
     { name: 'Início', path: '/' },
-    { name: 'Serviços', path: '#servicos' },
-    { name: 'Diferenciais', path: '#diferenciais' },
-    { name: 'Portfólio', path: '#portfolio' },
-    { name: 'Depoimentos', path: '#depoimentos' },
-    { name: 'Contato', path: '#contato' },
+    { name: 'Serviços', path: '/#servicos' },
+    { name: 'Diferenciais', path: '/#diferenciais' },
+    { name: 'Portfólio', path: '/#portfolio' },
+    { name: 'Depoimentos', path: '/#depoimentos' },
+    { name: 'Contato', path: '/contato' },
+    { name: 'Agente Autorizado', path: '/auth/dashboard' },
   ]
 
   const socialLinks = [
@@ -43,7 +44,7 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Links Rápidos</h4>
             <ul className="space-y-2">
-              {links.slice(0, 4).map((link, index) => (
+              {links.slice(0, 7).map((link, index) => (
                 <li key={index}>
                   <Link
                     href={link.path}

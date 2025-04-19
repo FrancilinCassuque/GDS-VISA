@@ -8,7 +8,7 @@ import { Tema } from './tema'
 
 export const navItems = [
   { name: 'Início', path: '/' },
-  { name: 'Serviços', path: '/servicos' },
+  { name: 'Serviços', path: '/service' },
   { name: 'Sobre Nós', path: '/about' },
   { name: 'Contato', path: '/contato' },
 ]
