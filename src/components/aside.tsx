@@ -2,6 +2,9 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Home, LogOut, Mail, Menu, Settings, User, X } from 'lucide-react';
+import { MENU_ADMIN_LINKS } from '@/lib/constantes';
+import { Tema } from './tema';
+import { DropMenu } from '@/app/_components';
 
 const SideDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,10 +14,10 @@ const SideDrawer = () => {
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
-    
+
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
@@ -30,12 +33,17 @@ const SideDrawer = () => {
   return (
     <div className='mb-16'>
       {/* Botão de Toggle */}
-      <button 
+      <button
         onClick={toggleDrawer}
         className="fixed z-50 top-4 left-4 p-2 rounded-lg bg-indigo-600 text-white shadow-lg hover:bg-indigo-700 transition-colors"
       >
         {isOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
+
+      {/* Drop dawn Menu fixed right */}
+      <div className="fixed z-50 top-4 right-4 p-2">
+        <DropMenu />
+      </div>
 
       {/* Overlay */}
       <AnimatePresence>
@@ -63,8 +71,8 @@ const SideDrawer = () => {
             <div className="flex flex-col h-full p-4">
               {/* Cabeçalho */}
               <div className="flex items-center justify-between mb-8 p-2">
-                <h2 className="text-xl font-bold text-indigo-600">Menu</h2>
-                <button 
+                <h2 className="text-xl font-bold text-indigo-600">GOTA D' SOL</h2>
+                <button
                   onClick={toggleDrawer}
                   className="p-1 rounded-full hover:bg-gray-100"
                 >
@@ -75,18 +83,18 @@ const SideDrawer = () => {
               {/* Itens de Navegação */}
               <nav className="flex-1">
                 <ul className="space-y-2">
-                  {navItems.map((item, index) => (
+                  {MENU_ADMIN_LINKS.map((item, index) => (
                     <motion.li
                       key={index}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
                       <a
-                        href={item.href}
+                        href={item.path}
                         className="flex items-center p-3 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
                       >
-                        <span className="mr-3">{item.icon}</span>
-                        <span>{item.label}</span>
+                        <span className="mr-3">{item.icon({ className: 'w-8 h-8' })}</span>
+                        <span>{item.text}</span>
                       </a>
                     </motion.li>
                   ))}
@@ -95,6 +103,10 @@ const SideDrawer = () => {
 
               {/* Rodapé */}
               <div className="mt-auto pt-4 border-t border-gray-200">
+                <div className="p-3">
+                  <Tema isMobile />
+                </div>
+
                 <button className="flex items-center w-full p-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
                   <LogOut size={20} className="mr-3" />
                   Sair

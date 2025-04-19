@@ -1,6 +1,5 @@
 'use client'
 
-import { DropMenu, Footer, AsideBar, TooggleMenu, } from "../_components"
 import { useCallback, useEffect, useState } from "react"
 import { authStore } from "@/store"
 import { signOut, useSession } from "next-auth/react"
@@ -8,6 +7,7 @@ import { auth, NotificacaoIndex } from "@/db"
 import { Loader2 } from "lucide-react"
 import { INotificacao } from "@/types"
 import SideDrawer from "@/components/aside"
+import { FooterAdmin } from "@/components"
 
 export default function Component({ children }: Readonly<{ children: React.ReactNode }>) {
   const { data, status } = useSession()
@@ -55,6 +55,7 @@ export default function Component({ children }: Readonly<{ children: React.React
   return (
     <div className="">
       <SideDrawer />
+ 
       <div className="flex flex-col min-h-96 justify-center items-center">
         {((status == 'loading') || loading) ? (
           <Loader2 className="animate-spin min-h-96 min-w-96" />
@@ -63,9 +64,9 @@ export default function Component({ children }: Readonly<{ children: React.React
             {children}
           </>
         )}
-
       </div>
 
+      <FooterAdmin />
     </div>
   )
 }

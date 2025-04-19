@@ -1,3 +1,5 @@
+
+
 // export const SERVICES = [
 //   {
 //     title: "Visto de Trabalho",
@@ -13,6 +15,8 @@
 //   },
 //   // Adicionar outros serviços...
 // ];
+
+import { IconFactura, IconHome, IconNewInf, IconNewInf2, IconNewInf3, IconNewInf4, IconSettings, IconUserPlus, IconUsers } from "@/app/_components";
 
 export const DIFFERENCIAIS = [
   {
@@ -282,22 +286,77 @@ export const SERVICES_BY_COUNTRY = [
 ];
 
 export const MENU_ADMIN_LINKS = [
-  {
-    icon: 'Home',
-    label: 'Início',
-    href: '/auth/home'
+    {
+    text: 'Inicio',
+    icon: IconHome,
+    path: '/auth/home',
+    linkClass: 'flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
   },
+  // {
+  //   text: 'Orders',
+  //   icon: IconShoppingCart,
+  //   path: '#',
+  // },
   {
-    icon: 'User',
-    label: 'Perfil',
-    href: '/profile'
+    text: 'Novo Cliente',
+    icon: IconUserPlus,
+    path: '/auth/client/create',
   },
+
+  
+  // {
+  //   text: 'Nova Factura',
+  //   icon: IconNewFactura,
+  //   path: '/auth/dashboard/contas/create',
+  // },
+
   {
-    icon: 'Mail', label: 'Mensagens',
-    href: '/messages'
+    text: 'Processos',
+    icon: IconNewInf2,
+    path: '/auth/processo/',
   },
+
   {
-    icon: 'Settings', label: 'Configurações',
-    href: '/settings'
+    text: 'Novo Processo',
+    icon: IconNewInf,
+    path: '/auth/processo/create',
   },
+
+  {
+    text: 'Serviços',
+    icon: IconNewInf4,
+    path: '/auth/dashboard/service',
+  },
+  
+  {
+    text: 'Novo Serviço',
+    icon: IconNewInf3,
+    path: '/auth/dashboard/service/new',
+  },
+
+  {
+    text: 'Finanças',
+    icon: IconFactura,
+    path: '/auth/dashboard/contas',
+  },
+
+  {
+    text: 'Recursos Humanos',
+    icon: IconUsers,
+    path: '/auth/user',
+  },
+
+  // {
+  //   text: 'Analytics',
+  //   icon: IconLineChart,
+  //   path: '#',
+  // },
+]
+
+export const subListItem = [
+  {
+    text: 'Configurações',
+    icon: IconSettings,
+    path: '/auth/dashboard/settings',
+  }
 ]
