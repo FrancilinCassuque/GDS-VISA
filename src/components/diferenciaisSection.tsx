@@ -2,11 +2,12 @@
 
 import { DIFFERENCIAIS } from '@/lib/constantes'
 import { motion } from 'framer-motion'
-import { Award, CheckCircle } from 'lucide-react'
+import { Award, CheckCircle, ShieldCheck } from 'lucide-react'
 
 const iconComponents = {
   Award,
-  CheckCircle
+  CheckCircle,
+  ShieldCheck,
   // Adicionar outros ícones conforme necessário
 }
 

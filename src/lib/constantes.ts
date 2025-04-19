@@ -1,18 +1,18 @@
-export const SERVICES = [
-  {
-    title: "Visto de Trabalho",
-    description: "Assessoria completa para obtenção de vistos de trabalho em todos os países atendidos.",
-    icon: "Briefcase",
-    countries: ["Portugal", "Espanha", "França", "Alemanha", "Bélgica"]
-  },
-  {
-    title: "Visto de Estudo",
-    description: "Auxílio na documentação e processos para vistos de estudante.",
-    icon: "GraduationCap",
-    countries: ["Portugal", "Espanha", "França", "África do Sul"]
-  },
-  // Adicionar outros serviços...
-];
+// export const SERVICES = [
+//   {
+//     title: "Visto de Trabalho",
+//     description: "Assessoria completa para obtenção de vistos de trabalho em todos os países atendidos.",
+//     icon: "Briefcase",
+//     countries: ["Portugal", "Espanha", "França", "Alemanha", "Bélgica"]
+//   },
+//   {
+//     title: "Visto de Estudo",
+//     description: "Auxílio na documentação e processos para vistos de estudante.",
+//     icon: "GraduationCap",
+//     countries: ["Portugal", "Espanha", "França", "África do Sul"]
+//   },
+//   // Adicionar outros serviços...
+// ];
 
 export const DIFFERENCIAIS = [
   {
@@ -25,12 +25,16 @@ export const DIFFERENCIAIS = [
     description: "93% de sucesso nos processos que acompanhamos.",
     icon: "CheckCircle"
   },
-  // Adicionar outros diferenciais...
+  {
+    title: "Atendimento Personalizado",
+    description: "Auxílio na documentação e processos para vistos de maneiras que permitem comodidade.",
+    icon: "ShieldCheck"
+  },
 ];
 
 export const PORTFOLIO = [
   {
-    image: "/placeholder.jpg",
+    image: "/images/familiaPiscina.jpg",
     title: "Família Silva - Portugal",
     description: "Processo de visto de trabalho concluído em 3 meses"
   },
@@ -169,27 +173,27 @@ export const SERVICES_BY_COUNTRY = [
       },
     ]
   },
-  {
-    country: "Angola",
-    flag: "🇦🇴",
-    services: [
-      {
-        title: "Visto de Trabalho",
-        description: "Processo completo para vistos de trabalho em Angola.",
-        icon: "Briefcase"
-      },
-      {
-        title: "Visto de Estudo",
-        description: "Assessoria para vistos de estudante em universidades angolanas.",
-        icon: "GraduationCap"
-      },
-      {
-        title: "Visto de Turismo",
-        description: "Assessoria para vistos Schengen.",
-        icon: "MapPinPlus"
-      },
-    ]
-  },
+  // {
+  //   country: "Angola",
+  //   flag: "🇦🇴",
+  //   services: [
+  //     {
+  //       title: "Visto de Trabalho",
+  //       description: "Processo completo para vistos de trabalho em Angola.",
+  //       icon: "Briefcase"
+  //     },
+  //     {
+  //       title: "Visto de Estudo",
+  //       description: "Assessoria para vistos de estudante em universidades angolanas.",
+  //       icon: "GraduationCap"
+  //     },
+  //     {
+  //       title: "Visto de Turismo",
+  //       description: "Assessoria para vistos Schengen.",
+  //       icon: "MapPinPlus"
+  //     },
+  //   ]
+  // },
   {
     country: "Alemanha",
     flag: "🇩🇪",

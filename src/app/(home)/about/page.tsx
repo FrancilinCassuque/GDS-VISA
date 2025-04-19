@@ -17,7 +17,7 @@ export default function AboutPage() {
       name: "Mateus F.L. Cassuque",
       role: "Có-Fundador & Consultora Sênior",
       bio: "Especialista em vistos para Europa com 8 anos de experiência.",
-      image: "/placeholder.jpg"
+      image: "/images/mateusPerfil.jpg"
     },
     {
       name: "José Severino Sambuanda",
@@ -28,11 +28,12 @@ export default function AboutPage() {
     // Adicionar mais membros conforme necessário
   ]
 
+
   return (
     <div className="bg-background">
       {/* Hero Section */}
       <section className="relative h-[60vh] min-h-[500px] flex items-center">
-        <div className="absolute inset-0 bg-[url('/placeholder.jpg')] bg-cover bg-center brightness-75" />
+        <div className="absolute inset-0 bg-[url('/aboute.jpg')] bg-cover bg-center brightness-75" />
         <div className="container mx-auto px-4 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -68,11 +69,11 @@ export default function AboutPage() {
                 personalizada e suporte em cada etapa.
               </p>
               <p className="text-lg text-muted-foreground mb-8">
-                Fundada em 2013, começamos como uma pequena equipe e hoje somos referência no mercado, 
+                Fundada em 2017, começamos como uma pequena equipe e hoje somos referência no mercado, 
                 ajudando milhares de clientes a realizarem o sonho de morar no exterior.
               </p>
               <Link
-                href="/servicos"
+                href="/service"
                 className="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
               >
                 Conheça nossos serviços

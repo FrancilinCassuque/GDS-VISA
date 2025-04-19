@@ -1,14 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-     remotePatterns: [
-       {
-         protocol: 'https',
-         hostname: '**',
-       },
-     ],
-     domains: ['**'], // Adicione o domínio aqui
-   },
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+    // Adicione esta linha para permitir imagens locais
+    domains: [],
+  },
 
   eslint: {
     ignoreDuringBuilds: true,
