@@ -14,8 +14,14 @@ export default function AboutPage() {
 
   const team = [
     {
+      name: "Elias Cassuque",
+      role: "Có-Fundador & Consultor Chefe",
+      bio: "Especialista em vistos para Europa.",
+      image: "/placeholder.jpg"
+    },
+    {
       name: "Mateus F.L. Cassuque",
-      role: "Có-Fundador & Consultora Sênior",
+      role: "Có-Fundador & Consultor Sênior",
       bio: "Especialista em vistos para Europa com 8 anos de experiência.",
       image: "/images/mateusPerfil.jpg"
     },
