@@ -118,7 +118,7 @@ export const SERVICES_BY_COUNTRY = [
   {
     country: "França",
     flag: "🇫🇷",
-     services: [
+    services: [
       {
         title: "Visto de Trabalho",
         description: "Processo completo para vistos de trabalho em França.",
@@ -155,7 +155,7 @@ export const SERVICES_BY_COUNTRY = [
         description: "Processo completo para vistos de trabalho em Brazil.",
         icon: "Briefcase"
       },
-      
+
       {
         title: "Visto de Estudo",
         description: "Assessoria para vistos de estudante em universidades Bazileiras e não só.",
@@ -258,3 +258,24 @@ export const SERVICES_BY_COUNTRY = [
     ]
   }
 ];
+
+export const MENU_ADMIN_LINKS = [
+  {
+    icon: 'Home',
+    label: 'Início',
+    href: '/auth/home'
+  },
+  {
+    icon: 'User',
+    label: 'Perfil',
+    href: '/profile'
+  },
+  {
+    icon: 'Mail', label: 'Mensagens',
+    href: '/messages'
+  },
+  {
+    icon: 'Settings', label: 'Configurações',
+    href: '/settings'
+  },
+]
