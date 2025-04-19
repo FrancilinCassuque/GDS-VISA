@@ -127,8 +127,6 @@ model Identidade {
   profileId String  @unique
 }
 
-
-
 model Processo {
   id           String @id @default(cuid())
   tipo         String
@@ -228,6 +226,19 @@ model Contacto {
   nome      String
   telefone  String @unique
   descricao String @db.Text
+
+  ContactoGeral ContactoGeral[]
+}
+
+model ContactoGeral {
+  id        String @id @default(uuid())
+  contatoid String
+  email     String @unique
+  servico   String @db.Text
+
+  contato Contacto @relation(fields: [contatoid], references: [id], onDelete: Cascade)
+
+  @@index([contatoid])
 }
 
 model notificacao {
