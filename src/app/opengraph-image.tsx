@@ -30,7 +30,7 @@ export default async function Image() {
           marginRight: 'auto'
         }}>
           <div style={{
-            display: 'inline-flex',
+            display: 'flex',
             alignItems: 'center',
             gap: '0.5rem',
             backgroundColor: 'rgba(0, 119, 182, 0.2)',
