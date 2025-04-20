@@ -1,7 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Loader2, } from "lucide-react"
+import { Eye, Loader2, } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -20,8 +20,8 @@ import { useState } from "react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import { Input } from "@/components/ui/input"
-import { IconEye, listCode } from "../.."
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
+import { LIST_CODE } from "@/lib/constantes"
 
 
 const FormSchema = z.object({
@@ -44,7 +44,7 @@ export const AutorizacaoCheck: React.FC = () => {
     try {
       setLoading(true)
 
-      const code = listCode.find(code => code.authCode == data.autirizationCode)
+      const code = LIST_CODE.find(code => code.authCode == data.autirizationCode)
       if (code) {
         setOpen(false)
         setLoading(false)
@@ -132,7 +132,7 @@ export const AutorizacaoCheck: React.FC = () => {
                           e.preventDefault()
                           setShowPass(!showPass)
                         }}>
-                          <IconEye className="h-4 w-4" />
+                          <Eye className="h-4 w-4" />
                           <span className="sr-only">botão para mostrar palavra passe</span>
                         </Button>
                       </div>

@@ -1,5 +1,4 @@
-import { DrawerDialog, FacturaStore } from "@/app/_components"
-import { AutorizacaoCheck } from "@/app/_components/layouts/dashboard/autorizacaoCheck"
+import {  FacturaStore } from "@/app/_components"
 import { ClientIndex, FacturaShow, processoIndex } from "@/db"
 
 export default async function Component({ params }: { params: { facturaId: string } }) {

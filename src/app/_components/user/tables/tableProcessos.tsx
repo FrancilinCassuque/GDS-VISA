@@ -1,13 +1,13 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell, TableFooter } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import { IconFile } from "../../icons"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { useReactToPrint } from 'react-to-print'
-import { useRef } from "react"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { File } from "lucide-react"
 import { IProcesso } from "@/types"
+import { useRef } from "react"
 import Image from "next/image"
 
 interface ITableProps {
@@ -32,7 +32,7 @@ export const TabelaProcessos: React.FC<ITableProps> = ({ processos, printOnly, f
             e.preventDefault()
             printTable()
           }}>
-            <IconFile className="h-3.5 w-3.5" />
+            <File className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only">Imprimir</span>
           </Button>
         </div>
@@ -45,7 +45,7 @@ export const TabelaProcessos: React.FC<ITableProps> = ({ processos, printOnly, f
               e.preventDefault()
               printTable()
             }}>
-              <IconFile className="h-3.5 w-3.5" />
+              <File className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only">Imprimir</span>
             </Button>
           </div>

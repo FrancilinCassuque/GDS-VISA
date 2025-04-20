@@ -11,7 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, ListFilter } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -29,7 +29,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { IconListFilter } from "../../icons/dashboard"
 import { useEffect, useState } from "react"
 import { useMediaQuery } from 'usehooks-ts'
 
@@ -153,7 +152,7 @@ export const TabelaDeDados: React.FC<IDataTableProps> = ({ listaDeDados, dataPro
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm" className="h-7 gap-1 text-sm ml-auto">
-                  <IconListFilter className="h-3.5 w-3.5" />
+                  <ListFilter className="h-3.5 w-3.5" />
                   <span className="sr-only sm:not-sr-only">Filtrar</span>
                   <ChevronDown className="ml-2 h-4 w-4" />
                 </Button>

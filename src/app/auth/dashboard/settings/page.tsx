@@ -5,12 +5,12 @@ import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/component
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import { EnderecoForm, IconChevronDown, PerfilData } from "@/app/_components"
+import { EnderecoForm, PerfilData } from "@/app/_components"
 import { useForm } from "react-hook-form"
 import { authStore } from "@/store"
 import { update } from "@/db"
 import { image } from "@/firebase/uploadImage"
-import { Loader } from "lucide-react"
+import { ChevronDown, Loader } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { toast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
@@ -107,7 +107,7 @@ export default function Settings({ params }: { params: { userId: string } }) {
               <div className="font-medium">Dados do Usuário</div>
               <div className="text-muted-foreground text-sm">Informações básicas do usuário</div>
             </div>
-            <IconChevronDown className="h-5 w-5 transition-transform" />
+            <ChevronDown className="h-5 w-5 transition-transform" />
           </CollapsibleTrigger>
 
           <CollapsibleContent className="px-6 py-4 space-y-4">

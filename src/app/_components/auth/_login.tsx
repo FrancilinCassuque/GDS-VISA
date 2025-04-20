@@ -8,9 +8,8 @@ import { useForm } from "react-hook-form"
 import { signIn } from 'next-auth/react'
 import { useRouter } from "next/navigation"
 import { toast } from "@/components/ui/use-toast"
-import { IconEye, IconLogIn, IconUserPlus } from "../icons"
 import { useState } from "react"
-import { Loader2 } from "lucide-react"
+import { Eye, Loader2, LogIn, UserPlus } from "lucide-react"
 
 export const GoogleLogin = async () => {
   try {
@@ -82,13 +81,13 @@ export const Login: React.FC = () => {
         {/* <Image src={'/placeholder.png'} alt="Logo da Gota de Sol" width={150} height={150} className="rounded-t-lg object-cover aspect-video" /> */}
         <div>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-foreground">
-            <IconLogIn className="mr-2 inline-block h-6 w-6" />
+            <LogIn className="mr-2 inline-block h-6 w-6" />
             Sign in to your account
           </h2>
           <p className="mt-2 text-center text-sm text-muted-foreground">
             Or{" "}
             <Link href={"/user/create"} className="font-medium text-primary hover:text-primary/80" prefetch={false}>
-              <IconUserPlus className="mr-2 inline-block h-4 w-4" />
+              <UserPlus className="mr-2 inline-block h-4 w-4" />
               sign up for a new account
             </Link>
           </p>
@@ -131,7 +130,7 @@ export const Login: React.FC = () => {
                   e.preventDefault()
                   setShowPass(!showPass)
                 }}>
-                  <IconEye className="h-4 w-4" />
+                  <Eye className="h-4 w-4" />
                   <span className="sr-only">Toggle password visibility</span>
                 </Button>
               </div>
@@ -150,7 +149,7 @@ export const Login: React.FC = () => {
               </div>
             </div>
             <Button disabled={isLoading} type="submit" className="w-full">
-              <IconLogIn className="mr-2 inline-block h-4 w-4" />
+              <LogIn className="mr-2 inline-block h-4 w-4" />
               {isLoading ? <Loader2 className="animate-spin h-8 w-8"/>: 'Entrar' }
             </Button>
           </form>

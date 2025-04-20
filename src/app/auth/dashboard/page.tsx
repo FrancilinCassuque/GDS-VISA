@@ -2,7 +2,7 @@
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
-import { FormOcupacao, DrawerDialog, FormBio, IconHeart, IconMapPin, IconSettings, IconBriefcase } from "@/app/_components"
+import { FormOcupacao, DrawerDialog, FormBio } from "@/app/_components"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
@@ -14,7 +14,7 @@ import { IUserAuth } from "@/types"
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { Pencil } from "lucide-react"
+import { Briefcase, Heart, MapPin, Pencil, Settings } from "lucide-react"
 import { Metadata } from "next"
 
 export default function Component() {
@@ -57,7 +57,7 @@ export default function Component() {
 
                   <Link href={`/auth/dashboard/settings`}>
                     <Button className='my-4 flex flex-row w-full'>
-                      <IconSettings className='w-5 h-5 mx-2' />
+                      <Settings className='w-5 h-5 mx-2' />
                       Configurar
                     </Button>
                   </Link>
@@ -70,7 +70,7 @@ export default function Component() {
               <div className="text-center md:text-left items-center">
                 {(user?.pessoa?.funcoes && user.pessoa.funcoes.funcao) ? (
                   <div className="grid grid-flow-col grid-cols-1 items-center justify-center">
-                    <IconBriefcase className="w-4 h-4 text-muted-foreground" />
+                    <Briefcase className="w-4 h-4 text-muted-foreground" />
                     <span className="text-sm text-muted-foreground m-4">
                       {user.pessoa.funcoes.funcao}
                     </span>
@@ -117,11 +117,11 @@ export default function Component() {
           {(user?.pessoa?.funcoes && user.pessoa.funcoes.id) && (
             <div className="grid gap-2">
               <div className="flex items-center gap-2">
-                <IconBriefcase className="w-4 h-4 text-muted-foreground" />
+                <Briefcase className="w-4 h-4 text-muted-foreground" />
                 <span className="text-sm text-muted-foreground">{user.pessoa.funcoes.funcao}</span>
               </div>
               <div className="flex items-center gap-2">
-                <IconHeart className="w-4 h-4 text-muted-foreground" />
+                <Heart className="w-4 h-4 text-muted-foreground" />
                 <span className="text-sm text-muted-foreground">Gota D` Sol</span>
               </div>
             </div>
@@ -129,7 +129,7 @@ export default function Component() {
 
           {user?.pessoa?.address.id && (
             <div className="flex items-center gap-2 my-2">
-              <IconMapPin className="w-4 h-4 text-muted-foreground" />
+              <MapPin className="w-4 h-4 text-muted-foreground" />
               <span className="text-sm text-muted-foreground">{user.pessoa.address.rua}, {user.pessoa.address.bairro}, {user.pessoa.address.comuna}, {user.pessoa.address.municipio}, {user.pessoa.address.provincia}, {user.pessoa.address.pais}</span>
             </div>
           )}

@@ -1,23 +1,19 @@
 'use client'
 
 import Link from "next/link"
-import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { IconEye, IconLock, IconLogIn, IconMail, IconUser, IconUserPlus } from "../icons"
 import { useForm } from "react-hook-form"
 import { toast } from "@/components/ui/use-toast"
-import { SocialAuth } from "./socialAuth"
-import { GoogleLogin } from "./_login"
 import { signIn, useSession } from "next-auth/react"
 import { userCreate } from "@/db"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { FileWarning, FormInput, Loader2, Loader2Icon } from "lucide-react"
+import { Eye, FileWarning, FormInput, Loader2, Loader2Icon, Lock, LogIn, Mail, UserPlus } from "lucide-react"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
+import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
 import { authStore } from "@/store"
 import { IUserAuth } from "@/types"
 
@@ -30,7 +26,7 @@ const IFormRegisterUser = z.object({
 export const SignUp = () => {
   const form = useForm<z.infer<typeof IFormRegisterUser>>({
     resolver: zodResolver(IFormRegisterUser),
-    defaultValues:{
+    defaultValues: {
       code: '00000100aOLixo'
     }
   })
@@ -132,7 +128,7 @@ export const SignUp = () => {
       <div className="w-full max-w-md space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-foreground">
-            <IconUserPlus className="mr-2 inline-block h-6 w-6" />
+            <UserPlus className="mr-2 inline-block h-6 w-6" />
             Registra Agente🐱‍👤
           </h2>
 
@@ -140,7 +136,7 @@ export const SignUp = () => {
             <p className="mt-2 text-center text-sm text-muted-foreground">
               Ou{" "}
               <Link href={"/userauth"} className="font-medium text-primary" prefetch={false}>
-                <IconLogIn className="mr-2 inline-block h-4 w-4" />
+                <LogIn className="mr-2 inline-block h-4 w-4" />
                 Loga na minha Conta
               </Link>
             </p>
@@ -156,7 +152,7 @@ export const SignUp = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="block text-sm font-medium text-foreground">
-                      <IconMail className="mr-2 inline-block h-4 w-4" />
+                      <Mail className="mr-2 inline-block h-4 w-4" />
                       Email address
                     </FormLabel>
 
@@ -184,7 +180,7 @@ export const SignUp = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="block text-sm font-medium text-foreground">
-                      <IconLock className="mr-2 inline-block h-4 w-4" />
+                      <Lock className="mr-2 inline-block h-4 w-4" />
                       Palavra Passe
                     </FormLabel>
 
@@ -202,7 +198,7 @@ export const SignUp = () => {
                         e.preventDefault()
                         setShowPass(!showPass)
                       }}>
-                        <IconEye className="h-4 w-4" />
+                        <Eye className="h-4 w-4" />
                         <span className="sr-only">Toggle password visibility</span>
                       </Button>
                       <FormDescription>cria uma palavra Passa forte com pelo menos 6 digitos</FormDescription>
@@ -220,7 +216,7 @@ export const SignUp = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="block text-sm font-medium text-foreground">
-                      <IconLock className="mr-2 inline-block h-4 w-4" />
+                      <Lock className="mr-2 inline-block h-4 w-4" />
                       Nº de Funcionario.
                     </FormLabel>
 
@@ -237,7 +233,7 @@ export const SignUp = () => {
                         e.preventDefault()
                         setShowCode(!showCode)
                       }}>
-                        <IconEye className="h-4 w-4" />
+                        <Eye className="h-4 w-4" />
                         <span className="sr-only">Toggle Code visibility</span>
                       </Button>
                       <FormDescription>Insira o Codigo de agente Fornecido pela Empresa.</FormDescription>
@@ -250,7 +246,7 @@ export const SignUp = () => {
 
             <div>
               <Button disabled={isLoading} type="submit" className="w-full">
-                <IconUserPlus className="mr-2 inline-block h-4 w-4" />
+                <UserPlus className="mr-2 inline-block h-4 w-4" />
                 {isLoading ? <Loader2 className="animate-spin h-8 w-8" /> : 'Registrar'}
               </Button>
             </div>

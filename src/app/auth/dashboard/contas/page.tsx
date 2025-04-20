@@ -1,8 +1,5 @@
-import { AutorizacaoCheck, CardAction, CardFacturasHomeTop, columnsFactura, TabelaDeDados, TabFacturas } from "@/app/_components"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
+import { AutorizacaoCheck, CardAction, CardFacturasHomeTop } from "@/app/_components"
 import { FacturaIndex } from "@/db"
-import { ReceiptText } from "lucide-react"
 
 
 export default async function Contas() {

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { IconFacebook, IconMail } from "../icons"
+import { Facebook, Mail } from "lucide-react"
 
 interface ISocialProps {
   action?: () => void
@@ -19,11 +19,11 @@ export const SocialAuth:React.FC<ISocialProps> = ({ action, secundeAction }) => 
           </div>
           <div className="grid grid-cols-2 gap-4">
             <Button variant="outline" className="w-full" onClick={() => action?.()}>
-              <IconMail className="mr-2 h-4 w-4" />
+              <Mail className="mr-2 h-4 w-4" />
               E-mail
             </Button>
             <Button variant="outline" className="w-full" onClick={() => secundeAction?.()}>
-              <IconFacebook className="mr-2 h-4 w-4" />
+              <Facebook className="mr-2 h-4 w-4" />
               Facebook
             </Button>
           </div>

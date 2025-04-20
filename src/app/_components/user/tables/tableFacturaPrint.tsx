@@ -1,16 +1,16 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell, TableFooter } from "@/components/ui/table"
+import { Card, CardContent } from "@/components/ui/card"
+import { Separator } from "@/components/ui/separator"
+import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { IconFile } from "../../icons"
 import { useReactToPrint } from 'react-to-print'
 import { useRef } from "react"
-import { IFacturaPrint, IProcesso } from "@/types"
+import { IFacturaPrint } from "@/types"
 import Image from "next/image"
-import { Separator } from "@/components/ui/separator"
 import { TermoFactura } from "../.."
+import { File } from "lucide-react"
 
 interface ITableProps {
   factura: IFacturaPrint
@@ -33,7 +33,7 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
             e.preventDefault()
             printTable()
           }}>
-            <IconFile className="h-3.5 w-3.5 text-primary" />
+            <File className="h-3.5 w-3.5 text-primary" />
             <span className="text-primary">Imprimir Factura</span>
           </Button>
         </div>
@@ -155,7 +155,7 @@ export const TabelaFacturaPrint: React.FC<ITableProps> = ({ factura, printOnly }
                 </TableRow>
 
 
-                <div className={factura.processos.length <= 2 ? "h-10" : factura.processos.length > 2 && factura.processos.length <=4?"h-[880px]":"h-[770px]"}></div>
+                <div className={factura.processos.length <= 2 ? "h-10" : factura.processos.length > 2 && factura.processos.length <= 4 ? "h-[880px]" : "h-[770px]"}></div>
 
                 <TableRow>
                   <TableCell colSpan={5}>

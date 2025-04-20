@@ -1,10 +1,8 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { IClient, IFacturaList } from "@/types"
-import { CardAction, IconFactura, IconNewInf, IconNewInf2, IconNewInf3, IconUserPlus } from "../.."
-import { Newspaper, ReceiptText } from "lucide-react"
+import { IFacturaList } from "@/types"
+import { CardAction, } from "../.."
+import { FilePlus2, FileStack, Newspaper, ReceiptText } from "lucide-react"
 
 interface ICardProps {
   facturas: IFacturaList[]
@@ -79,17 +77,17 @@ export const CardFacturasHomeTop: React.FC<ICardProps> = async ({ facturas }) =>
       <div className="">
         <CardAction
           textoDoTitle="Relatório"
-          iconDoBotao={<IconNewInf />}
+          iconDoBotao={<FilePlus2 />}
           textoDoBotao="Nova"
           textoDaDescricao="Fazer relatório das Facturas."
           linkDoBotao={'#'}
 
-          iconDoBotao2={<IconFactura />}
+          iconDoBotao2={<FileStack />}
           textoDoBotao2="Ver Relatórios"
           linkDoBotao2={"#"}
         />
       </div>
-      
+
       <div className="">
         {/* <CardAction
           textoDoTitle="Relatório"

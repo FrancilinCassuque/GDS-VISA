@@ -1,6 +1,6 @@
 'use client'
 
-import { columnsCliente, columnsProcesso, TabelaClientes, TabelaDeDados,  } from "@/app/_components"
+import { columnsCliente, TabelaClientes, TabelaDeDados,  } from "@/app/_components"
 import { IClient } from "@/types"
 import { useState } from "react"
 

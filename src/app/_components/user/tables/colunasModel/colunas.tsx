@@ -1,12 +1,12 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { ServicoDelete } from "@/db"
-import { IClient, IFacturaList, IProcesso, IService } from "@/types"
-import { ColumnDef } from "@tanstack/react-table"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { ArrowUpDown, ClipboardPlus, MoreHorizontal, Trash2 } from "lucide-react"
+import { IClient, IFacturaList, IProcesso, IService } from "@/types"
+import { Checkbox } from "@/components/ui/checkbox"
+import { ColumnDef } from "@tanstack/react-table"
+import { Button } from "@/components/ui/button"
+import { ServicoDelete } from "@/db"
 import Link from "next/link"
 
 export const columnsProcesso: ColumnDef<IProcesso>[] = [

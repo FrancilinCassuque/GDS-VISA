@@ -1,6 +1,6 @@
 'use client'
 
-import { columnsFactura, columnsProcesso, TabelaDeDados } from "@/app/_components"
+import { columnsFactura, TabelaDeDados } from "@/app/_components"
 import { IFacturaList } from "@/types"
 import { useState } from "react"
 
@@ -22,7 +22,7 @@ export const TabFacturas: React.FC<ITabProps> = ({ facturas }) => {
       listaDeDados={facturas} dataProcessos={setSelectedPro}
       listaDe="Facturas"
       filtrarColunaPor="nome"
-      // listaPrint={<Tabelafacturas facturas={selectedfacturas ? selectedfacturas : []} printOnly={true} />}
+    // listaPrint={<Tabelafacturas facturas={selectedfacturas ? selectedfacturas : []} printOnly={true} />}
     />
   )
 }

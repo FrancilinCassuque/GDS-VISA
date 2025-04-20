@@ -1,4 +1,4 @@
-import { IFactura, IFacturaPrint } from "@/types"
+import { IFacturaPrint } from "@/types"
 
 interface ITermoFactura {
   factura: IFacturaPrint
@@ -28,7 +28,7 @@ export const TermoFactura: React.FC<ITermoFactura> = ({ factura }) => {
       <h3 className="text-xl font-bold mt-6 mb-2">3. EXCLUSÃO DE RESPONSABILIDADE</h3>
       <p className="">
         A ASSESSORA não se responsabiliza por:
-      </p>      
+      </p>
       <ul className="mb-4">
         <li className="">- Recusas, atrasos ou exigências adicionais por parte das autoridades emissoras do visto;</li>
         <li>- Erros ou omissões nas informações prestadas pelo CLIENTE que possam impactar o processo;</li>

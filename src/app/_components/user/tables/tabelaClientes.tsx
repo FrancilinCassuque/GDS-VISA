@@ -1,13 +1,13 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell, TableFooter } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import { IconFile } from "../../icons"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { useReactToPrint } from 'react-to-print'
-import { useRef } from "react"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { File } from "lucide-react"
 import { IClient } from "@/types"
+import { useRef } from "react"
 import Image from "next/image"
 
 interface ITableProps {
@@ -28,7 +28,7 @@ export const TabelaClientes: React.FC<ITableProps> = ({ clientes, printOnly }) =
       {printOnly && (
         <div className="ml-auto flex items-center gap-2">
           <Button size="sm" variant="outline" className="h-7 gap-1 text-sm" onClick={printTable}>
-            <IconFile className="h-3.5 w-3.5" />
+            <File className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only">Imprimir</span>
           </Button>
         </div>
@@ -39,7 +39,7 @@ export const TabelaClientes: React.FC<ITableProps> = ({ clientes, printOnly }) =
           <div className="ml-auto flex items-center gap-2">
 
             <Button size="sm" variant="outline" className="h-7 gap-1 text-sm" onClick={printTable}>
-              <IconFile className="h-3.5 w-3.5" />
+              <File className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only">Imprimir</span>
             </Button>
           </div>

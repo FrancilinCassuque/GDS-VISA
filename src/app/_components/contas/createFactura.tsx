@@ -12,13 +12,13 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { authStore } from "@/store"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
-import { Check, ChevronsUpDown, FileWarning, HandHelpingIcon, Loader2, Newspaper, Trash } from "lucide-react"
+import { Check, ChevronDown, ChevronsUpDown, FileWarning, HandHelpingIcon, Loader2, Newspaper, Trash } from "lucide-react"
 import Link from "next/link"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { IClient, IFactura, IFacturaPrint, IFacturaStore, IFacturaUpdate, IProcesso, TClientShow } from "@/types"
-import { columnsCliente, columnsProcesso, IconChevronDown, TabelaClientes, TabelaDeDados, TabelaProcessos, TermoFactura } from "@/app/_components"
+import { columnsProcesso, TabelaDeDados, TabelaProcessos, } from "@/app/_components"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
@@ -347,7 +347,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
                   <div className="font-medium">Detalhes da Factura</div>
                   <div className="text-muted-foreground text-sm">Forneça detalhes sobre a Factura a ser Registrada</div>
                 </div>
-                <IconChevronDown className="h-5 w-5 transition-transform" />
+                <ChevronDown className="h-5 w-5 transition-transform" />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="px-6 py-4 space-y-4">

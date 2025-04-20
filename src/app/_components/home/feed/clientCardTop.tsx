@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { IClient } from "@/types"
-import { CardAction, IconUserPlus } from "../.."
+import { CardAction } from "../.."
+import { UserPlus } from "lucide-react"
 
 interface ICardProps {
   clientes: IClient[]
@@ -40,7 +41,7 @@ export const CardClientsHomeTop: React.FC<ICardProps> = async ({ clientes }) => 
     <>
       <CardAction
         textoDoTitle="Clientes"
-        iconDoBotao={<IconUserPlus />}
+        iconDoBotao={<UserPlus />}
         textoDoBotao="Registrar novo "
         textoDaDescricao="Registra Cliente para poder Abrir Processo."
         linkDoBotao={'/auth/client/create'}

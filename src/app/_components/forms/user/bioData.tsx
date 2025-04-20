@@ -5,12 +5,11 @@ import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/component
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import { EnderecoForm, IconChevronDown, PerfilData } from "@/app/_components"
 import { useForm } from "react-hook-form"
 import { authStore } from "@/store"
 import { update, updateBio } from "@/db"
 import { image } from "@/firebase/uploadImage"
-import { Loader, Loader2 } from "lucide-react"
+import { ChevronDown, Loader, Loader2 } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import { z } from "zod"
@@ -83,7 +82,7 @@ export const BioData: React.FC = () => {
           <div className="font-medium">Bio do Usuário</div>
           <div className="text-muted-foreground text-sm">Que es Tu? (Como Ti descreves?)</div>
         </div>
-        <IconChevronDown className="h-5 w-5 transition-transform" />
+        <ChevronDown className="h-5 w-5 transition-transform" />
       </CollapsibleTrigger>
 
       <CollapsibleContent className="px-6 py-4 space-y-4">

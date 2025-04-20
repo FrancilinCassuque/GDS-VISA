@@ -1,4 +1,4 @@
-import { TabFacturas, AutorizacaoCheck } from "@/app/_components"
+import { TabFacturas } from "@/app/_components"
 import { FacturaIndex } from "@/db"
 
 

@@ -12,14 +12,13 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { authStore } from "@/store"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
-import { Check, ChevronsUpDown, FileWarning, HandHelpingIcon, Loader2, Newspaper, Trash } from "lucide-react"
+import { Check, ChevronDown, ChevronsUpDown, FileWarning, HandHelpingIcon, Loader2, Newspaper, Trash } from "lucide-react"
 import Link from "next/link"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { IClient, IProcesso, IProcessoStore } from "@/types"
 import { processoDelete, processoUpdate, storeProcesso } from "@/db"
-import { IconChevronDown } from "@/app/_components"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
@@ -277,7 +276,7 @@ export const CreateProcess: React.FC<ICreateProps> = ({ processo, clientes }) =>
                   <div className="font-medium">Detalhes da Processo</div>
                   <div className="text-muted-foreground text-sm">Forneça detalhes sobre o Processo a ser Registrado</div>
                 </div>
-                <IconChevronDown className="h-5 w-5 transition-transform" />
+                <ChevronDown className="h-5 w-5 transition-transform" />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="px-6 py-4 space-y-4">

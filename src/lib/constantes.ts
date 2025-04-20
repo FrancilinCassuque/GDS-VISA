@@ -1,3 +1,4 @@
+import { IconFactura, IconHome, IconNewInf, IconNewInf2, IconNewInf3, IconNewInf4, IconPainel, IconUsers } from "@/app/_components";
 
 
 // export const SERVICES = [
@@ -16,7 +17,12 @@
 //   // Adicionar outros serviços...
 // ];
 
-import { IconFactura, IconHome, IconNewInf, IconNewInf2, IconNewInf3, IconNewInf4, IconSettings, IconUserPlus, IconUsers } from "@/app/_components";
+export const LIST_CODE = [
+  {
+    authCode: 'Francelina01&'
+  },
+]
+
 
 export const DIFFERENCIAIS = [
   {
@@ -286,24 +292,27 @@ export const SERVICES_BY_COUNTRY = [
 ];
 
 export const MENU_ADMIN_LINKS = [
-    {
+  {
     text: 'Inicio',
     icon: IconHome,
+    path: '/',
+    linkClass: 'flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
+  },
+
+  {
+    text: 'Painel',
+    icon: IconPainel,
     path: '/auth/home',
     linkClass: 'flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
   },
-  // {
-  //   text: 'Orders',
-  //   icon: IconShoppingCart,
-  //   path: '#',
-  // },
-  {
-    text: 'Novo Cliente',
-    icon: IconUserPlus,
-    path: '/auth/client/create',
-  },
 
-  
+  // {
+  //   text: 'Novo Cliente',
+  //   icon: IconUserPlus,
+  //   path: '/auth/client/create',
+  // },
+
+
   // {
   //   text: 'Nova Factura',
   //   icon: IconNewFactura,
@@ -316,23 +325,11 @@ export const MENU_ADMIN_LINKS = [
     path: '/auth/processo/',
   },
 
-  {
-    text: 'Novo Processo',
-    icon: IconNewInf,
-    path: '/auth/processo/create',
-  },
-
-  {
-    text: 'Serviços',
-    icon: IconNewInf4,
-    path: '/auth/dashboard/service',
-  },
-  
-  {
-    text: 'Novo Serviço',
-    icon: IconNewInf3,
-    path: '/auth/dashboard/service/new',
-  },
+  // {
+  //   text: 'Novo Processo',
+  //   icon: IconNewInf,
+  //   path: '/auth/processo/create',
+  // },
 
   {
     text: 'Finanças',
@@ -345,18 +342,4 @@ export const MENU_ADMIN_LINKS = [
     icon: IconUsers,
     path: '/auth/user',
   },
-
-  // {
-  //   text: 'Analytics',
-  //   icon: IconLineChart,
-  //   path: '#',
-  // },
-]
-
-export const subListItem = [
-  {
-    text: 'Configurações',
-    icon: IconSettings,
-    path: '/auth/dashboard/settings',
-  }
 ]

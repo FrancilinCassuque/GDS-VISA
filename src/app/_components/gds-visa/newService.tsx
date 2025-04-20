@@ -7,11 +7,10 @@ import { toast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
-import { IconChevronDown } from "../icons"
 import { useSession } from "next-auth/react"
 import { authStore } from "@/store"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
-import { FileWarning, Loader2, Newspaper, Trash } from "lucide-react"
+import { ChevronDown, FileWarning, Loader2, Newspaper, Trash } from "lucide-react"
 import Link from "next/link"
 import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { z } from "zod"
@@ -235,7 +234,7 @@ export const NewService: React.FC<ICreateProps> = ({ service }) => {
                   <div className="font-medium">Detalhes do Serviço</div>
                   <div className="text-muted-foreground text-sm">Detalhes sobre o Serviço</div>
                 </div>
-                <IconChevronDown className="h-5 w-5 transition-transform" />
+                <ChevronDown className="h-5 w-5 transition-transform" />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="px-6 py-4 space-y-4">

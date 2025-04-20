@@ -1,6 +1,5 @@
 'use client'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { IconChevronDown } from "../../icons"
 import { Label } from "@/components/ui/label"
 import { useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
@@ -9,7 +8,7 @@ import { Separator } from "@/components/ui/separator"
 import { IEnderecoStore } from "@/types"
 import { useCallback, useState } from "react"
 import { authStore } from "@/store"
-import { Loader, Newspaper } from "lucide-react"
+import { ChevronDown, Loader, Newspaper } from "lucide-react"
 import { EnderecoStore } from "@/db"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
@@ -109,7 +108,7 @@ export const EnderecoForm: React.FC = () => {
                 <div className="font-medium">informações Endereço</div>
                 <div className="text-muted-foreground text-sm">Fornecer informações sobre o Endereço</div>
               </div>
-              <IconChevronDown className="h-5 w-5 transition-transform" />
+              <ChevronDown className="h-5 w-5 transition-transform" />
             </CollapsibleTrigger>
 
             <CollapsibleContent className="px-6 py-4 space-y-4">

@@ -37,7 +37,7 @@ import { useState } from "react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import { useRouter } from "next/navigation"
-import { ListaDeCargos } from "@/app/_components/listas/cargos"
+import { ListaDeCargos } from "@/lib/cargos"
 
 
 const FormSchema = z.object({

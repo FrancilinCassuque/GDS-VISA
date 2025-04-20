@@ -2,19 +2,17 @@
 
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { IconChevronDown } from "../../icons"
-import { Label } from "@/components/ui/label"
-import { Controller, useForm } from "react-hook-form"
+import {  useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Lista } from "../../listas/listadepaises"
+import { Lista } from "../../../../lib/listadepaises"
 import { useCallback, useState } from "react"
 import { IProfile, IUserAuth } from "@/types"
 import { authStore } from "@/store"
 import { storeProfile, updateProfile } from "@/db"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
-import { Loader } from "lucide-react"
+import { ChevronDown, Loader } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 
 import z from 'zod'
@@ -137,7 +135,7 @@ export const PerfilData: React.FC<IProfileProps> = ({ authUser }) => {
             <div className="font-medium">informações Pessoas</div>
             <div className="text-muted-foreground text-sm">detalhes Pessoas</div>
           </div>
-          <IconChevronDown className="h-5 w-5 transition-transform" />
+          <ChevronDown className="h-5 w-5 transition-transform" />
         </CollapsibleTrigger>
 
         {erro && (

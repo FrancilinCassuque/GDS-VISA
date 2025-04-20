@@ -1,13 +1,13 @@
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
-import { FormOcupacao, DrawerDialog, FormBio, IconHeart, IconMapPin, IconSettings, IconBriefcase, } from "@/app/_components"
+import { FormOcupacao, DrawerDialog, FormBio } from "@/app/_components"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
 import { ShowUser } from "@/db"
 import { redirect } from "next/navigation"
-import { Pencil } from "lucide-react"
+import { Briefcase, Heart, MapPin, Pencil } from "lucide-react"
 
 export default async function Component({ params }: { params: { id: string } }) {
   const id = params.id
@@ -48,7 +48,7 @@ export default async function Component({ params }: { params: { id: string } }) 
               <div className="text-center md:text-left items-center">
                 {(user?.pessoa?.funcao && user.pessoa.funcao.funcao) ? (
                   <div className="flex items-center gap-2">
-                    <IconBriefcase className="w-4 h-4 text-muted-foreground" />
+                    <Briefcase className="w-4 h-4 text-muted-foreground" />
                     <span className="text-sm text-muted-foreground">{user.pessoa.funcao.funcao}</span>
 
                     <DrawerDialog
@@ -97,11 +97,11 @@ export default async function Component({ params }: { params: { id: string } }) 
           {(user?.pessoa?.funcao && user.pessoa.funcao.funcao) && (
             <div className="grid gap-2">
               <div className="flex items-center gap-2">
-                <IconBriefcase className="w-4 h-4 text-muted-foreground" />
+                <Briefcase className="w-4 h-4 text-muted-foreground" />
                 <span className="text-sm text-muted-foreground">{user.pessoa.funcao.funcao}</span>
               </div>
               <div className="flex items-center gap-2">
-                <IconHeart className="w-4 h-4 text-muted-foreground" />
+                <Heart className="w-4 h-4 text-muted-foreground" />
                 <span className="text-sm text-muted-foreground">Gota D' Sol, {user.pessoa.funcao.funcao}</span>
               </div>
             </div>
@@ -109,7 +109,7 @@ export default async function Component({ params }: { params: { id: string } }) 
 
           {user?.pessoa?.address.id && (
             <div className="flex items-center gap-2 my-2">
-              <IconMapPin className="w-4 h-4 text-muted-foreground" />
+              <MapPin className="w-4 h-4 text-muted-foreground" />
               <span className="text-sm text-muted-foreground">{user.pessoa.address.rua}, {user.pessoa.address.bairro}, {user.pessoa.address.comuna}, {user.pessoa.address.municipio}, {user.pessoa.address.provincia}, {user.pessoa.address.pais}</span>
             </div>
           )}
