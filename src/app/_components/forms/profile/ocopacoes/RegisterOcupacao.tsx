@@ -30,9 +30,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { toast } from "@/components/ui/use-toast"
+import { toast } from "sonner"
 import { ocupacaoCreate, ocupacaoUpdate } from "@/db"
-import { authStore } from "@/store"
+import { useUserStore } from "@/store"
 import { useState } from "react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
@@ -52,7 +52,7 @@ interface IOcupacaoProps {
 export const FormOcupacao: React.FC<IOcupacaoProps> = ({ update, id }) => {
   const [loading, setLoading] = useState(false)
   const [erro, setErro] = useState(false)
-  const authUser = authStore()
+  const { currentUser } = useUserStore()
   const route = useRouter()
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -73,54 +73,26 @@ export const FormOcupacao: React.FC<IOcupacaoProps> = ({ update, id }) => {
             setLoading(false)
             return
           }
-          const upAuth = authUser.userauth
-    
-          if (upAuth) {
-            upAuth.pessoa.funcoes = ocupacao
-    
-            authUser.startAuth(upAuth)
-    
-            route.push('/auth/home')
-          }
+
+          route.refresh()
           setLoading(false)
-    
-          toast({
-            title: "sucesso!",
-            description: (
-              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                <code className="text-white">Perfil Actualizado com sucesso!</code>
-              </pre>
-            ),
-          })
+
+          toast.success("Perfil Actualizado com sucesso!")
         }
 
       } else {
-        const ocupacao = await ocupacaoCreate({ ...data, profileId: authUser.userauth?.pessoa?.id || '' })
+        const ocupacao = await ocupacaoCreate({ ...data, profileId: currentUser?.pessoa?.id || '' })
 
         if (ocupacao instanceof Error) {
           setErro(true)
           setLoading(false)
           return
         }
-        const upAuth = authUser.userauth
-  
-        if (upAuth) {
-          upAuth.pessoa.funcoes = ocupacao
-  
-          authUser.startAuth(upAuth)
-  
-          route.push('/auth/dashboard')
-        }
+
+        route.refresh()
         setLoading(false)
-  
-        toast({
-          title: "sucesso!",
-          description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-              <code className="text-white">Perfil Actualizado com sucesso!</code>
-            </pre>
-          ),
-        })
+
+        toast.success("Perfil Actualizado com sucesso!")
       }
 
     } catch (error) {

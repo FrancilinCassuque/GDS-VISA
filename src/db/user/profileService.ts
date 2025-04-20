@@ -2,8 +2,7 @@
 
 import { IProfile, IProfileStore } from "@/types"
 import prisma from '../prisma.index'
-import { update } from "./userService"
-
+import { updateUser } from ".."
 
 
 export async function profileIndex(): Promise<IProfile[] | Error> {
@@ -71,7 +70,7 @@ export async function storeProfile(profile: IProfileStore, userId: string): Prom
       return new Error('Error ao registrar perfil.')
     }
 
-    await update(perfil.userId,undefined,`${profile.apelido}${farstNome}`.trim())
+    await updateUser(perfil.userId,undefined,`${profile.apelido}${farstNome}`.trim())
 
     return perfil
 
@@ -114,7 +113,7 @@ export async function updateProfile(profile: IProfileStore, profileId: string, i
       return new Error('Error ao registrar perfil.')
     }
 
-    await update(perfil.userId,undefined,`${profile.apelido}${farstNome}`.trim())
+    await updateUser(perfil.userId,undefined,`${profile.apelido}${farstNome}`.trim())
 
     return perfil
 

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { useSession } from "next-auth/react"
-import { authStore } from "@/store"
+import { useUserStore } from "@/store"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
 import { ChevronDown, FileWarning, Loader2, Trash } from "lucide-react"
 import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
@@ -35,7 +35,7 @@ export const CreateVencimento: React.FC<ICreateProps> = ({ client }) => {
   const [eliminar, SetEliminar] = useState(false)
   const [loading, setLoading] = useState(false)
   const [editar, setEditar] = useState(true)
-  const AUTH = authStore()
+  const {currentUser } = useUserStore()
   const route = useRouter()
   const { status } = useSession()
 
@@ -47,15 +47,14 @@ export const CreateVencimento: React.FC<ICreateProps> = ({ client }) => {
   async function submitForm(clientBody: z.infer<typeof clientForm>) {
     try {
       setLoading(true)
-      const user = AUTH.userauth
-
-      if (user?.id) {
+      
+      if (currentUser?.id) {
 
         const clientData: Omit<IClientStore, 'id'> = {
           telefone: clientBody.telefone,
           nomecompleto: clientBody.nomecompleto,
           descricao: clientBody.descricao,
-          userId: user.id,
+          userId: currentUser.id,
         }
 
         const newClient = await storeClient(clientData)
