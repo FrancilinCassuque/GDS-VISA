@@ -92,6 +92,9 @@ const SideDrawer = () => {
                       <a
                         href={item.path}
                         className="flex items-center p-3 rounded-lg text-secondary-foreground hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
+                        onClick={(e) => {
+                          setIsOpen(!isOpen)
+                        }}
                       >
                         <span className="mr-3">{item.icon({ className: 'w-6 h-6 text-indigo-600' })}</span>
                         <span>{item.text}</span>

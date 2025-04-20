@@ -293,7 +293,7 @@ export const SERVICES_BY_COUNTRY = [
 
 export const MENU_ADMIN_LINKS = [
   {
-    text: 'Inicio',
+    text: 'Home Cliente',
     icon: IconHome,
     path: '/',
     linkClass: 'flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
