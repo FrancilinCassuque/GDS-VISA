@@ -22,7 +22,8 @@ export default async function Image() {
         position: 'relative',
         zIndex: 10,
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'center',
+        display: 'flex',
       }}>
         <div style={{
           maxWidth: '48rem',
