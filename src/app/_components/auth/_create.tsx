@@ -4,18 +4,16 @@ import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
-import { toast } from "@/components/ui/use-toast"
+import { toast } from "sonner"
 import { signIn, useSession } from "next-auth/react"
-import { userCreate } from "@/db"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { Eye, FileWarning, FormInput, Loader2, Loader2Icon, Lock, LogIn, Mail, UserPlus } from "lucide-react"
+import { Eye, FileWarning, Loader2, Loader2Icon, Lock, LogIn, Mail, UserPlus } from "lucide-react"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
-import { authStore } from "@/store"
-import { IUserAuth } from "@/types"
+import { useUserStore } from "@/store"
 
 const IFormRegisterUser = z.object({
   email: z.string().email('E-mail Invalido!'),
@@ -34,70 +32,22 @@ export const SignUp = () => {
   const [showPass, setShowPass] = useState(false)
   const [showCode, setShowCode] = useState(false)
   const [formError, setFormError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
   const route = useRouter()
-
-  const { status } = useSession()
-  const [userAuth, setUser] = useState<IUserAuth | undefined>(undefined)
-  const u = authStore()
-
-  useEffect(() => {
-    if (status == 'authenticated') {
-      setUser(u.userauth)
-      // setCasas(u.casas)
-      // setdisponiveis(u.casas.filter(casa => casa.published == true).length)
-    }
-
-  }, [status, setUser, u])
+  const { currentUser, createUser, loading } = useUserStore()
 
   const submitForm = form.handleSubmit(async (user: z.infer<typeof IFormRegisterUser>) => {
-    setIsLoading(true)
-
     const elias = user.code.toUpperCase() === 'G22/25-002877412LA031'
     const jose = user.code.toUpperCase() === 'G22/25-009578474LA040'
     const francis = user.code.toUpperCase() === 'G22/25-007169455LA048'
 
-    if (francis || elias || jose || userAuth?.id) {
-      const newUser = await userCreate(user).then(res => {
-        return res
-      }).catch((err) => {
-        return err
+    if (francis || elias || jose || currentUser?.id) {
+      await createUser({
+        email: user.email,
+        password: user.password,
       })
 
-      if (newUser instanceof Error) {
-        const erro = newUser.message
-
-        form.setValue('email', '')
-        form.setValue('password', '')
-        form.setFocus('email')
-        setIsLoading(false)
-
-        return toast({
-          title: 'Error',
-          description: <pre><code>Error ao registrar usuário</code></pre>,
-          variant: "destructive"
-        })
-      }
-
-      await signIn('email', { email: user.email, redirect: false })
-
-      form.setValue('email', '')
-      form.setValue('password', '')
-      form.setFocus('email')
-
-      setIsLoading(false)
-
-      if (!userAuth?.id) {
-        route.push('auth/home')
-      }
-
-      setIsLoading(false)
-      return toast({
-        title: 'Success',
-        description: <pre><code>Agente Registrado com sucesso✔</code></pre>
-      })
+      route.push('auth/user')
     } else {
-      setIsLoading(false)
       setFormError(true)
       form.setValue('code', '')
       form.setFocus('code')
@@ -132,7 +82,7 @@ export const SignUp = () => {
             Registra Agente🐱‍👤
           </h2>
 
-          {!userAuth?.id && (
+          {!currentUser?.id && (
             <p className="mt-2 text-center text-sm text-muted-foreground">
               Ou{" "}
               <Link href={"/userauth"} className="font-medium text-primary" prefetch={false}>
@@ -207,9 +157,9 @@ export const SignUp = () => {
                 )}
               />
             </div>
-            {/* {JSON.stringify(userAuth)} */}
+            {/* {JSON.stringify(currentUser)} */}
 
-            <div className={userAuth?.id ? "sr-only" : "relative"}>
+            <div className={currentUser?.id ? "sr-only" : "relative"}>
               <FormField
                 control={form.control}
                 name="code"
@@ -245,9 +195,9 @@ export const SignUp = () => {
 
 
             <div>
-              <Button disabled={isLoading} type="submit" className="w-full">
+              <Button disabled={loading} type="submit" className="w-full">
                 <UserPlus className="mr-2 inline-block h-4 w-4" />
-                {isLoading ? <Loader2 className="animate-spin h-8 w-8" /> : 'Registrar'}
+                {loading ? <Loader2 className="animate-spin h-8 w-8" /> : 'Registrar'}
               </Button>
             </div>
           </form>

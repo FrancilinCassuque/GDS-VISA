@@ -6,8 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form"
-import { authStore } from "@/store"
-import { update, updateBio } from "@/db"
+import {  updateBio } from "@/db"
 import { image } from "@/firebase/uploadImage"
 import { ChevronDown, Loader, Loader2 } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
@@ -15,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { z } from "zod"
 import { useRouter } from "next/navigation"
 import { toast } from "@/components/ui/use-toast"
+import { useUserStore } from "@/store"
 
 interface IUpdateUser {
   bio: string
@@ -26,11 +26,11 @@ export const BioData: React.FC = () => {
   const [editar, setEditar] = useState(true)
   const [loading, setLoading] = useState(false)
   const form = useForm<IUpdateUser>()
-  const auth = authStore()
+  const { currentUser } = useUserStore()
   const rote = useRouter()
 
   const cancelar = () => {
-    form.setValue('bio', auth.userauth?.pessoa?.bio || '')
+    form.setValue('bio', currentUser?.pessoa?.bio || '')
 
     setEditar(true)
   }
@@ -39,18 +39,17 @@ export const BioData: React.FC = () => {
     try {
       setLoading(true)
 
-      const id = auth.userauth?.pessoa?.id || ''
+      const id = currentUser?.pessoa?.id || ''
       const bioSend = bio.parse(data)
 
       const response = await updateBio(bioSend, id)
 
       if (!(response instanceof Error)) {
-        const updateAuth = auth.userauth
+        const updateAuth = currentUser
         if (updateAuth) {
           updateAuth.pessoa.bio = response
 
-          auth.startAuth(updateAuth)
-          rote.push('/auth/dashboard')
+          rote.refresh()
 
           toast({
             title: "sucesso!",
@@ -92,7 +91,7 @@ export const BioData: React.FC = () => {
               <Label htmlFor="bio">Descrições</Label>
               <Textarea id="bio" placeholder="Fale Sobre voce!"
                 {...form.register('bio')}
-                defaultValue={auth.userauth?.pessoa?.bio || ''}
+                defaultValue={currentUser?.pessoa?.bio || ''}
                 readOnly={editar}
                 rows={8}
               />

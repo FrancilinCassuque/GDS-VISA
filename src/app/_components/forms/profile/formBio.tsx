@@ -3,9 +3,9 @@
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
+import { toast } from "sonner"
 import { updateBio } from "@/db"
-import { authStore } from "@/store"
+import { useUserStore } from "@/store"
 import { Loader } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -21,44 +21,23 @@ const bio = z.string({ message: 'Erro! Diga qualquer coisa sobre vc!' }).min(5, 
 export const FormBio: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const form = useForm<IUpdateUser>()
-  const auth = authStore()
+  const { currentUser } = useUserStore()
   const rote = useRouter()
 
-  // const cancelar = () => {
-  //   form.setValue('bio', auth.userauth?.pessoa?.bio || '')
-
-  //   setEditar(true)
-  // }
 
   const createBio = form.handleSubmit(async (data: IUpdateUser) => {
     try {
       setLoading(true)
 
-      const id = auth.userauth?.pessoa?.id || ''
+      const id = currentUser?.pessoa?.id || ''
 
       const bioSend = bio.parse(data.bio)
 
       const response = await updateBio(bioSend, id)
 
       if (!(response instanceof Error)) {
-        const upAuth = auth.userauth
-
-        if (upAuth) {
-          upAuth.pessoa.bio = response
-
-          auth.startAuth(upAuth)
-
-          rote.push('/auth/dashboard')
-
-          toast({
-            title: "sucesso!",
-            description: (
-              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                <code className="text-white">Perfil Actualizado com sucesso!</code>
-              </pre>
-            ),
-          })
-        }
+        rote.refresh()
+        toast.success("Perfil Actualizado com sucesso!")
       }
       setLoading(false)
 

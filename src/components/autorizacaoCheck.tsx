@@ -15,7 +15,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { toast } from "@/components/ui/use-toast"
-import { authStore } from "@/store"
 import { useState } from "react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
@@ -31,7 +30,6 @@ const FormSchema = z.object({
 export const AutorizacaoCheck: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [erro, setErro] = useState(false)
-  const authUser = authStore()
   const [showPass, setShowPass] = useState(false)
   const [open, setOpen] = useState(true)
 

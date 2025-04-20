@@ -1,11 +1,4 @@
 // User types
-
-export interface userlogin {
-  id: string
-  email: string
-  password: string
-}
-
 export type IUserProfileHome = {
   id: string
   name: string | null
@@ -61,84 +54,50 @@ export interface IProfileStore {
   telefone: string
 }
 
-
-export interface IUserAuth {
-  id: string
-  name: string | null
-  email: string
-  image: string | null
-  password: string | null
+export interface IUserAuth extends IUser {
   pessoa: {
-    id: string
-    nome: string
-    Apelido: string
-    genero: string
-    pais: string | null
-    bio: string | null
-    telefone: string
-
-    address: {
-      id: number
-      rua: string
-      bairro: string
-      comuna: string
-      municipio: string
-      provincia: string
-      pais: string
-    }
-
+    id: string;
+    nome: string;
+    Apelido: string;
+    genero: string;
+    pais: string;
+    telefone: string;
+    bio: string;
     identidade: {
-      id: string,
-      numero: string,
-      tipo: string
-    }
-
-    funcoes?: {
-      id: number,
-      funcao: string
-    }
-
-  }
-
-}
-
-export interface IUserShow {
-  id: string
-  name: string | null
-  email: string
-  image: string | null
-  password: string | null
-  pessoa?: {
-    id: string
-    nome: string
-    Apelido: string
-    genero: string
-    pais: string | null
-    bio: string | null
-    telefone: string
-
+      id: string;
+      numero: string;
+      tipo: string;
+    };
+    funcao: {
+      id: number;
+      funcao: string;
+    };
     address: {
-      id: number
-      rua: string
-      bairro: string
-      comuna: string
-      municipio: string
-      provincia: string
-      pais: string
-    }
-
-    identidade?: {
-      id: string,
-      numero: string,
-      tipo: string
-    }
-
-    funcao?: {
-      id: number,
-      funcao: string
-    }
-  },
-
-  // casas: ICasas[]
+      id: number;
+      rua: string;
+      bairro: string;
+      comuna: string;
+      municipio: string;
+      provincia: string;
+      pais: string;
+    };
+  };
 }
 
+
+export interface IUserShow extends IUserAuth {
+  // casas: Casa[]; // Adicione o tipo correto para casas, se necessário
+}
+
+export interface IUpdateUser {
+  id: string;
+  name: string | null;
+  email: string;
+  image?: string;
+}
+
+export interface userlogin {
+  id: string;
+  email: string;
+  password: string;
+}

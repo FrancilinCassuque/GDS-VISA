@@ -41,7 +41,7 @@ const SideDrawer = () => {
       </button>
 
       {/* Drop dawn Menu fixed right */}
-      <div className="fixed z-50 top-4 right-4 p-2">
+      <div className="fixed z-50 top-4 right-4">
         <DropMenu />
       </div>
 

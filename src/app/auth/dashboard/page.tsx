@@ -7,7 +7,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
-import { authStore } from "@/store"
+import { useUserStore } from "@/store"
 import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
 import { IUserAuth } from "@/types"
@@ -18,34 +18,22 @@ import { Briefcase, Heart, MapPin, Pencil, Settings } from "lucide-react"
 import { Metadata } from "next"
 
 export default function Component() {
-  const { status } = useSession()
-  const [user, setUser] = useState<IUserAuth | undefined>(undefined)
-  const u = authStore()
-
-
-  useEffect(() => {
-    if (status == 'authenticated') {
-      setUser(u.userauth)
-      // setCasas(u.casas)
-      // setdisponiveis(u.casas.filter(casa => casa.published == true).length)
-    }
-
-  }, [status, setUser, u])
+  const { currentUser } = useUserStore()
 
   return (
     <div className="flex flex-col items-center gap-8 min-w-full mx-auto py-12 px-4 md:px-0">
       <div className="flex flex-col items-center gap-6 md:w-1/3 md:min-w-96 mb-10">
         <div className="flex flex-col items-center gap-4">
           <Avatar className="w-24 h-24">
-            <AvatarImage src={user?.image ? user.image : "/placeholder-user.jpg"} />
-            <AvatarFallback>{user?.name ? `${user.name[0]}` : 'MC'}</AvatarFallback>
+            <AvatarImage src={currentUser?.image ? currentUser.image : "/placeholder-user.jpg"} />
+            <AvatarFallback>{currentUser?.name ? `${currentUser.name[0]}` : 'MC'}</AvatarFallback>
           </Avatar>
 
           <div className="text-center md:text-left items-center">
-            <h2 className="text-2xl font-bold text-center">{user?.name}</h2>
+            <h2 className="text-2xl font-bold text-center">{currentUser?.name}</h2>
           </div>
 
-          {(!user?.pessoa?.id) ? (
+          {(!currentUser?.pessoa?.id) ? (
             <div>
               <Alert variant='destructive'>
                 <ExclamationTriangleIcon />
@@ -68,16 +56,16 @@ export default function Component() {
           ) : (
             <>
               <div className="text-center md:text-left items-center">
-                {(user?.pessoa?.funcoes && user.pessoa.funcoes.funcao) ? (
+                {(currentUser?.pessoa?.funcao && currentUser.pessoa.funcao.funcao) ? (
                   <div className="grid grid-flow-col grid-cols-1 items-center justify-center">
                     <Briefcase className="w-4 h-4 text-muted-foreground" />
                     <span className="text-sm text-muted-foreground m-4">
-                      {user.pessoa.funcoes.funcao}
+                      {currentUser.pessoa.funcao.funcao}
                     </span>
 
                     <DrawerDialog descricao="Actualiza sua Função aqui. Clique em salvar quando terminar."
                       icon={<Pencil className="w-5 text-primary" />}>
-                      <FormOcupacao id={user.pessoa.funcoes.id} update={true} />
+                      <FormOcupacao id={currentUser.pessoa.funcao.id} update={true} />
                     </DrawerDialog>
                   </div>
                 ) : (
@@ -89,7 +77,7 @@ export default function Component() {
                 )}
               </div>
 
-              {(user?.pessoa && user.pessoa.bio) ? <p className="text-sm text-muted-foreground max-w-[300px] text-center">{user.pessoa.bio}</p> : (
+              {(currentUser?.pessoa && currentUser.pessoa.bio) ? <p className="text-sm text-muted-foreground max-w-[300px] text-center">{currentUser.pessoa.bio}</p> : (
                 <div>
                   <DrawerDialog textoDoBotao="Editar Biografia" descricao="Faça alterações em sua Biografia aqui. Clique em salvar quando terminar.">
                     <FormBio />
@@ -114,11 +102,11 @@ export default function Component() {
 
           <Separator className="my-4" />
 
-          {(user?.pessoa?.funcoes && user.pessoa.funcoes.id) && (
+          {(currentUser?.pessoa?.funcao && currentUser.pessoa.funcao.id) && (
             <div className="grid gap-2">
               <div className="flex items-center gap-2">
                 <Briefcase className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">{user.pessoa.funcoes.funcao}</span>
+                <span className="text-sm text-muted-foreground">{currentUser.pessoa.funcao.funcao}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Heart className="w-4 h-4 text-muted-foreground" />
@@ -127,10 +115,10 @@ export default function Component() {
             </div>
           )}
 
-          {user?.pessoa?.address.id && (
+          {currentUser?.pessoa?.address.id && (
             <div className="flex items-center gap-2 my-2">
               <MapPin className="w-4 h-4 text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">{user.pessoa.address.rua}, {user.pessoa.address.bairro}, {user.pessoa.address.comuna}, {user.pessoa.address.municipio}, {user.pessoa.address.provincia}, {user.pessoa.address.pais}</span>
+              <span className="text-sm text-muted-foreground">{currentUser.pessoa.address.rua}, {currentUser.pessoa.address.bairro}, {currentUser.pessoa.address.comuna}, {currentUser.pessoa.address.municipio}, {currentUser.pessoa.address.provincia}, {currentUser.pessoa.address.pais}</span>
             </div>
           )}
 

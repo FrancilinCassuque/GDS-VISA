@@ -1,8 +1,6 @@
 import { CardProcessoHomeTop, TabProcessos } from "@/app/_components"
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { processoIndex } from "@/db"
-import Link from "next/link"
 
 
 export default async function Page() {

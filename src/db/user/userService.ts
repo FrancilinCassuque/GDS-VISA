@@ -1,231 +1,65 @@
-'use server'
+// src/actions/userActions.ts
+'use server';
 
-import { IUser, IUserAuth, IUserProfileHome, IUserShow, userlogin } from "@/types"
-import prisma from "../prisma.index"
-import { CriptPassword } from "@/lib/criptPass"
-import { authStore, userStore } from '@/store'
-import { revalidatePath } from "next/cache"
+import { IUser, IUserShow, IUpdateUser, userlogin } from "@/types";
+import prisma from "../prisma.index";
+import { CriptPassword } from "@/lib/criptPass";
+import { revalidatePath } from "next/cache";
 
-interface IUpdateUser {
-  id: string
-  name: string | null
-  email: string
-  image?: string
-}
-
-export async function userCreate(formDara: Omit<userlogin, 'id'>): Promise<string | Error> {
-  'use server'
-
+// Função para criar um usuário
+export async function userCreate(formData: Omit<userlogin, 'id'>): Promise<string | Error> {
   try {
-    const user = {
-      email: formDara.email,
-      password: formDara.password
-    }
-
-    const criptPass = CriptPassword(user.password as string || '')
-    const name = `user_${Date.now()}`
+    const criptPass = CriptPassword(formData.password);
+    const name = `user_${Date.now()}`;
 
     const newUser = await prisma.user.create({
       data: {
-        email: user.email.toLowerCase(),
+        email: formData.email.toLowerCase(),
         password: criptPass,
-        name: name
-      }
-    })
-
-    if (newUser.id) {
-      return newUser.id
-    }
-
-    return new Error('Error ao registrar usuário')
-
-  } catch (error) {
-    return new Error((error as { message: string }).message || 'Erro ao registrar usuário')
-  }
-}
-
-export async function login(user: Omit<userlogin, 'id'>): Promise<IUser | Error> {
-
-  'use server'
-
-  try {
-    const userFinded = await prisma.user.findUnique({
-      where: {
-        email: user.email.toLowerCase()
+        name: name,
       },
-    })
+    });
 
-    const passwordHash = CriptPassword(user.password)
-
-    if (!userFinded) {
-      return new Error('Conta não existe.')
-    }
-
-    if (userFinded?.password != passwordHash) {
-      return new Error('Palavra passe errada.')
-    }
-
-    revalidatePath('/')
-
-    return userFinded
+    return newUser.id;
   } catch (error) {
-    return new Error((error as { massage: string }).massage || 'Erro ao fazer login')
+    return new Error((error as { message: string }).message || 'Erro ao registrar usuário');
   }
 }
 
-export async function auth(email: string): Promise<IUserAuth | Error> {
-  'use server'
-  try {
-    const userCompleto = await prisma.user.findUnique({
-      where: {
-        email
-      },
-
-      include: {
-        profile: {
-          include: {
-            identidades: true,
-
-            funcoes: {
-              orderBy: {
-                updatedAt: "desc"
-              },
-
-              select: {
-                id: true,
-                funcao: true,
-              }
-            },
-
-            Address: {
-              select: {
-                id: true,
-                rua: true,
-                bairro: true,
-                comuna: true,
-                municipio: true,
-                provincia: true,
-                pais: true,
-              }
-            }
-          }
-        },
-      }
-    })
-
-    if (!userCompleto) {
-      return new Error('Conta não existe.')
-    }
-
-    const pessoa = userCompleto.profile.find((_, index) => index == 0)
-    const identidade = pessoa?.identidades.find(indentidade => indentidade.tipo == 'NIF' || indentidade.tipo == 'PASSAPORTE')
-    const funcao = pessoa?.funcoes.find((_, index) => index == 0)
-    const address = pessoa?.Address.find((_, index) => index == 0)
-
-    const auth: IUserAuth = {
-      id: userCompleto.id,
-      name: userCompleto.name,
-      email: userCompleto.email,
-      image: userCompleto.image,
-      password: userCompleto.password,
-      pessoa: {
-        id: pessoa?.id || '',
-        nome: pessoa?.nome || '',
-        Apelido: pessoa?.Apelido || '',
-        genero: pessoa?.genero || '',
-        pais: pessoa?.pais || '',
-        telefone: pessoa?.telefone || '',
-        bio: pessoa?.bio || '',
-
-        identidade: {
-          id: identidade?.id || '',
-          numero: identidade?.numero || '',
-          tipo: identidade?.tipo || '',
-        },
-
-        funcoes: {
-          id: funcao?.id || 0,
-          funcao: funcao?.funcao || '',
-        },
-
-        address: {
-          id: address?.id || 0,
-          rua: address?.rua || '',
-          bairro: address?.bairro || '',
-          comuna: address?.comuna || '',
-          municipio: address?.municipio || '',
-          provincia: address?.provincia || '',
-          pais: address?.pais || '',
-        }
-      }
-    }
-
-    revalidatePath('/')
-
-    return auth
-  } catch (error) {
-    return new Error((error as { massage: string }).massage || 'Erro ao fazer login')
-  }
-}
-
+// Função para buscar um usuário por ID
 export async function ShowUser(id: string): Promise<IUserShow | Error> {
-  'use server'
   try {
     const userCompleto = await prisma.user.findUnique({
-      where: {
-        id: id
-      },
-
+      where: { id },
       include: {
         profile: {
-
           include: {
             identidades: true,
-
-            funcoes: {
-              orderBy: {
-                updatedAt: "desc"
-              },
-
-              select: {
-                id: true,
-                funcao: true,
-              }
-            },
-
-            Address: {
-              select: {
-                id: true,
-                rua: true,
-                bairro: true,
-                comuna: true,
-                municipio: true,
-                provincia: true,
-                pais: true,
-              }
-            },
-
-            processos: true
-          }
+            funcoes: { orderBy: { updatedAt: "desc" }, select: { id: true, funcao: true } },
+            Address: { select: { id: true, rua: true, bairro: true, comuna: true, municipio: true, provincia: true, pais: true } },
+          },
         },
-      }
-    })
+      },
+    });
 
     if (!userCompleto) {
-      return new Error('Conta não existe.')
+      return new Error('Conta não existe.');
     }
 
-    const pessoa = userCompleto.profile.find((_, index) => index == 0)
-    const identidade = pessoa?.identidades.find(indentidade => indentidade.tipo == 'NIF' || indentidade.tipo == 'PASSAPORTE')
-    const ocupacao = pessoa?.funcoes.find((_, index) => index == 0)
-    const address = pessoa?.Address.find((_, index) => index == 0)
+    const pessoa = userCompleto.profile[0];
+    const identidade = pessoa?.identidades.find((ind) => ind.tipo === 'NIF' || ind.tipo === 'PASSAPORTE');
+    const ocupacao = pessoa?.funcoes[0];
+    const address = pessoa?.Address[0];
 
-    const auth: IUserShow = {
+    const userShow: IUserShow = {
       id: userCompleto.id,
       name: userCompleto.name,
       email: userCompleto.email,
       image: userCompleto.image,
       password: userCompleto.password,
+      emailVerified: userCompleto.emailVerified,
+      updatedAt: userCompleto.updatedAt,
+      createdAt: userCompleto.createdAt,
       pessoa: {
         id: pessoa?.id || '',
         nome: pessoa?.nome || '',
@@ -234,18 +68,15 @@ export async function ShowUser(id: string): Promise<IUserShow | Error> {
         pais: pessoa?.pais || '',
         telefone: pessoa?.telefone || '',
         bio: pessoa?.bio || '',
-
         identidade: {
           id: identidade?.id || '',
           numero: identidade?.numero || '',
           tipo: identidade?.tipo || '',
         },
-
         funcao: {
           id: ocupacao?.id || 0,
           funcao: ocupacao?.funcao || '',
         },
-
         address: {
           id: address?.id || 0,
           rua: address?.rua || '',
@@ -254,115 +85,52 @@ export async function ShowUser(id: string): Promise<IUserShow | Error> {
           municipio: address?.municipio || '',
           provincia: address?.provincia || '',
           pais: address?.pais || '',
-        }
+        },
       },
+    };
 
-      // casas: userCompleto.casas
-    }
-
-    revalidatePath('/')
-
-    return auth
+    revalidatePath('/');
+    return userShow;
   } catch (error) {
-    return new Error((error as { massage: string }).massage || 'Erro ao fazer login')
+    return new Error((error as { message: string }).message || 'Erro ao buscar usuário');
   }
 }
 
+// Função para listar usuários
 export async function userIndex(page = 1): Promise<IUser[] | Error> {
-  'use server'
-
   try {
-    const users = await prisma.user.findMany()
-
-    if (users) {
-      userStore.getState().start(users)
-      return users
-    }
-
-    return new Error('Usários não encontrados')
+    const users = await prisma.user.findMany();
+    return users;
   } catch (error) {
-    return new Error((error as { message: string }).message || 'Erro ao buscar usuários')
+    return new Error((error as { message: string }).message || 'Erro ao buscar usuários');
   }
 }
 
-export async function update(userId = '', user?: IUpdateUser, userName = ''): Promise<string | Error> {
-  'use server'
-
+// Função para atualizar um usuário
+export async function updateUser(userId: string, user?: IUpdateUser, userName = ''): Promise<string | Error> {
   try {
+    const data = userName ? { name: userName } : { name: user?.name, email: user?.email, image: user?.image };
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data,
+    });
 
-    if (userName) {
-      const updatedUser = await prisma.user.update({
-        where: {
-          id: userId
-        },
-        data: {
-          name: userName
-        },
-        select: {
-          id: true,
-          email: true
-        }
-      })
-
-      if (updatedUser) {
-        const userAuth = await auth(updatedUser.email)
-
-        if (userAuth instanceof Error) return updatedUser.id
-
-        authStore.getState().startAuth(userAuth)
-        return updatedUser.id
-      }
-
-    } else {
-      const updatedUser = await prisma.user.update({
-        where: {
-          id: userId
-        },
-        data: {
-          name: user?.name,
-          email: user?.email.toLowerCase(),
-          image: user?.image
-        },
-        select: {
-          id: true,
-          email: true
-        }
-      })
-
-      if (updatedUser) {
-        const userAuth = await auth(updatedUser.email)
-
-        if (userAuth instanceof Error) return updatedUser.id
-
-        authStore.getState().startAuth(userAuth)
-        return updatedUser.id
-      }
+    if (updatedUser) {
+      return updatedUser.id;
     }
 
-    return new Error('usuário não encontrado')
-  } catch (err) {
-    return new Error((err as { message: string }).message || 'Erro ao buscar Usuário')
+    return new Error('Usuário não encontrado');
+  } catch (error) {
+    return new Error((error as { message: string }).message || 'Erro ao atualizar usuário');
   }
 }
 
-export async function deletUser(id: string): Promise<string | Error> {
-  'use server'
-
+// Função para excluir um usuário
+export async function deleteUser(id: string): Promise<string | Error> {
   try {
-    const userDeleted = await prisma.user.delete({
-      where: {
-        id
-      }
-    })
-
-    if (userDeleted instanceof Error) {
-      return new Error('usuário não encontrado')
-    }
-
-    return userDeleted.id
-
-  } catch (err) {
-    return new Error((err as { message: string }).message || 'Erro ao buscar Usuário')
+    const userDeleted = await prisma.user.delete({ where: { id } });
+    return userDeleted.id;
+  } catch (error) {
+    return new Error((error as { message: string }).message || 'Erro ao excluir usuário');
   }
 }
-

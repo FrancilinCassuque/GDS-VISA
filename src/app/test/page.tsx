@@ -1,12 +1,5 @@
 'use client'
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { userIndex } from "@/db"
-import { userStore } from "@/store"
-import { IUser } from "@/types"
-import { Separator } from "@radix-ui/react-select"
-import Link from "next/link"
-import { useEffect, useState } from "react"
 import ImageUpload from "../_components/image/upload"
 
 function stringToColor(string: string) {

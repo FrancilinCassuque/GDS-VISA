@@ -10,7 +10,6 @@ import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import { authStore } from "@/store"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
 import { Check, ChevronDown, ChevronsUpDown, FileWarning, HandHelpingIcon, Loader2, Newspaper, Trash } from "lucide-react"
 import Link from "next/link"
@@ -24,6 +23,7 @@ import { cn } from "@/lib/utils"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { FacturaDelete, facturaStoreService, FacturaUpdate } from "@/db"
 import { TabelaFacturaPrint } from "../user/tables/tableFacturaPrint"
+import { useUserStore } from "@/store"
 
 export const estadosDeFactura = [
   '1ª Parcela Pendente',
@@ -68,8 +68,8 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
 
   const [loading, setLoading] = useState(false)
   const [editar, setEditar] = useState(true)
+  const { currentUser } = useUserStore()
 
-  const AUTH = authStore()
   const rote = useRouter()
   const { status } = useSession()
   const [processosList, setProcessosList] = useState<IProcesso[]>([])
@@ -93,17 +93,16 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
   async function submitForm(body: z.infer<typeof facturaForm>) {
     try {
       setLoading(true)
-      const user = AUTH.userauth
 
 
-      if (user?.pessoa?.id) {
+      if (currentUser?.id) {
 
         const store: IFacturaStore = {
           desconto: Number.parseInt(body.desconto),
           estado: body.estado,
           valorApagar: Number.parseInt(body.valorApagar),
           descricao: body.descricao,
-          profileId: user.pessoa.id,
+          profileId: currentUser.id,
           clientId: body.clientId,
         }
 
@@ -319,7 +318,7 @@ export const FacturaStore: React.FC<IFacturaProps> = ({ factura, clientes, proce
     <div className="w-full max-w-4xl mx-auto py-12 md:py-16 lg:py-20">
 
       {status == 'authenticated' && (
-        <AlertDialog open={AUTH.userauth?.pessoa?.identidade?.id ? false : true}>
+        <AlertDialog open={currentUser?.id ? false : true}>
           <AlertDialogContent className="w-full mx-auto">
             <AlertDialogHeader>
               <AlertDialogTitle className="flex flew-col col-end-2 justify-center"><FileWarning /> Aviso!</AlertDialogTitle>

@@ -5,32 +5,19 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Separator } from "@/components/ui/separator"
-import { deletUser, userIndex } from "@/db"
-import { userStore } from "@/store"
+import { useUserStore } from "@/store"
 import { IUser } from "@/types"
 import { ClipboardPlus, Loader2, MoreHorizontal, Trash2, UserPlus, Users } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function UserList() {
-  const [users, setUsers] = useState<IUser[]>(userStore.getState().users)
-  const [total, setTotal] = useState(userStore.getState().total)
-  const [loading, setLoading] = useState(false)
-
-
+  const { fetchUsers, users, loading, deleteUser } = useUserStore()
+  const rota = useRouter()
   useEffect(() => {
-    if (userStore.getState().users.length == 0) {
-      userIndex().then((res) => {
-        if (res instanceof Error) return
-
-        if (res.length > 0) {
-          setUsers(res)
-          setTotal(res.length)
-          userStore.getState().start(res)
-        }
-      })
-    }
-  }, [setUsers, setTotal])
+    fetchUsers()
+  }, [fetchUsers])
 
   return (
     <div className="h-[80dvh]">
@@ -90,13 +77,8 @@ export default function UserList() {
 
                   <DropdownMenuItem className="text-red-700"
                     onClick={() => {
-                      setLoading(true)
-                      deletUser(user.id).then(res => {
-                        if (!(res instanceof Error)) {
-                          setLoading(false)
-                          window.location.reload()
-
-                        }
+                      deleteUser(user.id).then(res => {
+                        rota.refresh()
                       })
                     }}
                   >
@@ -109,6 +91,6 @@ export default function UserList() {
           ))}
         </ul>
       </div>
-    </div>
+    </div >
   )
 }

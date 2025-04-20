@@ -7,14 +7,13 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { EnderecoForm, PerfilData } from "@/app/_components"
 import { useForm } from "react-hook-form"
-import { authStore } from "@/store"
-import { update } from "@/db"
 import { image } from "@/firebase/uploadImage"
 import { ChevronDown, Loader } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
-import { toast } from "@/components/ui/use-toast"
-import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 import { BioData } from "@/app/_components/forms/user/bioData"
+import { useUserStore } from "@/store"
+import { useRouter } from "next/navigation"
 
 interface IUpdateUser {
   id: string
@@ -28,29 +27,29 @@ export default function Settings({ params }: { params: { userId: string } }) {
   const [editar, setEditar] = useState(true)
   const [loading, setLoading] = useState(false)
   const form = useForm<IUpdateUser>()
-  const auth = authStore()
+  const { currentUser, updateUser } = useUserStore()
   const rote = useRouter()
 
   const cancelar = () => {
-    form.setValue('name', auth.userauth?.name || '')
-    form.setValue('email', auth.userauth?.email || '')
+    form.setValue('name', currentUser?.name || '')
+    form.setValue('email', currentUser?.email || '')
 
     setEditar(true)
   }
 
-  const updateUser = form.handleSubmit(async (data: IUpdateUser) => {
+  const handlerUpdateUser = form.handleSubmit(async (data: IUpdateUser) => {
     try {
       setLoading(true)
       const userSave = {
-        id: auth.userauth?.id || '',
-        name: auth.userauth?.name || '',
-        email: auth.userauth?.email || '',
-        image: auth.userauth?.image || '',
+        id: currentUser?.id || '',
+        name: currentUser?.name || '',
+        email: currentUser?.email || '',
+        image: currentUser?.image || '',
       }
 
       if (data.file) {
-        if (auth.userauth?.image) {
-          await image.deleteFile(auth.userauth.image)
+        if (currentUser?.image) {
+          await image.deleteFile(currentUser.image)
 
           const img = await image.imgUpload(data.file)
           userSave.image = img || ''
@@ -60,36 +59,15 @@ export default function Settings({ params }: { params: { userId: string } }) {
         }
       }
 
-      const response = await update(auth.userauth?.id || '', userSave)
+      await updateUser(currentUser?.id || '', userSave)
 
-      if (!(response instanceof Error)) {
-        const upAuth = auth.userauth
-
-        if (upAuth) {
-          upAuth.image = userSave.image
-          auth.startAuth(upAuth)
-        }
-
-        setEditar(true)
-        setLoading(false)
-        rote.push('/auth/dashboard')
-        toast({
-          title: 'Sucesso!',
-          description: 'Usuario actualizado com successo! Por favor, actualiza a Pagina.',
-          variant: 'default'
-        })
-
-      }
+      rote.refresh()
+      toast.success("Usuario actualizado com successo! Por favor, actualiza a Pagina.")
 
     } catch (erro) {
       setLoading(false)
       setEditar(true)
-      toast({
-        title: 'Erro',
-        description: 'Erro ao actualizar a Imagem',
-        variant: 'destructive'
-      })
-
+      toast.error('Erro ao actualizar a Imagem')
     }
   })
 
@@ -111,13 +89,13 @@ export default function Settings({ params }: { params: { userId: string } }) {
           </CollapsibleTrigger>
 
           <CollapsibleContent className="px-6 py-4 space-y-4">
-            <form className="mx-2 mt-10 mb-20" onSubmit={updateUser}>
+            <form className="mx-2 mt-10 mb-20" onSubmit={handlerUpdateUser}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
                 <div className="space-y-2">
                   <Label htmlFor="name">Nome de Usuário</Label>
                   <Input id="name" placeholder="John Doe"
                     {...form.register('name')}
-                    defaultValue={auth.userauth?.name || ''}
+                    defaultValue={currentUser?.name || ''}
                     readOnly={true}
 
                   />
@@ -126,7 +104,7 @@ export default function Settings({ params }: { params: { userId: string } }) {
                   <Label htmlFor="email">E-mail do proprietário</Label>
                   <Input id="email" type="email" placeholder="john@example.com"
                     {...form.register('email')}
-                    defaultValue={auth.userauth?.email || ''}
+                    defaultValue={currentUser?.email || ''}
                     readOnly={true}
                   />
                 </div>
@@ -166,16 +144,16 @@ export default function Settings({ params }: { params: { userId: string } }) {
           </CollapsibleContent>
         </Collapsible>
 
-        {auth.userauth && (
-          <PerfilData authUser={auth.userauth} />
-    // Pico do gohst
-      )}
+        {currentUser && (
+          <PerfilData authUser={currentUser} />
+          // Pico do gohst
+        )}
 
-        {auth.userauth?.pessoa?.id && (
+        {currentUser?.pessoa?.id && (
           <>
             <EnderecoForm />
 
-            {auth.userauth?.pessoa?.bio && (
+            {currentUser?.pessoa?.bio && (
               <BioData />
             )}
           </>

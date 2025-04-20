@@ -1,7 +1,7 @@
 export * from './icons/menu'
 
 export * from '../../components/footer'
-export * from './layouts/dashboard/autorizacaoCheck'
+export * from '../../components/autorizacaoCheck'
 export * from '../../components/DropMenu'
 
 export * from './auth/_login'
@@ -48,9 +48,6 @@ export * from './contas/vencimento/create'
 export * from './gds-visa/privacy'
 export * from './gds-visa/terms'
 export * from './gds-visa/terms-and-privacy'
-export * from './gds-visa/services-page'
-export * from './gds-visa/NotifyShow'
-export * from './gds-visa/newService'
 
 export * from './image/upload'
 

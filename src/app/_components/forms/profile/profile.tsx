@@ -2,24 +2,23 @@
 
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import {  useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Lista } from "../../../../lib/listadepaises"
 import { useCallback, useState } from "react"
-import { IProfile, IUserAuth } from "@/types"
-import { authStore } from "@/store"
-import { storeProfile, updateProfile } from "@/db"
+import { IUserAuth } from "@/types"
+import { updateProfile } from "@/db"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import { ChevronDown, Loader } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 
-import z from 'zod'
 import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
-import { toast } from "@/components/ui/use-toast"
+import { toast } from "sonner"
+import z from 'zod'
 
 const pessoa = z.object({
   apelido: z.string().min(3),
@@ -39,42 +38,11 @@ export const PerfilData: React.FC<IProfileProps> = ({ authUser }) => {
   const [editar, setEditar] = useState(true)
   const [loading, setLoading] = useState(false)
   const [erro, setErro] = useState(false)
-  const rota = useRouter()
+  const rote = useRouter()
 
   const form = useForm<z.infer<typeof pessoa>>({
     resolver: zodResolver(pessoa),
   })
-
-  const auth = authStore()
-
-  function updateAuth(perfil: IProfile) {
-    if (authUser) {
-      const authUpdate = authUser
-
-      authUpdate.pessoa.id = perfil.id
-      authUpdate.pessoa.nome = perfil.nome
-      authUpdate.pessoa.pais = perfil.pais
-      authUpdate.pessoa.bio = perfil.bio
-      authUpdate.pessoa.genero = perfil.genero
-      authUpdate.pessoa.Apelido = perfil.Apelido
-      authUpdate.pessoa.telefone = perfil.telefone
-      authUpdate.pessoa.identidade.id = perfil.identidade?.id || ''
-      authUpdate.pessoa.identidade.tipo = perfil.identidade?.tipo || ''
-      authUpdate.pessoa.identidade.numero = perfil.identidade?.numero || ''
-
-      auth.startAuth(authUpdate)
-      rota.push('/auth/dashboard')
-    }
-
-    toast({
-      title: "sucesso!",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">Perfil Actualizado com sucesso!</code>
-        </pre>
-      ),
-    })
-  }
 
   const submitProfileForm = form.handleSubmit(async (data: z.infer<typeof pessoa>) => {
     try {
@@ -91,16 +59,11 @@ export const PerfilData: React.FC<IProfileProps> = ({ authUser }) => {
               return setErro(true)
             }
 
-            updateAuth(perfil)
+            rote.refresh()
+            toast.success("Perfil Actualizado com sucesso!")
 
           } else {
-            const perfil = await storeProfile(userData, authUser.id)
-
-            if (perfil instanceof Error) {
-              return setErro(true)
-            }
-
-            updateAuth(perfil)
+            return setErro(true)
           }
         }
 

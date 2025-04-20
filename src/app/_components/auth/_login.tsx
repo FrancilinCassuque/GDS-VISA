@@ -7,9 +7,10 @@ import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
 import { signIn } from 'next-auth/react'
 import { useRouter } from "next/navigation"
-import { toast } from "@/components/ui/use-toast"
+import { toast } from "sonner"
 import { useState } from "react"
 import { Eye, Loader2, LogIn, UserPlus } from "lucide-react"
+import { useUserStore } from "@/store"
 
 export const GoogleLogin = async () => {
   try {
@@ -22,23 +23,18 @@ export const GoogleLogin = async () => {
   } catch (error) {
     // form.setValue('email', '')
     // form.setValue('password', '')
-    toast({
-      title: "Error!",
-      description: "An error ocurred, please try again.",
-      variant: 'destructive'
-    })
+    toast.error("An error ocurred, please try again.")
   }
 }
 
 export const Login: React.FC = () => {
   const form = useForm()
   const route = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
   const [showPass, setShowPass] = useState(false)
+  const { loading } = useUserStore()
 
   const submitForm = form.handleSubmit((user) => {
     try {
-      setIsLoading(true)
 
       signIn('credentials', {
         email: user.email,
@@ -46,32 +42,19 @@ export const Login: React.FC = () => {
         redirect: false,
       }).then((res) => {
         if (res?.ok) {
-          route.push('/auth/home')
-          setIsLoading(false)
+          route.push('/auth/dashboard')
         } else {
-          setIsLoading(false)
 
           form.setValue('email', '')
           form.setValue('password', '')
-          toast({
-            title: "Error!",
-            description: <pre> <code>"Error ao Fazer Login"</code> </pre>,
-            variant: 'destructive',
-          })
+          toast.error("Erro: Usuário não encontrado!❌😢") // Toast de erro
         }
       })
 
     } catch (error) {
-      setIsLoading(false)
-
       form.setValue('email', '')
       form.setValue('password', '')
-
-      toast({
-        title: "Error!",
-        description: "An error ocurred, please try again.",
-        variant:'destructive'
-      })
+      toast.error('Error ao Fazer Login')
     }
   })
 
@@ -148,9 +131,9 @@ export const Login: React.FC = () => {
                 </Link>
               </div>
             </div>
-            <Button disabled={isLoading} type="submit" className="w-full">
+            <Button disabled={loading} type="submit" className="w-full">
               <LogIn className="mr-2 inline-block h-4 w-4" />
-              {isLoading ? <Loader2 className="animate-spin h-8 w-8"/>: 'Entrar' }
+              {loading ? <Loader2 className="animate-spin h-8 w-8" /> : 'Entrar'}
             </Button>
           </form>
 

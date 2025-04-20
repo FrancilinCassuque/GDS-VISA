@@ -10,7 +10,6 @@ import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import { authStore } from "@/store"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
 import { Check, ChevronDown, ChevronsUpDown, FileWarning, HandHelpingIcon, Loader2, Newspaper, Trash } from "lucide-react"
 import Link from "next/link"
@@ -22,6 +21,7 @@ import { processoDelete, processoUpdate, storeProcesso } from "@/db"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
+import { useUserStore } from "@/store"
 
 const clientForm = z.object({
   preco: z.string(),
@@ -58,17 +58,16 @@ export const CreateProcess: React.FC<ICreateProps> = ({ processo, clientes }) =>
   const [loading, setLoading] = useState(false)
   const [eliminar, SetEliminar] = useState(false)
   const [editar, setEditar] = useState(true)
-  const AUTH = authStore()
+  const { currentUser } = useUserStore()
   const route = useRouter()
   const { status } = useSession()
 
   async function submitForm(body: z.infer<typeof clientForm>) {
     try {
       setLoading(true)
-      const user = AUTH.userauth
 
 
-      if (user?.pessoa?.id) {
+      if (currentUser?.pessoa?.id) {
         const preco = Number.parseInt(body.preco)
         const processo: IProcessoStore = {
           tipo: body.tipo,
@@ -77,7 +76,7 @@ export const CreateProcess: React.FC<ICreateProps> = ({ processo, clientes }) =>
           descricao: body.descricao,
           nomecompleto: body.nomecompleto,
           passaport: body.passaport,
-          profileId: user.pessoa.id,
+          profileId: currentUser.pessoa.id,
           clientId: body.clientId,
           anexos: []
         }
@@ -248,7 +247,7 @@ export const CreateProcess: React.FC<ICreateProps> = ({ processo, clientes }) =>
     <div className="w-full max-w-4xl mx-auto py-12 md:py-16 lg:py-20">
 
       {status == 'authenticated' && (
-        <AlertDialog open={AUTH.userauth?.pessoa?.identidade?.id ? false : true}>
+        <AlertDialog open={currentUser?.pessoa?.identidade?.id ? false : true}>
           <AlertDialogContent className="w-full mx-auto">
             <AlertDialogHeader>
               <AlertDialogTitle className="flex flew-col col-end-2 justify-center"><FileWarning /> Aviso!</AlertDialogTitle>

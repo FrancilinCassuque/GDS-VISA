@@ -1,36 +1,19 @@
 'use client'
 
-import { AutorizacaoCheck, IconBriefcase, IconHeart, IconMapPin, } from "@/app/_components"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { MapPin, UserPlus, Users } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
-import { deletUser, userIndex } from "@/db"
-import { userStore } from "@/store"
-import { IUser } from "@/types"
-import { ClipboardPlus, Loader2, MoreHorizontal, Trash2, UserPlus, Users } from "lucide-react"
+import { AutorizacaoCheck } from "@/app/_components"
+import { Button } from "@/components/ui/button"
+import { useUserStore } from "@/store"
+import { useEffect } from "react"
 import Link from "next/link"
-import { useEffect, useState } from "react"
 
 export default function UserList() {
-  const [users, setUsers] = useState<IUser[]>(userStore.getState().users)
-  const [total, setTotal] = useState(userStore.getState().total)
-  const [loading, setLoading] = useState(false)
-
-
+  const { fetchUsers, users, loading, deleteUser } = useUserStore()
   useEffect(() => {
-    if (userStore.getState().users.length == 0) {
-      userIndex().then((res) => {
-        if (res instanceof Error) return
+    fetchUsers()
+  }, [fetchUsers])
 
-        if (res.length > 0) {
-          setUsers(res)
-          setTotal(res.length)
-          userStore.getState().start(res)
-        }
-      })
-    }
-  }, [setUsers, setTotal])
 
   return (
     <div className="h-[80dvh] overflow-auto">
@@ -52,7 +35,7 @@ export default function UserList() {
         </span></Link> </Button>
 
         <Button variant={'outline'}> <Link href={`#`}><span className="text-sm text-muted-foreground flex items-center gap-2">
-          <IconMapPin className="w-6 h-6 text-muted-foreground" />
+          <MapPin className="w-6 h-6 text-muted-foreground" />
           Gota D` Sol
         </span></Link> </Button>
       </div>

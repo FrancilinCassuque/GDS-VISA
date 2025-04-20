@@ -7,8 +7,6 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { EnderecoForm, PerfilData } from "@/app/_components"
 import { useForm } from "react-hook-form"
-import { authStore } from "@/store"
-import { update } from "@/db"
 import { image } from "@/firebase/uploadImage"
 import { ChevronDown, Loader } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
@@ -16,6 +14,7 @@ import { BioData } from "./bioData"
 import { toast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
 import { IUserAuth } from "@/types"
+import { useUserStore } from "@/store"
 
 interface IUpdateUser {
   id: string
@@ -32,8 +31,8 @@ export const UserData: React.FC<IUserSettings> = ({ userAuth }) => {
   const [editar, setEditar] = useState(true)
   const [loading, setLoading] = useState(false)
   const form = useForm<IUpdateUser>()
-  // const auth = authStore()
   const rote = useRouter()
+  const { updateUser } = useUserStore()
 
   const cancelar = () => {
     form.setValue('name', userAuth?.name || '')
@@ -42,7 +41,7 @@ export const UserData: React.FC<IUserSettings> = ({ userAuth }) => {
     setEditar(true)
   }
 
-  const updateUser = form.handleSubmit(async (data: IUpdateUser) => {
+  const handlerUpdateUser = form.handleSubmit(async (data: IUpdateUser) => {
     try {
       setLoading(true)
       const userSave = {
@@ -64,27 +63,8 @@ export const UserData: React.FC<IUserSettings> = ({ userAuth }) => {
         }
       }
 
-      const response = await update(userAuth?.id || '', userSave)
-
-      if (!(response instanceof Error)) {
-        const upAuth = userAuth
-
-        // if (upAuth) {
-        //   upAuth.image = userSave.image
-        //   auth.startAuth(upAuth)
-        // }
-
-        setEditar(true)
-        setLoading(false)
-        // rote.push('/auth/dashboard')
-        window.location.reload()
-        toast({
-          title: 'Sucesso!',
-          description: 'Usuario actualizado com successo!',
-          variant: 'default'
-        })
-
-      }
+      await updateUser(userAuth?.id || '', userSave)
+      rote.refresh()
 
     } catch (erro) {
       setLoading(false)
@@ -110,7 +90,7 @@ export const UserData: React.FC<IUserSettings> = ({ userAuth }) => {
         </CollapsibleTrigger>
 
         <CollapsibleContent className="px-6 py-4 space-y-4">
-          <form className="mx-2 mt-10 mb-20" onSubmit={updateUser}>
+          <form className="mx-2 mt-10 mb-20" onSubmit={handlerUpdateUser}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
               <div className="space-y-2">
                 <Label htmlFor="name">Nome de Usuário</Label>

@@ -3,12 +3,11 @@
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible"
 import { useForm } from "react-hook-form"
 import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { useSession } from "next-auth/react"
-import { authStore } from "@/store"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
 import { ChevronDown, FileWarning, Loader2, Newspaper, Trash } from "lucide-react"
 import Link from "next/link"
@@ -20,6 +19,7 @@ import { ClientDelete, ClientUpdate, storeClient } from "@/db"
 import { columnsProcesso, TabelaDeDados, TabelaProcessos } from ".."
 import { useRouter } from "next/navigation"
 import InputMask from 'react-input-mask'
+import { useUserStore } from "@/store"
 
 const clientForm = z.object({
   telefone: z.string({ required_error: "Campo de Preechimento Obrigatorio!" }).min(9, 'Contacto Pequeno de mais').max(20, 'Contacto Grande de mais'),
@@ -39,7 +39,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
   const [eliminar, SetEliminar] = useState(false)
   const [loading, setLoading] = useState(false)
   const [editar, setEditar] = useState(true)
-  const AUTH = authStore()
+  const { currentUser } = useUserStore()
   const route = useRouter()
   const { status } = useSession()
 
@@ -51,32 +51,25 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
   async function submitForm(clientBody: z.infer<typeof clientForm>) {
     try {
       setLoading(true)
-      const user = AUTH.userauth
+      
 
-      if (user?.id) {
+      if (currentUser?.id) {
 
         const clientData: Omit<IClientStore, 'id'> = {
           telefone: clientBody.telefone,
           nomecompleto: clientBody.nomecompleto,
           descricao: clientBody.descricao,
-          userId: user.id,
+          userId: currentUser.id,
         }
 
         const newClient = await storeClient(clientData)
 
         if (newClient instanceof Error) {
           setLoading(false)
-          return toast({
-            title: 'Error!',
-            description: <pre><code> Erro ao Registrar Cliente </code></pre>,
-            variant: 'destructive'
-          })
+          return toast.error(" Erro ao Registrar Cliente")
         }
 
-        toast({
-          title: 'Success',
-          description: <pre><code>Cliente Registrado com sucesso.</code></pre>
-        })
+        toast.success("Cliente Registrado com sucesso.")
 
         cancelar()
 
@@ -84,11 +77,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
       }
 
     } catch (error) {
-      toast({
-        title: 'Error!',
-        description: <pre><code>Erro ao Registrar novo Cliente</code></pre>,
-        variant: 'destructive'
-      })
+      toast.error("Erro ao Registrar novo Cliente")
       setLoading(false)
     }
   }
@@ -130,11 +119,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
 
         if (clientEdited instanceof Error) {
           setLoading(false)
-          return toast({
-            title: 'Error!',
-            description: <pre><code> Erro ao Registrar Cliente </code></pre>,
-            variant: 'destructive'
-          })
+          return toast.error("Erro ao Registrar Cliente")
         }
 
         client.descricao = clientEdited.descricao
@@ -144,19 +129,12 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
         client.telefone = clientEdited.telefone
         client.updatedAt = clientEdited.updatedAt
 
-        toast({
-          title: 'Success',
-          description: <pre><code>Cliente Actualizado com sucesso.</code></pre>
-        })
+        toast.success("Cliente Actualizado com sucesso.")
 
         cancelar()
       }
     } catch (error) {
-      toast({
-        title: 'Error!',
-        description: <pre><code>Erro ao Registrar novo Cliente</code></pre>,
-        variant: 'destructive'
-      })
+      toast.error("Erro ao Registrar novo Cliente")
       setLoading(false)
     }
   }
@@ -171,28 +149,17 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
 
         if (response instanceof Error) {
           setLoading(false)
-          return toast({
-            title: 'Error!',
-            description: <pre><code> Erro ao Registrar Cliente </code></pre>,
-            variant: 'destructive'
-          })
+          return toast.error("Erro ao Registrar Cliente")
         }
 
-        route.push('/auth/home')
-        toast({
-          title: 'Success',
-          description: <pre><code>Cliente Eliminado com sucesso.</code></pre>
-        })
+        route.refresh()
+        toast.success("Cliente Eliminado com sucesso.")
       }
 
       setLoading(false)
 
     } catch (error) {
-      toast({
-        title: 'Error!',
-        description: <pre><code>Erro ao Registrar novo Cliente</code></pre>,
-        variant: 'destructive'
-      })
+      toast.error("Erro ao Registrar novo Cliente")
       setLoading(false)
     }
   }
@@ -208,7 +175,7 @@ export const CreateClient: React.FC<ICreateProps> = ({ client }) => {
     <div className="w-full max-w-4xl mx-auto py-12 md:py-16 lg:py-20">
 
       {status == 'authenticated' && (
-        <AlertDialog open={AUTH.userauth?.pessoa?.identidade?.id ? false : true}>
+        <AlertDialog open={currentUser?.pessoa?.identidade?.id ? false : true}>
           <AlertDialogContent className="w-full mx-auto">
             <AlertDialogHeader>
               <AlertDialogTitle className="flex flew-col col-end-2 justify-center"><FileWarning /> Aviso!</AlertDialogTitle>

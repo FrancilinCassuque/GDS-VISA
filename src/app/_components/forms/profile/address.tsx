@@ -7,13 +7,13 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { IEnderecoStore } from "@/types"
 import { useCallback, useState } from "react"
-import { authStore } from "@/store"
 import { ChevronDown, Loader, Newspaper } from "lucide-react"
 import { EnderecoStore } from "@/db"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import { useRouter } from "next/navigation"
-import { toast } from "@/components/ui/use-toast"
+import { toast } from "sonner"
+import { useUserStore } from "@/store"
 
 
 export const EnderecoForm: React.FC = () => {
@@ -22,40 +22,21 @@ export const EnderecoForm: React.FC = () => {
   const [erro, setErro] = useState(false)
 
   const form = useForm<IEnderecoStore>()
-  const auth = authStore()
   const rote = useRouter()
+  const { currentUser } = useUserStore()
 
   const submitAddressForm = form.handleSubmit(async (data: IEnderecoStore) => {
     try {
       setLoading(true)
 
-      if (auth.userauth?.id) {
-        const address = await EnderecoStore(data, auth.userauth.pessoa?.id)
+      if (currentUser?.id) {
+        const address = await EnderecoStore(data, currentUser.pessoa?.id)
 
         if (address instanceof Error) {
           return setErro(true)
         }
-        const upAuth = auth.userauth
-        if (upAuth) {
-          upAuth.pessoa.address.rua = address.rua
-          upAuth.pessoa.address.bairro = address.bairro
-          upAuth.pessoa.address.comuna = address.comuna
-          upAuth.pessoa.address.municipio = address.municipio
-          upAuth.pessoa.address.provincia = address.provincia
-          upAuth.pessoa.address.pais = address.pais
-
-          auth.startAuth(upAuth)
-
-
-          toast({
-            title: "sucesso!",
-            description: (
-              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                <code className="text-white">Perfil Actualizado com sucesso!</code>
-              </pre>
-            ),
-          })
-        }
+          toast.success("Perfil Actualizado com sucesso!")
+          rote.refresh()
       }
 
       setEditar(true)
@@ -70,12 +51,12 @@ export const EnderecoForm: React.FC = () => {
   })
 
   const cancelar = useCallback(() => {
-    form.setValue('rua', auth.userauth?.pessoa?.address.rua || '')
-    form.setValue('bairro', auth.userauth?.pessoa?.address.bairro || '')
-    form.setValue('comuna', auth.userauth?.pessoa?.address.comuna || '')
-    form.setValue('municipio', auth.userauth?.pessoa?.address.municipio || '')
-    form.setValue('provincia', auth.userauth?.pessoa?.address.provincia || '')
-    form.setValue('pais', auth.userauth?.pessoa?.address.pais || '')
+    form.setValue('rua', currentUser?.pessoa?.address.rua || '')
+    form.setValue('bairro', currentUser?.pessoa?.address.bairro || '')
+    form.setValue('comuna', currentUser?.pessoa?.address.comuna || '')
+    form.setValue('municipio', currentUser?.pessoa?.address.municipio || '')
+    form.setValue('provincia', currentUser?.pessoa?.address.provincia || '')
+    form.setValue('pais', currentUser?.pessoa?.address.pais || '')
 
     setEditar(true)
   }, [form])
@@ -83,7 +64,7 @@ export const EnderecoForm: React.FC = () => {
   return (
     <div className="grid grid-cols-1 gap-2 mx-auto mb-14">
 
-      {(!auth.userauth?.pessoa?.address.id && editar) ? (
+      {(!currentUser?.pessoa?.address.id && editar) ? (
         <div>
           <Alert variant='destructive'>
             <ExclamationTriangleIcon />
@@ -116,19 +97,19 @@ export const EnderecoForm: React.FC = () => {
                 <div className="space-y-2">
                   <Label htmlFor="rua">Rua & Nº.</Label>
                   <Input {...form.register('rua')} id="rua" readOnly={editar} placeholder="Fapa - 12"
-                    defaultValue={auth.userauth?.pessoa?.address.rua || ''} />
+                    defaultValue={currentUser?.pessoa?.address.rua || ''} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="bairro">Bairro / Quarteirão</Label>
                   <Input {...form.register('bairro')} id="bairro" readOnly={editar} placeholder="Bairro da Paz"
-                    defaultValue={auth.userauth?.pessoa?.address.bairro || ''} />
+                    defaultValue={currentUser?.pessoa?.address.bairro || ''} />
 
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="comuna">Distrito / Comuna</Label>
                   <Input {...form.register('comuna')} id="comuna" readOnly={editar} placeholder="Ngola-Kiluange"
-                    defaultValue={auth.userauth?.pessoa?.address.comuna || ''} />
+                    defaultValue={currentUser?.pessoa?.address.comuna || ''} />
                 </div>
               </div>
 
@@ -136,17 +117,17 @@ export const EnderecoForm: React.FC = () => {
                 <div className="space-y-2">
                   <Label htmlFor="municipio">Município</Label>
                   <Input {...form.register('municipio')} id="municipio" readOnly={editar} placeholder="Sambizanga"
-                    defaultValue={auth.userauth?.pessoa?.address.municipio || ''} />
+                    defaultValue={currentUser?.pessoa?.address.municipio || ''} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="provincia">Província</Label>
                   <Input {...form.register('provincia')} id="provincia" readOnly={editar} placeholder="Luanda"
-                    defaultValue={auth.userauth?.pessoa?.address.provincia || ''} />
+                    defaultValue={currentUser?.pessoa?.address.provincia || ''} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="pais">Pais</Label>
                   <Input {...form.register('pais')} id="pais" placeholder="Angola" readOnly={editar}
-                    defaultValue={auth.userauth?.pessoa?.address.pais || 'Angola'} />
+                    defaultValue={currentUser?.pessoa?.address.pais || 'Angola'} />
                 </div>
               </div>
 

@@ -1,11 +1,13 @@
 import { UserData } from "@/app/_components"
 import { auth } from "@/db"
+import { useUserStore } from "@/store"
 
-export default async function SettingsID({ params }: { params: { userEmail: string } }) {
-  const email = decodeURIComponent(params.userEmail)
-  const userauth = await auth(email)
-  
-  if (userauth instanceof Error) return
+export default async function SettingsID({ params }: { params: { userId: string } }) {
+  const id = decodeURIComponent(params.userId)
+  const { fetchUserById } = useUserStore()
+  const userauth = await fetchUserById(id)
+
+  if (!userauth) return
 
 
   return (
