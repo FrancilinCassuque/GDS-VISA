@@ -20,7 +20,7 @@ const fontBody = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Gota D\' Sol | Consultoria de Vistos Internacionais',
+  title: 'Gota D\' Sol | Consultoria de Vistos Internacionais | Agendamento | Agendamento para Portugal',
   description: 'Consultoria especializada para obtenção de vistos para Portugal, Espanha, França, Bélgica, Brasil, Alemanha e África do Sul.',
 }
 
