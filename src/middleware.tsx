@@ -1,29 +1,53 @@
+
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { getUrl } from './lib/getUrl'
 
-// This function can be marked `async` if using `await` inside
 export default async function middleware(request: NextRequest) {
-  const session = process.env.NODE_ENV === 'production' ? request.cookies.get('__Secure-next-auth.session-token') : request.cookies.get('next-auth.session-token')
-  // const sessionP = request.cookies.get('next-auth.session-token')
-  // const pathname = request.nextUrl.pathname
-  const login = request.nextUrl.pathname == '/user'
-  const home = request.nextUrl.pathname == '/'
-  const signUp = request.nextUrl.pathname == '/user/create'
+  const session = process.env.NODE_ENV === 'production'
+    ? request.cookies.get('__Secure-next-auth.session-token')
+    : request.cookies.get('next-auth.session-token')
 
-  if ((login || signUp) && session) {
-    return NextResponse.redirect(new URL(getUrl('/auth/home')))
+  const { pathname } = request.nextUrl
+
+  // Rotas públicas que não exigem sessão
+  const publicPaths = [
+    '/',
+    '/user',
+    '/user/create',
+    '/test',
+    '/service',
+    '/terms-and-privacy',
+    '/about',
+    '/contato',
+    '/confirmacao',
+    '/placeholder'
+  ]
+  // console.log('pathname:', pathname)
+  // console.log('session:', session)
+
+  // Se for rota pública, segue sem redirecionar
+  if (publicPaths.includes(pathname)) {
+    if ((pathname === '/user' || pathname === '/user/create') && session) {
+      // return NextResponse.redirect(new URL(getUrl('/home')))
+      return NextResponse.redirect(new URL('/auth/home', request.nextUrl.origin))
+
+    }
+    return NextResponse.next()
   }
 
-  if ((!login && !signUp && !home) && (!session)) {
-    return NextResponse.redirect(new URL(getUrl('/user')))
+  // Qualquer outra rota precisa de sessão
+  if (!session) {
+    // return NextResponse.redirect(new URL(getUrl('/entrar')))
+    return NextResponse.redirect(new URL('/user', request.nextUrl.origin))
+
   }
 
+  return NextResponse.next()
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|test|terms-and-privacy|about|contato|service|placeholder).*)'
+    '/((?!api|_next/|favicon.ico|images|placeholder.png|opengraph-image.png).*)'
   ]
 }

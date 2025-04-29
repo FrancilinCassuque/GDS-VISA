@@ -5,6 +5,8 @@ import { Home, LogOut, Mail, Menu, Settings, User, X } from 'lucide-react';
 import { MENU_ADMIN_LINKS } from '@/lib/constantes';
 import { Tema } from './tema';
 import { DropMenu } from '@/app/_components';
+import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 
 const SideDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -110,10 +112,16 @@ const SideDrawer = () => {
                   <Tema isMobile />
                 </div>
 
-                <button className="flex items-center w-full p-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors">
+                <Link
+                  href={'#'}
+                  className="flex items-center w-full p-3 text-muted-foreground hover:text-primary transition-colors font-medium"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    signOut()
+                  }}>
                   <LogOut size={20} className="mr-3" />
                   Sair
-                </button>
+                </Link>
               </div>
             </div>
           </motion.aside>
