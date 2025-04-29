@@ -39,7 +39,7 @@ export default function AboutPage() {
     <div className="bg-background">
       {/* Hero Section */}
       <section className="relative h-[60vh] min-h-[500px] flex items-center">
-        <div className="absolute inset-0 bg-[url('/aboute.jpg')] bg-cover bg-center brightness-75" />
+        <div className="absolute inset-0 bg-[url('/images/aboute.jpg')] bg-cover bg-center brightness-75" />
         <div className="container mx-auto px-4 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}

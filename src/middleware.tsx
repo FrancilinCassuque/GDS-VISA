@@ -21,7 +21,8 @@ export default async function middleware(request: NextRequest) {
     '/about',
     '/contato',
     '/confirmacao',
-    '/placeholder'
+    '/placeholder',
+    'opengraph-image'
   ]
   // console.log('pathname:', pathname)
   // console.log('session:', session)
