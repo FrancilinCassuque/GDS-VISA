@@ -31,11 +31,11 @@ export const Login: React.FC = () => {
   const form = useForm()
   const route = useRouter()
   const [showPass, setShowPass] = useState(false)
-  const { loading } = useUserStore()
+  const [loading, setLoading] = useState(false)
 
   const submitForm = form.handleSubmit((user) => {
     try {
-
+      setLoading(true)
       signIn('credentials', {
         email: user.email,
         password: user.password,
@@ -50,8 +50,9 @@ export const Login: React.FC = () => {
           toast.error("Erro: Usuário não encontrado!❌😢") // Toast de erro
         }
       })
-
+      setLoading(false)
     } catch (error) {
+      setLoading(false)
       form.setValue('email', '')
       form.setValue('password', '')
       toast.error('Error ao Fazer Login')
