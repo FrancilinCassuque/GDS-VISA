@@ -41,7 +41,6 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       >
         <MySessionProvider>
           <ThemeProvider
-            defaultTheme="light"
             enableSystem
             attribute="class"
           // disableTransitionOnChange
