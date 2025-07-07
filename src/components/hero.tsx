@@ -7,7 +7,7 @@ import Link from 'next/link'
 export const Hero: React.FC = () => {
   return (
     <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 bg-[url('/placeholder.jpg')] bg-cover bg-center brightness-75" />
+      <div className="absolute inset-0 bg-[url('/placeholder.png')] bg-cover bg-center brightness-75" />
 
       <div className="container mx-auto px-4 relative z-10 text-white text-center my-12">
         <motion.div
