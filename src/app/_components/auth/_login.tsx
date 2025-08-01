@@ -66,13 +66,13 @@ export const Login: React.FC = () => {
         <div>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-foreground">
             <LogIn className="mr-2 inline-block h-6 w-6" />
-            Sign in to your account
+            Loga na minha Conta
           </h2>
           <p className="mt-2 text-center text-sm text-muted-foreground">
             Or{" "}
             <Link href={"/user/create"} className="font-medium text-primary hover:text-primary/80" prefetch={false}>
               <UserPlus className="mr-2 inline-block h-4 w-4" />
-              sign up for a new account
+              Registra Agente🐱‍👤
             </Link>
           </p>
         </div>

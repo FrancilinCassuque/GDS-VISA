@@ -79,7 +79,7 @@ export const Header: React.FC = () => {
                 </Link>
               ))}
 
-              <Tema isMobile/>
+              <Tema isMobile />
             </div>
           </motion.div>
         )}

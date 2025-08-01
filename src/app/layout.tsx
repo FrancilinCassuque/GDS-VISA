@@ -43,7 +43,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           <ThemeProvider
             enableSystem
             attribute="class"
-          // disableTransitionOnChange
+            defaultTheme="dark"
+            disableTransitionOnChange
           >
             {children}
 

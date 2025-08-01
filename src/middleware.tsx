@@ -21,7 +21,7 @@ export default async function middleware(request: NextRequest) {
     '/about',
     '/contato',
     '/confirmacao',
-    '/placeholder',
+    '/not-found',
     'opengraph-image'
   ]
   // console.log('pathname:', pathname)
@@ -49,6 +49,6 @@ export default async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!api|_next/|favicon.ico|images|placeholder.png|opengraph-image.png).*)'
+    '/((?!api|_next/|favicon.ico|images|placeholder|opengraph-image|not-found).*)'
   ]
 }
