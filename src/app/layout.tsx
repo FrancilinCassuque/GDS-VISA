@@ -47,7 +47,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             disableTransitionOnChange
           >
             {children}
-
+            {/* made by Mateus Cassuque */}
             <Toaster />
           </ThemeProvider>
         </MySessionProvider>
@@ -55,3 +55,5 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     </html>
   )
 }
+
+
