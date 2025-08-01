@@ -48,6 +48,7 @@ export const Hero: React.FC = () => {
           </div>
 
         </motion.div>
+      </div>
     </section>
   )
 }
